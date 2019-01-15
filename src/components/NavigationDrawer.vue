@@ -1,0 +1,141 @@
+<template>
+  <div class="navigation-drawer">
+    <div id="head-container" class="primary">
+      <v-layout justify-space-between align-start>
+        <v-flex shrink>
+          <v-avatar id="avatar" size="80">
+            <img @click="$router.push({name: 'account'})" :src="$store.state.userInfo.head_portrait" alt="">
+          </v-avatar><!--头像-->
+        </v-flex>
+        <v-flex shrink>
+          <div id="button-group">
+            <v-btn id="wallet" outline fab small color="secondary">
+              <v-icon>account_balance_wallet</v-icon>
+            </v-btn>
+            <v-btn id="camera" outline fab small color="secondary">
+              <v-icon>photo_camera</v-icon>
+            </v-btn>
+          </div>
+        </v-flex><!--按钮组-->
+      </v-layout>
+
+      <div id="info-container" v-if="$store.state.token">
+        <v-layout>
+          <span id="nickname">{{ $store.state.userInfo.nickname }}</span>
+          <v-chip id="group" color="secondary" text-color="font" small disabled>{{ $store.state.userInfo.group.text }}</v-chip>
+        </v-layout><!--昵称&用户组-->
+
+        <v-layout class="text-xs-center primary" align-center>
+          <span>
+            <span id="level" class="orange lighten-1 secondary--text font-weight-bold">Lv{{ $store.state.userInfo.level }}</span>
+          </span>
+          <v-flex xs7><!--xs(1-12)代表经验条长度-->
+            <v-progress-linear id="exp" color="secondary" v-model="$store.state.userInfo.exp.percent"></v-progress-linear>
+          </v-flex>
+        </v-layout>
+      </div><!--未登录时不显示部分-->
+    </div>
+
+    <v-layout v-if="$store.state.token" id="fans_container">
+      <v-flex xs4>
+        <v-layout class="text-xs-center">
+          <v-flex class="font-weight-bold">{{ $store.state.userInfo.answer }}</v-flex>
+        </v-layout>
+        <v-layout class="text-xs-center font--text">
+          <v-flex>回答</v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex xs4>
+        <v-layout class="text-xs-center">
+          <v-flex class="font-weight-bold">{{ $store.state.userInfo.follow }}</v-flex>
+        </v-layout>
+        <v-layout class="text-xs-center font--text">
+          <v-flex>关注</v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex xs4>
+        <v-layout class="text-xs-center">
+          <v-flex class="font-weight-bold">{{ $store.state.userInfo.fans }}</v-flex>
+        </v-layout>
+        <v-layout class="text-xs-center font--text">
+          <v-flex>粉丝</v-flex>
+        </v-layout>
+      </v-flex>
+    </v-layout><!--动态&关注&粉丝--><!--未登录时不显示部分-->
+
+    <v-divider></v-divider>
+
+    <div id="list">
+      <v-list>
+        <v-list-tile :to="{name: 'topic'}" @click="$store.commit('drawer')">
+          <v-list-tile-action> <v-icon>question_answer</v-icon> </v-list-tile-action>
+          <v-list-tile-title>行业热议</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile @click="$store.commit('drawer')">
+          <v-list-tile-action> <v-icon>favorite</v-icon> </v-list-tile-action>
+          <v-list-tile-title>个人收藏</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile @click="$store.commit('drawer')">
+          <v-list-tile-action> <v-icon>school</v-icon> </v-list-tile-action>
+          <v-list-tile-title>我的学院</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile :to="{name: 'message'}" @click="$store.commit('drawer')">
+          <v-list-tile-action> <v-icon>chat</v-icon> </v-list-tile-action>
+          <v-list-tile-title>消息通知</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile :to="{name: 'account'}" @click="$store.commit('drawer')">
+          <v-list-tile-action> <v-icon>person</v-icon> </v-list-tile-action>
+          <v-list-tile-title>个人中心</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+
+      <v-divider></v-divider>
+
+      <v-list>
+        <v-list-tile :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" @click="drawer = false">
+          <v-list-tile-action> <v-icon>settings</v-icon> </v-list-tile-action>
+          <v-list-tile-title>设置</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </div><!--功能列表-->
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "NavigationDrawer"
+  }
+</script>
+
+<style scoped>
+  #head-container {
+    padding: 1em;
+  }
+  #wallet {
+    margin: 0 5px;
+  }
+  #camera {
+    margin: 0;
+  }
+  #info-container {
+    margin-top: 10px;
+  }
+  #nickname {
+    font-weight: 700;
+    margin: 4px;
+    color: white;
+  }
+  #group {
+    height: 20px;
+    font-weight: 700;
+  }
+  #exp {
+    margin: 4px;
+  }
+  #level {
+    margin: 4px;
+  }
+  #fans_container {
+    padding: 10px;
+  }
+</style>
