@@ -1,6 +1,6 @@
 import base from './base'
 import qs from 'qs'
-import axios from '../utils/http'
+import axios from './http'
 import store from '../store'
 
 

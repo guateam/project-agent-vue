@@ -42,8 +42,8 @@
     data() {
       return {
         show: false,
-        email: '',
-        password: '',
+        email: 'zhangyu199946@126.com',
+        password: 'zhangyuk',
       }
     },
 
