@@ -209,7 +209,7 @@
         methods: {
             // 查看问题详情
             view_detail(id) {
-                this.$router.push({name: 'topic', params: id});  // 跳转到话题详情页
+                this.$router.push({name: 'question', query: {id:id}});  // 跳转到话题详情页
             },
             // 获取推荐内容
             get_recommend() {
@@ -237,7 +237,7 @@
 
         mounted() {
             this.get_category();
-            // this.get_recommend();
+            this.get_recommend();
         }
     }
 </script>

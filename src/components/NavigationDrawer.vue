@@ -71,7 +71,7 @@
           <v-list-tile-action> <v-icon>question_answer</v-icon> </v-list-tile-action>
           <v-list-tile-title>行业热议</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile @click="$store.commit('drawer')">
+        <v-list-tile :to="{name: 'collection'}" @click="$store.commit('drawer')">
           <v-list-tile-action> <v-icon>favorite</v-icon> </v-list-tile-action>
           <v-list-tile-title>个人收藏</v-list-tile-title>
         </v-list-tile>
