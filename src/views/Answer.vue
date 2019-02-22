@@ -1,5 +1,18 @@
 <template>
     <div class="answer">
+        <v-toolbar dark flat color="primary" app dense scroll-off-screen>
+            <v-btn icon @click="$router.go(-1)">
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
+
+            <v-toolbar-title class="headline " style="margin: 0 auto">
+                <span>话题</span>
+            </v-toolbar-title>
+
+            <v-btn icon>
+                <v-icon>more_vert</v-icon>
+            </v-btn>
+        </v-toolbar>
         <div style="padding-left: 1em; padding-right: 1em;padding-top: 1em">
             <h2>{{topicTitle}}</h2>
             <h2 style="line-height: 1.5;height: 1.5em">
@@ -28,7 +41,7 @@
                     </div>
                 </div>
                 <div style="display: flex;flex: 0 0 20%;align-items: center;justify-content: center">
-                    <div style="width: 70px;height: 38px;background-color: #FFCC00;color: black;font-weight: 600;display: flex;align-items: center;justify-content: center;">
+                    <div style="width: 70px;height: 38px;background-color: #FFCC00;color: black;font-weight: 600;display: flex;align-items: center;justify-content: center;border-radius:5px;">
                         关注
                     </div>
                 </div>
@@ -59,7 +72,9 @@
                         <img :src="comment.avatar" alt=""><!-- 头像 -->
                         <span class="comment-user-name">{{ comment.nickname }}</span>
                         <!--<span class="comment-user-tag">从业者</span>-->
-                        <div class="comment-like">赞同 {{ comment.agree }}</div>
+                        <div class="comment-like"><span class="subheading">{{ comment.agree }}</span>
+                            <v-icon style="height: 30px;margin-left: 3px">thumb_up</v-icon>
+                        </div>
                     </div>
                     <div>
                         <p>{{ comment.content.length > 20 ? comment.content.substring(0, 20) + '...' : comment.content
@@ -79,7 +94,17 @@
             <div class="footinput">
                 <input type="text" placeholder="输入您的回答">
             </div>
-            <div>又是俩icon</div>
+            <div class="footright">
+                <v-btn icon>
+                    <v-icon :color="favorite==='favorite'?'primary':'black'" @click="follow_answer()">{{favorite}}
+                    </v-icon>
+                </v-btn>
+            </div>
+            <div class="footright">
+                <v-btn icon>
+                    <v-icon>comment</v-icon>
+                </v-btn>
+            </div>
         </div>
 
         <!--END-->
@@ -140,6 +165,8 @@
                         nickname: "拉拉人"
                     },
                 ],
+                name: '',
+                favorite: 'favorite_border'
             }
         },
 
@@ -178,12 +205,34 @@
                     }
                 })
             },
+            follow_answer() {
+                if (this.favorite === 'favorite_border') {
+                    this.$api.answer.collect_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.favorite = 'favorite'
+                        }
+                    })
+                } else {
+                    this.$api.answer.un_collect_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.favorite = 'favorite_border'
+                        }
+                    })
+                }
+            },
+            get_follow_state() {
+                this.$api.answer.get_collect_state(this.$route.query.id).then(res => {
+                    if (res.data.code === 1) {
+                        this.favorite = 'favorite'
+                    }
+                })
+            }
         },
 
         mounted() {
             this.getAnswerData();
             this.getCommentData();
-
+            this.get_follow_state();
         },
     }
 </script>
@@ -258,13 +307,11 @@
         width: 100%;
         height: 50px;
         display: flex;
-        align-items: center;
         position: fixed;
         bottom: 0;
         background-color: white;
         z-index: 100;
         line-height: 1.5;
-        padding-left: 1em;
     }
 
     .footinput {
@@ -280,6 +327,10 @@
         width: 100%;
         height: 100%;
         outline: #EBEBEB;
+    }
+
+    .footright {
+        margin-left: 5px;
     }
 
     /*img {*/

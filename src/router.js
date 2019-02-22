@@ -36,7 +36,13 @@ export default new Router({
                     meta: {requireLogin: true},
                     component: () => import('./views/ExpDetail.vue')
                 },
-
+                // 历史发布
+                {
+                    path:'historical-post',
+                    name:'historical-post',
+                    meta:{requireLogin:true},
+                    component:()=>import('./views/HistoricalPost.vue')
+                }
             ],
         },
         // 消息

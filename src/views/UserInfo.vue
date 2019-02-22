@@ -81,23 +81,11 @@
     <v-card flat>
       <div id="list">
         <v-list>
-          <v-list-tile>
+          <v-list-tile @click="$router.push({name:'historical-post'})">
             <v-list-tile-action> <v-icon class="time--text">description</v-icon> </v-list-tile-action>
             <v-list-tile-title>
               <v-layout justify-space-between>
                 <span>我发布的</span>
-                <v-icon>keyboard_arrow_right</v-icon>
-              </v-layout>
-            </v-list-tile-title>
-          </v-list-tile>
-
-          <v-divider></v-divider>
-
-          <v-list-tile>
-            <v-list-tile-action> <v-icon class="time--text">favorite</v-icon> </v-list-tile-action>
-            <v-list-tile-title>
-              <v-layout justify-space-between>
-                <span>我的收藏</span>
                 <v-icon>keyboard_arrow_right</v-icon>
               </v-layout>
             </v-list-tile-title>

@@ -71,7 +71,18 @@
         <div class="bottom"></div>
 
         <!--固定在底部的input等-->
-
+        <v-card-text style="height: 100px; position: fixed;right:2%;bottom: 2%;">
+            <v-btn
+                    absolute
+                    dark
+                    fab
+                    top
+                    right
+                    color="pink"
+            >
+                <v-icon>add</v-icon>
+            </v-btn>
+        </v-card-text>
         <!--<div class="foot">-->
         <!--<div class="footinput">-->
         <!--<input type="text" placeholder="输入您的回答">-->
