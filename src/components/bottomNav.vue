@@ -1,16 +1,16 @@
 <template>
     <div class="bottom-nav">
-        <v-bottom-nav :active.sync="bottomNav" :value="true" absolute color="white" >
-            <v-btn color="#FFCC00" flat value="home" @click="$router.push('/topic')" >
+        <v-bottom-nav :active.sync="bottomNav" :value="true" absolute color="white">
+            <v-btn color="#FFCC00" flat value="topic" @click="$router.push('/topic')">
                 <span>首页</span>
                 <v-icon>question_answer</v-icon>
             </v-btn>
 
-            <v-btn color="#FFCC00" flat value="school" @click="$router.push('/school')" >
+            <v-btn color="#FFCC00" flat value="school" @click="$router.push('/school')">
                 <span>学院</span>
                 <v-icon>school</v-icon>
             </v-btn>
-            <v-btn color="#FFCC00" flat value="board" @click="$router.push('/board')" >
+            <v-btn color="#FFCC00" flat value="board" @click="$router.push('/board')">
                 <span>告示板</span>
                 <v-icon>school</v-icon>
             </v-btn>
@@ -20,7 +20,14 @@
 
 <script>
     export default {
-        name: "bottomNav"
+        name: "bottomNav",
+        data() {
+            return {
+                bottomNav: 'topic'
+            };
+        },
+        mounted() {
+        }
     }
 </script>
 

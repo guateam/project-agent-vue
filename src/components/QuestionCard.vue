@@ -1,5 +1,6 @@
 <template>
     <div class="question-card">
+
         <v-card id="card" flat border>
             <!--<v-container v-if="card_type==0">-->
             <!--<v-layout row>-->
@@ -26,13 +27,13 @@
                 <v-img
                         :src="img"
                         aspect-ratio="2.75"
-                        v-if="img!=''"
+                        v-if="img!==''&&img"
                 ></v-img>
 
                 <v-card-title primary-title>
                     <div>
                         <h3>{{ title }}</h3>
-                        <div>{{substring}}
+                        <div>{{description}}
                         </div>
 
                     </div>
@@ -40,7 +41,7 @@
                 </v-card-title>
 
                 <v-card-actions>
-                    <v-flex class="font--text" xs12 pa-1>标签 : <span v-for="(tag, index) in tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag }}</span>
+                    <v-flex class="font--text" xs12 pa-1>标签 : <span v-for="(tag, index) in tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
                     </v-flex>
                     <v-flex class="font--text" grow pa-1>{{ follow }} 人关注&nbsp;·&nbsp;{{ comment }} 条评论 <span
                             class="time--text">{{ edittime }}</span></v-flex>
@@ -54,7 +55,7 @@
 <script>
     export default {
         name: "QuestionCard",
-        props: ['title', 'img', 'tags', 'follow', 'comment', 'edittime', 'substring', 'card_type'],
+        props: ['title', 'img', 'tags', 'follow', 'comment', 'edittime', 'description', 'card_type'],
     }
 </script>
 

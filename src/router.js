@@ -36,6 +36,7 @@ export default new Router({
                     meta: {requireLogin: true},
                     component: () => import('./views/ExpDetail.vue')
                 },
+
             ],
         },
         // 消息
@@ -45,5 +46,23 @@ export default new Router({
             meta: {requireLogin: true},  // 需要登录
             component: () => import('./views/Message.vue')
         },
+        // 收藏
+        {
+            path: '/collection',
+            name: 'collection',
+            meta: {requireLogin: true},
+            component: () => import('./views/Collection.vue')
+        },
+        // 问题页
+        {
+            path: '/question',
+            name: 'question',
+            component: () => import('./views/Question.vue')
+        },
+        {
+            path: '/answer',
+            name: 'answer',
+            component: () => import('./views/Answer.vue')
+        }
     ],
 });
