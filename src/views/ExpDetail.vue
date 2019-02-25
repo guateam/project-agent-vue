@@ -168,6 +168,7 @@
         </v-card-text>
       </v-card>
     </v-card>
+    <div class="bottom"></div>
   </div>
 </template>
 
@@ -244,5 +245,8 @@
   }
   #authority-card {
     margin-top: -115px;
+  }
+  .bottom{
+    margin-bottom: 8%;
   }
 </style>

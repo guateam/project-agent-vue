@@ -34,7 +34,7 @@
           </v-flex>
 
           <v-flex xs1>
-            <v-btn icon small>
+            <v-btn icon small :to="{name:'user-detail'}">
               <v-icon>keyboard_arrow_right</v-icon>
             </v-btn>
           </v-flex><!-- 按钮 -->
@@ -46,7 +46,7 @@
     <v-card height="25px" color="primary" flat></v-card><!--占位用-->
 
     <v-layout justify-center>
-      <v-card id="float-card" width="80%" height="50px">
+      <v-card id="float-card" width="80%" height="50px" @click="$router.push({name:'fan-list'})">
         <v-container fill-height>
           <v-layout class="text-xs-center" align-center>
             <v-flex xs6>
@@ -81,7 +81,8 @@
     <v-card flat>
       <div id="list">
         <v-list>
-          <v-list-tile>
+
+          <v-list-tile @click="$router.push({name:'historical-post'})">
             <v-list-tile-action> <v-icon class="time--text">description</v-icon> </v-list-tile-action>
             <v-list-tile-title>
               <v-layout justify-space-between>
@@ -93,19 +94,7 @@
 
           <v-divider></v-divider>
 
-          <v-list-tile>
-            <v-list-tile-action> <v-icon class="time--text">favorite</v-icon> </v-list-tile-action>
-            <v-list-tile-title>
-              <v-layout justify-space-between>
-                <span>我的收藏</span>
-                <v-icon>keyboard_arrow_right</v-icon>
-              </v-layout>
-            </v-list-tile-title>
-          </v-list-tile>
-
-          <v-divider></v-divider>
-
-          <v-list-tile>
+          <v-list-tile @click="$router.push({name:'wallet'})">
             <v-list-tile-action> <v-icon class="time--text">account_balance_wallet</v-icon> </v-list-tile-action>
             <v-list-tile-title>
               <v-layout justify-space-between>
