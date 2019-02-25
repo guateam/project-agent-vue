@@ -21,6 +21,7 @@ export default new Vuex.Store({
       collection: null,  // 收藏
     },
     drawer: false,  // 侧边栏开关
+    login:false, //是否登录检查
   },
   mutations: {
     // Update user's token with `$store.commit('updateToken', token);`.
@@ -41,6 +42,12 @@ export default new Vuex.Store({
     drawer(state) {
       state.drawer = !state.drawer;
     },
+    login(state){
+      state.login=true
+    },
+    logout(state){
+      state.login=false
+    }
   },
   actions: {
 
