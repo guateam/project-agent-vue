@@ -1,7 +1,10 @@
 <template>
     <div class="login">
         <v-container>
-            <form>
+            <div class="head">
+                <h1>你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
+            </div>
+            <form class="form">
                 <v-text-field
                         v-model="email"
                         :error-messages="emailErrors"
@@ -130,5 +133,10 @@
 </script>
 
 <style scoped>
-
+    .form {
+        margin-top: 2em;
+    }
+    .head{
+        margin-top: 3em;
+    }
 </style>
