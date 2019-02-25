@@ -40,7 +40,7 @@
         </div>
 
         <v-layout v-if="$store.state.token" id="fans_container">
-            <v-flex xs4>
+            <v-flex xs4 @click="$router.push('/collection')">
                 <v-layout class="text-xs-center">
                     <v-flex class="font-weight-bold">{{ $store.state.userInfo.answer }}</v-flex>
                 </v-layout>

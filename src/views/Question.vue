@@ -173,6 +173,13 @@
                         this.followNotice = '已关注';
                     }
                 })
+            },
+            add_user_action(id) {
+                this.$api.account.add_user_action(id,11).then(res=>{
+                    if(res.data.code===1){
+                        return 0;
+                    }
+                })
             }
         },
         mounted() {
@@ -180,6 +187,7 @@
             this.getAnswers(id);
             this.getQuestion(id);
             this.get_follow(id);
+            this.add_user_action(id);
         },
     }
 </script>

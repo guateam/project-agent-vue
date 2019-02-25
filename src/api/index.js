@@ -28,6 +28,10 @@ const index = {
         get_collections(token = store.state.token) {
             return axios.get(`${base.account}/get_collections`, {params: {token: token}})
         },
+        // 添加用户行为
+        add_user_action(target,target_type,token=store.state.token){
+            return axios.get(`${base.account}/add_user_action`,{params:{token:token,target_id:target,action_type:target_type}})
+        }
     },
     message: {
         // 获取聊天列表
