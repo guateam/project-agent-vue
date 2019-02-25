@@ -29,6 +29,22 @@ export default new Router({
                     meta: {requireLogin: true},
                     component: () => import('./views/UserInfo.vue')
                 },
+                // 用户基本详情
+                {
+                    path:'user-detail',
+                    name:'user-detail',
+                    meta:{requireLogin:true},
+                    component:()=>import('./views/UserDetail.vue'),
+                    children: [
+                        // 实名认证
+                        {
+                            path: 'verified',
+                            name: 'verified',
+                            meta: {requireLogin: true},
+                            component: () => import('./views/Verified.vue')
+                        },
+                    ]
+                },
                 // 积分详情
                 {
                     path: 'exp-detail',
@@ -42,6 +58,20 @@ export default new Router({
                     name:'historical-post',
                     meta:{requireLogin:true},
                     component:()=>import('./views/HistoricalPost.vue')
+                },
+                // 粉丝列表
+                {
+                    path:'fan-list',
+                    name:'fan-list',
+                    meta:{requireLogin:true},
+                    component:()=>import('./views/FanList.vue')
+                },
+                // 我的钱包
+                {
+                    path:'wallet',
+                    name:'wallet',
+                    meta:{requireLogin:true},
+                    component:()=>import('./views/Wallet.vue')
                 }
             ],
         },
