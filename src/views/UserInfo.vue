@@ -1,6 +1,14 @@
 <template>
     <div class="user-info">
+        <v-toolbar dark flat color="primary" app dense scroll-off-screen>
+            <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
 
+            <v-toolbar-title class="headline" style="margin: 0 auto">
+                <span>{{ title }}</span>
+            </v-toolbar-title>
+
+            <v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon> <v-icon>settings</v-icon> </v-btn>
+        </v-toolbar>
         <v-card color="primary" flat>
             <v-container>
                 <v-layout align-center>
