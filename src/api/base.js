@@ -8,6 +8,7 @@ const base = {
     school: baseUrl + '/school',
     answer: baseUrl + '/answer',
     article: baseUrl + '/article',
+    specialist: baseUrl + '/specialist'
 };
 
 export default base;

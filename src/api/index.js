@@ -29,8 +29,22 @@ const index = {
             return axios.get(`${base.account}/get_collections`, {params: {token: token}})
         },
         // 添加用户行为
-        add_user_action(target,target_type,token=store.state.token){
-            return axios.get(`${base.account}/add_user_action`,{params:{token:token,target_id:target,action_type:target_type}})
+        add_user_action(target, target_type, token = store.state.token) {
+            return axios.get(`${base.account}/add_user_action`, {
+                params: {
+                    token: token,
+                    target_id: target,
+                    action_type: target_type
+                }
+            })
+        },
+        // 获取钱包消息
+        get_account_balance(token = store.state.token) {
+            return axios.post(`${base.account}/get_account_balance`, qs.stringify({token: token}))
+        },
+        // 获取关注列表
+        get_my_follow(token = store.state.token) {
+            return axios.get(`${base.account}/get_my_follow`, {params: {token: token}})
         }
     },
     message: {
@@ -97,6 +111,11 @@ const index = {
         },
         get_article_allowed_group(token = store.state.token) {
             return axios.get(`${base.article}/get_article_allowed_group`, {params: {token: token}})
+        }
+    },
+    specialist: {
+        get_my_fans(token = store.state.token) {
+            return axios.get(`${base.specialist}/get_my_fans`, {params: {token: token}})
         }
     }
 };

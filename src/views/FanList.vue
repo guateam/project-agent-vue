@@ -1,93 +1,59 @@
 <template>
-    <div class="bigbox">
-        <v-toolbar color="white" flat>
-            <v-btn icon light @click="$router.push({name: 'user-info'})">
-                <v-icon color="grey darken-2">arrow_back</v-icon>
+    <div class="fan-list">
+        <v-toolbar dark flat color="primary" app dense scroll-off-screen>
+            <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
+
+            <v-toolbar-title class="headline" style="margin: 0 auto">
+                <span>我关注的</span>
+            </v-toolbar-title>
+
+            <v-btn icon>
+                <v-icon>search</v-icon>
             </v-btn>
+            <v-tabs slot="extension" v-model="active" centered color="primary" slider-color="secondary">
+                <v-tab v-for="(tab, tab_idx) in tabs" :key="tab_idx">{{ tab.title }}</v-tab>
+            </v-tabs>
 
-            <v-toolbar-title class="grey--text text--darken-4">我发布的</v-toolbar-title>
         </v-toolbar>
+        <v-card>
+            <v-tabs-items v-model="active">
+                <v-tab-item
+                        v-for="n in tabs.length"
+                        :key="n"
+                >
+                    <v-list>
+                        <template v-for="(item, index) in items[n-1]">
+                            <v-list-tile
+                                    :key="item.title"
+                                    avatar
+                                    ripple
+                                    @click="toggle(item.id)"
+                            >
+                                <v-list-tile-avatar>
+                                    <img :src="item.head_portrait" alt="">
+                                </v-list-tile-avatar>
 
-        <v-divider></v-divider>
-        <v-tabs
-                v-model="active"
-                color="cyan"
-                dark
-                slider-color="yellow"
-        >
-            <v-tab
-                    v-for="item in tabs"
-                    ripple
-            >
-                {{ item.title}}
+                                <v-list-tile-content>
+                                    <v-list-tile-title><span class="lv">lv.{{item.level}}</span>{{ item.nickname }}
+                                        <span :class="{chip:true,chip_red:item.usergroup.value===0,chip_yellow:item.usergroup.value===2||item.usergroup===5,chip_green:item.usergroup.value===1,chip_blue:item.usergroup.value===3||item.usergroup.value===6,chip_gray:item.usergroup.value===4}">
+                                            {{ item.usergroup.text }}
+                                        </span>
+                                    </v-list-tile-title>
+                                    <v-list-tile-sub-title>{{ item.description }}</v-list-tile-sub-title>
+                                </v-list-tile-content>
 
-            </v-tab>
-            <v-tab-item
-                    v-for="n in tabs.length"
-                    :key="n"
-            >
-                <v-layout row>
-                    <v-flex xs12 sm6 offset-sm3>
-                        <v-card>
+                            </v-list-tile>
+                            <v-divider
+                                    v-if="index + 1 < items[n-1].length"
+                                    :key="index"
+                                    style="margin-bottom: 0.5em;margin-top: 0.5em"
+                            ></v-divider>
+                        </template>
+                    </v-list>
 
-
-                            <v-layout row>
-                                <v-flex xs12 sm6 offset-sm3>
-                                    <v-card>
-
-                                        <v-list subheader>
-                                            <v-subheader>特别关注</v-subheader>
-                                            <v-list-tile
-                                                    v-for="item in items1"
-                                                    :key="item.title"
-                                                    avatar
-                                            >
-                                                <v-list-tile-avatar>
-                                                    <img :src="item.avatar">
-                                                </v-list-tile-avatar>
-
-                                                <v-list-tile-content>
-                                                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                                                </v-list-tile-content>
-
-                                                <v-list-tile-action>
-                                                    <v-icon color="teal">fas fa-badge-check</v-icon>
-                                                </v-list-tile-action>
-                                            </v-list-tile>
-                                        </v-list>
-
-                                        <v-divider></v-divider>
-
-                                        <v-list subheader>
-                                            <v-subheader>特别关注</v-subheader>
-                                            <v-list-tile
-                                                    v-for="item in items2"
-                                                    :key="item.title"
-                                                    avatar
-                                            >
-                                                <v-list-tile-avatar>
-                                                    <img :src="item.avatar">
-                                                </v-list-tile-avatar>
-
-                                                <v-list-tile-content>
-                                                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                                                </v-list-tile-content>
-
-                                                <v-list-tile-action>
-                                                    <v-icon color="teal">fas fa-badge-check</v-icon>
-                                                </v-list-tile-action>
-                                            </v-list-tile>
-                                        </v-list>
-                                    </v-card>
-                                </v-flex>
-                            </v-layout>
-
-
-                        </v-card>
-                    </v-flex>
-                </v-layout>
-            </v-tab-item>
-        </v-tabs>
+                </v-tab-item>
+            </v-tabs-items>
+        </v-card>
     </div>
 </template>
 
@@ -101,19 +67,36 @@
                     {title: '我的关注'},
                     {title: '我的粉丝'}
                 ],
-                selected: [2],
-                items1: [
-                    { title: '满莫安', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-                    { title: '钱欠延', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
-                ],
-                items2: [
-                    { active: true, title: '张三', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-                    { active: true, title: '赵四', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-                    { title: '满莫安', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-                    { title: '钱欠延', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
+                items: [
+                    [], []
                 ],
             }
         },
+        methods: {
+            get_my_follow() {
+
+                this.$api.account.get_my_follow().then(res => {
+                    if (res.data.code === 1) {
+                        this.items[0] = res.data.data;
+                    }
+                })
+            },
+            toggle(id) {
+                this.$router.push({name: 'user', query: {id: id}});
+            },
+            get_my_fans() {
+                this.$api.specialist.get_my_fans().then(res => {
+                    if (res.data.code === 1) {
+                        this.items[1] = res.data.data;
+                    }
+                })
+            }
+        },
+        mounted() {
+            this.get_my_follow();
+            this.get_my_fans();
+            // this.active = this.$route.query.active;
+        }
     }
 </script>
 
@@ -128,5 +111,41 @@
         right: 0;
         bottom: 0;
         background-color: white;
+    }
+
+    .chip {
+        border: 1px solid;
+        border-radius: 3px;
+        font-size: 0.7em;
+    }
+
+    .chip_yellow {
+        border-color: #ffcc00;
+        color: #ffcc00;
+    }
+
+    .chip_green {
+        border-color: green;
+        color: green;
+    }
+
+    .chip_red {
+        border-color: tomato;
+        color: tomato;
+    }
+
+    .chip_gray {
+        border-color: gray;
+        color: gray;
+    }
+
+    .chip_blue {
+        border-color: deepskyblue;
+        color: deepskyblue;
+    }
+    .lv{
+        font-size:0.9em;
+        font-weight: bolder;-webkit-text-stroke:1px #ff9c00;color: transparent;
+        margin-right: 0.5em;
     }
 </style>

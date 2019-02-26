@@ -9,7 +9,7 @@
                 </v-flex>
                 <v-flex shrink>
                     <div id="button-group">
-                        <v-btn id="wallet" outline fab small color="secondary">
+                        <v-btn id="wallet" outline fab small color="secondary" @click="$router.push({name:'wallet'})">
                             <v-icon>account_balance_wallet</v-icon>
                         </v-btn>
                         <v-btn id="camera" outline fab small color="secondary">
@@ -40,7 +40,7 @@
         </div>
 
         <v-layout v-if="$store.state.token" id="fans_container">
-            <v-flex xs4 @click="$router.push('/collection')">
+            <v-flex xs4 @click="$router.push('/account/historical-post')">
                 <v-layout class="text-xs-center">
                     <v-flex class="font-weight-bold">{{ $store.state.userInfo.answer }}</v-flex>
                 </v-layout>
@@ -48,7 +48,7 @@
                     <v-flex>回答</v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex xs4>
+            <v-flex xs4 @click="fan_list(0)">
                 <v-layout class="text-xs-center">
                     <v-flex class="font-weight-bold">{{ $store.state.userInfo.follow }}</v-flex>
                 </v-layout>
@@ -56,7 +56,7 @@
                     <v-flex>关注</v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex xs4>
+            <v-flex xs4 @click="fan_list(1)">
                 <v-layout class="text-xs-center">
                     <v-flex class="font-weight-bold">{{ $store.state.userInfo.fans }}</v-flex>
                 </v-layout>
@@ -76,7 +76,7 @@
                     </v-list-tile-action>
                     <v-list-tile-title>行业热议</v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile :to="{name: 'collection'}" @click="$store.commit('drawer')">
+                <v-list-tile :to="{name: 'history'}" @click="$store.commit('drawer')">
                     <v-list-tile-action>
                         <v-icon>history</v-icon>
                     </v-list-tile-action>
@@ -161,7 +161,12 @@
 
 <script>
     export default {
-        name: "NavigationDrawer"
+        name: "NavigationDrawer",
+        methods: {
+            fan_list(active) {
+                this.$router.push({name: 'fan-list', query: {active: active}})
+            }
+        }
     }
 </script>
 

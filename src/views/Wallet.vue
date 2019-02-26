@@ -1,14 +1,18 @@
 <template>
-    <div class="bigbox">
+    <div class="wallet">
+        <v-toolbar dark flat color="primary" app dense scroll-off-screen>
+            <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
+
+            <v-toolbar-title class="headline" style="margin: 0 auto">
+                <span>话题</span>
+            </v-toolbar-title>
+
+            <v-btn icon>
+                <v-icon>search</v-icon>
+            </v-btn>
+        </v-toolbar>
         <v-container fluid grid-list-md>
             <v-layout row wrap>
-                <v-toolbar color="white" flat style="">
-                    <v-btn icon light @click="$router.push({name: 'user-info'})">
-                        <v-icon color="grey darken-2">arrow_back</v-icon>
-                    </v-btn>
-                    <v-toolbar-title class="grey--text text--darken-4">我的钱包</v-toolbar-title>
-                </v-toolbar>
-                <div style="width: 100%;height: 1px;background-color: black;margin-bottom: 1em;"></div>
                 <v-flex d-flex xs12 sm6 md3>
                     <v-card color="white lighten-2" dark>
                         <v-layout row wrap>
@@ -83,30 +87,10 @@
         methods: {
             getWallet() {
 
-                import('js-cookie').then((Cookies) => {
-                    axios({
-                        method: 'post',
-                        url: 'https://'+this.GLOBAL.host+'/api/account/get_account_balance',
-                        responseType: 'json',
-                        data: {
-                            token: this.GLOBAL.token
-                        },
-                        transformRequest: [function (data) {
-                            // Do whatever you want to transform the data
-                            let ret = '';
-                            for (let it in data) {
-                                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-                            }
-                            return ret
-                        }],
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        }
-                    }).then((res) => {
-                        if (res.data.code === 1) {
-                            this.wallet = res.data.data
-                        }
-                    })
+                this.$api.account.get_account_balance().then((res) => {
+                    if (res.data.code === 1) {
+                        this.wallet = res.data.data
+                    }
                 })
 
             }
