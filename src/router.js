@@ -78,6 +78,11 @@ export default new Router({
                     name: 'history',
                     meta: {requireLogin: true},
                     component: () => import('./views/History.vue')
+                },
+                {
+                    path: '/browser',
+                    name: 'browser',
+                    component: () => import('./views/Browser.vue')
                 }
             ],
         },
