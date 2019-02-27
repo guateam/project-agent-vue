@@ -21,13 +21,13 @@
           <message-list :list="msgList"></message-list>
         </v-tab-item>
         <v-tab-item :key="1">
-          好友
+          <FriendList :list="friList"></FriendList>
         </v-tab-item>
         <v-tab-item :key="2">
-          通知
+          <Notice :list1="noticeList1" :list2="noticeList2"></Notice>
         </v-tab-item>
         <v-tab-item :key="3">
-          群组
+          <GroupList :list="groupList"></GroupList>
         </v-tab-item>
       </v-tabs-items>
     </v-card>
@@ -36,13 +36,19 @@
 </template>
 
 <script>
-  import MessageList from "../components/MessageList";
+  import MessageList from "../components/MessageList"
+  import FriendList from "../components/FriendList"
+  import Notice from "../components/Notice"
+  import GroupList from "../components/GroupList"
 
   export default {
     name: 'Message',
 
     components: {
       MessageList,
+      FriendList,
+      Notice,
+      GroupList
     },
 
     data() {
@@ -60,6 +66,144 @@
           {
             title: '袁宜照<span id="title-time">2018/12/15</span>',
             content: 'first cry!!!!!',
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            userId: 2
+          }
+        ],
+        friList:[
+          {
+            action: 'account_box',
+            title: '分组一',
+            items: [
+              {
+                title: '谯盼旋',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                content: '这是一个非常牛逼的签名'
+              }
+            ]
+          },
+          {
+            action: 'account_box',
+            title: '分组二',
+            active: true,
+            items: [
+              {
+                title: '伦书文',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                content: '这是一个非常牛逼的签名'
+              },
+              {
+                title: '隐云泽',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+                content: '这是一个非常牛逼的签名'
+              },
+              {
+                title: '蒲秀竹',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                content: '这是一个非常牛逼的签名'
+              }
+            ]
+          },
+          {
+            action: 'account_box',
+            title: '分组三',
+            items: [
+              {
+                title: '在阳舒',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+                content: '这是一个非常牛逼的签名'
+              },
+            ]
+          },
+          {
+            action: 'account_box',
+            title: '分组四',
+            items: [
+              {
+                title: '百河灵',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+                content: '这是一个非常牛逼的签名'
+              },
+            ]
+          },
+          {
+            action: 'account_box',
+            title: '分组五',
+            items: [
+              {
+                title: '窦晨曦',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+                content: '这是一个非常牛逼的签名'
+              },
+            ]
+          },
+          {
+            action: 'account_box',
+            title: '分组六',
+            items: [
+              {
+                title: '塔平文',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                content: '这是一个非常牛逼的签名'
+              },
+            ]
+          },
+          {
+            action: 'account_box',
+            title: '分组七',
+            items: [
+              {
+                title: '勇志强',
+                avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+                content: '这是一个非常牛逼的签名'
+              },
+            ]
+          }
+        ],
+        noticeList1:[
+          {header: '今天'},
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            title: '系统消息',
+            subtitle: "您有新的系统通知。"
+          },
+          {divider: true, inset: true},
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+            title: '踩和赞',
+            subtitle: "赵一和王五赞了您的回答"
+          },
+          {divider: true, inset: true},
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            title: '评论和回复',
+            subtitle: "神奇的我等十人回复了你的评论"
+          },
+        ],
+        noticeList2:[
+          {header: '昨天'},
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            title: '@我的',
+            subtitle: "用户123@了你"
+          },
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            title: '群组',
+            subtitle: "用户123邀请你加入清纯女大学生激情聊"
+          }
+        ],
+        groupList: [
+          {
+            title: '秃头猿之家<span id="title-time">18:17</span>',
+            content: '尤雨溪：[图片]',
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+            userId: 3
+          },
+          { divider: true, inset: true },
+          {
+            title: '正经群聊<span id="title-time">2018/12/15</span>',
+            content: '大漠孤烟：我觉得OK',
             avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
             userId: 2
           }
