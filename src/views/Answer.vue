@@ -10,7 +10,7 @@
             </v-toolbar-title>
 
             <v-btn icon>
-                <v-icon>more_vert</v-icon>
+                <v-icon>delete</v-icon>
             </v-btn>
         </v-toolbar>
         <div style="padding-left: 1em; padding-right: 1em;padding-top: 1em">

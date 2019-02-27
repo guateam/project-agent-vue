@@ -12,7 +12,7 @@
             </v-btn>
             <v-btn color="#FFCC00" flat value="board" @click="$router.push('/board')">
                 <span>告示板</span>
-                <v-icon>school</v-icon>
+                <v-icon>event_note</v-icon>
             </v-btn>
         </v-bottom-nav>
     </div>

@@ -31,10 +31,10 @@ export default new Router({
                 },
                 // 用户基本详情
                 {
-                    path:'user-detail',
-                    name:'user-detail',
-                    meta:{requireLogin:true},
-                    component:()=>import('./views/UserDetail.vue'),
+                    path: 'user-detail',
+                    name: 'user-detail',
+                    meta: {requireLogin: true},
+                    component: () => import('./views/UserDetail.vue'),
                     children: [
                         // 实名认证
                         {
@@ -54,24 +54,35 @@ export default new Router({
                 },
                 // 历史发布
                 {
-                    path:'historical-post',
-                    name:'historical-post',
-                    meta:{requireLogin:true},
-                    component:()=>import('./views/HistoricalPost.vue')
+                    path: 'historical-post',
+                    name: 'historical-post',
+                    meta: {requireLogin: true},
+                    component: () => import('./views/HistoricalPost.vue')
                 },
                 // 粉丝列表
                 {
-                    path:'fan-list',
-                    name:'fan-list',
-                    meta:{requireLogin:true},
-                    component:()=>import('./views/FanList.vue')
+                    path: 'fan-list',
+                    name: 'fan-list',
+                    meta: {requireLogin: true},
+                    component: () => import('./views/FanList.vue')
                 },
                 // 我的钱包
                 {
-                    path:'wallet',
-                    name:'wallet',
-                    meta:{requireLogin:true},
-                    component:()=>import('./views/Wallet.vue')
+                    path: 'wallet',
+                    name: 'wallet',
+                    meta: {requireLogin: true},
+                    component: () => import('./views/Wallet.vue')
+                },
+                {
+                    path: '/history',
+                    name: 'history',
+                    meta: {requireLogin: true},
+                    component: () => import('./views/History.vue')
+                },
+                {
+                    path: '/browser',
+                    name: 'browser',
+                    component: () => import('./views/Browser.vue')
                 }
             ],
         },
@@ -99,6 +110,7 @@ export default new Router({
             path: '/answer',
             name: 'answer',
             component: () => import('./views/Answer.vue')
-        }
+        },
+
     ],
 });
