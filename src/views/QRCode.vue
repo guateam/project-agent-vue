@@ -13,8 +13,8 @@
                 <v-icon>share</v-icon>
             </v-btn>
         </v-toolbar>
-        <canvas class="qr_code" id="canvas" @touchstart="start_timer" @touchmove="stop_timmer" @touchend="end_timmer"/>
-        <div class="grey--text notice">长按保存二维码</div>
+        <canvas class="qr_code" id="canvas" @click="save_qr_code"/>
+        <div class="grey--text notice">点击保存二维码</div>
     </div>
 </template>
 
@@ -25,49 +25,39 @@
         name: "QRCode",
         data() {
             return {
-                timeOutEvent: null
+                timeOutEvent: null,
+                plusReady:null,
             }
         },
         methods: {
-            start_timer() {
-                let that = this;
-                this.timeOutEvent = setTimeout(function () {
-                    that.save_qr_code();
-                }, 500);//这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
-            },
             save_qr_code() {
-                var plusReady = function (callback) {
-                    if (window.plus) {
-                        callback();
-                    } else {
-                        document.addEventListener('plusready', callback);
-                    }
-                };
-
-                plusReady(function () {
-                    let canvas = document.getElementById('canvas');
-                    let url = canvas.toDataURL("image/jpeg");
-                    let picname = this.$route.query.text + '.jpg';
-                    plus.downloader.createDownload(url, {}, function (d, status) {
-                        if (status == 200) {
-                            alert("Download success: " + d.filename);
-                            plus.gallery.save(picname, function () {
-                                mui.toast('保存成功');
-                            }, function () {
-                                mui.toast('保存失败，请重试！');
-                            });
-                        } else {
-                            alert("Download failed: " + status);
-                        }
+                let canvas = document.getElementById('canvas');
+                let url = canvas.toDataURL("image/jpeg");
+                let that=this;
+                console.info('!');
+                this.plusReady(function () {
+                    bitmap = new plus.nativeObj.Bitmap(that.$route.query.text);
+                    bitmap.loadBase64Data(url, function(){
+                        console.log("加载Base64图片数据成功");
+                        bitmap.save("_doc/"+that.$route.query.text+".jpg",{},function(i){
+                            console.log('保存图片成功：'+JSON.stringify(i));
+                        },function(e){
+                            console.log('保存图片失败：'+JSON.stringify(e));
+                        });
+                    }, function(){
+                        console.log('加载Base64图片数据失败：'+JSON.stringify(e));
                     });
                 });
             },
-            end_timmer() {
-                clearTimeout(this.timeOutEvent);//清除定时器
-            },
-            stop_timmer() {
-                clearTimeout(this.timeOutEvent);//清除定时器
-                this.timeOutEvent = null;
+            share() {
+                this.plusReady(function () {
+                    let Context = plus.android.importClass("android.content.Intent");
+                    let Main = plus.android.runtimeMainActivity();
+                    let shareIntent = new Context(Context.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Context.EXTRA_TEXT, '我分享了我的专+二维码，欢迎关注我');
+                    Main.startActivity(Context.createChooser(shareIntent, this.$route.query.text));
+                });
             }
         },
         mounted() {
@@ -78,6 +68,13 @@
                 width: 256,
                 color: {dark: '#ffcc00'}
             });
+            this.plusReady = function (callback) {
+                if (window.plus) {
+                    callback();
+                } else {
+                    document.addEventListener('plusready', callback);
+                }
+            };
         }
     }
 </script>
