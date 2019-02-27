@@ -83,6 +83,11 @@ export default new Router({
                     path: '/browser',
                     name: 'browser',
                     component: () => import('./views/Browser.vue')
+                },
+                {
+                    path:'/qr-code',
+                    name:'qr-code',
+                    component:()=>import('./views/QRCode.vue')
                 }
             ],
         },
