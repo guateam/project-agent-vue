@@ -117,6 +117,11 @@ const index = {
         get_my_fans(token = store.state.token) {
             return axios.get(`${base.specialist}/get_my_fans`, {params: {token: token}})
         }
+    },
+    activities: {
+        get_activities(type) {
+            return axios.get(`${base.activities}/get_activities`, {params: {type: type}})
+        }
     }
 };
 

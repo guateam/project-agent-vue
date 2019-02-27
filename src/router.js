@@ -78,6 +78,16 @@ export default new Router({
                     name: 'history',
                     meta: {requireLogin: true},
                     component: () => import('./views/History.vue')
+                },
+                {
+                    path: '/browser',
+                    name: 'browser',
+                    component: () => import('./views/Browser.vue')
+                },
+                {
+                    path:'/qr-code',
+                    name:'qr-code',
+                    component:()=>import('./views/QRCode.vue')
                 }
             ],
         },
