@@ -20,6 +20,10 @@ const index = {
         login(data) {
             return axios.post(`${base.account}/login`, qs.stringify(data))
         },
+        // 用户注册
+        register(data) {
+            return axios.post(`${base.account}/register`, qs.stringify(data))
+        },
         // 根据token获取用户信息
         get_user_by_token(token = store.state.token) {
             return axios.get(`${base.account}/get_user_by_token`, {params: {token: token}})
