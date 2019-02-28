@@ -45,12 +45,18 @@ const index = {
         // 获取关注列表
         get_my_follow(token = store.state.token) {
             return axios.get(`${base.account}/get_my_follow`, {params: {token: token}})
+        },
+        get_history(token = store.state.token) {
+            return axios.get(`${base.account}/get_history`, {params: {token: token}})
         }
     },
     message: {
         // 获取聊天列表
         get_message_list(token = store.state.token) {
             return axios.get(`${base.message}/get_message_list`, {params: {token: token}})
+        },
+        get_friend_list(token=store.state.token){
+            return axios.get(`${base.message}/get_friend_list`,{params:{token:token}})
         }
     },
     questions: {
@@ -103,7 +109,7 @@ const index = {
         },
         get_collect_state(id, token = store.state.token) {
             return axios.get(`${base.answer}/get_collect_state`, {params: {token: token, answer_id: id}})
-        }
+        },
     },
     article: {
         get_user_articles(token = store.state.token) {
