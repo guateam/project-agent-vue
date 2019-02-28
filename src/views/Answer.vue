@@ -10,7 +10,7 @@
             </v-toolbar-title>
 
             <v-btn icon>
-                <v-icon>delete</v-icon>
+                <v-icon>more_vert</v-icon>
             </v-btn>
         </v-toolbar>
         <div style="padding-left: 1em; padding-right: 1em;padding-top: 1em">
@@ -226,6 +226,13 @@
                         this.favorite = 'favorite'
                     }
                 })
+            },
+            add_user_action(id) {
+                this.$api.account.add_user_action(id,51).then(res=>{
+                    if(res.data.code===1){
+                        return 0;
+                    }
+                })
             }
         },
 
@@ -233,6 +240,7 @@
             this.getAnswerData();
             this.getCommentData();
             this.get_follow_state();
+            this.add_user_action(this.$route.query.id);
         },
     }
 </script>

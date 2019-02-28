@@ -85,9 +85,9 @@ export default new Router({
                     component: () => import('./views/Browser.vue')
                 },
                 {
-                    path:'/qr-code',
-                    name:'qr-code',
-                    component:()=>import('./views/QRCode.vue')
+                    path: '/qr-code',
+                    name: 'qr-code',
+                    component: () => import('./views/QRCode.vue')
                 }
             ],
         },
@@ -111,11 +111,32 @@ export default new Router({
             name: 'question',
             component: () => import('./views/Question.vue')
         },
+        // 回答页
         {
             path: '/answer',
             name: 'answer',
             component: () => import('./views/Answer.vue')
         },
-
+        // 问题发布页
+        {
+            path: '/question-publish',
+            name: 'question-publish',
+            meta: {requireLogin: true},
+            component: () => import('./views/QuestionPublish.vue')
+        },
+        // 回答发布页
+        {
+            path: '/answer-publish',
+            name: 'answer-publish',
+            meta: {requireLogin: true},
+            component: () => import('./views/AnswerPublish.vue')
+        },
+        // 文章发布页
+        {
+            path: '/article-publish',
+            name: 'article-publish',
+            meta: {requireLogin: true},
+            component: () => import('./views/ArticlePublish.vue')
+        }
     ],
 });

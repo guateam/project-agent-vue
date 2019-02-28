@@ -22,15 +22,15 @@
                                     avatar
                                     v-for="subItem in item.items"
                                     :key="subItem.title"
-                                    @click=""
+                                    @click="$router.push({name:'',query:{id:subItem.user_id}})"
                             >
                                 <v-list-tile-avatar>
-                                    <img :src="subItem.avatar" alt="">
+                                    <img :src="subItem.headportrait" alt="">
                                 </v-list-tile-avatar>
 
                                 <v-list-tile-content>
-                                    <v-list-tile-title v-html="subItem.title"></v-list-tile-title>
-                                    <v-list-tile-sub-title v-html="subItem.content"></v-list-tile-sub-title>
+                                    <v-list-tile-title v-html="subItem.nickname"></v-list-tile-title>
+                                    <v-list-tile-sub-title v-html="subItem.description"></v-list-tile-sub-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
                                     <v-icon>{{ subItem.action }}</v-icon>
