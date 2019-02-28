@@ -24,6 +24,7 @@
                 ></v-text-field>
 
                 <v-btn @click="login">登录</v-btn>
+                <v-btn :to="{name: 'register'}">注册</v-btn>
                 <v-btn @click="$router.push({name: 'index'})">返回</v-btn>
             </form>
         </v-container>
@@ -134,8 +135,8 @@
 
 <style scoped>
     .form {
-        margin-top: 2em;
-    }
+             margin-top: 2em;
+         }
     .head{
         margin-top: 3em;
     }
