@@ -91,7 +91,14 @@ export default new Router({
             path: '/message',
             name: 'message',
             meta: {requireLogin: true},  // 需要登录
-            component: () => import('./views/Message.vue')
+            component: () => import('./views/Message.vue'),
+            children:[
+                {
+                    path: 'chat',
+                    name: 'Chat',
+                    component: () => import('./views/Chat.vue')
+                },
+            ]
         },
         // 收藏
         {
