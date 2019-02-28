@@ -22,10 +22,19 @@
             :type="show ? 'text' : 'password'"
             @click:append="show = !show"
         ></v-text-field>
+        <v-text-field
+            v-model="password"
+            :error-messages="passwordErrors"
+            label="确认密码"
+            @input="$v.password.$touch()"
+            @blur="$v.password.$touch()"
+            :append-icon="show ? 'visibility_off' : 'visibility'"
+            :type="show ? 'text' : 'password'"
+            @click:append="show = !show"
+        ></v-text-field>
 
-        <v-btn @click="login">登录</v-btn>
-        <v-btn :to="{name: 'register'}">注册</v-btn>
-        <v-btn @click="$router.push({name: 'index'})">返回</v-btn>
+        <v-btn @click="register">注册</v-btn>
+        <v-btn @click="$router.push({name: 'login'})">返回</v-btn>
       </form>
     </v-container>
   </div>

@@ -105,7 +105,7 @@
                     let version = 1;
                     let request = window.indexedDB.open(name, version);
                     request.onerror = function (e) {
-                        console.log(e.currentTarget.error.message);
+                        window.console.log(e.currentTarget.error.message);
                     };
                     request.onsuccess = function (e) {
                         myDB.db = e.target.result;
