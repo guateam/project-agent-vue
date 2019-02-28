@@ -124,6 +124,16 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
+                <v-list-tile @click="$router.push({name:'question-publish'})">
+                    <v-list-tile-action>
+                        <v-icon class="time--text">create_new_folder</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-title>
+                        <v-layout justify-space-between>
+                            <span>发布话题</span>
+                        </v-layout>
+                    </v-list-tile-title>
+                </v-list-tile>
                 <v-list-tile @click="$router.push({name:'creation-manager'})">
                     <v-list-tile-action>
                         <v-icon class="time--text">insert_chart</v-icon>

@@ -78,7 +78,8 @@
                     fab
                     top
                     right
-                    color="pink"
+                    color="accent"
+                    @click="$router.push({name:'answer-publish',query:{id:$route.query.id}})"
             >
                 <v-icon>add</v-icon>
             </v-btn>
@@ -175,8 +176,8 @@
                 })
             },
             add_user_action(id) {
-                this.$api.account.add_user_action(id,11).then(res=>{
-                    if(res.data.code===1){
+                this.$api.account.add_user_action(id, 11).then(res => {
+                    if (res.data.code === 1) {
                         return 0;
                     }
                 })

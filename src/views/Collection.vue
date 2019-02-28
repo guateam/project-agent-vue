@@ -46,10 +46,10 @@
                                     </v-icon>
 
                                     <!--<v-icon-->
-                                            <!--v-else-->
-                                            <!--color="yellow darken-2"-->
+                                    <!--v-else-->
+                                    <!--color="yellow darken-2"-->
                                     <!--&gt;-->
-                                        <!--star_border-->
+                                    <!--star_border-->
                                     <!--</v-icon>-->
                                 </v-list-tile-action>
 
@@ -95,11 +95,13 @@
             toggle(id, type) {
                 switch (type) {
                     case 0:
+                        this.$router.push({name: 'answer', query: {id: id}});
                         break;
                     case 1:
                         this.$router.push({name: 'question', query: {id: id}});
                         break;
                     case 2:
+                        this.$router.push({name: 'article', query: {id: id}});
                         break;
                 }
             }
