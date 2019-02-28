@@ -1,25 +1,40 @@
 <template>
-    <div class="chat">
-        <!--<Chat-->
-                <!--:data="wxChatData"-->
-                <!--:showShade="false"-->
-                <!--contactNickname="简叔"-->
-                <!--:getUpperData="getUpperData"-->
-                <!--:getUnderData="getUnderData"-->
-                <!--:ownerAvatarUrl="ownerAvatarUrl"-->
-                <!--:contactAvatarUrl="contactAvatarUrl"-->
-                <!--:width="width">-->
-        <!--</Chat>-->
-        dfdf
+    <div class="bigbox">
+        <div class="chat">
+            <!--<div class="head">-->
+                <!--<span class="goback" @click="$router.push('./message')">&lt;</span>-->
+                <!--<h2>李一般</h2>-->
+                <!--<span class="setting" @click="$router.push('./chatSetting')">设置</span>-->
+            <!--</div>-->
+            <!--<div class="line"></div>-->
+            <div style="width: 100%;">
+                <wxChat
+                        :data="wxChatData"
+                        :showShade="false"
+                        contactNickname="大漠孤烟"
+                        :getUpperData="getUpperData"
+                        :getUnderData="getUnderData"
+                        :ownerAvatarUrl="ownerAvatarUrl"
+                        :contactAvatarUrl="contactAvatarUrl"
+                        :width="width">
+                </wxChat>
+                <!--<div class="footinput">-->
+                    <!--<input type="text">-->
+                <!--</div>-->
+            </div>
+        </div>
+        <ChatInput></ChatInput>
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-    import Chat from "../components/Chat"
+    import wxChat from "../components/wxChat"
+    import ChatInput from "../components/ChatInput"
 
     export default {
         name: "Chat",
-        components: {Chat},
+        components: {wxChat,ChatInput},
         data() {
             return {
                 upperTimes: 0,
@@ -27,8 +42,8 @@
                 upperId: 0,
                 underId: 6,
                 width: window.screen.width,
-                ownerAvatarUrl: './src/assets/avatar1.png',
-                contactAvatarUrl: './src/assets/avatar2.png',
+                ownerAvatarUrl: 'https://www.asgardusk.com/images/none.png',
+                contactAvatarUrl: 'https://www.asgardusk.com/images/head-pic.jpeg',
                 wxChatData: [{
                     direction: 2,
                     id: 1,
@@ -47,21 +62,21 @@
                         direction: 2,
                         id: 3,
                         type: 1,
-                        content: '这是我的简历头像：',
+                        content: '你好香啊',
                         ctime: new Date().toLocaleString()
                     },
                     {
                         direction: 2,
                         id: 4,
                         type: 2,
-                        content: './src/assets/wyz.jpg',
+                        content: 'https://www.asgardusk.com/images/pic1.jpg',
                         ctime: new Date().toLocaleString()
                     },
                     {
                         direction: 1,
                         id: 5,
                         type: 1,
-                        content: '你开心就好。[微笑]',
+                        content: '你也一样',
                         ctime: new Date().toLocaleString()
                     }]
             }
@@ -160,5 +175,64 @@
 </script>
 
 <style scoped>
+    h1, h2 {
+        font-weight: normal;
+    }
 
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+    }
+
+    .bigbox {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+    }
+
+    .chat {
+        margin: 0;
+        padding: 0;
+        line-height: 1.5;
+    }
+
+    .head {
+        width: 100%;
+        height: 3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        margin-bottom: 1em;
+    }
+    .footinput {
+        width: 100%;
+        height: 3.5em;
+        position: fixed;
+        z-index: 200;
+        background-color: white;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .footinput input {
+        border: 1px solid #bbb;
+        border-radius: 10px;
+        height: 90%;
+        line-height: 1.5;
+        width: 72%;
+        margin-left: 2%;
+        padding-left: 5%;
+    }
 </style>

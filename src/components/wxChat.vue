@@ -1,7 +1,7 @@
 //参数：
 // width               组件宽度，默认450
 // wrapBg              外层父元素背景颜色，默认#efefef
-// maxHeight           展示窗口最高高度, 默认900
+// maxHeight           展示窗口最高高度, 默认700
 // contactAvatarUrl    好友头像url
 // ownerAvatarUrl      微信主人头像url
 // ownerNickname       微信主人昵称
@@ -25,7 +25,7 @@ ctime: new Date().toLocaleString()
 
 <template>
     <div class="wxchat-container" :style="{backgroundColor: wrapBg}">
-        <div class="window" id="window-view-container" :style="{maxHeight: maxHeight + 'px', width: width +'px'}">
+        <div class="window" id="window-view-container" :style="{maxHeight: 700 + 'px', width: width +'px'}">
             <!-- data is empty -->
             <div class="loading" v-if="dataArray && dataArray.length==0">
                 <div style="margin-top: 300px;text-align:center; font-size: 16px;">
@@ -41,10 +41,16 @@ ctime: new Date().toLocaleString()
             </div>
 
             <div class="title" v-if="dataArray && dataArray.length>0">
-                <p v-text="contactNickname"></p>
+                <div style="width: 45px;height: 45px;margin-left: 14px;display: flex;align-items: center;justify-content: center;">
+                    <v-icon large color="white" @click="$router.push({name:'message'})">keyboard_arrow_left</v-icon>
+                </div>
+                <span v-text="contactNickname"></span>
+                <div style="width: 45px;height: 45px;margin-right: 14px;display: flex;align-items: center;justify-content: center;">
+                    <v-icon large color="white" @click="$router.push({name:'chat-setting'})">more_horiz</v-icon>
+                </div>
             </div>
             <!-- main -->
-            <ScrollLoader :minHeight="minHeight" @scroll-to-top="refresh" @scroll-to-botton="infinite" class="container-main" v-if="dataArray && dataArray.length>0" :style="{maxHeight: maxHeight-50 + 'px'}">
+            <ScrollLoader :minHeight="minHeight" @scroll-to-top="refresh" @scroll-to-botton="infinite" class="container-main" v-if="dataArray && dataArray.length>0" :style="{maxHeight: 700-50 + 'px'}">
                 <div class="message">
                     <ul>
                         <li v-for="(message, index) in dataArray" :key="message.id" :class="message.direction==2?'an-move-right':'an-move-left'">
@@ -81,7 +87,7 @@ ctime: new Date().toLocaleString()
     import ScrollLoader from './ScrollLoader';
 
     export default {
-        name: "Chat",
+        name: "wxChat",
 
         components: {
             ScrollLoader
@@ -222,6 +228,10 @@ ctime: new Date().toLocaleString()
 </script>
 
 <style scoped>
+    ol, ul{
+        padding-left: 0;
+        margin-bottom: 70px;
+    }
     .wxchat-container{ width: 100%; height: 100%;z-index: 100; position: fixed; left:0; top: 0; overflow: hidden;}
     .shadow{ position: absolute; top:0; left: 0; z-index: 100; width: 100%; height: 100%; background: #000; opacity: .2; }
     .window {box-shadow: 1px 1px 20px -5px #000; /*max-width: 450px;*/ min-width: 300px; background: #F5F5F5; margin: 0 auto; overflow: hidden; padding: 0; height: 100%;position: relative;z-index: 101;}
@@ -234,7 +244,7 @@ ctime: new Date().toLocaleString()
     .mb10{margin-bottom: 10px;}
     .mb20{margin-bottom: 20px;}
     .fs0{font-size: 0}
-    .title{background: #000; text-align: center; color:#fff; width: 100%; height: 50px; line-height: 50px; font-size: 14px;}
+    .title{background: #ffd633; text-align: center; color:#fff; width: 100%; height: 50px; line-height: 50px; font-size: 14px;display: flex;align-items: center; justify-content: space-between;}
     .loading,.no-more{text-align: center; color: #b0b0b0; line-height: 100px;}
     .no-more{line-height: 60px;}
     .pull-right{float: right;}
@@ -254,6 +264,7 @@ ctime: new Date().toLocaleString()
     .message .time {
         margin: 10px 0;
         text-align: center;
+        background-color: transparent !important;
     }
     .message .text {
         display: inline-block;
@@ -304,14 +315,14 @@ ctime: new Date().toLocaleString()
         margin: 0 0 0 10px;
     }
     .message .self .text {
-        background-color: #9EEA6A;
+        background-color: #ffd633;
     }
 
     .message .self .text:before {
         right: inherit;
         left: 100%;
         border-right-color: transparent;
-        border-left-color: #9EEA6A;
+        border-left-color: #ffd633;
     }
     .message .image{
         max-width: 200px;

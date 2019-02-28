@@ -96,7 +96,14 @@ export default new Router({
                 {
                     path: 'chat',
                     name: 'Chat',
-                    component: () => import('./views/Chat.vue')
+                    component: () => import('./views/Chat.vue'),
+                    children: [
+                        {
+                            path: 'chat-setting',
+                            name: 'chat-setting',
+                            component: () => import('./views/ChatSetting.vue')
+                        },
+                    ]
                 },
             ]
         },
