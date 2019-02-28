@@ -11,6 +11,8 @@ export default new Router({
         {path: '/topic', name: 'topic', component: () => import('./views/Topic.vue')},
         // 登录
         {path: '/login', name: 'login', component: () => import('./views/Login.vue')},
+        // 注册
+        {path: '/register', name: 'register', component: () => import('./views/Register.vue')},
         // 设置
         {path: '/settings', name: 'settings', component: () => import('./views/Settings.vue')},
         {path: '/school', name: 'school', component: () => import('./views/School.vue')},

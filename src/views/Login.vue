@@ -24,6 +24,7 @@
                 ></v-text-field>
 
                 <v-btn @click="login">登录</v-btn>
+                <v-btn :to="{name: 'register'}">注册</v-btn>
                 <v-btn @click="$router.push({name: 'index'})">返回</v-btn>
             </form>
         </v-container>
@@ -104,7 +105,7 @@
                     let version = 1;
                     let request = window.indexedDB.open(name, version);
                     request.onerror = function (e) {
-                        console.log(e.currentTarget.error.message);
+                        window.console.log(e.currentTarget.error.message);
                     };
                     request.onsuccess = function (e) {
                         myDB.db = e.target.result;
@@ -134,8 +135,8 @@
 
 <style scoped>
     .form {
-        margin-top: 2em;
-    }
+             margin-top: 2em;
+         }
     .head{
         margin-top: 3em;
     }
