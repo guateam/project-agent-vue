@@ -33,7 +33,7 @@
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
-
+        <router-view></router-view>
     </div>
 </template>
 

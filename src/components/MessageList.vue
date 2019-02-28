@@ -8,7 +8,7 @@
 
         <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider>
 
-        <v-list-tile v-else :key="index" avatar>
+        <v-list-tile v-else :key="index" avatar @click="$router.push({name:'Chat'})">
           <v-list-tile-avatar>
             <img :src="item.avatar" alt="">
           </v-list-tile-avatar>
