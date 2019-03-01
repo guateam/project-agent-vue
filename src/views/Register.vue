@@ -11,6 +11,7 @@
         <form class="form">
           <v-text-field
               dark
+              solo
               v-model="email"
               :error-messages="emailErrors"
               label="请输入邮箱"
@@ -19,7 +20,9 @@
           ></v-text-field>
           <v-text-field
               dark
+              solo
               v-model="password"
+              type="password"
               :error-messages="passwordErrors"
               label="请设置密码"
               @input="$v.password.$touch()"
@@ -27,13 +30,17 @@
           ></v-text-field>
           <v-text-field
               dark
+              solo
               v-model="password2"
+              type="password"
               :error-messages="password2Errors"
               label="请确认密码"
               @input="$v.password2.$touch()"
               @blur="$v.password2.$touch()"
           ></v-text-field>
         </form>
+
+        <p class="white--text">已有账号？<a @click="$router.push({name: 'login'})">返回登录</a></p>
         <v-btn @click="register" color="primary" block>立刻注册</v-btn>
       </v-container>
     </div>
@@ -94,7 +101,7 @@
             return
           }
           this.$api.account.register({
-            username: this.email,
+            email: this.email,
             password: this.password
           }).then(res => {
             if (res.data.code === 1) {
