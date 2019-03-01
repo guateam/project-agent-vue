@@ -1,42 +1,42 @@
 <template>
   <div class="register">
-    <v-container>
-      <div class="head">
-        <h1>你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
-      </div>
-      <form class="form">
-        <v-text-field
-            v-model="email"
-            :error-messages="emailErrors"
-            label="邮箱"
-            @input="$v.email.$touch()"
-            @blur="$v.email.$touch()"
-        ></v-text-field>
-        <v-text-field
-            v-model="password"
-            :error-messages="passwordErrors"
-            label="密码"
-            @input="$v.password.$touch()"
-            @blur="$v.password.$touch()"
-            :append-icon="show ? 'visibility_off' : 'visibility'"
-            :type="show ? 'text' : 'password'"
-            @click:append="show = !show"
-        ></v-text-field>
-        <v-text-field
-            v-model="password2"
-            :error-messages="password2Errors"
-            label="确认密码"
-            @input="$v.password2.$touch()"
-            @blur="$v.password2.$touch()"
-            :append-icon="show ? 'visibility_off' : 'visibility'"
-            :type="show ? 'text' : 'password'"
-            @click:append="show = !show"
-        ></v-text-field>
-
-        <v-btn @click="register">注册</v-btn>
-        <v-btn @click="$router.push({name: 'login'})">返回</v-btn>
-      </form>
-    </v-container>
+    <div id="background">
+      <v-btn @click="$router.push({name: 'login'})" icon dark>
+        <v-icon>arrow_back</v-icon>
+      </v-btn>
+      <v-container id="container">
+        <div class="head">
+          <h1 class="white--text">你好，<br/>欢迎加入<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
+        </div>
+        <form class="form">
+          <v-text-field
+              dark
+              v-model="email"
+              :error-messages="emailErrors"
+              label="请输入邮箱"
+              @input="$v.email.$touch()"
+              @blur="$v.email.$touch()"
+          ></v-text-field>
+          <v-text-field
+              dark
+              v-model="password"
+              :error-messages="passwordErrors"
+              label="请设置密码"
+              @input="$v.password.$touch()"
+              @blur="$v.password.$touch()"
+          ></v-text-field>
+          <v-text-field
+              dark
+              v-model="password2"
+              :error-messages="password2Errors"
+              label="请确认密码"
+              @input="$v.password2.$touch()"
+              @blur="$v.password2.$touch()"
+          ></v-text-field>
+        </form>
+        <v-btn @click="register" color="primary" block>立刻注册</v-btn>
+      </v-container>
+    </div>
   </div>
 </template>
 
@@ -55,7 +55,6 @@
 
     data() {
       return {
-        show: false,
         email: '',
         password: '',
         password2: '',
@@ -79,7 +78,8 @@
       password2Errors() {
         const errors = [];
         if (!this.$v.password2.$dirty) return errors;
-        !this.$v.password2.required && errors.push('请输入密码');
+        !this.$v.password2.required && errors.push('请确认密码');
+        !(this.password === this.password2) && errors.push('密码不一致');
         return errors
       }
     },
@@ -173,10 +173,37 @@
 </script>
 
 <style scoped>
+  .register {
+    height: 100vh;
+    width: 100%;
+  }
+  .register, #background::before {
+    background: url("../assets/background.jpg") 50% / cover no-repeat fixed;
+  }
+  #background {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    color: #A84631;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 2;
+  }
+  #background::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    filter: blur(3px);
+    margin: -20px;
+    z-index: -1;
+  }
+  #container {
+    padding: 2em;
+  }
   .form {
-    margin-top: 2em;
+    margin-top: 4em;
   }
   .head{
-    margin-top: 3em;
+    margin-top: 1em;
   }
 </style>

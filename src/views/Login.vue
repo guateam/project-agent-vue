@@ -1,18 +1,26 @@
 <template>
     <div class="login">
-        <v-container>
-            <div class="head">
-                <h1>你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
-            </div>
-            <form class="form">
-                <v-text-field
+        <div id="background">
+            <v-btn @click="$router.push({name: 'index'})" icon dark>
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
+            <v-container id="container">
+                <div class="head">
+                    <h1 class="white--text">你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
+                </div>
+                <form class="form">
+                    <v-text-field
+                        dark
+                        prepend-icon="email"
                         v-model="email"
                         :error-messages="emailErrors"
                         label="邮箱"
                         @input="$v.email.$touch()"
                         @blur="$v.email.$touch()"
-                ></v-text-field>
-                <v-text-field
+                    ></v-text-field>
+                    <v-text-field
+                        dark
+                        prepend-icon="lock"
                         v-model="password"
                         :error-messages="passwordErrors"
                         label="密码"
@@ -21,13 +29,13 @@
                         :append-icon="show ? 'visibility_off' : 'visibility'"
                         :type="show ? 'text' : 'password'"
                         @click:append="show = !show"
-                ></v-text-field>
+                    ></v-text-field>
+                </form>
 
-                <v-btn @click="login">登录</v-btn>
-                <v-btn :to="{name: 'register'}">注册</v-btn>
-                <v-btn @click="$router.push({name: 'index'})">返回</v-btn>
-            </form>
-        </v-container>
+                <p class="white--text">还没有账号？<a @click="$router.push({name: 'register'})">立即注册</a></p>
+                <v-btn @click="login" color="primary" block>登录</v-btn>
+            </v-container>
+        </div>
     </div>
 </template>
 
@@ -134,10 +142,38 @@
 </script>
 
 <style scoped>
+    .login {
+        height: 100vh;
+        width: 100%;
+    }
+    .login, #background::before {
+        background: url("../assets/background.jpg") 50% / cover no-repeat fixed;
+    }
+    #background {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        color: #A84631;
+        border-radius: 20px;
+        overflow: hidden;
+        z-index: 2;
+    }
+    #background::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        filter: blur(3px);
+        margin: -20px;
+        z-index: -1;
+    }
+    #container {
+        padding: 2em;
+        z-index: 1;
+    }
     .form {
-             margin-top: 2em;
-         }
+         margin-top: 4em;
+     }
     .head{
-        margin-top: 3em;
+        margin-top: 1em;
     }
 </style>
