@@ -7,7 +7,7 @@
         <v-content>
             <router-view></router-view>
         </v-content>
-        <v-footer app>
+        <v-footer app v-if="$route.path !== '/login' && $route.path !== '/register'">
             <bottomNav></bottomNav>
         </v-footer>
     </v-app>
@@ -37,7 +37,7 @@
                     let version = 1;
                     let request = window.indexedDB.open(name, version);
                     request.onerror = function (e) {
-                        console.log(e.currentTarget.error.message);
+                        window.console.log(e.currentTarget.error.message);
                     };
                     request.onsuccess = function (e) {
                         myDB.db = e.target.result;

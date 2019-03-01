@@ -11,6 +11,7 @@
                 <form class="form">
                     <v-text-field
                         dark
+                        solo
                         prepend-icon="email"
                         v-model="email"
                         :error-messages="emailErrors"
@@ -20,6 +21,7 @@
                     ></v-text-field>
                     <v-text-field
                         dark
+                        solo
                         prepend-icon="lock"
                         v-model="password"
                         :error-messages="passwordErrors"
