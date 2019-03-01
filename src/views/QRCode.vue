@@ -13,7 +13,10 @@
                 <v-icon>share</v-icon>
             </v-btn>
         </v-toolbar>
-        <canvas class="qr_code" id="canvas" @click="save_qr_code"/>
+        <div class="qr_code_box">
+            <canvas class="qr_code" id="canvas" @click="save_qr_code"/>
+
+        </div>
         <div class="grey--text notice">点击保存二维码</div>
     </div>
 </template>
@@ -26,26 +29,26 @@
         data() {
             return {
                 timeOutEvent: null,
-                plusReady:null,
+                plusReady: null,
             }
         },
         methods: {
             save_qr_code() {
                 let canvas = document.getElementById('canvas');
                 let url = canvas.toDataURL("image/jpeg");
-                let that=this;
+                let that = this;
                 console.info('!');
                 this.plusReady(function () {
                     bitmap = new plus.nativeObj.Bitmap(that.$route.query.text);
-                    bitmap.loadBase64Data(url, function(){
+                    bitmap.loadBase64Data(url, function () {
                         console.log("加载Base64图片数据成功");
-                        bitmap.save("_doc/"+that.$route.query.text+".jpg",{},function(i){
-                            console.log('保存图片成功：'+JSON.stringify(i));
-                        },function(e){
-                            console.log('保存图片失败：'+JSON.stringify(e));
+                        bitmap.save("_doc/" + that.$route.query.text + ".jpg", {}, function (i) {
+                            console.log('保存图片成功：' + JSON.stringify(i));
+                        }, function (e) {
+                            console.log('保存图片失败：' + JSON.stringify(e));
                         });
-                    }, function(){
-                        console.log('加载Base64图片数据失败：'+JSON.stringify(e));
+                    }, function () {
+                        console.log('加载Base64图片数据失败：' + JSON.stringify(e));
                     });
                 });
             },
@@ -80,10 +83,17 @@
 </script>
 
 <style scoped>
-    .qr_code {
+    .qr_code_box{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-top: 7em;
-        margin-left: 5.5em;
     }
+    /*.qr_code {*/
+        /*margin-top: 7em;*/
+        /*margin-left: 5.5em;*/
+    /*}*/
 
     .notice {
         margin-top: 1em;
