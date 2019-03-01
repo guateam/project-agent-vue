@@ -7,7 +7,9 @@
                 <span>{{ title }}</span>
             </v-toolbar-title>
 
-            <v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon> <v-icon>settings</v-icon> </v-btn>
+            <v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon>
+                <v-icon>settings</v-icon>
+            </v-btn>
         </v-toolbar>
         <v-card color="primary" flat>
             <v-container>
@@ -94,6 +96,19 @@
         <v-card flat>
             <div id="list">
                 <v-list>
+                    <v-list-tile @click="jump_qr_code()">
+                        <v-list-tile-action>
+                            <v-icon class="time--text">crop_free</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-title>
+                            <v-layout justify-space-between>
+                                <span>我的二维码</span>
+                                <v-icon>keyboard_arrow_right</v-icon>
+                            </v-layout>
+                        </v-list-tile-title>
+                    </v-list-tile>
+
+                    <v-divider></v-divider>
 
                     <v-list-tile @click="$router.push({name:'historical-post'})">
                         <v-list-tile-action>
@@ -162,6 +177,9 @@
         methods: {
             fan_list(active) {
                 this.$router.push({name: 'fan-list', query: {active: active}});
+            },
+            jump_qr_code(){
+                this.$router.push({name:'qr-code',query:{text:'uid://'+this.$store.state.userInfo.user_id}})
             }
         },
         mounted() {

@@ -11,6 +11,8 @@ export default new Router({
         {path: '/topic', name: 'topic', component: () => import('./views/Topic.vue')},
         // 登录
         {path: '/login', name: 'login', component: () => import('./views/Login.vue')},
+        // 注册
+        {path: '/register', name: 'register', component: () => import('./views/Register.vue')},
         // 设置
         {path: '/settings', name: 'settings', component: () => import('./views/Settings.vue')},
         {path: '/school', name: 'school', component: () => import('./views/School.vue')},
@@ -83,6 +85,11 @@ export default new Router({
                     path: '/browser',
                     name: 'browser',
                     component: () => import('./views/Browser.vue')
+                },
+                {
+                    path: '/qr-code',
+                    name: 'qr-code',
+                    component: () => import('./views/QRCode.vue')
                 }
             ],
         },
@@ -120,11 +127,32 @@ export default new Router({
             name: 'question',
             component: () => import('./views/Question.vue')
         },
+        // 回答页
         {
             path: '/answer',
             name: 'answer',
             component: () => import('./views/Answer.vue')
         },
-
+        // 问题发布页
+        {
+            path: '/question-publish',
+            name: 'question-publish',
+            meta: {requireLogin: true},
+            component: () => import('./views/QuestionPublish.vue')
+        },
+        // 回答发布页
+        {
+            path: '/answer-publish',
+            name: 'answer-publish',
+            meta: {requireLogin: true},
+            component: () => import('./views/AnswerPublish.vue')
+        },
+        // 文章发布页
+        {
+            path: '/article-publish',
+            name: 'article-publish',
+            meta: {requireLogin: true},
+            component: () => import('./views/ArticlePublish.vue')
+        }
     ],
 });

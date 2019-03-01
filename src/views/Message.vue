@@ -75,7 +75,7 @@
                 friList: [
                     {
                         action: 'account_box',
-                        title: '分组一',
+                        title: '系统管理员',
                         items: [
                             {
                                 title: '谯盼旋',
@@ -236,11 +236,44 @@
                         this.msgList.pop();
                     }
                 })
+            },
+            get_friend_list() {
+                this.$api.message.get_friend_list().then(res => {
+                    if (res.data.code === 1) {
+                        let data = [];
+                        res.data.data.forEach(value => {
+                            if (data[value['usergroup']] === undefined) {
+                                data.push({
+                                    action: 'account_box',
+                                    title: value['group']['text'],
+                                    items: [],
+                                    id:value['usergroup']
+                                })
+                            }
+                            data.forEach(item=>{
+                                if(item.id===value['usergroup']){
+                                    item.items.push(value);
+                                }
+                            })
+                        });
+                        data.sort((a,b)=>{
+                            if(a.id>b.id){
+                                return 1;
+                            }else if(a.id<b.id){
+                                return -1;
+                            }else {
+                                return 0;
+                            }
+                        });
+                        this.friList=data;
+                    }
+                })
             }
         },
 
         mounted() {
             this.getMessageList();
+            this.get_friend_list();
         },
     }
 </script>

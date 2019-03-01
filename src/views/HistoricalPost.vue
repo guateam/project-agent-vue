@@ -123,11 +123,11 @@
                 if (time < 60 * 1000) {
                     return "刚刚"
                 } else if (time > 60 * 1000 && time < 60 * 60 * 1000) {
-                    return time / 60 / 1000 + '分钟前'
+                    return Math.round(time / 60 / 1000) + '分钟前'
                 } else if (time > 60 * 60 * 1000 && time < 24 * 60 * 60 * 1000) {
-                    return time / 60 / 60 / 1000 + '小时前'
+                    return Math.round(time / 60 / 60 / 1000) + '小时前'
                 } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
-                    return time / 24 / 60 / 60 / 1000 + '天前'
+                    return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
                 } else {
                     return old.getMonth() + '-' + old.getDay()
                 }
@@ -192,10 +192,10 @@
             toggle(id, type) {
                 switch (type) {
                     case 0:
-                        this.$router.push({name:'answer',query:{id:id}});
+                        this.$router.push({name: 'answer', query: {id: id}});
                         break;
                     case 1:
-                        this.$router.push({name:'question',query:{id:id}});
+                        this.$router.push({name: 'question', query: {id: id}});
                         break;
                     case 2:
                         break;
