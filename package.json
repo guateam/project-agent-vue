@@ -22,6 +22,7 @@
     "roboto-fontface": "*",
     "vue": "^2.6.7",
     "vue-loader": "^15.7.0",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.7.4",
     "vuetify": "^1.5.4",
