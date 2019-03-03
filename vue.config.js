@@ -1,4 +1,4 @@
-
+var webpack = require('webpack');
 // vue.config.js 配置说明
 //官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
 // 这里只列一部分，具体配置参考文档
@@ -41,5 +41,13 @@ module.exports = {
     // proxy: 'http://localhost:4000' // 配置跨域处理,只有一个代理
 
     // 配置多个代理
+  },
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        'window.Quill': 'quill/dist/quill.js',
+        'Quill': 'quill/dist/quill.js'
+      }),
+    ]
   }
 };
