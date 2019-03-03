@@ -114,6 +114,9 @@ const index = {
         get_collect_state(id, token = store.state.token) {
             return axios.get(`${base.answer}/get_collect_state`, {params: {token: token, answer_id: id}})
         },
+        add_answer(data){
+            return axios.post(`${base.answer}/add_answer`,qs.stringify(data))
+        }
     },
     article: {
         get_user_articles(token = store.state.token) {

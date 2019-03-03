@@ -47,10 +47,7 @@
         <div style="width: 100%;height: 100%">
             <quill-editor
                     v-model="content"
-                    :options="editorOption"
-                    @blur="onEditorBlur($event)"
-                    @focus="onEditorFocus($event)"
-                    @change="onEditorChange($event)">
+                    :options="editorOption">
             </quill-editor>
         </div>
 
@@ -58,15 +55,52 @@
 </template>
 
 <script>
-    import Edit from 'wangeditor'
+    import * as Quill from 'quill'  //引入编辑器
+    import ImageResize from 'quill-image-resize-module'
+    import { ImageExtend, QuillWatch} from 'quill-image-extend-module'
+
+    Quill.register('modules/imageResize', ImageResize);
+    Quill.register('modules/ImageExtend', ImageExtend);
 
     export default {
         name: "ArticlePublish",
         data() {
             return {
-                editorContent: '',
+                content: '',
                 dialog: false,
-                price: ['0', '￥19.9', '￥29.9', '￥69.9', '￥99.9']
+                price: ['0', '￥19.9', '￥29.9', '￥69.9', '￥99.9'],
+                editorOption: {
+                    modules: {
+                        ImageExtend: {
+                            loading: true,  // 可选参数 是否显示上传进度和提示语
+                            name: 'picture',  // 图片参数名
+                            size: 3,  // 可选参数 图片大小，单位为M，1M = 1024kb
+                            action: 'https://hanerx.tk:5000/api/upload/upload_picture',  // 服务器地址, 如果action为空，则采用base64插入图片
+                            // response 为一个函数用来获取服务器返回的具体图片地址
+                            // 例如服务器返回{code: 200; data:{ url: 'baidu.com'}}
+                            // 则 return res.data.url
+                            response: (res) => {
+                                return res.data;
+                            },
+                        },
+                        imageResize: {
+                            modules: ['Resize', 'DisplaySize', 'Toolbar']
+                        },
+                        toolbar: {
+                            container: [['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                                [{'header': [1, 2, 3, 4, false]}, {'list': 'ordered'}, {'list': 'bullet'}],
+                                [{'indent': '-1'}, {'indent': '+1'}],
+                                ['blockquote', 'code-block', 'link', 'image', 'formula'],
+                                [{'color': []}, {'background': []}]],
+                            handlers: {
+                                'image': function () {  // 劫持原来的图片点击按钮事件
+                                    QuillWatch.emit(this.quill.id)
+                                }
+                            }
+                        }
+                    },
+                    placeholder: '请在此输入内容'
+                }
             }
         },
 
@@ -76,8 +110,6 @@
             //     this.editorContent = html
             // }
             // editor.create()
-            var editor1 = new Edit('#editbar', '#editput')  // 两个参数也可以传入 elem 对象，class 选择器
-            editor1.create()
         }
     }
 </script>
