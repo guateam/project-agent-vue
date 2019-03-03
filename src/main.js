@@ -10,9 +10,11 @@ import Vuelidate from 'vuelidate'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
-import VueQuillEditor from 'vue-quill-editor'
+import  VueQuillEditor from 'vue-quill-editor'
+import infiniteScroll from 'vue-infinite-scroll'
 import 'iview/dist/styles/iview.css';
 
+Vue.use(infiniteScroll);
 import {Menu, MenuItem, Col, Row, Submenu,Icon} from 'iview';
 
 Vue.component('Menu', Menu);

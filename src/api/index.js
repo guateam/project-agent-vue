@@ -7,8 +7,8 @@ import store from '../store'
 const index = {
     homepage: {
         // 根据用户推荐首页内容
-        get_recommend(token = store.state.token) {
-            return axios.get(`${base.homepage}/get_recommend`, {params: {token: token}})
+        get_recommend(page, token = store.state.token) {
+            return axios.get(`${base.homepage}/get_recommend`, {params: {token: token, page: page}})
         },
         // 获取分类
         get_category() {
@@ -59,8 +59,8 @@ const index = {
         get_message_list(token = store.state.token) {
             return axios.get(`${base.message}/get_message_list`, {params: {token: token}})
         },
-        get_friend_list(token=store.state.token){
-            return axios.get(`${base.message}/get_friend_list`,{params:{token:token}})
+        get_friend_list(token = store.state.token) {
+            return axios.get(`${base.message}/get_friend_list`, {params: {token: token}})
         }
     },
     questions: {
@@ -87,8 +87,8 @@ const index = {
     },
     school: {
         // 获取学院文章
-        get_recommend_article(token = store.state.token) {
-            return axios.get(`${base.school}/get_recommend_article`, {params: {token: token}})
+        get_recommend_article(page, token = store.state.token) {
+            return axios.get(`${base.school}/get_recommend_article`, {params: {token: token, page: page}})
         }
     },
     answer: {
@@ -114,8 +114,8 @@ const index = {
         get_collect_state(id, token = store.state.token) {
             return axios.get(`${base.answer}/get_collect_state`, {params: {token: token, answer_id: id}})
         },
-        add_answer(data){
-            return axios.post(`${base.answer}/add_answer`,qs.stringify(data))
+        add_answer(data) {
+            return axios.post(`${base.answer}/add_answer`, qs.stringify(data))
         }
     },
     article: {
