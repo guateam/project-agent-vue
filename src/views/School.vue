@@ -38,7 +38,6 @@
                                             slot-scope="{ hover }"
                                             :class="`elevation-${hover ? 12 : 2}`"
                                             class="mx-auto"
-                                            width="200"
                                             @click="jump_article(value.id)"
                                     >
                                         <v-img
@@ -71,7 +70,82 @@
                     </div>
                     <div class="bottom"></div>
                 </v-tab-item>
-                <v-tab-item :key="1"></v-tab-item>
+                <v-tab-item :key="1">
+                    <Row>
+                        <Col span="7">
+                            <Menu :theme="theme3" active-name="1" width="auto">
+                                <MenuItem name="1" @click.native="change(1)">
+                                    <Icon type="md-document"/>
+                                    减震降噪
+                                </MenuItem>
+                                <MenuItem name="2" @click.native="change(2)">
+                                    <Icon type="md-chatbubbles"/>
+                                    新材料应用
+                                </MenuItem>
+                                <MenuItem name="3" @click.native="change(3)">
+                                    <Icon type="md-heart"/>
+                                    传感器
+                                </MenuItem>
+                                <MenuItem name="4" @click.native="change(4)">
+                                    <Icon type="md-leaf"/>
+                                    绿色能源
+                                </MenuItem>
+                                <MenuItem name="5" @click.native="change(5)">
+                                    <Icon type="md-document"/>
+                                    射频技术
+                                </MenuItem>
+                                <MenuItem name="6" @click.native="change(6)">
+                                    <Icon type="md-chatbubbles"/>
+                                    人工智能
+                                </MenuItem>
+                            </Menu>
+                        </Col>
+                        <Col span="17" v-if="this.eee===1">
+                            <v-layout row>
+                                <v-flex xs12 sm6 offset-sm3>
+                                    <v-card>
+                                        <v-list two-line>
+                                            <template v-for="(item, index) in items2">
+                                                <v-list-tile
+                                                        :key="item.title"
+                                                        avatar
+                                                        ripple
+                                                        @click="toggle(index)"
+                                                >
+                                                    <div style="width: 9em;height: 60px;background-color: red;margin-right: 1em">
+                                                        <img :src="item.img" style="width: 100%;height: 100%; object-fit: cover;"/>
+                                                    </div>
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                                        <v-list-tile-sub-title>{{ item.subtitle }}
+                                                        </v-list-tile-sub-title>
+                                                    </v-list-tile-content>
+
+                                                    <v-list-tile-action style="text-align: right">
+                                                        <v-list-tile-action-text>{{ item.action }}
+                                                        </v-list-tile-action-text>
+                                                        <v-list-tile-sub-title style="color: orange">{{ item.headline }}
+                                                        </v-list-tile-sub-title>
+                                                    </v-list-tile-action>
+
+                                                </v-list-tile>
+                                                <v-divider
+                                                        v-if="index + 1 < items.length"
+                                                        :key="index"
+                                                ></v-divider>
+                                            </template>
+                                        </v-list>
+                                    </v-card>
+                                </v-flex>
+                            </v-layout>
+                        </Col>
+                        <Col span="17" v-if="this.eee===2">2</Col>
+                        <Col span="17" v-if="this.eee===3">3</Col>
+                        <Col span="17" v-if="this.eee===4">4</Col>
+                        <Col span="17" v-if="this.eee===5">5</Col>
+                        <Col span="17" v-if="this.eee===6">6</Col>
+                    </Row>
+                </v-tab-item>
             </v-tabs-items>
         </v-card>
 
@@ -79,10 +153,50 @@
 </template>
 
 <script>
+
     export default {
         name: "School",
         data() {
             return {
+                selected: [2],
+                items2: [
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    },
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    },
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    },
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    },
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    }
+                ],
+                eee: 1,
                 category: 0,
                 items: [
                     {
@@ -142,6 +256,18 @@
             }
         },
         methods: {
+            change(ee){
+                this.eee=ee
+            },
+            toggle(index) {
+                const i = this.selected.indexOf(index)
+
+                if (i > -1) {
+                    this.selected.splice(i, 1)
+                } else {
+                    this.selected.push(index)
+                }
+            },
             get_recommend_article() {
                 this.$api.school.get_recommend_article(this.page).then(res => {
                     if (res.data.code === 1) {
@@ -186,7 +312,8 @@
                 this.busy=true;
                 this.get_recommend_article()
             }
-        },
+        }
+        ,
         mounted() {
             this.get_recommend_article();
             this.get_activities();
@@ -195,8 +322,12 @@
 </script>
 
 <style scoped>
+    .ivu-menu-item {
+        padding: 10px 6px 10px 6px;
+    }
+
     .bottom {
-        margin-bottom: 1.7em;
+        margin-bottom: 10%;
     }
 
     .banner {
