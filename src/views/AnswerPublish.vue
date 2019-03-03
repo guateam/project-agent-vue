@@ -16,10 +16,13 @@
 
 
         <div style="width: 100%;height: 100%">
-            <div id="editput" class="text">
-                <!--<p>文章内容</p>-->
-            </div>
-            <div id="editbar" class="toolbar"></div>
+            <quill-editor
+                    v-model="content"
+                    :options="editorOption"
+                    @blur="onEditorBlur($event)"
+                    @focus="onEditorFocus($event)"
+                    @change="onEditorChange($event)">
+            </quill-editor>
         </div>
 
     </div>
@@ -88,5 +91,8 @@
         border-bottom: 1px solid #ccc;
         height: 400px;
         font-size: 1.1em;
+    }
+    .quill-editor {
+        height: 100%;
     }
 </style>

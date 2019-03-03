@@ -7,7 +7,12 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import api from './api'
 import store from './store'
 import Vuelidate from 'vuelidate'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import  VueQuillEditor from 'vue-quill-editor'
 
+Vue.use(VueQuillEditor);
 
 Vue.config.productionTip = false;
 // 把封装好的api挂载到 Vue.$api
