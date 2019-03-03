@@ -35,7 +35,7 @@
 
                                 <v-list-tile-content>
                                     <v-list-tile-title><span class="lv">lv.{{item.level}}</span>{{ item.nickname }}
-                                        <span :class="{chip:true,chip_red:item.usergroup.value===0,chip_yellow:item.usergroup.value===2||item.usergroup===5,chip_green:item.usergroup.value===1,chip_blue:item.usergroup.value===3||item.usergroup.value===6,chip_gray:item.usergroup.value===4}">
+                                        <span :class="{chip:true,chip_red:item.usergroup.value===0,chip_yellow:item.usergroup.value===2||item.usergroup.value===5,chip_green:item.usergroup.value===1,chip_blue:item.usergroup.value===3||item.usergroup.value===6,chip_gray:item.usergroup.value===4}">
                                             {{ item.usergroup.text }}
                                         </span>
                                     </v-list-tile-title>

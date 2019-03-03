@@ -344,4 +344,8 @@
     /*img {*/
     /*width: 100%;*/
     /*}*/
+    img{
+        max-width: 100%;
+        overflow:hidden;
+    }
 </style>
