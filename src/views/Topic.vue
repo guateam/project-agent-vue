@@ -21,8 +21,8 @@
         <v-card id="card">
             <v-tabs-items v-model="tabs">
                 <v-tab-item :key="0">
-                    <question-card @click.native="view_detail(question.questionID)" v-for="question in questionList"
-                                   :key="question.questionID" v-bind="question"></question-card>
+                    <question-card @click.native="view_detail(question.questionID)" v-for="(question,n) in questionList"
+                                   :key="n" v-bind="question"></question-card>
                 </v-tab-item>
 
                 <v-tab-item v-for="data in category" :key="data.id">
@@ -32,7 +32,16 @@
                 <div class="bottom-nav"></div>
             </v-tabs-items>
         </v-card>
-
+        <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
+             infinite-scroll-disabled="busy" infinite-scroll-distance="0">
+            <h3>
+                <v-progress-circular
+                        indeterminate
+                        color="primary"
+                ></v-progress-circular>
+                <span style="margin-left: 1em">加载中</span></h3>
+        </div>
+        <div style="height: 1.5em"></div>
     </div>
 </template>
 
@@ -51,177 +60,38 @@
                 tabs: 0,
                 category: [],
                 questionList: [
-                    {
-                        questionID: 1,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
-                        tags: ['科技', '人工智能'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',  // 缩略图
-                        substring: '',
-                        card_type: 1
-                    },
-                    {
-                        questionID: 2,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '2018年，哪些经济学论文让你印象深刻？',  // 标题
-                        tags: ['经济', '论文'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: '',  // 缩略图
-                        substring: '啦啦啦啦啦啦啦啦',
-                        card_type: 1
-                    },
-                    {
-                        questionID: 3,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '2018年，哪些经济学论文让你印象深刻？',  // 标题
-                        tags: ['经济', '论文'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/house.jpg',  // 缩略图
-                        substring:"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦",
-                        card_type: 0
-                    },
-                    {
-                        questionID: 4,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
-                        tags: ['科技', '人工智能'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/road.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 5,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
-                        tags: ['科技', '人工智能'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 6,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '2018年，哪些经济学论文让你印象深刻？',  // 标题
-                        tags: ['经济', '论文'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',  // 缩略图
-                    },
-                    {
-                        questionID: 7,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '2018年，哪些经济学论文让你印象深刻？',  // 标题
-                        tags: ['经济', '论文'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/house.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 8,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
-                        tags: ['科技', '人工智能'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/road.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 9,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
-                        tags: ['科技', '人工智能'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 10,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '2018年，哪些经济学论文让你印象深刻？',  // 标题
-                        tags: ['经济', '论文'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',  // 缩略图
-                    },
-                    {
-                        questionID: 11,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '2018年，哪些经济学论文让你印象深刻？',  // 标题
-                        tags: ['经济', '论文'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/house.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 12,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
-                        tags: ['科技', '人工智能'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/road.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 13,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
-                        tags: ['科技', '人工智能'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 14,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '2018年，哪些经济学论文让你印象深刻？',  // 标题
-                        tags: ['经济', '论文'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',  // 缩略图
-                    },
-                    {
-                        questionID: 15,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '2018年，哪些经济学论文让你印象深刻？',  // 标题
-                        tags: ['经济', '论文'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/house.jpg',  // 缩略图
-                    },
-                    {
-                        questionID: 16,  // 问题ID
-                        edittime: '12小时前',  // 编辑时间
-                        title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
-                        tags: ['科技', '人工智能'],  // 标签
-                        follow: 4342,  // 关注人数
-                        comment: 40,  // 评论人数
-                        img: 'https://cdn.vuetifyjs.com/images/cards/road.jpg',  // 缩略图
-                    },
                 ],
-                bottomNav:0
+                bottomNav: 0,
+                page: 0,
+                busy: false
             }
         },
 
         methods: {
             // 查看问题详情
             view_detail(id) {
-                this.$router.push({name: 'question', query: {id:id}});  // 跳转到话题详情页
+                this.$router.push({name: 'question', query: {id: id}});  // 跳转到话题详情页
             },
             // 获取推荐内容
             get_recommend() {
-                this.$api.homepage.get_recommend().then(res => {
+                this.$api.homepage.get_recommend(this.page).then(res => {
                     if (res.data.code === 1) {
                         // 处理推荐内容
-                        this.questionList = [];
+                        if (this.page === 0) {
+                            this.questionList = [];
+                        }
                         res.data.data.forEach(item => {
-                            if (item.type === 0) {
+                            let flag=true;
+                            for(let value in this.questionList){
+                                if(value['questionID']===item['questionID'])
+                                    flag=false;
+                            }
+                            if (item.type === 0 && flag) {
                                 this.questionList.push(item);
                             }
-                        })
+                        });
+                        this.page++;
+                        this.busy=false;
                     }
                 })
             },
@@ -233,6 +103,10 @@
                     }
                 })
             },
+            loadMore() {
+                this.busy=true;
+                this.get_recommend();
+            }
         },
 
         mounted() {
@@ -249,5 +123,15 @@
 
     .bottom-nav {
         margin-bottom: 10%;
+    }
+
+    .load-more-normal {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    }
+
+    .load-more-hide {
+        height: 0;
     }
 </style>

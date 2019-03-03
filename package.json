@@ -24,6 +24,7 @@
     "quill-image-resize-module": "^3.0.0",
     "roboto-fontface": "*",
     "vue": "^2.6.7",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-loader": "^15.7.0",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1",

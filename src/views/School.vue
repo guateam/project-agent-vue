@@ -60,11 +60,21 @@
                             </v-flex>
                         </v-layout>
                     </v-container>
+                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
+                         infinite-scroll-disabled="busy" infinite-scroll-distance="0">
+                        <h3>
+                            <v-progress-circular
+                                    indeterminate
+                                    color="primary"
+                            ></v-progress-circular>
+                            <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
+                    <div class="bottom"></div>
                 </v-tab-item>
                 <v-tab-item :key="1"></v-tab-item>
             </v-tabs-items>
         </v-card>
-        <div class="bottom"></div>
+
     </div>
 </template>
 
@@ -90,6 +100,8 @@
                 ],
                 tabs: 0,
                 bottomNav: 1,
+                page:0,
+                busy:false,
                 recommends: [
                     {
                         title: '如何在FPS游戏中不TK',
@@ -131,18 +143,21 @@
         },
         methods: {
             get_recommend_article() {
-                this.$api.school.get_recommend_article().then(res => {
+                this.$api.school.get_recommend_article(this.page).then(res => {
                     if (res.data.code === 1) {
-                        let data = [];
+                        if(this.page===0){
+                            this.recommends=[]
+                        }
                         res.data.data.forEach(value => {
-                            data.push({
+                            this.recommends.push({
                                 title: value['title'],
                                 tags: value['tags'],
                                 img: value['cover'],
                                 id: value['articleID']
                             })
                         });
-                        this.recommends = data;
+                        this.page++;
+                        this.busy=false;
                     }
                 })
             },
@@ -166,6 +181,10 @@
             },
             jump_article(id) {
                 this.$router.push({name: 'article', query: {id: id}})
+            },
+            loadMore(){
+                this.busy=true;
+                this.get_recommend_article()
             }
         },
         mounted() {
@@ -192,5 +211,14 @@
 
     .banner-father {
         position: relative;
+    }
+    .load-more-normal {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    }
+
+    .load-more-hide {
+        height: 0;
     }
 </style>
