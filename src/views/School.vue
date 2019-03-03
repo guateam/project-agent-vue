@@ -62,35 +62,36 @@
                 </v-tab-item>
                 <v-tab-item :key="1">
                     <Row>
-                        <Col span="7">
-                            <Menu :theme="theme3" active-name="1" width="auto">
-                                <MenuItem name="1" @click.native="change(1)">
-                                    <Icon type="md-document"/>
-                                    减震降噪
-                                </MenuItem>
-                                <MenuItem name="2" @click.native="change(2)">
-                                    <Icon type="md-chatbubbles"/>
-                                    新材料应用
-                                </MenuItem>
-                                <MenuItem name="3" @click.native="change(3)">
-                                    <Icon type="md-heart"/>
-                                    传感器
-                                </MenuItem>
-                                <MenuItem name="4" @click.native="change(4)">
-                                    <Icon type="md-leaf"/>
-                                    绿色能源
-                                </MenuItem>
-                                <MenuItem name="5" @click.native="change(5)">
-                                    <Icon type="md-document"/>
-                                    射频技术
-                                </MenuItem>
-                                <MenuItem name="6" @click.native="change(6)">
-                                    <Icon type="md-chatbubbles"/>
-                                    人工智能
-                                </MenuItem>
+                        <Col span="10">
+                            <Menu Menu theme="light" active-name="1" open-names="1-1" width="auto">
+                                <Submenu name="1">
+                                    <template slot="title">
+                                        人工智能
+                                    </template>
+                                    <MenuItem name="1-1" @click.native="change(1)">图像处理</MenuItem>
+                                    <MenuItem name="1-2" @click.native="change(2)">文字处理</MenuItem>
+                                    <MenuItem name="1-3" @click.native="change(3)">语音识别</MenuItem>
+                                </Submenu>
+                                <Submenu name="2">
+                                    <template slot="title">
+                                        射频技术
+                                    </template>
+                                    <MenuItem name="2-1" @click.native="change(4)">NOMA</MenuItem>
+                                    <MenuItem name="2-2" @click.native="change(5)">OFDM</MenuItem>
+                                </Submenu>
+                                <Submenu name="3">
+                                    <template slot="title">
+                                        绿色能源
+                                    </template>
+                                        <MenuItem name="3-1" @click.native="change(6)">沼气</MenuItem>
+                                        <MenuItem name="3-2" @click.native="change(7)">天然气</MenuItem>
+                                        <MenuItem name="3-3" @click.native="change(8)">太阳能</MenuItem>
+                                        <MenuItem name="3-4" @click.native="change(9)" >地热</MenuItem>
+                                        <MenuItem name="3-5" @click.native="change(10)">潮汐</MenuItem>
+                                </Submenu>
                             </Menu>
                         </Col>
-                        <Col span="17" v-if="this.eee===1">
+                        <Col span="14" v-if="this.eee===1">
                             <v-layout row>
                                 <v-flex xs12 sm6 offset-sm3>
                                     <v-card>
@@ -111,12 +112,6 @@
                                                         </v-list-tile-sub-title>
                                                     </v-list-tile-content>
 
-                                                    <v-list-tile-action style="text-align: right">
-                                                        <v-list-tile-action-text>{{ item.action }}
-                                                        </v-list-tile-action-text>
-                                                        <v-list-tile-sub-title style="color: orange">{{ item.headline }}
-                                                        </v-list-tile-sub-title>
-                                                    </v-list-tile-action>
 
                                                 </v-list-tile>
                                                 <v-divider
@@ -129,11 +124,15 @@
                                 </v-flex>
                             </v-layout>
                         </Col>
-                        <Col span="17" v-if="this.eee===2">2</Col>
-                        <Col span="17" v-if="this.eee===3">3</Col>
-                        <Col span="17" v-if="this.eee===4">4</Col>
-                        <Col span="17" v-if="this.eee===5">5</Col>
-                        <Col span="17" v-if="this.eee===6">6</Col>
+                        <Col span="14" v-if="this.eee===2">2</Col>
+                        <Col span="14" v-if="this.eee===3">3</Col>
+                        <Col span="14" v-if="this.eee===4">4</Col>
+                        <Col span="14" v-if="this.eee===5">5</Col>
+                        <Col span="14" v-if="this.eee===6">6</Col>
+                        <Col span="14" v-if="this.eee===7">7</Col>
+                        <Col span="14" v-if="this.eee===8">8</Col>
+                        <Col span="14" v-if="this.eee===9">9</Col>
+                        <Col span="14" v-if="this.eee===10">10</Col>
                     </Row>
                 </v-tab-item>
             </v-tabs-items>

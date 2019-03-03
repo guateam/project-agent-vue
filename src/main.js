@@ -13,12 +13,14 @@ import 'quill/dist/quill.bubble.css'
 import VueQuillEditor from 'vue-quill-editor'
 import 'iview/dist/styles/iview.css';
 
-import {Menu, MenuItem, Col, Row} from 'iview';
+import {Menu, MenuItem, Col, Row, Submenu,Icon} from 'iview';
 
 Vue.component('Menu', Menu);
 Vue.component('MenuItem', MenuItem);
 Vue.component('Col', Col);
 Vue.component('Row', Row);
+Vue.component('Submenu', Submenu);
+Vue.component('Icon', Icon);
 
 Vue.use(VueQuillEditor);
 
