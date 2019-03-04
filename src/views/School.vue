@@ -38,7 +38,6 @@
                                             slot-scope="{ hover }"
                                             :class="`elevation-${hover ? 12 : 2}`"
                                             class="mx-auto"
-                                            width="200"
                                             @click="jump_article(value.id)"
                                     >
                                         <v-img
@@ -60,19 +59,143 @@
                             </v-flex>
                         </v-layout>
                     </v-container>
+                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
+                         infinite-scroll-disabled="busy" infinite-scroll-distance="0">
+                        <h3>
+                            <v-progress-circular
+                                    indeterminate
+                                    color="primary"
+                            ></v-progress-circular>
+                            <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
+                    <div class="bottom"></div>
                 </v-tab-item>
-                <v-tab-item :key="1"></v-tab-item>
+                <v-tab-item :key="1">
+                    <Row>
+                        <Col span="10">
+                            <Menu Menu theme="light" active-name="1" open-names="1-1" width="auto">
+                                <Submenu name="1">
+                                    <template slot="title">
+                                        人工智能
+                                    </template>
+                                    <MenuItem name="1-1" @click.native="change(1)">图像处理</MenuItem>
+                                    <MenuItem name="1-2" @click.native="change(2)">文字处理</MenuItem>
+                                    <MenuItem name="1-3" @click.native="change(3)">语音识别</MenuItem>
+                                </Submenu>
+                                <Submenu name="2">
+                                    <template slot="title">
+                                        射频技术
+                                    </template>
+                                    <MenuItem name="2-1" @click.native="change(4)">NOMA</MenuItem>
+                                    <MenuItem name="2-2" @click.native="change(5)">OFDM</MenuItem>
+                                </Submenu>
+                                <Submenu name="3">
+                                    <template slot="title">
+                                        绿色能源
+                                    </template>
+                                        <MenuItem name="3-1" @click.native="change(6)">沼气</MenuItem>
+                                        <MenuItem name="3-2" @click.native="change(7)">天然气</MenuItem>
+                                        <MenuItem name="3-3" @click.native="change(8)">太阳能</MenuItem>
+                                        <MenuItem name="3-4" @click.native="change(9)" >地热</MenuItem>
+                                        <MenuItem name="3-5" @click.native="change(10)">潮汐</MenuItem>
+                                </Submenu>
+                            </Menu>
+                        </Col>
+                        <Col span="14" v-if="this.eee===1">
+                            <v-layout row>
+                                <v-flex xs12 sm6 offset-sm3>
+                                    <v-card>
+                                        <v-list two-line>
+                                            <template v-for="(item, index) in items2">
+                                                <v-list-tile
+                                                        :key="item.title"
+                                                        avatar
+                                                        ripple
+                                                        @click="toggle(index)"
+                                                >
+                                                    <div style="width: 9em;height: 60px;background-color: red;margin-right: 1em">
+                                                        <img :src="item.img" style="width: 100%;height: 100%; object-fit: cover;"/>
+                                                    </div>
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                                        <v-list-tile-sub-title>{{ item.subtitle }}
+                                                        </v-list-tile-sub-title>
+                                                    </v-list-tile-content>
+
+
+                                                </v-list-tile>
+                                                <v-divider
+                                                        v-if="index + 1 < items.length"
+                                                        :key="index"
+                                                ></v-divider>
+                                            </template>
+                                        </v-list>
+                                    </v-card>
+                                </v-flex>
+                            </v-layout>
+                        </Col>
+                        <Col span="14" v-if="this.eee===2">2</Col>
+                        <Col span="14" v-if="this.eee===3">3</Col>
+                        <Col span="14" v-if="this.eee===4">4</Col>
+                        <Col span="14" v-if="this.eee===5">5</Col>
+                        <Col span="14" v-if="this.eee===6">6</Col>
+                        <Col span="14" v-if="this.eee===7">7</Col>
+                        <Col span="14" v-if="this.eee===8">8</Col>
+                        <Col span="14" v-if="this.eee===9">9</Col>
+                        <Col span="14" v-if="this.eee===10">10</Col>
+                    </Row>
+                </v-tab-item>
             </v-tabs-items>
         </v-card>
-        <div class="bottom"></div>
+
     </div>
 </template>
 
 <script>
+
     export default {
         name: "School",
         data() {
             return {
+                selected: [2],
+                items2: [
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    },
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    },
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    },
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    },
+                    {
+                        action: '15 min',
+                        headline: '作者名',
+                        title: '项目标题',
+                        img: 'https://www.asgardusk.com/images/blog/1.png',
+                        subtitle: "这里应该是具体的描述描述描述描述描述描述描述描述描述描述描述"
+                    }
+                ],
+                eee: 1,
                 category: 0,
                 items: [
                     {
@@ -90,6 +213,8 @@
                 ],
                 tabs: 0,
                 bottomNav: 1,
+                page:0,
+                busy:false,
                 recommends: [
                     {
                         title: '如何在FPS游戏中不TK',
@@ -130,19 +255,34 @@
             }
         },
         methods: {
+            change(ee){
+                this.eee=ee
+            },
+            toggle(index) {
+                const i = this.selected.indexOf(index)
+
+                if (i > -1) {
+                    this.selected.splice(i, 1)
+                } else {
+                    this.selected.push(index)
+                }
+            },
             get_recommend_article() {
-                this.$api.school.get_recommend_article().then(res => {
+                this.$api.school.get_recommend_article(this.page).then(res => {
                     if (res.data.code === 1) {
-                        let data = [];
+                        if(this.page===0){
+                            this.recommends=[]
+                        }
                         res.data.data.forEach(value => {
-                            data.push({
+                            this.recommends.push({
                                 title: value['title'],
                                 tags: value['tags'],
                                 img: value['cover'],
                                 id: value['articleID']
                             })
                         });
-                        this.recommends = data;
+                        this.page++;
+                        this.busy=false;
                     }
                 })
             },
@@ -166,8 +306,13 @@
             },
             jump_article(id) {
                 this.$router.push({name: 'article', query: {id: id}})
+            },
+            loadMore(){
+                this.busy=true;
+                this.get_recommend_article()
             }
-        },
+        }
+        ,
         mounted() {
             this.get_recommend_article();
             this.get_activities();
@@ -176,8 +321,12 @@
 </script>
 
 <style scoped>
+    .ivu-menu-item {
+        padding: 10px 6px 10px 6px;
+    }
+
     .bottom {
-        margin-bottom: 1.7em;
+        margin-bottom: 10%;
     }
 
     .banner {
@@ -192,5 +341,14 @@
 
     .banner-father {
         position: relative;
+    }
+    .load-more-normal {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    }
+
+    .load-more-hide {
+        height: 0;
     }
 </style>
