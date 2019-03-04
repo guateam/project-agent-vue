@@ -15,13 +15,14 @@ import infiniteScroll from 'vue-infinite-scroll'
 import 'iview/dist/styles/iview.css';
 
 Vue.use(infiniteScroll);
-
-import {Menu, MenuItem, Col, Row} from 'iview';
+import {Menu, MenuItem, Col, Row, Submenu,Icon} from 'iview';
 
 Vue.component('Menu', Menu);
 Vue.component('MenuItem', MenuItem);
 Vue.component('Col', Col);
 Vue.component('Row', Row);
+Vue.component('Submenu', Submenu);
+Vue.component('Icon', Icon);
 
 Vue.use(VueQuillEditor);
 

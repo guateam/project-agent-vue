@@ -153,6 +153,13 @@ export default new Router({
             name: 'article-publish',
             meta: {requireLogin: true},
             component: () => import('./views/ArticlePublish.vue')
-        }
+        },
+        // 创作中心
+        {
+            path: '/creation-manager',
+            name: 'creation-manager',
+            meta: {requireLogin: true},
+            component: () => import('./views/CreationManager.vue')
+        },
     ],
 });
