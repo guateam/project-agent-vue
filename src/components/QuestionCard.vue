@@ -33,7 +33,7 @@
                 <v-card-title primary-title>
                     <div>
                         <h3>{{ title }}</h3>
-                        <p class="description">{{description}}
+                        <p class="description">{{description !== 'None' ? description : ''}}
                         </p>
 
                     </div>
