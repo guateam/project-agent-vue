@@ -19,6 +19,19 @@
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6>
+
+                                        </v-flex>
+                                        <v-flex xs12 sm6>
+                                            <v-select
+                                                    v-model="e7"
+                                                    :items="states"
+                                                    label="选择分类"
+                                                    multiple
+                                                    chips
+                                                    persistent-hint
+                                            ></v-select>
+                                        </v-flex>
+                                        <v-flex xs12 sm6>
                                             <v-select
                                                     v-model="e7"
                                                     :items="states"
@@ -86,7 +99,7 @@
                 content: '',
                 editorContent: '',
                 dialog: false,
-                e7: ['选择标签'],
+                e7: [],
                 states: [
                     '减振降噪', '新材料应用', '传感器', '绿色能源',
                     '射频技术', '人工智能', '流体机械', '水处理技术',

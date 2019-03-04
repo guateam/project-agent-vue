@@ -42,6 +42,19 @@
                 <span style="margin-left: 1em">加载中</span></h3>
         </div>
         <div style="height: 1.5em"></div>
+        <v-snackbar
+                v-model="snackbar"
+                vertical="vertical"
+        >
+            {{ text }}
+            <v-btn
+                    dark
+                    flat
+                    @click="snackbar = false"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
     </div>
 </template>
 
@@ -59,11 +72,13 @@
             return {
                 tabs: 0,
                 category: [],
-                questionList: [
-                ],
+                questionList: [],
                 bottomNav: 0,
                 page: 0,
-                busy: false
+                busy: false,
+                timeout:0,
+                snackbar:false,
+                text:''
             }
         },
 
@@ -81,17 +96,32 @@
                             this.questionList = [];
                         }
                         res.data.data.forEach(item => {
-                            let flag=true;
-                            for(let value in this.questionList){
-                                if(value['questionID']===item['questionID'])
-                                    flag=false;
+                            let flag = true;
+                            for (let value in this.questionList) {
+                                if (value['questionID'] === item['questionID'])
+                                    flag = false;
                             }
+                            if(item['type']===0){
+                                if(item['image'].length>=1){
+                                    item['img']=item['image'][0].split('src="')[1].split('"')[0];
+                                }
+                            }
+
                             if (item.type === 0 && flag) {
                                 this.questionList.push(item);
                             }
                         });
                         this.page++;
-                        this.busy=false;
+                        this.busy = false;
+                        this.timeout=0;
+                    }else{
+                        if(this.timeout<3){
+                            this.get_recommend();
+                            this.timeout++;
+                        }else{
+                            this.snackbar=true;
+                            this.text='连接超时，请检查网络'
+                        }
                     }
                 })
             },
@@ -104,14 +134,14 @@
                 })
             },
             loadMore() {
-                this.busy=true;
+                this.busy = true;
                 this.get_recommend();
             }
         },
 
         mounted() {
             this.get_category();
-            this.get_recommend();
+            setTimeout(this.get_recommend(), 5000);
         }
     }
 </script>

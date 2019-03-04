@@ -51,8 +51,12 @@
                         :to="{name: 'answer', query: {id: answer.answerID}}">
                     <!--<p class="answerDetail">{{ answer.content.length > 70 ? answer.content.substring(0, 70) + '...' :-->
                     <!--answer.content }}</p>-->
-                    <p class="answerDetail">{{answer.content }}</p>
-                    <div class="answerImg">
+
+                    <!--列表正文内容-->
+                    <p class="answerDetail" v-html="answer.content"></p>
+
+                    <!--没有图片时不加载下面的div-->
+                    <div class="answerImg" v-if="answer.image.length !== 0">
                         <img v-for="(item,x) in answer.image" :key="x" :src="item" alt=""/>
                     </div>
                 </router-link>
@@ -92,6 +96,9 @@
         <!--</div>-->
 
         <!--END-->
+
+        <!--底部为添加按钮留出空间，防止遮挡内容-->
+        <div id="bottom-space"></div>
     </div>
 </template>
 
@@ -358,5 +365,8 @@
 
     .bottom {
         margin-bottom: 3em;
+    }
+    #bottom-space {
+        height: 8em;
     }
 </style>
