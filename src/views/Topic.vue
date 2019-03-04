@@ -55,8 +55,8 @@
                 Close
             </v-btn>
         </v-snackbar>
-        <v-footer app v-if="$route.path !== '/login' && $route.path !== '/register'">
-            <bottomNav></bottomNav>
+        <v-footer app>
+            <bottomNav :bottom-nav="'topic'"></bottomNav>
         </v-footer>
     </div>
 </template>
