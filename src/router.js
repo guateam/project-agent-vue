@@ -9,6 +9,8 @@ export default new Router({
         {path: '/', name: 'index', redirect: {name: 'topic'}},
         // 话题
         {path: '/topic', name: 'topic', component: () => import('./views/Topic.vue')},
+        // 告示板
+        {path: '/board', name: 'board', component: () => import('./views/Board.vue')},
         // 登录
         {path: '/login', name: 'login', component: () => import('./views/Login.vue')},
         // 注册
@@ -160,6 +162,13 @@ export default new Router({
             name: 'creation-manager',
             meta: {requireLogin: true},
             component: () => import('./views/CreationManager.vue')
+        },
+        // 创作中心
+        {
+            path: '/corporate_center',
+            name: 'corporate_center',
+            meta: {requireLogin: true},
+            component: () => import('./views/CorporateCenter.vue')
         },
     ],
 });

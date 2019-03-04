@@ -197,7 +197,6 @@
 <style scoped>
 
     .bigbox {
-        z-index: 200;
     }
 
     .head {
