@@ -73,7 +73,7 @@
                 <v-tab-item :key="1">
                     <Row>
                         <Col span="10">
-                            <Menu Menu theme="light" active-name="1" open-names="1-1" width="auto">
+                            <Menu Menu theme="light" active-name="1" open-names="1-1" width="auto" accordion>
                                 <Submenu name="1">
                                     <template slot="title">
                                         人工智能
@@ -93,11 +93,11 @@
                                     <template slot="title">
                                         绿色能源
                                     </template>
-                                        <MenuItem name="3-1" @click.native="change(6)">沼气</MenuItem>
-                                        <MenuItem name="3-2" @click.native="change(7)">天然气</MenuItem>
-                                        <MenuItem name="3-3" @click.native="change(8)">太阳能</MenuItem>
-                                        <MenuItem name="3-4" @click.native="change(9)" >地热</MenuItem>
-                                        <MenuItem name="3-5" @click.native="change(10)">潮汐</MenuItem>
+                                    <MenuItem name="3-1" @click.native="change(6)">沼气</MenuItem>
+                                    <MenuItem name="3-2" @click.native="change(7)">天然气</MenuItem>
+                                    <MenuItem name="3-3" @click.native="change(8)">太阳能</MenuItem>
+                                    <MenuItem name="3-4" @click.native="change(9)">地热</MenuItem>
+                                    <MenuItem name="3-5" @click.native="change(10)">潮汐</MenuItem>
                                 </Submenu>
                             </Menu>
                         </Col>
@@ -114,7 +114,8 @@
                                                         @click="toggle(index)"
                                                 >
                                                     <div style="width: 9em;height: 60px;background-color: red;margin-right: 1em">
-                                                        <img :src="item.img" style="width: 100%;height: 100%; object-fit: cover;"/>
+                                                        <img :src="item.img"
+                                                             style="width: 100%;height: 100%; object-fit: cover;"/>
                                                     </div>
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -147,13 +148,17 @@
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
-
+        <v-footer app v-if="$route.path !== '/login' && $route.path !== '/register'">
+            <bottomNav></bottomNav>
+        </v-footer>
     </div>
 </template>
 
 <script>
+    import bottomNav from '../components/bottomNav';
 
     export default {
+        components: {bottomNav},
         name: "School",
         data() {
             return {
@@ -213,8 +218,8 @@
                 ],
                 tabs: 0,
                 bottomNav: 1,
-                page:0,
-                busy:false,
+                page: 0,
+                busy: false,
                 recommends: [
                     {
                         title: '如何在FPS游戏中不TK',
@@ -255,8 +260,8 @@
             }
         },
         methods: {
-            change(ee){
-                this.eee=ee
+            change(ee) {
+                this.eee = ee
             },
             toggle(index) {
                 const i = this.selected.indexOf(index)
@@ -270,8 +275,8 @@
             get_recommend_article() {
                 this.$api.school.get_recommend_article(this.page).then(res => {
                     if (res.data.code === 1) {
-                        if(this.page===0){
-                            this.recommends=[]
+                        if (this.page === 0) {
+                            this.recommends = []
                         }
                         res.data.data.forEach(value => {
                             this.recommends.push({
@@ -282,7 +287,7 @@
                             })
                         });
                         this.page++;
-                        this.busy=false;
+                        this.busy = false;
                     }
                 })
             },
@@ -307,8 +312,8 @@
             jump_article(id) {
                 this.$router.push({name: 'article', query: {id: id}})
             },
-            loadMore(){
-                this.busy=true;
+            loadMore() {
+                this.busy = true;
                 this.get_recommend_article()
             }
         }
@@ -342,6 +347,7 @@
     .banner-father {
         position: relative;
     }
+
     .load-more-normal {
         text-align: center;
         height: 60px;
@@ -350,5 +356,9 @@
 
     .load-more-hide {
         height: 0;
+    }
+
+    .ivu-menu {
+        z-index: 4 !important;
     }
 </style>

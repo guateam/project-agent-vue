@@ -55,17 +55,22 @@
                 Close
             </v-btn>
         </v-snackbar>
+        <v-footer app v-if="$route.path !== '/login' && $route.path !== '/register'">
+            <bottomNav></bottomNav>
+        </v-footer>
     </div>
 </template>
 
 <script>
     import QuestionCard from "../components/QuestionCard";
+    import bottomNav from '../components/bottomNav';
 
     export default {
         name: 'Topic',
 
         components: {
             QuestionCard,
+            bottomNav
         },
 
         data() {
