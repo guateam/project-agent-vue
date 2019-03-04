@@ -33,8 +33,8 @@
                 <v-card-title primary-title>
                     <div>
                         <h3>{{ title }}</h3>
-                        <div>{{description}}
-                        </div>
+                        <p class="description">{{description}}
+                        </p>
 
                     </div>
 
@@ -63,5 +63,12 @@
     #card {
         margin-top: 10px;
     }
-
+    .description{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        display: -webkit-box;
+        word-break: break-all;
+    }
 </style>

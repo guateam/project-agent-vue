@@ -68,6 +68,9 @@
         },
         mounted() {
             // 获取用户信息
+
+        },
+        created() {
             this.DB();
             let that = this;
             setTimeout(function () {
@@ -81,7 +84,7 @@
                 })
             }, 1100);
             // 添加返回事件监听
-        },
+        }
     }
 </script>
 
