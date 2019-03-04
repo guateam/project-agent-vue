@@ -146,7 +146,7 @@
 
         mounted() {
             this.get_category();
-            setTimeout(this.get_recommend(), 5000);
+            // setTimeout(this.get_recommend(), 5000);
         }
     }
 </script>
