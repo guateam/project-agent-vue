@@ -219,4 +219,11 @@
     #fans_container {
         padding: 10px;
     }
+
+    .v-navigation-drawer, .v-navigation-drawer--fixed, .v-navigation-drawer--open, .v-navigation-drawer--temporary {
+        z-index: 9999 !important;
+    }
+    aside{
+        z-index: 9999 !important;
+    }
 </style>
