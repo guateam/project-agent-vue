@@ -7,9 +7,6 @@
         <v-content>
             <router-view></router-view>
         </v-content>
-        <v-footer app v-if="$route.path !== '/login' && $route.path !== '/register'">
-            <bottomNav></bottomNav>
-        </v-footer>
     </v-app>
 </template>
 

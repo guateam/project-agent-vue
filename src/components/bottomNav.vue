@@ -21,9 +21,15 @@
 <script>
     export default {
         name: "bottomNav",
+        props:{
+            bottomNav:{
+                type:String,
+                default:'topic'
+            }
+        },
         data() {
             return {
-                bottomNav: 'topic'
+
             };
         },
         mounted() {
