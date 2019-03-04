@@ -144,6 +144,16 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
+                <v-list-tile @click="$router.push({name:'corporate_center'})">
+                    <v-list-tile-action>
+                        <v-icon class="time--text">local_offer</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-title>
+                        <v-layout justify-space-between>
+                            <span>企业中心</span>
+                        </v-layout>
+                    </v-list-tile-title>
+                </v-list-tile>
                 <v-list-tile :to="{name: 'exp-detail', query: {redirect: $route.fullPath}}">
                     <v-list-tile-action>
                         <v-icon class="time--text">trending_up</v-icon>
@@ -218,5 +228,12 @@
 
     #fans_container {
         padding: 10px;
+    }
+
+    .v-navigation-drawer, .v-navigation-drawer--fixed, .v-navigation-drawer--open, .v-navigation-drawer--temporary {
+        z-index: 9999 !important;
+    }
+    aside{
+        z-index: 9999 !important;
     }
 </style>

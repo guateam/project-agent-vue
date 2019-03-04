@@ -11,6 +11,7 @@ const base = {
     specialist: baseUrl + '/specialist',
     activities: baseUrl + '/activities',
     tags:baseUrl+'/tags',
+    upload:baseUrl+'/upload'
 };
 
 export default base;

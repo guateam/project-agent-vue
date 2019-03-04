@@ -133,7 +133,10 @@ const index = {
         },
         get_article_allowed_group(token = store.state.token) {
             return axios.get(`${base.article}/get_article_allowed_group`, {params: {token: token}})
-        }
+        },
+        add_article(data) {
+            return axios.post(`${base.article}/get_article_allowed_group`,qs.stringify(data))
+        },
     },
     specialist: {
         get_my_fans(token = store.state.token) {
@@ -163,6 +166,11 @@ const index = {
                 token: store.state.token
             };
             return axios.post(`${base.tags}/add_tag`, qs.stringify(data))
+        }
+    },
+    upload:{
+        upload_picture(picture){
+            return axios.get(`${base.upload}/upload_picture`,{params:{picture:picture}})
         }
     }
 };

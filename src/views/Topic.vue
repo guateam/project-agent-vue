@@ -55,17 +55,22 @@
                 Close
             </v-btn>
         </v-snackbar>
+        <v-footer app>
+            <bottomNav :bottom-nav="'topic'"></bottomNav>
+        </v-footer>
     </div>
 </template>
 
 <script>
     import QuestionCard from "../components/QuestionCard";
+    import bottomNav from '../components/bottomNav';
 
     export default {
         name: 'Topic',
 
         components: {
             QuestionCard,
+            bottomNav
         },
 
         data() {
