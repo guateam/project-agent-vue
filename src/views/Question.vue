@@ -98,13 +98,19 @@
         <!--END-->
 
         <!--底部为添加按钮留出空间，防止遮挡内容-->
-        <div id="bottom-space"></div>
+        <v-footer app>
+            <bottomNav :bottom-nav="'topic'"></bottomNav>
+        </v-footer>
     </div>
 </template>
 
 <script>
+    import bottomNav from '../components/bottomNav';
     export default {
         name: "Question",
+        components: {
+            bottomNav
+        },
         data() {
             return {
                 showAll: false,

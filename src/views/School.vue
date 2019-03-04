@@ -149,7 +149,7 @@
             </v-tabs-items>
         </v-card>
         <v-footer app v-if="$route.path !== '/login' && $route.path !== '/register'">
-            <bottomNav></bottomNav>
+            <bottomNav :bottom-nav="'school'"></bottomNav>
         </v-footer>
     </div>
 </template>
