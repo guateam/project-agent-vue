@@ -19,19 +19,78 @@
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 d-flex>
+                                            <v-text-field
+                                                label="输入文章标题"
+                                                v-model="title"
+                                                :rules="[rules.counter,rules.required]"
+                                                maxlength="30"
+                                                counter
+                                            ></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 d-flex>
                                             <v-select
-
+                                                :items="first_tag"
+                                                item-text="name"
+                                                item-value="id"
+                                                label="选择一级标签"
+                                                v-model="tag1"
+                                                :rules="[rules.required]"
+                                                @change="get_second_tag()"
+                                            ></v-select>
+                                        </v-flex>
+                                        <v-combobox
+                                                v-model="tag2"
+                                                :items="second_tag"
+                                                item-text="name"
+                                                item-value="name"
+                                                :search-input.sync="search"
+                                                hide-selected
+                                                hint="最多输入5个标签"
+                                                label="输入二级标签"
+                                                :rules="[rules.required]"
+                                                multiple
+                                                persistent-hint
+                                                small-chips
+                                                :disabled="tag2_disable"
+                                                >
+                                                <template v-slot:no-data>
+                                                    <v-list-tile>
+                                                        <v-list-tile-content>
+                                                            <v-list-tile-title>
+                                                            按 <kbd>enter</kbd> 创建 <strong>{{ search }}</strong> 标签
+                                                            </v-list-tile-title>
+                                                        </v-list-tile-content>
+                                                    </v-list-tile>
+                                             </template>
+                                        </v-combobox>
+                                        <v-flex xs12 sm6 d-flex>
+                                            <v-select
+                                                    item-text="txt"
+                                                    item-value="val"
                                                     :items="price"
                                                     label="选择价格"
                                             ></v-select>
                                         </v-flex>
+                                        <v-img
+                                            :src="photoSrc"
+                                            aspect-ratio="0.8"
+                                            style="width:80%;height:300px"
+                                        >
+                                        <input
+                                                type="file"
+                                                class="photoFileIn"
+                                                @change="previewImg($event)"
+                                                accept="image/*"
+                                        >
+                                        </v-img>
+
                                     </v-layout>
                                 </v-container>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" flat @click="dialog = false">关闭</v-btn>
-                                <v-btn color="primary" flat @click="$router.push({name:'topic'})">确认</v-btn>
+                                <v-btn color="primary" flat @click="done()">确认</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -67,8 +126,19 @@
         data() {
             return {
                 content: '',
+                title:"",
+                cover:"",
+                tag1:[],
+                tag2:[],
+                img:"",
+                photoSrc:"",
                 dialog: false,
-                price: ['0', '￥19.9', '￥29.9', '￥69.9', '￥99.9'],
+                tag2_disable: true,
+                price: [{'txt':'免费','val':0}, {'txt':'￥19.9','val':19.9}, {'txt':'￥29.9','val':29.9}, {'txt':'￥69.9','val':69.9}, {'txt':'￥99.9','val':99.9}],
+                first_tag:[],
+                second_tag:[],
+                search:"",
+
                 editorOption: {
                     modules: {
                         ImageExtend: {
@@ -100,16 +170,90 @@
                         }
                     },
                     placeholder: '请在此输入内容'
+                },
+
+                rules:{
+                    counter: value => value.length <= 30 || '字数不能超过30个',
+                    required: value => !!value || '该栏不能为空.',
                 }
             }
         },
-
+        watch: {
+            tag2 (val) {
+              if (val.length > 5) {
+                this.$nextTick(() => this.model.pop())
+              }
+            }
+        },
+        methods:{
+            get_second_tag(){
+                var tag_id = this.tag1
+                this.tag2_disable = true;
+                console.log(tag_id)
+                this.$api.tags.get_child_tag({
+                    tag_id
+                }).then(res => {
+                    if (res.data.code === 1) {
+                        this.second_tag = res.data.data;
+                        this.tag2 = []
+                        this.tag2_disable = false;
+                    }
+                })
+            },
+            previewImg: function (e) {
+                var files = e.target.files[0];
+                var that = this;
+                
+                // 判断浏览器是否支持 FileReader
+                if (!e || !window.FileReader) {
+                    alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+                    return;
+                }
+                let reader = new FileReader();
+                
+                // 这里是最关键的一步，转换就在这里
+                if (files) {
+                    reader.readAsDataURL(files); 
+                }
+                
+                reader.onload = function () {
+                    that.photoSrc = this.result
+                };
+                // 设置文件
+                this.img = files;
+                console.log(this.img)
+                console.log(this.photoSrc)
+            },
+            done(){
+                if(this.content && this.title && this.tag1 && this.tag2 && this.img){
+                    this.$api.upload.upload_picture(this.img).then(res => {
+                        if (res.data.code === 1) {
+                            this.first_tag = res.data.data;
+                            let data = {
+                                    content:this.content,
+                                    title:this.title,
+                                    cover:this.cover,
+                                    price:this.price,
+                                    first_tag:this.tag1,
+                                    second_tag:this.tag2,
+                                    token: this.$store.state.token
+                            }
+                            this.$api.article.add_article(data).then(res=>{
+                                if(res.data.code === 1){
+                                    alert("success")
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        },
         mounted() {
-            // var editor = new Edit(this.$refs.editor)
-            // editor.customConfig.onchange = (html) => {
-            //     this.editorContent = html
-            // }
-            // editor.create()
+                this.$api.tags.get_first_tag().then(res => {
+                    if (res.data.code === 1) {
+                        this.first_tag = res.data.data;
+                    }
+                })
         }
     }
 </script>

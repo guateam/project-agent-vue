@@ -133,6 +133,12 @@ const index = {
         },
         get_article_allowed_group(token = store.state.token) {
             return axios.get(`${base.article}/get_article_allowed_group`, {params: {token: token}})
+        },
+        add_article(data) {
+            return axios.post(`${base.article}/get_article_allowed_group`, qs.stringify(data))
+        },
+        get_tag_articles(tag_id) {
+            return axios.get(`${base.article}/get_tag_articles`, {params: {tag_id: tag_id}})
         }
     },
     specialist: {
@@ -163,6 +169,14 @@ const index = {
                 token: store.state.token
             };
             return axios.post(`${base.tags}/add_tag`, qs.stringify(data))
+        },
+        get_tag_tree() {
+            return axios.get(`${base.tags}/get_tag_tree`)
+        }
+    },
+    upload: {
+        upload_picture(picture) {
+            return axios.get(`${base.upload}/upload_picture`, {params: {picture: picture}})
         }
     }
 };
