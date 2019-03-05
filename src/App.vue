@@ -12,13 +12,11 @@
 
 <script>
     import NavigationDrawer from "./components/NavigationDrawer";
-    import bottomNav from './components/bottomNav';
 
     export default {
         name: 'App',
         components: {
             NavigationDrawer,
-            bottomNav
         },
         data() {
             return {}
