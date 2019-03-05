@@ -58,6 +58,11 @@
                 this.scroll = new BScroll(this.$refs.wrapper, {
                     probeType: this.probeType,
                     click: this.click,
+                    bounce: {
+                        top: false,
+                        bottom: false
+                    },
+
                     eventPassthrough: this.direction === DIRECTION_V ? DIRECTION_H : DIRECTION_V
                 })
 
