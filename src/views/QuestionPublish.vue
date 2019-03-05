@@ -16,38 +16,90 @@
                                 <span class="headline">确认发布</span>
                             </v-card-title>
                             <v-card-text>
-                                <v-container grid-list-md>
-                                    <v-layout wrap>
-                                        <v-flex xs12 sm6>
+                                <!--<v-container grid-list-md>-->
+                                <!--<v-layout wrap>-->
+                                <!--<v-flex xs12 sm6>-->
 
-                                        </v-flex>
-                                        <v-flex xs12 sm6>
-                                            <v-select
-                                                    v-model="e7"
-                                                    :items="states"
-                                                    label="选择分类"
-                                                    multiple
-                                                    chips
-                                                    persistent-hint
-                                            ></v-select>
-                                        </v-flex>
-                                        <v-flex xs12 sm6>
-                                            <v-select
-                                                    v-model="e7"
-                                                    :items="states"
-                                                    label="选择标签"
-                                                    multiple
-                                                    chips
-                                                    persistent-hint
-                                            ></v-select>
-                                        </v-flex>
-                                    </v-layout>
-                                </v-container>
+                                <!--</v-flex>-->
+                                <!--<v-flex xs12 sm6>-->
+                                <!--<v-select-->
+                                <!--v-model="e7"-->
+                                <!--:items="states"-->
+                                <!--label="选择分类"-->
+                                <!--multiple-->
+                                <!--chips-->
+                                <!--persistent-hint-->
+                                <!--&gt;</v-select>-->
+                                <!--</v-flex>-->
+                                <!--<v-flex xs12 sm6>-->
+                                <!--<v-select-->
+                                <!--v-model="e7"-->
+                                <!--:items="states"-->
+                                <!--label="选择标签"-->
+                                <!--multiple-->
+                                <!--chips-->
+                                <!--persistent-hint-->
+                                <!--&gt;</v-select>-->
+                                <!--</v-flex>-->
+                                <!--</v-layout>-->
+                                <!--</v-container>-->
+                                <Form :model="formItem">
+                                    <FormItem label="标题">
+                                        <Input v-model="formItem.title" placeholder="请输入标题"></Input>
+                                    </FormItem>
+                                    <FormItem label="一级标签">
+                                        <Select v-model="formItem.first_category"
+                                                @on-change="get_second_category(value)">
+                                            <Option :value="item.id" v-for="item in first_category">{{item.name}}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem label="二级标签">
+                                        <Select v-model="formItem.second_category" multiple filterable remote
+                                                :remote-method="get_tag_recommend" :loading="tag_loading"
+                                                :disabled="formItem.first_category===undefined">
+                                            <Option :value="item" v-for="item in second_category">{{item.name}}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem label="付费问题">
+                                        <i-switch v-model="formItem.priced" size="large">
+                                            <span slot="open">是</span>
+                                            <span slot="close">否</span>
+                                        </i-switch>
+                                    </FormItem>
+                                    <FormItem label="悬赏价格" v-if="formItem.priced">
+                                        <Input v-model.number="formItem.price" type="text">
+                                            <span slot="prepend">￥</span>
+                                            <span slot="append">元</span>
+                                        </Input>
+                                        <!--<Slider :value="formItem.price" :step="0.1" :max="100"></Slider>-->
+                                    </FormItem>
+                                    <FormItem label="允许回答用户组" v-if="formItem.priced">
+                                        <Select v-model="formItem.user_group" multiple filterable>
+                                            <Option :value="item.id" v-for="item in user_group">{{item.name}}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                </Form>
+                                <v-snackbar
+                                        v-model="snackbar"
+                                        vertical="vertical"
+                                >
+                                    {{ text }}
+                                    <v-btn
+                                            dark
+                                            flat
+                                            @click="snackbar = false"
+                                    >
+                                        Close
+                                    </v-btn>
+                                </v-snackbar>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="red" flat @click="dialog = false">关闭</v-btn>
-                                <v-btn color="primary" flat @click="$router.push({name:'topic'})">确认</v-btn>
+                                <v-btn color="red" flat @click="dialog = false">取消</v-btn>
+                                <v-btn color="primary" flat @click="send()">确认</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -80,13 +132,25 @@
             >
             </quill-editor>
         </div>
-
+        <v-snackbar
+                v-model="snackbar"
+                vertical="vertical"
+        >
+            {{ text }}
+            <v-btn
+                    dark
+                    flat
+                    @click="snackbar = false"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
     </div>
 </template>
 
 <script>
     // import Edit from 'wangeditor';
-    import * as Quill from 'quill'  //引入编辑器
+    import * as Quill from 'quill' //引入编辑器
     import ImageResize from 'quill-image-resize-module'
     import {ImageExtend, QuillWatch} from 'quill-image-extend-module'
 
@@ -94,18 +158,28 @@
     Quill.register('modules/ImageExtend', ImageExtend);
     export default {
         name: "QuestionPublish",
+        components: {},
         data() {
             return {
                 content: '',
                 editorContent: '',
                 dialog: false,
-                e7: [],
-                states: [
-                    '减振降噪', '新材料应用', '传感器', '绿色能源',
-                    '射频技术', '人工智能', '流体机械', '水处理技术',
-                    '食品技术', '制冷系统设计',
-                    '燃烧技术', '空气净化技术', '机械结构设计', '加热技术'
+                first_category: [
+                    {name: '正在获取。。。', id: 0}
                 ],
+                second_category: [],
+                user_group: [],
+                formItem: {
+                    title: undefined,
+                    first_category: undefined,
+                    second_category: [],
+                    priced: false,
+                    price: 0.00,
+                    user_group: []
+                },
+                text:'',
+                snackbar:false,
+                tag_loading: false,
                 editorOption: {
                     modules: {
                         ImageExtend: {
@@ -140,7 +214,104 @@
                 }
             }
         },
-        methods: {},
+        methods: {
+            get_second_category() {
+                this.formItem.second_category=[];
+                this.$api.tags.get_child_tag(this.formItem.first_category).then(res => {
+                    if (res.data.code === 1) {
+                        this.second_category = res.data.data;
+                    }
+                })
+            },
+            get_user_group() {
+                this.$api.account.get_user_group().then(res => {
+                    if (res.data.code === 1) {
+                        this.user_group = [];
+                        for (let i = 0; i < res.data.data.length; i++) {
+                            this.user_group.push({name: res.data.data[i], id: i})
+                        }
+                    }
+                })
+            },
+            get_first_category() {
+                this.$api.tags.get_first_tag().then(res => {
+                    if (res.data.code === 1) {
+                        this.first_category = res.data.data;
+                    }
+                })
+            },
+            get_tag_recommend(query) {
+                if (query !== '') {
+                    this.tag_loading = true;
+                    this.$api.tags.get_tag_recommend(this.formItem.first_category, query).then(res => {
+                        if (res.data.code === 1) {
+                            this.second_category = res.data.data;
+                            this.tag_loading = false;
+                        }
+                    })
+                }
+            },
+            set_tags(first_category) {
+                this.formItem.second_category.forEach(item => {
+                    if (item.id === -1) {
+                        this.$api.tags.add_tag(first_category, item.name, 2).then(res => {
+                            if (res.data.code === 1) {
+                                item.id = res.data.data.id;
+                            }
+                        })
+                    }
+
+                });
+            },
+            get_tags(first_category, second_category) {
+                let back = first_category;
+                second_category.forEach(item => {
+                    back += ',' + item.id;
+                });
+                return back;
+            },
+            send() {
+                this.set_tags(this.formItem.first_category);
+                let that = this;
+                setTimeout(() => {
+                    let tags = that.get_tags(that.formItem.first_category, that.formItem.second_category);
+                    if (this.formItem.priced) {
+                        let allowed_user = that.formItem.user_group.join(',');
+                        let data = {
+                            title: that.formItem.title,
+                            token: that.$store.state.token,
+                            price: that.formItem.price,
+                            description: that.content,
+                            tags: tags,
+                            allowed_user: allowed_user
+                        };
+                        that.$api.questions.add_priced_question(data).then(res => {
+                            if (res.data.code === 1) {
+                                that.$router.back();
+                            }else{
+                                that.text=res.data.msg;
+                                that.snackbar=true;
+                            }
+                        })
+                    } else {
+                        let data = {
+                            title: that.formItem.title,
+                            token: that.$store.state.token,
+                            description: that.content,
+                            tags: tags,
+                        };
+                        that.$api.questions.add_question(data).then(res => {
+                            if (res.data.code === 1) {
+                                that.$router.back();
+                            }else{
+                                that.text=res.data.msg;
+                                that.snackbar=true;
+                            }
+                        });
+                    }
+                }, 3000)
+            }
+        },
         mounted() {
             // var editor = new Edit(this.$refs.editor)
             // editor.customConfig.onchange = (html) => {
@@ -149,6 +320,8 @@
             // editor.create()
             // var editor1 = new Edit('#editbar', '#editput')  // 两个参数也可以传入 elem 对象，class 选择器
             // editor1.create()
+            this.get_user_group();
+            this.get_first_category();
         }
     }
 </script>

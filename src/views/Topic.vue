@@ -55,17 +55,22 @@
                 Close
             </v-btn>
         </v-snackbar>
+        <v-footer app>
+            <bottomNav :bottom-nav="'topic'"></bottomNav>
+        </v-footer>
     </div>
 </template>
 
 <script>
     import QuestionCard from "../components/QuestionCard";
+    import bottomNav from '../components/bottomNav';
 
     export default {
         name: 'Topic',
 
         components: {
             QuestionCard,
+            bottomNav
         },
 
         data() {
@@ -141,7 +146,7 @@
 
         mounted() {
             this.get_category();
-            setTimeout(this.get_recommend(), 5000);
+            // setTimeout(this.get_recommend(), 5000);
         }
     }
 </script>

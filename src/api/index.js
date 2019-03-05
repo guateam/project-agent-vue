@@ -52,6 +52,9 @@ const index = {
         },
         get_history(token = store.state.token) {
             return axios.get(`${base.account}/get_history`, {params: {token: token}})
+        },
+        get_user_group() {
+            return axios.get(`${base.account}/get_user_group`)
         }
     },
     message: {
@@ -83,6 +86,12 @@ const index = {
         // 获取发布过的问题
         get_my_questions(token = store.state.token) {
             return axios.get(`${base.questions}/get_my_questions`, {params: {token: token}})
+        },
+        add_question(data) {
+            return axios.post(`${base.questions}/add_question`, qs.stringify(data))
+        },
+        add_priced_question(data) {
+            return axios.post(`${base.questions}/add_priced_question`, qs.stringify(data))
         }
     },
     school: {
@@ -124,7 +133,10 @@ const index = {
         },
         get_article_allowed_group(token = store.state.token) {
             return axios.get(`${base.article}/get_article_allowed_group`, {params: {token: token}})
-        }
+        },
+        add_article(data) {
+            return axios.post(`${base.article}/get_article_allowed_group`,qs.stringify(data))
+        },
     },
     specialist: {
         get_my_fans(token = store.state.token) {
@@ -134,6 +146,31 @@ const index = {
     activities: {
         get_activities(type) {
             return axios.get(`${base.activities}/get_activities`, {params: {type: type}})
+        }
+    },
+    tags: {
+        get_first_tag() {
+            return axios.get(`${base.tags}/get_first_tag`)
+        },
+        get_child_tag(tag_id) {
+            return axios.get(`${base.tags}/get_child_tag`, {params: {tag_id: tag_id}})
+        },
+        get_tag_recommend(tag_id, tag) {
+            return axios.get(`${base.tags}/get_tag_recommend`, {params: {tag_id: tag_id, tag: tag}})
+        },
+        add_tag(father, tag, tag_type) {
+            let data = {
+                name: tag,
+                father: father,
+                tag_type: tag_type,
+                token: store.state.token
+            };
+            return axios.post(`${base.tags}/add_tag`, qs.stringify(data))
+        }
+    },
+    upload:{
+        upload_picture(picture){
+            return axios.get(`${base.upload}/upload_picture`,{params:{picture:picture}})
         }
     }
 };

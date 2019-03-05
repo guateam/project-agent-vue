@@ -10,12 +10,13 @@ import Vuelidate from 'vuelidate'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
-import  VueQuillEditor from 'vue-quill-editor'
+import VueQuillEditor from 'vue-quill-editor'
 import infiniteScroll from 'vue-infinite-scroll'
 import 'iview/dist/styles/iview.css';
 
+
 Vue.use(infiniteScroll);
-import {Menu, MenuItem, Col, Row, Submenu,Icon} from 'iview';
+import {Menu, MenuItem, Col, Row, Submenu, Icon, Form, Input, FormItem, Select, Option,Switch,Slider} from 'iview';
 
 Vue.component('Menu', Menu);
 Vue.component('MenuItem', MenuItem);
@@ -23,6 +24,13 @@ Vue.component('Col', Col);
 Vue.component('Row', Row);
 Vue.component('Submenu', Submenu);
 Vue.component('Icon', Icon);
+Vue.component('Form', Form);
+Vue.component('Input', Input);
+Vue.component('FormItem', FormItem);
+Vue.component('Select', Select);
+Vue.component('Option', Option);
+Vue.component('i-switch',Switch);
+Vue.component('Slider',Slider);
 
 Vue.use(VueQuillEditor);
 
