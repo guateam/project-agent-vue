@@ -84,4 +84,7 @@
 </script>
 
 <style>
+    aside{
+        z-index: 999!important;
+    }
 </style>

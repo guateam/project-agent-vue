@@ -16,7 +16,23 @@ import 'iview/dist/styles/iview.css';
 
 
 Vue.use(infiniteScroll);
-import {Menu, MenuItem, Col, Row, Submenu, Icon, Form, Input, FormItem, Select, Option,Switch,Slider} from 'iview';
+import {
+    Menu,
+    MenuItem,
+    Col,
+    Row,
+    Submenu,
+    Icon,
+    Form,
+    Input,
+    FormItem,
+    Select,
+    Option,
+    Switch,
+    Slider,
+    Carousel,
+    CarouselItem
+} from 'iview';
 
 Vue.component('Menu', Menu);
 Vue.component('MenuItem', MenuItem);
@@ -29,8 +45,10 @@ Vue.component('Input', Input);
 Vue.component('FormItem', FormItem);
 Vue.component('Select', Select);
 Vue.component('Option', Option);
-Vue.component('i-switch',Switch);
-Vue.component('Slider',Slider);
+Vue.component('i-switch', Switch);
+Vue.component('Slider', Slider);
+Vue.component('Carousel', Carousel);
+Vue.component('CarouselItem',CarouselItem);
 
 Vue.use(VueQuillEditor);
 
