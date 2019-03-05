@@ -16,81 +16,67 @@
                                 <span class="headline">确认发布</span>
                             </v-card-title>
                             <v-card-text>
-                                <v-container grid-list-md>
-                                    <v-layout wrap>
-                                        <v-flex xs12 sm6 d-flex>
-                                            <v-text-field
-                                                label="输入文章标题"
-                                                v-model="title"
-                                                :rules="[rules.counter,rules.required]"
-                                                maxlength="30"
-                                                counter
-                                            ></v-text-field>
-                                        </v-flex>
-                                        <v-flex xs12 sm6 d-flex>
-                                            <v-select
-                                                :items="first_tag"
-                                                item-text="name"
-                                                item-value="id"
-                                                label="选择一级标签"
-                                                v-model="tag1"
-                                                :rules="[rules.required]"
-                                                @change="get_second_tag()"
-                                            ></v-select>
-                                        </v-flex>
-                                        <v-combobox
-                                                v-model="tag2"
-                                                :items="second_tag"
-                                                item-text="name"
-                                                item-value="name"
-                                                :search-input.sync="search"
-                                                hide-selected
-                                                hint="最多输入5个标签"
-                                                label="输入二级标签"
-                                                :rules="[rules.required]"
-                                                multiple
-                                                persistent-hint
-                                                small-chips
-                                                :disabled="tag2_disable"
-                                                >
-                                                <template v-slot:no-data>
-                                                    <v-list-tile>
-                                                        <v-list-tile-content>
-                                                            <v-list-tile-title>
-                                                            按 <kbd>enter</kbd> 创建 <strong>{{ search }}</strong> 标签
-                                                            </v-list-tile-title>
-                                                        </v-list-tile-content>
-                                                    </v-list-tile>
-                                             </template>
-                                        </v-combobox>
-                                        <v-flex xs12 sm6 d-flex>
-                                            <v-select
-                                                    item-text="txt"
-                                                    item-value="val"
-                                                    :items="price"
-                                                    label="选择价格"
-                                            ></v-select>
-                                        </v-flex>
-                                        <v-img
-                                            :src="photoSrc"
-                                            aspect-ratio="0.8"
-                                            style="width:80%;height:300px"
-                                        >
-                                        <input
-                                                type="file"
-                                                class="photoFileIn"
-                                                @change="previewImg($event)"
-                                                accept="image/*"
-                                        >
-                                        </v-img>
-
-                                    </v-layout>
-                                </v-container>
+                                <Form :model="formItem">
+                                    <FormItem label="标题">
+                                        <Input v-model="formItem.title" placeholder="请输入标题"></Input>
+                                    </FormItem>
+                                    <FormItem label="封面">
+                                        <Upload action="https://hanerx.tk:5000/api/upload/upload_picture" name="picture"
+                                                :on-success="upload" :default-file-list="upload_list"
+                                                :on-remove="remove">
+                                            <Button icon="ios-cloud-upload-outline">上传封面</Button>
+                                        </Upload>
+                                    </FormItem>
+                                    <FormItem label="封面预览" v-if="formItem.cover!==undefined">
+                                        <img width="100%" :src="formItem.cover" >
+                                    </FormItem>
+                                    <FormItem label="一级标签">
+                                        <Select v-model="formItem.first_category"
+                                                @on-change="get_second_category(value)">
+                                            <Option :value="item.id" v-for="item in first_category">{{item.name}}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem label="二级标签">
+                                        <Select v-model="formItem.second_category" multiple filterable remote
+                                                :remote-method="get_tag_recommend" :loading="tag_loading"
+                                                :disabled="formItem.first_category===undefined">
+                                            <Option :value="item" v-for="item in second_category">{{item.name}}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem label="付费文章">
+                                        <i-switch v-model="formItem.priced" size="large">
+                                            <span slot="open">是</span>
+                                            <span slot="close">否</span>
+                                        </i-switch>
+                                    </FormItem>
+                                    <FormItem label="文章价格" v-if="formItem.priced">
+                                        <Input v-model.number="formItem.price" type="text">
+                                            <span slot="prepend">￥</span>
+                                            <span slot="append">元</span>
+                                        </Input>
+                                        <!--<Slider :value="formItem.price" :step="0.1" :max="100"></Slider>-->
+                                    </FormItem>
+                                </Form>
+                                <v-snackbar
+                                        v-model="snackbar"
+                                        vertical="vertical"
+                                >
+                                    {{ text }}
+                                    <v-btn
+                                            dark
+                                            flat
+                                            @click="snackbar = false"
+                                    >
+                                        Close
+                                    </v-btn>
+                                </v-snackbar>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" flat @click="dialog = false">关闭</v-btn>
-                                <v-btn color="primary" flat @click="done()">确认</v-btn>
+                                <v-btn color="primary" flat @click="send()">确认</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -116,7 +102,8 @@
 <script>
     import * as Quill from 'quill'  //引入编辑器
     import ImageResize from 'quill-image-resize-module'
-    import { ImageExtend, QuillWatch} from 'quill-image-extend-module'
+    import {ImageExtend, QuillWatch} from 'quill-image-extend-module'
+    import 'iview/dist/styles/iview.css';
 
     Quill.register('modules/imageResize', ImageResize);
     Quill.register('modules/ImageExtend', ImageExtend);
@@ -126,18 +113,21 @@
         data() {
             return {
                 content: '',
-                title:"",
-                cover:"",
-                tag1:[],
-                tag2:[],
-                img:"",
-                photoSrc:"",
+                snackbar: false,
                 dialog: false,
-                tag2_disable: true,
-                price: [{'txt':'免费','val':0}, {'txt':'￥19.9','val':19.9}, {'txt':'￥29.9','val':29.9}, {'txt':'￥69.9','val':69.9}, {'txt':'￥99.9','val':99.9}],
-                first_tag:[],
-                second_tag:[],
-                search:"",
+                text: '',
+                first_category: [],
+                second_category: [],
+                upload_list: [],
+                formItem: {
+                    title: undefined,
+                    first_category: undefined,
+                    second_category: [],
+                    priced: false,
+                    price: 0.00,
+                    cover: undefined,
+                },
+                tag_loading: false,
 
                 editorOption: {
                     modules: {
@@ -172,88 +162,97 @@
                     placeholder: '请在此输入内容'
                 },
 
-                rules:{
+                rules: {
                     counter: value => value.length <= 30 || '字数不能超过30个',
                     required: value => !!value || '该栏不能为空.',
                 }
             }
         },
-        watch: {
-            tag2 (val) {
-              if (val.length > 5) {
-                this.$nextTick(() => this.model.pop())
-              }
-            }
-        },
-        methods:{
-            get_second_tag(){
-                var tag_id = this.tag1
-                this.tag2_disable = true;
-                console.log(tag_id)
-                this.$api.tags.get_child_tag({
-                    tag_id
-                }).then(res => {
+        watch: {},
+        methods: {
+            upload(response, file, fileList) {
+                this.upload_list = [{
+                    name: file.name,
+                    url: response.data
+                }];
+                this.formItem.cover = response.data;
+            },
+            remove(){
+                this.formItem.cover=undefined
+            },
+            get_second_category() {
+                this.formItem.second_category = [];
+                this.$api.tags.get_child_tag(this.formItem.first_category).then(res => {
                     if (res.data.code === 1) {
-                        this.second_tag = res.data.data;
-                        this.tag2 = []
-                        this.tag2_disable = false;
+                        this.second_category = res.data.data;
                     }
                 })
             },
-            previewImg: function (e) {
-                var files = e.target.files[0];
-                var that = this;
-                
-                // 判断浏览器是否支持 FileReader
-                if (!e || !window.FileReader) {
-                    alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
-                    return;
-                }
-                let reader = new FileReader();
-                
-                // 这里是最关键的一步，转换就在这里
-                if (files) {
-                    reader.readAsDataURL(files); 
-                }
-                
-                reader.onload = function () {
-                    that.photoSrc = this.result
-                };
-                // 设置文件
-                this.img = files;
-                console.log(this.img)
-                console.log(this.photoSrc)
+            get_first_category() {
+                this.$api.tags.get_first_tag().then(res => {
+                    if (res.data.code === 1) {
+                        this.first_category = res.data.data;
+                    }
+                })
             },
-            done(){
-                if(this.content && this.title && this.tag1 && this.tag2 && this.img){
-                    this.$api.upload.upload_picture(this.img).then(res => {
+            get_tag_recommend(query) {
+                if (query !== '') {
+                    this.tag_loading = true;
+                    this.$api.tags.get_tag_recommend(this.formItem.first_category, query).then(res => {
                         if (res.data.code === 1) {
-                            this.first_tag = res.data.data;
-                            let data = {
-                                    content:this.content,
-                                    title:this.title,
-                                    cover:this.cover,
-                                    price:this.price,
-                                    first_tag:this.tag1,
-                                    second_tag:this.tag2,
-                                    token: this.$store.state.token
-                            }
-                            this.$api.article.add_article(data).then(res=>{
-                                if(res.data.code === 1){
-                                    alert("success")
-                                }
-                            })
+                            this.second_category = res.data.data;
+                            this.tag_loading = false;
                         }
                     })
                 }
+            },
+            set_tags(first_category) {
+                this.formItem.second_category.forEach(item => {
+                    if (item.id === -1) {
+                        this.$api.tags.add_tag(first_category, item.name, 2).then(res => {
+                            if (res.data.code === 1) {
+                                item.id = res.data.data.id;
+                            }
+                        })
+                    }
+
+                });
+            },
+            get_tags(first_category, second_category) {
+                let back = first_category;
+                second_category.forEach(item => {
+                    back += ',' + item.id;
+                });
+                return back;
+            },
+            send() {
+                this.set_tags(this.formItem.first_category);
+                let that = this;
+                setTimeout(() => {
+                    let tags = that.get_tags(that.formItem.first_category, that.formItem.second_category);
+                    let data = {
+                        title: that.formItem.title,
+                        token: that.$store.state.token,
+                        price: that.formItem.price,
+                        content: that.content,
+                        tags: tags,
+                        cover: that.formItem.cover,
+                        free:that.formItem.priced
+                    };
+                    that.$api.article.add_article(data).then(res => {
+                        if (res.data.code === 1) {
+                            that.$router.back();
+                        } else {
+                            that.text = res.data.msg;
+                            that.snackbar = true;
+                        }
+                    })
+
+                }, 3000)
             }
         },
         mounted() {
-                this.$api.tags.get_first_tag().then(res => {
-                    if (res.data.code === 1) {
-                        this.first_tag = res.data.data;
-                    }
-                })
+            this.get_first_category();
         }
     }
 </script>
@@ -298,7 +297,9 @@
         height: 400px;
         font-size: 1.1em;
     }
+
     .quill-editor {
         height: 100%;
     }
+
 </style>

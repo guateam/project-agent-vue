@@ -31,7 +31,9 @@ import {
     Switch,
     Slider,
     Carousel,
-    CarouselItem
+    CarouselItem,
+    Upload,
+    Button
 } from 'iview';
 
 Vue.component('Menu', Menu);
@@ -48,7 +50,9 @@ Vue.component('Option', Option);
 Vue.component('i-switch', Switch);
 Vue.component('Slider', Slider);
 Vue.component('Carousel', Carousel);
-Vue.component('CarouselItem',CarouselItem);
+Vue.component('CarouselItem', CarouselItem);
+Vue.component('Upload', Upload);
+Vue.component('Button', Button);
 
 Vue.use(VueQuillEditor);
 
