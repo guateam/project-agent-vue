@@ -218,7 +218,7 @@
                 ],
                 tabs: 0,
                 bottomNav: 1,
-                page: 0,
+                page: 1,
                 busy: false,
                 recommends: [
                     {
@@ -275,7 +275,7 @@
             get_recommend_article() {
                 this.$api.school.get_recommend_article(this.page).then(res => {
                     if (res.data.code === 1) {
-                        if (this.page === 0) {
+                        if (this.page === 1) {
                             this.recommends = []
                         }
                         res.data.data.forEach(value => {

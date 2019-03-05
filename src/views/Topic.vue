@@ -79,7 +79,7 @@
                 category: [],
                 questionList: [],
                 bottomNav: 0,
-                page: 0,
+                page: 1,
                 busy: false,
                 timeout:0,
                 snackbar:false,
@@ -97,7 +97,7 @@
                 this.$api.homepage.get_recommend(this.page).then(res => {
                     if (res.data.code === 1) {
                         // 处理推荐内容
-                        if (this.page === 0) {
+                        if (this.page === 1) {
                             this.questionList = [];
                         }
                         res.data.data.forEach(item => {
