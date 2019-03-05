@@ -16,22 +16,67 @@
                                 <span class="headline">确认发布</span>
                             </v-card-title>
                             <v-card-text>
-                                <v-container grid-list-md>
-                                    <v-layout wrap>
-                                        <v-flex xs12 sm6 d-flex>
-                                            <v-select
-
-                                                    :items="price"
-                                                    label="选择价格"
-                                            ></v-select>
-                                        </v-flex>
-                                    </v-layout>
-                                </v-container>
+                                <Form :model="formItem">
+                                    <FormItem label="标题">
+                                        <Input v-model="formItem.title" placeholder="请输入标题"></Input>
+                                    </FormItem>
+                                    <FormItem label="封面">
+                                        <Upload action="https://hanerx.tk:5000/api/upload/upload_picture" name="picture"
+                                                :on-success="upload" :default-file-list="upload_list"
+                                                :on-remove="remove">
+                                            <Button icon="ios-cloud-upload-outline">上传封面</Button>
+                                        </Upload>
+                                    </FormItem>
+                                    <FormItem label="封面预览" v-if="formItem.cover!==undefined">
+                                        <img width="100%" :src="formItem.cover" >
+                                    </FormItem>
+                                    <FormItem label="一级标签">
+                                        <Select v-model="formItem.first_category"
+                                                @on-change="get_second_category(value)">
+                                            <Option :value="item.id" v-for="item in first_category">{{item.name}}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem label="二级标签">
+                                        <Select v-model="formItem.second_category" multiple filterable remote
+                                                :remote-method="get_tag_recommend" :loading="tag_loading"
+                                                :disabled="formItem.first_category===undefined">
+                                            <Option :value="item" v-for="item in second_category">{{item.name}}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem label="付费文章">
+                                        <i-switch v-model="formItem.priced" size="large">
+                                            <span slot="open">是</span>
+                                            <span slot="close">否</span>
+                                        </i-switch>
+                                    </FormItem>
+                                    <FormItem label="文章价格" v-if="formItem.priced">
+                                        <Input v-model.number="formItem.price" type="text">
+                                            <span slot="prepend">￥</span>
+                                            <span slot="append">元</span>
+                                        </Input>
+                                        <!--<Slider :value="formItem.price" :step="0.1" :max="100"></Slider>-->
+                                    </FormItem>
+                                </Form>
+                                <v-snackbar
+                                        v-model="snackbar"
+                                        vertical="vertical"
+                                >
+                                    {{ text }}
+                                    <v-btn
+                                            dark
+                                            flat
+                                            @click="snackbar = false"
+                                    >
+                                        Close
+                                    </v-btn>
+                                </v-snackbar>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" flat @click="dialog = false">关闭</v-btn>
-                                <v-btn color="primary" flat @click="$router.push({name:'topic'})">确认</v-btn>
+                                <v-btn color="primary" flat @click="send()">确认</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -57,7 +102,8 @@
 <script>
     import * as Quill from 'quill'  //引入编辑器
     import ImageResize from 'quill-image-resize-module'
-    import { ImageExtend, QuillWatch} from 'quill-image-extend-module'
+    import {ImageExtend, QuillWatch} from 'quill-image-extend-module'
+    import 'iview/dist/styles/iview.css';
 
     Quill.register('modules/imageResize', ImageResize);
     Quill.register('modules/ImageExtend', ImageExtend);
@@ -67,8 +113,22 @@
         data() {
             return {
                 content: '',
+                snackbar: false,
                 dialog: false,
-                price: ['0', '￥19.9', '￥29.9', '￥69.9', '￥99.9'],
+                text: '',
+                first_category: [],
+                second_category: [],
+                upload_list: [],
+                formItem: {
+                    title: undefined,
+                    first_category: undefined,
+                    second_category: [],
+                    priced: false,
+                    price: 0.00,
+                    cover: undefined,
+                },
+                tag_loading: false,
+
                 editorOption: {
                     modules: {
                         ImageExtend: {
@@ -100,16 +160,99 @@
                         }
                     },
                     placeholder: '请在此输入内容'
+                },
+
+                rules: {
+                    counter: value => value.length <= 30 || '字数不能超过30个',
+                    required: value => !!value || '该栏不能为空.',
                 }
             }
         },
+        watch: {},
+        methods: {
+            upload(response, file, fileList) {
+                this.upload_list = [{
+                    name: file.name,
+                    url: response.data
+                }];
+                this.formItem.cover = response.data;
+            },
+            remove(){
+                this.formItem.cover=undefined
+            },
+            get_second_category() {
+                this.formItem.second_category = [];
+                this.$api.tags.get_child_tag(this.formItem.first_category).then(res => {
+                    if (res.data.code === 1) {
+                        this.second_category = res.data.data;
+                    }
+                })
+            },
+            get_first_category() {
+                this.$api.tags.get_first_tag().then(res => {
+                    if (res.data.code === 1) {
+                        this.first_category = res.data.data;
+                    }
+                })
+            },
+            get_tag_recommend(query) {
+                if (query !== '') {
+                    this.tag_loading = true;
+                    this.$api.tags.get_tag_recommend(this.formItem.first_category, query).then(res => {
+                        if (res.data.code === 1) {
+                            this.second_category = res.data.data;
+                            this.tag_loading = false;
+                        }
+                    })
+                }
+            },
+            set_tags(first_category) {
+                this.formItem.second_category.forEach(item => {
+                    if (item.id === -1) {
+                        this.$api.tags.add_tag(first_category, item.name, 2).then(res => {
+                            if (res.data.code === 1) {
+                                item.id = res.data.data.id;
+                            }
+                        })
+                    }
 
+                });
+            },
+            get_tags(first_category, second_category) {
+                let back = first_category;
+                second_category.forEach(item => {
+                    back += ',' + item.id;
+                });
+                return back;
+            },
+            send() {
+                this.set_tags(this.formItem.first_category);
+                let that = this;
+                setTimeout(() => {
+                    let tags = that.get_tags(that.formItem.first_category, that.formItem.second_category);
+                    let data = {
+                        title: that.formItem.title,
+                        token: that.$store.state.token,
+                        price: that.formItem.price,
+                        content: that.content,
+                        tags: tags,
+                        cover: that.formItem.cover,
+                        free:that.formItem.priced
+                    };
+                    that.$api.article.add_article(data).then(res => {
+                        if (res.data.code === 1) {
+                            that.$router.back();
+                        } else {
+                            that.text = res.data.msg;
+                            that.snackbar = true;
+                        }
+                    })
+
+                }, 3000)
+            }
+        },
         mounted() {
-            // var editor = new Edit(this.$refs.editor)
-            // editor.customConfig.onchange = (html) => {
-            //     this.editorContent = html
-            // }
-            // editor.create()
+            this.get_first_category();
         }
     }
 </script>
@@ -154,7 +297,9 @@
         height: 400px;
         font-size: 1.1em;
     }
+
     .quill-editor {
         height: 100%;
     }
+
 </style>

@@ -12,16 +12,16 @@
 
 <script>
     import NavigationDrawer from "./components/NavigationDrawer";
-    import bottomNav from './components/bottomNav';
 
     export default {
         name: 'App',
         components: {
             NavigationDrawer,
-            bottomNav
         },
         data() {
-            return {}
+            return {
+                loading:0
+            }
         },
         methods: {
             DB() {
@@ -61,6 +61,20 @@
                 setTimeout(function () {
                     getDataByKey(myDB.db, 'user', 1)
                 }, 1000);
+            },
+            get_user(){
+                this.$api.account.get_user_by_token().then(res => {
+                    if (res.data.code === 1) {
+                        this.$store.commit('refreshUserInfo', res.data.data);
+                        this.$store.commit('login', this.$store.state);
+                        this.loading=0;
+                    }else if(this.loading<3){
+                        this.loading++;
+                        this.get_user();
+                    } else {
+                        this.$store.commit('logout', this.$store.state);
+                    }
+                })
             }
         },
         mounted() {
@@ -69,21 +83,14 @@
         },
         created() {
             this.DB();
-            let that = this;
-            setTimeout(function () {
-                that.$api.account.get_user_by_token().then(res => {
-                    if (res.data.code === 1) {
-                        that.$store.commit('refreshUserInfo', res.data.data);
-                        that.$store.commit('login', that.$store.state)
-                    } else {
-                        that.$store.commit('logout', that.$store.state)
-                    }
-                })
-            }, 1100);
+            setTimeout(this.get_user(), 1100);
             // 添加返回事件监听
         }
     }
 </script>
 
 <style>
+    aside{
+        z-index: 999!important;
+    }
 </style>
