@@ -323,4 +323,7 @@
     .ivu-menu {
         z-index: 4 !important;
     }
+    button{
+        z-index: 1;
+    }
 </style>
