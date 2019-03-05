@@ -135,7 +135,7 @@ const index = {
             return axios.get(`${base.article}/get_article_allowed_group`, {params: {token: token}})
         },
         add_article(data) {
-            return axios.post(`${base.article}/get_article_allowed_group`, qs.stringify(data))
+            return axios.post(`${base.article}/add_article`, qs.stringify(data))
         },
         get_tag_articles(tag_id) {
             return axios.get(`${base.article}/get_tag_articles`, {params: {tag_id: tag_id}})

@@ -121,7 +121,7 @@
                                                         slot-scope="{ hover }"
                                                         :class="`elevation-${hover ? 12 : 2}`"
                                                         class="mx-auto"
-                                                        @click="jump_article(value.id)"
+                                                        @click="jump_article(value.articleID)"
                                                 >
                                                     <v-img
                                                             :aspect-ratio="16/9"
@@ -134,7 +134,13 @@
                                                             <div>
                                                                 <div class="grey--text text--darken-2">
                                                                     作者：{{value.nickname}}
+                                                                    <span class="right green--text" style="margin-left: 10em" v-if="value.free!==1">
+                                                                        ￥{{value.price}}
+                                                                    </span>
+                                                                    <span class="right red--text" style="margin-left: 10em" v-if="value.free===1">免费
+                                                                    </span>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </v-card-title>
@@ -323,7 +329,8 @@
     .ivu-menu {
         z-index: 4 !important;
     }
-    button{
+
+    button {
         z-index: 1;
     }
 </style>
