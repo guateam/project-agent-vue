@@ -135,7 +135,19 @@ height: 100%;border-radius: 50%">
                 data: {
                     title: '加载中',
                     nickname: '未知',
-                    group: {}
+                    group: {
+                        text:'未知用户组'
+                    },
+                    level:0,
+                    description:'加载中请稍等···',
+                    article_description:'加载中请稍等···',
+                    collect:0,
+                    read:0,
+                    rate:0,
+                    free:1,
+                    cover:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871818376&di=23a06b4313b4716598c3448d8803049e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3c6d55fbb2fb431690697fb32aa4462308f7d381.jpg',
+                    head_portrait:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871796439&di=b76ea1eec37f57c40181636afbe7d303&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F69%2F80%2F595f67c2239cb_610.jpg',
+
                 },
                 comments: []
             }
