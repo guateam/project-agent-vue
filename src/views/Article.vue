@@ -117,10 +117,30 @@ height: 100%;border-radius: 50%">
             </v-layout>
             <v-divider></v-divider>
         </div>
-        <!--<v-footer class="pa-3">-->
-        <!--<v-spacer></v-spacer>-->
-        <!--<div>&copy; {{ new Date().getFullYear() }}</div>-->
-        <!--</v-footer>-->
+        <!--占位的盒子   STAR-->
+        <v-flex xs12 style="height: 70px;background-color: white"></v-flex>
+        <!--占位的盒子   END-->
+        <v-container grid-list-md text-xs-center
+                     style="position: fixed;bottom: 0;height: 60px;background: white;z-index: 100;width: 100%;padding:0;padding-top:5px;border-top:1px #ccc solid; align-items: center;">
+            <v-layout row style="height: 100%;align-items: center;">
+                <v-flex xs2 style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                    <div>
+                        <v-icon color="primary">favorite_border</v-icon>
+                    </div>
+                    <div style="margin-top: 5px">收藏</div>
+                </v-flex>
+                <v-flex xs2 style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                    <div>
+                        <v-icon color="primary">share</v-icon>
+                    </div>
+                    <div style="margin-top: 5px">分享</div>
+                </v-flex>
+                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="$router.push({name:'article-read'})">
+                    <h2 style="color: white">立即参与（￥<span>39</span>）</h2>
+                </v-flex>
+            </v-layout>
+        </v-container>
+        <router-view></router-view>
     </div>
 </template>
 
