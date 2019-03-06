@@ -5,37 +5,48 @@
                 <v-icon>arrow_back</v-icon>
             </v-btn>
             <v-container id="container">
-                <div class="head">
-                    <h1 class="white--text">你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
-                </div>
-                <form class="form">
-                    <v-text-field
-                        dark
-                        solo
-                        prepend-icon="email"
-                        v-model="email"
-                        :error-messages="emailErrors"
-                        label="邮箱"
-                        @input="$v.email.$touch()"
-                        @blur="$v.email.$touch()"
-                    ></v-text-field>
-                    <v-text-field
-                        dark
-                        solo
-                        prepend-icon="lock"
-                        v-model="password"
-                        :error-messages="passwordErrors"
-                        label="密码"
-                        @input="$v.password.$touch()"
-                        @blur="$v.password.$touch()"
-                        :append-icon="show ? 'visibility_off' : 'visibility'"
-                        :type="show ? 'text' : 'password'"
-                        @click:append="show = !show"
-                    ></v-text-field>
-                </form>
-
-                <p class="white--text">还没有账号？<a @click="$router.push({name: 'register'})">立即注册</a></p>
-                <v-btn @click="login" color="primary" block>登录</v-btn>
+                <v-layout justify-space-between column fill-height>
+                    <v-flex xs2>
+                        <div class="head">
+                            <h1 class="white--text">你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
+                        </div>
+                    </v-flex>
+                    <v-flex>
+                        <form class="form">
+                            <v-text-field
+                                dark
+                                solo
+                                prepend-icon="email"
+                                v-model="email"
+                                :error-messages="emailErrors"
+                                label="邮箱"
+                                @input="$v.email.$touch()"
+                                @blur="$v.email.$touch()"
+                            ></v-text-field>
+                            <v-text-field
+                                dark
+                                solo
+                                prepend-icon="lock"
+                                v-model="password"
+                                :error-messages="passwordErrors"
+                                label="密码"
+                                @input="$v.password.$touch()"
+                                @blur="$v.password.$touch()"
+                                :append-icon="show ? 'visibility_off' : 'visibility'"
+                                :type="show ? 'text' : 'password'"
+                                @click:append="show = !show"
+                            ></v-text-field>
+                        </form>
+                        <p class="right">忘记密码?</p><br><br>
+                        <v-btn @click="login" color="primary" block large>登录</v-btn>
+                    </v-flex>
+                    <v-flex xs1>
+                        <p class="white--text">
+                            还没有账号？<a @click="$router.push({name: 'register'})">立即注册</a>
+                            <span class="right">2019 GuaTeam</span>
+                        </p>
+                    </v-flex>
+                </v-layout>
             </v-container>
         </div>
     </div>
@@ -171,6 +182,7 @@
     #container {
         padding: 2em;
         z-index: 1;
+        height: 98vh;
     }
     .form {
          margin-top: 4em;
