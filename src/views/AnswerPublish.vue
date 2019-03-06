@@ -11,9 +11,6 @@
         </div>
         <div class="line"></div>
 
-        <!--富文本编辑器采用的wangEditor-->
-        <!--git地址https://github.com/wangfupeng1988/wangEditor-->
-
 
         <div style="width: 100%;height: 100%">
             <quill-editor

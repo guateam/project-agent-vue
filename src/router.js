@@ -17,7 +17,13 @@ export default new Router({
         {path: '/register', name: 'register', component: () => import('./views/Register.vue')},
         // 设置
         {path: '/settings', name: 'settings', component: () => import('./views/Settings.vue')},
-        {path: '/school', name: 'school', component: () => import('./views/School.vue')},
+        // 学院
+        {
+            path: '/school',
+            name: 'school',
+            component: () => import('./views/School.vue'),
+        },
+
         // 用户个人页
         {
             path: '/account',
@@ -169,6 +175,19 @@ export default new Router({
             name: 'corporate_center',
             meta: {requireLogin: true},
             component: () => import('./views/CorporateCenter.vue')
+        },
+        // 文章页
+        {
+            path: 'article',
+            name: 'article',
+            component: () => import('./views/Article.vue'),
+            // children: [
+            //     {
+            //         path: 'chat-setting',
+            //         name: 'chat-setting',
+            //         component: () => import('./views/ChatSetting.vue')
+            //     },
+            // ]
         },
     ],
 });
