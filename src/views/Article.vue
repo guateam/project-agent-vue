@@ -127,9 +127,11 @@ height: 100%;border-radius: 50%">
                      style="position: fixed;bottom: 0;height: 60px;background: white;z-index: 100;width: 100%;padding:0;padding-top:5px;border-top:1px #ccc solid; align-items: center;">
             <v-layout row style="height: 100%;align-items: center;">
                 <v-flex xs2
-                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc"
+                        @click="collect_article()"
+                >
                     <div>
-                        <v-icon color="primary">favorite_border</v-icon>
+                        <v-icon color="primary">{{favorite}}</v-icon>
                     </div>
                     <div style="margin-top: 5px">收藏</div>
                 </v-flex>
@@ -141,7 +143,8 @@ height: 100%;border-radius: 50%">
                     <div style="margin-top: 5px">分享</div>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="pay_confirm()">
-                    <h2 style="color: white">立即阅读<span v-if="data.free!==1 && paid===false">（￥{{data.price}}）</span></h2>
+                    <h2 style="color: white">立即阅读<span v-if="data.free!==1 && paid===false">（￥{{data.price}}）</span>
+                    </h2>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -212,8 +215,9 @@ height: 100%;border-radius: 50%">
 
                 },
                 comments: [],
-                dialog:false,
-                paid:false,
+                dialog: false,
+                paid: false,
+                favorite: 'favorite_border',
             }
         },
         methods: {
@@ -235,24 +239,46 @@ height: 100%;border-radius: 50%">
                 this.$api.account.add_user_action(this.$route.query.id, 21);
             },
             pay() {
-                this.dialog=false;
+                this.dialog = false;
                 this.$api.article.pay_article(this.$route.query.id).then(res => {
                     if (res.data.code === 1 || res.data.code === 2) {
                         this.$router.push({name: 'article-read'})
                     }
                 })
             },
-            pay_confirm(){
-                if(this.paid===false){
-                    this.dialog=true;
-                }else {
+            pay_confirm() {
+                if (this.paid === false) {
+                    this.dialog = true;
+                } else {
                     this.$router.push({name: 'article-read'})
                 }
             },
-            get_paid(id){
-                this.$api.article.get_paid(id).then(res=>{
-                    if(res.data.code===1){
-                        this.paid=true;
+            get_paid(id) {
+                this.$api.article.get_paid(id).then(res => {
+                    if (res.data.code === 1) {
+                        this.paid = true;
+                    }
+                })
+            },
+            collect_article() {
+                if (this.favorite === 'favorite_border') {
+                    this.$api.article.collect_article(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.favorite = 'favorite'
+                        }
+                    })
+                } else {
+                    this.$api.article.un_collect_article(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.favorite = 'favorite_border'
+                        }
+                    })
+                }
+            },
+            get_article_collect_state(id) {
+                this.$api.article.get_article_collect_state(id).then(res => {
+                    if (res.data.code === 1) {
+                        this.favorite = 'favorite'
                     }
                 })
             }
@@ -262,6 +288,7 @@ height: 100%;border-radius: 50%">
             this.get_article_comment(this.$route.query.id);
             this.set_user_action();
             this.get_paid(this.$route.query.id);
+            this.get_article_collect_state(this.$route.query.id);
         }
     }
 </script>
