@@ -10,8 +10,9 @@ const base = {
     article: baseUrl + '/article',
     specialist: baseUrl + '/specialist',
     activities: baseUrl + '/activities',
-    tags:baseUrl+'/tags',
-    upload:baseUrl+'/upload'
+    tags: baseUrl + '/tags',
+    upload: baseUrl + '/upload',
+    group: baseUrl + '/group',
 };
 
 export default base;

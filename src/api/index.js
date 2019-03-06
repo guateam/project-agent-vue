@@ -184,6 +184,11 @@ const index = {
         upload_picture(picture) {
             return axios.get(`${base.upload}/upload_picture`, {params: {picture: picture}})
         }
+    },
+    group: {
+        get_groups(token = store.state.token) {
+            return axios.get(`${base.group}/get_groups`, {params: {token: token}})
+        }
     }
 };
 

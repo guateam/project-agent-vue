@@ -247,25 +247,60 @@
                                     action: 'account_box',
                                     title: value['group']['text'],
                                     items: [],
-                                    id:value['usergroup']
+                                    id: value['usergroup']
                                 })
                             }
-                            data.forEach(item=>{
-                                if(item.id===value['usergroup']){
+                            data.forEach(item => {
+                                if (item.id === value['usergroup']) {
                                     item.items.push(value);
                                 }
                             })
                         });
-                        data.sort((a,b)=>{
-                            if(a.id>b.id){
+                        data.sort((a, b) => {
+                            if (a.id > b.id) {
                                 return 1;
-                            }else if(a.id<b.id){
+                            } else if (a.id < b.id) {
                                 return -1;
-                            }else {
+                            } else {
                                 return 0;
                             }
                         });
-                        this.friList=data;
+                        this.friList = data;
+                    }
+                })
+            },
+            get_date(date) {
+                let old = new Date(date);
+                let now = new Date();
+                let time = now.getTime() - old.getTime();
+                if (time < 60 * 1000) {
+                    return "刚刚"
+                } else if (time > 60 * 1000 && time < 60 * 60 * 1000) {
+                    return Math.round(time / 60 / 1000) + '分钟前'
+                } else if (time > 60 * 60 * 1000 && time < 24 * 60 * 60 * 1000) {
+                    return Math.round(time / 60 / 60 / 1000) + '小时前'
+                } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
+                    return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
+                } else {
+                    return old.getMonth() + '-' + old.getDay()
+                }
+            },
+            get_groups() {
+                this.$api.group.get_groups().then(res => {
+                    if (res.data.code === 1) {
+                        let data = [];
+                        res.data.data.forEach(value => {
+                            data.push({
+                                title: value['name'] + '<span id="title-time">' + this.get_date(value['last_message']['time']) + '</span>',
+                                content: value['last_message']['nickname'] + ':' + value['last_message']['content'],
+                                avatar: value['head_portrait'],
+                                id: value['id']
+                            });
+                            data.push({
+                                divider: true, inset: true
+                            })
+                        });
+                        this.groupList = data;
                     }
                 })
             }
@@ -274,6 +309,7 @@
         mounted() {
             this.getMessageList();
             this.get_friend_list();
+            this.get_groups();
         },
     }
 </script>
