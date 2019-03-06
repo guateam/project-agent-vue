@@ -25,8 +25,8 @@
                                    :key="n" v-bind="question"></question-card>
                 </v-tab-item>
 
-                <v-tab-item v-for="data in category" :key="data.id">
-                    <question-card @click.native="view_detail(question.questionID)" v-for="question in questionList"
+                <v-tab-item v-for="(data,idx) in category" :key="data.id">
+                    <question-card @click.native="view_detail(question.questionID)" v-for="question in classify_question[idx]"
                                    :key="question.questionID" v-bind="question"></question-card>
                 </v-tab-item>
                 <div class="bottom-nav"></div>
@@ -78,6 +78,7 @@
                 tabs: 0,
                 category: [],
                 questionList: [],
+                classify_question:[],
                 bottomNav: 0,
                 page: 1,
                 busy: false,
@@ -138,14 +139,44 @@
                     }
                 })
             },
+            get_classify_question(idx,page){
+                var that = this
+                var id = this.category[idx]['id']
+                this.category[idx]['page']++
+                this.$set(this.category,idx, this.category[idx])
+                this.$api.homepage.get_classify(id,1,page).then(res => {
+                    if (res.data.code === 1) {
+                        for(var i=0;i<res.data.data.length;i++)
+                            that.classify_question[idx].push(res.data.data[i])
+                        that.$set(that.classify_question,idx,that.classify_question[idx])
+                        that.busy = false;
+                        that.timeout=0;
+                    }else{
+                        that.timeout++
+                        that.get_classify_question(id,page)
+                    }
+                })
+            },
             loadMore() {
                 this.busy = true;
-                this.get_recommend();
-            }
+                if(this.tabs == 0){
+                    this.get_recommend();
+                }else{
+                    //获取目前的分类页码数
+                    var cate_page = 0
+                    cate_page =  this.category[this.tabs-1]['page']+1
+                    this.get_classify_question(this.tabs-1,cate_page)
+                }
+            },
         },
 
         mounted() {
             this.get_category();
+            this.$api.homepage.classify_all_tag(1).then(res => {
+                if (res.data.code === 1) {
+                    this.classify_question= res.data.data;
+                }
+            })
             // setTimeout(this.get_recommend(), 5000);
         }
     }

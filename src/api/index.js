@@ -14,6 +14,14 @@ const index = {
         get_category() {
             return axios.get(`${base.homepage}/get_category`)
         },
+        //获取特定tag下的问题或者文章
+        get_classify(tag,type,page){
+            return  axios.get(`${base.homepage}/classify_by_tag`, {params: {tag: tag, type: type, page:page}})
+        },
+        //获取特定tag下的问题或者文章
+        classify_all_tag(type){
+            return  axios.get(`${base.homepage}/classify_all_tag`, {params: {type: type}})
+        }
     },
     account: {
         // 用户登录
