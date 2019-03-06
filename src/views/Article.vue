@@ -136,11 +136,10 @@ height: 100%;border-radius: 50%">
                     <div style="margin-top: 5px">分享</div>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="$router.push({name:'article-read'})">
-                    <h2 style="color: white">立即参与（￥<span>39</span>）</h2>
+                    <h2 style="color: white">立即阅读<span v-if="data.free!==1">（￥{{data.price}}）</span></h2>
                 </v-flex>
             </v-layout>
         </v-container>
-        <router-view></router-view>
     </div>
 </template>
 
