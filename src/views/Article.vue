@@ -47,7 +47,7 @@
             </v-flex>
             <v-flex xs3
                     style="align-items: center;justify-content: space-between;flex-direction: column;text-align: center;padding-top: 10px;padding-bottom: 10px;border-right: 1px solid #eee;">
-                <div>阅读人数</div>
+                <div>点击量</div>
                 <div style="margin-top: 5px">{{data.read}}</div>
             </v-flex>
             <v-flex xs3
@@ -58,7 +58,9 @@
             <v-flex xs3
                     style="align-items: center;justify-content: space-between;flex-direction: column;text-align: center;padding-top: 10px;padding-bottom: 10px">
                 <div>价格</div>
-                <div style="margin-top: 5px"><span v-if="data.free!==1">￥{{data.price}}</span><span v-else style="color:tomato">免费</span></div>
+                <div style="margin-top: 5px"><span v-if="data.free!==1">￥{{data.price}}</span><span v-else
+                                                                                                    style="color:tomato">免费</span>
+                </div>
             </v-flex>
         </v-layout>
         <v-divider></v-divider>
@@ -86,14 +88,14 @@ height: 100%;border-radius: 50%">
                 </v-flex>
                 <v-flex xs9>
                     <p class="topicdetail">
-                        <h3>{{data.nickname}}</h3>
-                        作者简介：
-                        <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
-                        <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
-                        <button v-if="data.description.length > 80" @click="showAll_two = !showAll_two">
-                            <span v-if="!showAll_two" style="color: blue">显示全部</span>
-                            <span v-else style="color: blue">收起</span>
-                        </button>
+                    <h3>{{data.nickname}}</h3>
+                    作者简介：
+                    <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
+                    <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
+                    <button v-if="data.description.length > 80" @click="showAll_two = !showAll_two">
+                        <span v-if="!showAll_two" style="color: blue">显示全部</span>
+                        <span v-else style="color: blue">收起</span>
+                    </button>
                     </p>
                 </v-flex>
             </v-layout>
@@ -109,7 +111,8 @@ height: 100%;border-radius: 50%">
                     </div>
                 </v-flex>
                 <v-flex xs9>
-                    <div><b class="nickname">{{item.nickname}}</b><span class="board">{{item.group.text}} lv.{{item.level}}</span></div>
+                    <div><b class="nickname">{{item.nickname}}</b><span class="board">{{item.group.text}} lv.{{item.level}}</span>
+                    </div>
                     <p class="topicdetail">
                         <span>{{ item.content }} </span>
                     </p>
@@ -123,23 +126,63 @@ height: 100%;border-radius: 50%">
         <v-container grid-list-md text-xs-center
                      style="position: fixed;bottom: 0;height: 60px;background: white;z-index: 100;width: 100%;padding:0;padding-top:5px;border-top:1px #ccc solid; align-items: center;">
             <v-layout row style="height: 100%;align-items: center;">
-                <v-flex xs2 style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                <v-flex xs2
+                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
                     <div>
                         <v-icon color="primary">favorite_border</v-icon>
                     </div>
                     <div style="margin-top: 5px">收藏</div>
                 </v-flex>
-                <v-flex xs2 style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                <v-flex xs2
+                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
                     <div>
                         <v-icon color="primary">share</v-icon>
                     </div>
                     <div style="margin-top: 5px">分享</div>
                 </v-flex>
-                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="$router.push({name:'article-read'})">
-                    <h2 style="color: white">立即阅读<span v-if="data.free!==1">（￥{{data.price}}）</span></h2>
+                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="pay_confirm()">
+                    <h2 style="color: white">立即阅读<span v-if="data.free!==1 && paid===false">（￥{{data.price}}）</span></h2>
                 </v-flex>
             </v-layout>
         </v-container>
+        <v-dialog
+                v-model="dialog"
+                width="500"
+        >
+            <v-card>
+                <v-card-title
+                        class="headline grey lighten-2"
+                        primary-title
+                        color="primary"
+                >
+                    确认支付
+                </v-card-title>
+
+                <v-card-text>
+                    你确定支付￥{{data.price}}元来购买本文章吗？
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                            color="warning"
+                            flat
+                            @click="dialog = false"
+                    >
+                        取消
+                    </v-btn>
+                    <v-btn
+                            color="success"
+                            flat
+                            @click="pay"
+                    >
+                        确定
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -155,20 +198,22 @@ height: 100%;border-radius: 50%">
                     title: '加载中',
                     nickname: '未知',
                     group: {
-                        text:'未知用户组'
+                        text: '未知用户组'
                     },
-                    level:0,
-                    description:'加载中请稍等···',
-                    article_description:'加载中请稍等···',
-                    collect:0,
-                    read:0,
-                    rate:0,
-                    free:1,
-                    cover:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871818376&di=23a06b4313b4716598c3448d8803049e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3c6d55fbb2fb431690697fb32aa4462308f7d381.jpg',
-                    head_portrait:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871796439&di=b76ea1eec37f57c40181636afbe7d303&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F69%2F80%2F595f67c2239cb_610.jpg',
+                    level: 0,
+                    description: '加载中请稍等···',
+                    article_description: '加载中请稍等···',
+                    collect: 0,
+                    read: 0,
+                    rate: 0,
+                    free: 1,
+                    cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871818376&di=23a06b4313b4716598c3448d8803049e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3c6d55fbb2fb431690697fb32aa4462308f7d381.jpg',
+                    head_portrait: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871796439&di=b76ea1eec37f57c40181636afbe7d303&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F69%2F80%2F595f67c2239cb_610.jpg',
 
                 },
-                comments: []
+                comments: [],
+                dialog:false,
+                paid:false,
             }
         },
         methods: {
@@ -186,14 +231,37 @@ height: 100%;border-radius: 50%">
                     }
                 })
             },
-            set_user_action(){
-                this.$api.account.add_user_action(this.$route.query.id,21);
+            set_user_action() {
+                this.$api.account.add_user_action(this.$route.query.id, 21);
+            },
+            pay() {
+                this.dialog=false;
+                this.$api.article.pay_article(this.$route.query.id).then(res => {
+                    if (res.data.code === 1 || res.data.code === 2) {
+                        this.$router.push({name: 'article-read'})
+                    }
+                })
+            },
+            pay_confirm(){
+                if(this.paid===false){
+                    this.dialog=true;
+                }else {
+                    this.$router.push({name: 'article-read'})
+                }
+            },
+            get_paid(id){
+                this.$api.article.get_paid(id).then(res=>{
+                    if(res.data.code===1){
+                        this.paid=true;
+                    }
+                })
             }
         },
         mounted() {
             this.get_article_info(this.$route.query.id);
             this.get_article_comment(this.$route.query.id);
             this.set_user_action();
+            this.get_paid(this.$route.query.id);
         }
     }
 </script>
@@ -230,16 +298,18 @@ height: 100%;border-radius: 50%">
     .v-rating, .v-icon {
         padding: 0 !important;
     }
-    .board{
-        border:solid 1px #ffcc00;
+
+    .board {
+        border: solid 1px #ffcc00;
         border-radius: 2px;
         margin-left: 1em;
         padding: 0.1em;
         margin-bottom: 0.2em;
         font-size: 1.1em;
-        color:orange;
+        color: orange;
     }
-    .nickname{
+
+    .nickname {
         font-size: 1.5em;
     }
 </style>

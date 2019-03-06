@@ -145,6 +145,12 @@ const index = {
         },
         get_article_comment(id) {
             return axios.get(`${base.article}/get_article_comment`, {params: {article_id: id}})
+        },
+        pay_article(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/pay_article`, {params: {article_id: article_id, token: token}})
+        },
+        get_paid(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/get_paid`, {params: {article_id: article_id, token: token}})
         }
     },
     specialist: {
