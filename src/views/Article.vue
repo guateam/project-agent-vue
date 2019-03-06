@@ -23,7 +23,9 @@
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;">
                         <h3>大漠孤烟</h3>
-                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;border-radius: 25%"> 专家lv.4 </div>
+                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;border-radius: 25%">
+                            专家lv.4
+                        </div>
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;padding: 0 !important;">
                         <v-rating v-model="rating" style="padding: 0 !important;" readonly></v-rating>
@@ -135,10 +137,30 @@ height: 100%;border-radius: 50%">
                 </v-flex>
             </v-layout>
         </div>
-        <v-footer class="pa-3">
-            <v-spacer></v-spacer>
-            <div>&copy; {{ new Date().getFullYear() }}</div>
-        </v-footer>
+        <!--占位的盒子   STAR-->
+        <v-flex xs12 style="height: 70px;background-color: white"></v-flex>
+        <!--占位的盒子   END-->
+        <v-container grid-list-md text-xs-center
+                     style="position: fixed;bottom: 0;height: 60px;background: white;z-index: 100;width: 100%;padding:0;padding-top:5px;border-top:1px #ccc solid; align-items: center;">
+            <v-layout row style="height: 100%;align-items: center;">
+                <v-flex xs2 style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                    <div>
+                        <v-icon color="primary">favorite_border</v-icon>
+                    </div>
+                    <div style="margin-top: 5px">收藏</div>
+                </v-flex>
+                <v-flex xs2 style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                    <div>
+                        <v-icon color="primary">share</v-icon>
+                    </div>
+                    <div style="margin-top: 5px">分享</div>
+                </v-flex>
+                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="$router.push({name:'article-read'})">
+                    <h2 style="color: white">立即参与（￥<span>39</span>）</h2>
+                </v-flex>
+            </v-layout>
+        </v-container>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -151,7 +173,7 @@ height: 100%;border-radius: 50%">
                 content: '为了研究柔性天线面弹性变形对漂浮基星载天线的扰动,采用固定界面模态综合法和Lagrange方法,通过轴末端与天线面交界面的协调关系,推导了大范围运动的星载天线刚柔耦合动力学模型,其所建立的动力学模型计算效率高并具有足够的精度。分析了柔性天线面弹性变形对星载天线的扰动,利用PD+振动力反馈控制抑制系统振动,并基于Lyapunov方法证明了控制系统的渐近稳定性。仿真结果表明:天线工作过程激起了柔性天线面弹性振动,进而引起星载天线的抖动,严重影响了星载天线的指向精度;利用其控制策略能快速抑制系统振动。结论对天线指向精度的分析与控制具有重要的理论价值及工程实际意义。',
                 showAll_one: false,
                 showAll_two: false,
-                showAll_three:false
+                showAll_three: false
             }
         }
     }
@@ -186,7 +208,7 @@ height: 100%;border-radius: 50%">
         padding: 6px !important;
     }
 
-    .v-rating,.v-icon{
+    .v-rating, .v-icon {
         padding: 0 !important;
     }
 </style>

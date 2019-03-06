@@ -122,6 +122,19 @@ export default new Router({
                 },
             ]
         },
+        // 文章页
+        {
+            path: 'article',
+            name: 'article',
+            component: () => import('./views/Article.vue'),
+            children: [
+                {
+                    path: 'article-read',
+                    name: 'article-read',
+                    component: () => import('./views/ArticleRead.vue')
+                },
+            ]
+        },
         // 收藏
         {
             path: '/collection',
@@ -175,19 +188,6 @@ export default new Router({
             name: 'corporate_center',
             meta: {requireLogin: true},
             component: () => import('./views/CorporateCenter.vue')
-        },
-        // 文章页
-        {
-            path: 'article',
-            name: 'article',
-            component: () => import('./views/Article.vue'),
-            // children: [
-            //     {
-            //         path: 'chat-setting',
-            //         name: 'chat-setting',
-            //         component: () => import('./views/ChatSetting.vue')
-            //     },
-            // ]
         },
     ],
 });
