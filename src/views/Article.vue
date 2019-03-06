@@ -133,14 +133,14 @@ height: 100%;border-radius: 50%">
                     <div>
                         <v-icon color="primary">{{favorite}}</v-icon>
                     </div>
-                    <div style="margin-top: 5px">收藏</div>
+                    <div style="margin-top: 5px">{{favorite==='favorite'?'已关注':'关注'}}</div>
                 </v-flex>
                 <v-flex xs2
                         style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
                     <div>
-                        <v-icon color="primary">share</v-icon>
+                        <v-icon color="primary">comment</v-icon>
                     </div>
-                    <div style="margin-top: 5px">分享</div>
+                    <div style="margin-top: 5px">评论</div>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="pay_confirm()">
                     <h2 style="color: white">立即阅读<span v-if="data.free!==1 && paid===false">（￥{{data.price}}）</span>

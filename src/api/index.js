@@ -157,6 +157,14 @@ const index = {
         },
         un_collect_article(article_id, token = store.state.token) {
             return axios.get(`${base.article}/un_collect_article`, {params: {article_id: article_id, token: token}})
+        },
+        get_article_collect_state(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/get_article_collect_state`, {
+                params: {
+                    article_id: article_id,
+                    token: token
+                }
+            })
         }
     },
     specialist: {
