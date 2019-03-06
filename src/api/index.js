@@ -147,6 +147,12 @@ const index = {
         },
         get_tag_articles(tag_id) {
             return axios.get(`${base.article}/get_tag_articles`, {params: {tag_id: tag_id}})
+        },
+        get_article_info(id) {
+            return axios.get(`${base.article}/get_article_info`, {params: {article_id: id}})
+        },
+        get_article_comment(id) {
+            return axios.get(`${base.article}/get_article_comment`, {params: {article_id: id}})
         }
     },
     specialist: {
@@ -185,6 +191,11 @@ const index = {
     upload: {
         upload_picture(picture) {
             return axios.get(`${base.upload}/upload_picture`, {params: {picture: picture}})
+        }
+    },
+    group: {
+        get_groups(token = store.state.token) {
+            return axios.get(`${base.group}/get_groups`, {params: {token: token}})
         }
     }
 };
