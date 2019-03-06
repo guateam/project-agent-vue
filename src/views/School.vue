@@ -54,7 +54,7 @@
                                         ></v-img>
                                         <v-card-title>
                                             <div>
-                                                <span><b>{{value.title}}</b></span>
+                                                <span class="inline"><b>{{value.title}}</b></span>
                                                 <div>
                                                     <div class="grey--text text--darken-2">
                                                         <span v-for="(tag, index) in value.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
@@ -340,5 +340,7 @@
 
     button {
         z-index: 1;
+    }
+    .inline{
     }
 </style>
