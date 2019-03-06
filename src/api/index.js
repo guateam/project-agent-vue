@@ -14,6 +14,14 @@ const index = {
         get_category() {
             return axios.get(`${base.homepage}/get_category`)
         },
+        //获取特定tag下的问题或者文章
+        get_classify(tag,type,page){
+            return  axios.get(`${base.homepage}/classify_by_tag`, {params: {tag: tag, type: type, page:page}})
+        },
+        //获取特定tag下的问题或者文章
+        classify_all_tag(type){
+            return  axios.get(`${base.homepage}/classify_all_tag`, {params: {type: type}})
+        }
     },
     account: {
         // 用户登录
@@ -145,6 +153,26 @@ const index = {
         },
         get_article_comment(id) {
             return axios.get(`${base.article}/get_article_comment`, {params: {article_id: id}})
+        },
+        pay_article(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/pay_article`, {params: {article_id: article_id, token: token}})
+        },
+        get_paid(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/get_paid`, {params: {article_id: article_id, token: token}})
+        },
+        collect_article(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/collect_article`, {params: {article_id: article_id, token: token}})
+        },
+        un_collect_article(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/un_collect_article`, {params: {article_id: article_id, token: token}})
+        },
+        get_article_collect_state(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/get_article_collect_state`, {
+                params: {
+                    article_id: article_id,
+                    token: token
+                }
+            })
         }
     },
     specialist: {
