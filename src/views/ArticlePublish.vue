@@ -45,6 +45,9 @@
                                             </Option>
                                         </Select>
                                     </FormItem>
+                                    <FormItem label="文章简介">
+                                        <Input v-model="formItem.description" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="输入文章简介···"></Input>
+                                    </FormItem>
                                     <FormItem label="付费文章">
                                         <i-switch v-model="formItem.priced" size="large">
                                             <span slot="open">是</span>
@@ -126,6 +129,7 @@
                     priced: false,
                     price: 0.00,
                     cover: undefined,
+                    description: undefined,
                 },
                 tag_loading: false,
 
@@ -237,7 +241,8 @@
                         content: that.content,
                         tags: tags,
                         cover: that.formItem.cover,
-                        free:that.formItem.priced
+                        free:that.formItem.priced,
+                        description:that.formItem.description
                     };
                     that.$api.article.add_article(data).then(res => {
                         if (res.data.code === 1) {
