@@ -1,21 +1,23 @@
 <template>
     <div class="login">
         <div id="background">
-            <v-btn @click="$router.push({name: 'index'})" icon dark>
-                <v-icon>arrow_back</v-icon>
-            </v-btn>
-            <v-container id="container">
+            <div class="top">
+                <v-btn @click="$router.push({name: 'index'})" icon dark>
+                    <v-icon>arrow_back</v-icon>
+                </v-btn>
+            </div>
+            <v-container class="container">
                 <v-layout justify-space-between column fill-height>
                     <v-flex xs2>
                         <div class="head">
-                            <h1 class="white--text">你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
+                            <!--<h1 class="white&#45;&#45;text">你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>-->
+                            <h1 class="white--text">嗨!<br />欢迎回来</h1>
                         </div>
                     </v-flex>
                     <v-flex>
                         <form class="form">
                             <v-text-field
                                 dark
-                                solo
                                 prepend-icon="email"
                                 v-model="email"
                                 :error-messages="emailErrors"
@@ -25,7 +27,6 @@
                             ></v-text-field>
                             <v-text-field
                                 dark
-                                solo
                                 prepend-icon="lock"
                                 v-model="password"
                                 :error-messages="passwordErrors"
@@ -37,10 +38,12 @@
                                 @click:append="show = !show"
                             ></v-text-field>
                         </form>
-                        <p class="right">忘记密码?</p><br><br>
+                        <span class="right">忘记密码?</span>
+                        <br />
+                        <br />
                         <v-btn @click="login" color="primary" block large>登录</v-btn>
                     </v-flex>
-                    <v-flex xs1>
+                    <v-flex shrink>
                         <p class="white--text">
                             还没有账号？<a @click="$router.push({name: 'register'})">立即注册</a>
                             <span class="right">2019 GuaTeam</span>
@@ -179,10 +182,13 @@
         margin: -20px;
         z-index: -1;
     }
-    #container {
+    .top {
+        height: 10vh;
+    }
+    .container {
         padding: 2em;
         z-index: 1;
-        height: 98vh;
+        height: 90vh;
     }
     .form {
          margin-top: 4em;

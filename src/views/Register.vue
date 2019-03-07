@@ -1,10 +1,12 @@
 <template>
   <div class="register">
     <div id="background">
-      <v-btn @click="$router.push({name: 'login'})" icon dark>
-        <v-icon>arrow_back</v-icon>
-      </v-btn>
-      <v-container id="container">
+      <div class="top">
+        <v-btn @click="$router.push({name: 'login'})" icon dark>
+          <v-icon>arrow_back</v-icon>
+        </v-btn>
+      </div>
+      <v-container class="container">
         <v-layout justify-space-between column fill-height>
           <v-flex xs2>
             <div class="head">
@@ -15,7 +17,6 @@
             <form class="form">
               <v-text-field
                   dark
-                  solo
                   v-model="email"
                   :error-messages="emailErrors"
                   label="你的邮箱地址？"
@@ -24,7 +25,6 @@
               ></v-text-field>
               <v-text-field
                   dark
-                  solo
                   v-model="password"
                   type="password"
                   :error-messages="passwordErrors"
@@ -34,7 +34,6 @@
               ></v-text-field>
               <v-text-field
                   dark
-                  solo
                   v-model="password2"
                   type="password"
                   :error-messages="password2Errors"
@@ -45,7 +44,7 @@
             </form>
             <v-btn @click="register" color="primary" block large>立刻注册</v-btn>
           </v-flex>
-          <v-flex xs1>
+          <v-flex shrink>
             <p class="white--text">
               已有账号？<a @click="$router.push({name: 'login'})">返回登录</a>
               <span class="right">2019 GuaTeam</span>
@@ -214,9 +213,12 @@
     margin: -20px;
     z-index: -1;
   }
-  #container {
+  .top {
+    height: 10vh;
+  }
+  .container {
     padding: 2em;
-    height: 98vh;
+    height: 90vh;
   }
   .form {
     margin-top: 4em;
