@@ -2,9 +2,18 @@
     <div class="wallet">
         <v-layout column fill-height>
             <v-flex shrink>
-                <v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>
-                    <v-icon>arrow_back</v-icon>
-                </v-btn>
+                <v-layout justify-space-between row>
+                    <v-flex shrink>
+                        <v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>
+                            <v-icon>arrow_back</v-icon>
+                        </v-btn>
+                    </v-flex>
+                    <v-flex shrink>
+                        <v-btn @click="callService" icon>
+                            <v-icon>headset</v-icon>
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
             </v-flex>
             <v-flex grow>
                 <v-layout justify-space-between column fill-height>
@@ -19,10 +28,17 @@
                                             <span class="font--text">总资产(元)</span>
                                         </v-flex>
                                         <v-flex shrink>
-                                            <span class="headline font-weight-bold">¥ {{ balance }}</span>
+                                            <span class="balance font-weight-bold">{{ balance }}</span>
                                         </v-flex>
                                         <v-flex shrink>
-                                            <v-btn @click="topUp" small color="success" flat outline>立即充值</v-btn>
+                                            <v-layout>
+                                                <v-flex>
+                                                    <v-btn @click="withdraw" small color="success" flat outline>提现</v-btn>
+                                                </v-flex>
+                                                <v-flex>
+                                                    <v-btn @click="topUp" small color="success" flat outline>充值</v-btn>
+                                                </v-flex>
+                                            </v-layout>
                                         </v-flex>
                                     </v-layout>
                                 </v-flex>
@@ -99,7 +115,7 @@
                                                 <v-list-tile-action>
                                                         <span class="font-weight-bold">
                                                             <span class="red--text">- </span>
-                                                            ¥{{ item.price }}
+                                                            {{ item.price }}
                                                         </span>
                                                 </v-list-tile-action>
                                             </v-list-tile>
@@ -130,7 +146,7 @@
                                                 <v-list-tile-action>
                                                         <span class="font-weight-bold">
                                                             <span class="green--text">+ </span>
-                                                            ¥{{ item.price }}
+                                                            {{ item.price }}
                                                         </span>
                                                 </v-list-tile-action>
                                             </v-list-tile>
@@ -168,27 +184,75 @@
                     { title: '微信充值', time: '2019-03-01', price: '60.00' },
                     { title: '微信充值', time: '2019-01-01', price: '2,000.00' },
                 ],  // 收入/充值
-                balance: 0,  // 余额
+                balance: "正在载入...",  // 余额
             }
         },
         methods: {
+
+            callService() {
+                this.$store.commit('showInfo', '呼叫客服');
+            },  // 呼叫客服
+
             showMoreCards() {
-                alert("显示更多卡券");
+                this.$store.commit('showInfo', '显示更多卡券');
             },  // 显示更多卡券
+
+            withdraw() {
+                this.$store.commit('showInfo', '立即提现');
+            },  // 提现
+
             topUp() {
-                alert("立即充值");
+                this.$store.commit('showInfo', '立即充值');
             },  // 充值
-            getWallet() {
+
+            getBalance() {
                 this.$api.account.get_account_balance().then((res) => {
                     if (res.data.code === 1) {
                         this.balance = (res.data.data.toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     }
                 })
-            }
+            },  // 获取用户余额
+
+            getHistory() {
+                let type_dict = {
+                    1: "付费回答",
+                    2: "专家咨询",
+                    3: "告示板需求",
+                    4: "文章付费",
+                    5: "文章收入",
+                };
+                this.$api.account.get_history_pay().then(res => {
+                    if (res.data.code === 1) {
+                        if (res.data.data.length !== 0) {
+                            this.expense = [];  // 清空现有数据
+                            this.income = [];  // 清空现有数据
+                            res.data.data.forEach(item => {
+                                window.console.log(item);
+                                if (item.amount < 0) {
+                                    this.expense.unshift({
+                                        title: type_dict[item.type],
+                                        time: item.time,
+                                        price: Math.abs(item.amount),
+                                    })
+                                }  // 添加支出
+                                else {
+                                    this.income.unshift({
+                                        title: type_dict[item.type],
+                                        time: item.time,
+                                        price: Math.abs(item.amount),
+                                    })
+                                }  // 添加收入
+
+                            })
+                        }  // 处理数据
+                    }  // 如果获取成功
+                })
+            },  // 获取交易记录
         },
         mounted() {
             this.$emit('hiddenToolBar');
-            this.getWallet()
+            this.getBalance();
+            this.getHistory();
         }
     }
 </script>
@@ -199,6 +263,9 @@
         font-family: Helvetica, Arial, sans-serif;
         background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);;
         /*background: linear-gradient(to bottom, #FFCC00, white);*/
+    }
+    .balance {
+        font-size: 3em;
     }
     .card-info {
         padding: 8px;
