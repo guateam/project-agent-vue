@@ -136,7 +136,9 @@ height: 100%;border-radius: 50%">
                     <div style="margin-top: 5px">{{favorite==='favorite'?'已关注':'关注'}}</div>
                 </v-flex>
                 <v-flex xs2
-                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc"
+                        @click="$router.push({name:'comment',query:{id:$route.query.id,type:2}})"
+                >
                     <div>
                         <v-icon color="primary">comment</v-icon>
                     </div>
