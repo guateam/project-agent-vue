@@ -26,8 +26,8 @@
                     </div>
                 </div>
                 <p class="topicdetail">
-                    <span v-if="!showAll">{{ questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content }} </span>
-                    <span v-else>{{ questionData.content }} </span>
+                    <span v-if="!showAll" v-html="questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content"></span>
+                    <span v-else v-html="questionData.content"></span>
                     <button id="show-all-button" v-if="questionData.content.length > 65" @click="showAll = !showAll">
                         <span v-if="!showAll" style="color: blue">显示全部</span>
                         <span v-else style="color: blue">收起</span>

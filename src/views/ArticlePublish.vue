@@ -62,19 +62,7 @@
                                         <!--<Slider :value="formItem.price" :step="0.1" :max="100"></Slider>-->
                                     </FormItem>
                                 </Form>
-                                <v-snackbar
-                                        v-model="snackbar"
-                                        vertical="vertical"
-                                >
-                                    {{ text }}
-                                    <v-btn
-                                            dark
-                                            flat
-                                            @click="snackbar = false"
-                                    >
-                                        Close
-                                    </v-btn>
-                                </v-snackbar>
+
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -116,9 +104,7 @@
         data() {
             return {
                 content: '',
-                snackbar: false,
                 dialog: false,
-                text: '',
                 first_category: [],
                 second_category: [],
                 upload_list: [],
@@ -248,8 +234,7 @@
                         if (res.data.code === 1) {
                             that.$router.back();
                         } else {
-                            that.text = res.data.msg;
-                            that.snackbar = true;
+                            this.$store.commit('showInfo', res.data.msg);
                         }
                     })
 

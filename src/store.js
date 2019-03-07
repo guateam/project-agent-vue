@@ -21,9 +21,18 @@ export default new Vuex.Store({
       collection: null,  // 收藏
     },
     drawer: false,  // 侧边栏开关
-    login:false, //是否登录检查
+    login: false, //是否登录检查
+    infoText: '',  // 弹出提示的文字
+    snackbar: false,  // 是否弹出提示
   },
   mutations: {
+    showInfo(state, text) {
+      state.infoText = text;
+      state.snackbar = true;
+    },  // 弹出提示
+    closeInfo(state) {
+      state.snackbar = false
+    },  // 关闭提示
     // Update user's token with `$store.commit('updateToken', token);`.
     updateToken(state, token) { state.token = token },
     // Remove user's token.
@@ -38,10 +47,9 @@ export default new Vuex.Store({
         head_portrait: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
       }
     },
-    // 开关侧边栏
     drawer(state) {
       state.drawer = !state.drawer;
-    },
+    },  // 开关侧边栏
     login(state){
       state.login=true
     },
