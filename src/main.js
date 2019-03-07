@@ -34,7 +34,8 @@ import {
     CarouselItem,
     Upload,
     Button,
-    ButtonGroup
+    ButtonGroup,
+    Scroll
 } from 'iview';
 
 Vue.component('Menu', Menu);
@@ -55,6 +56,7 @@ Vue.component('CarouselItem', CarouselItem);
 Vue.component('Upload', Upload);
 Vue.component('Button', Button);
 Vue.component('ButtonGroup', ButtonGroup);
+Vue.component('Scroll', Scroll);
 
 Vue.use(VueQuillEditor);
 
