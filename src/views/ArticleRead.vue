@@ -19,7 +19,8 @@ width: 100%;object-fit: cover">
                     <img src="https://www.asgardusk.com/images/none.png" alt="" style="width: 100%;height: 100%;">
                 </div>
             </v-flex>
-            <v-flex xs7 style="flex-direction: column;justify-content: space-between;line-height: 27px;padding-top: 10px;">
+            <v-flex xs7
+                    style="flex-direction: column;justify-content: space-between;line-height: 27px;padding-top: 10px;">
                 <div><h3>大漠孤烟</h3></div>
                 <div>个人描述，是不是限制一下字数</div>
             </v-flex>
@@ -38,7 +39,8 @@ width: 100%;object-fit: cover">
             <br>
             <img src="https://www.asgardusk.com/images/portfolio/4.png" alt="" style="width: 100%;object-fit: cover">
             <br>
-            <p>打个比方就是，10亿个虫子冲过来了，联合国一轮炮击全躺。然后仅仅过了3秒钟，20亿虫子马上又冲了过来，又是一轮炮击，但虫子因为进化，所以杀伤力不明显，但还是用导弹给压了下去。不等你喘口气，40亿的虫子从四面八方围了上来，联合国动用核弹，到处种蘑菇，总算给消灭了。然后80亿的虫子不光是四面八方，还从你的脚底下，你的头顶上，你的身边一下子出现了。
+            <p>
+                打个比方就是，10亿个虫子冲过来了，联合国一轮炮击全躺。然后仅仅过了3秒钟，20亿虫子马上又冲了过来，又是一轮炮击，但虫子因为进化，所以杀伤力不明显，但还是用导弹给压了下去。不等你喘口气，40亿的虫子从四面八方围了上来，联合国动用核弹，到处种蘑菇，总算给消灭了。然后80亿的虫子不光是四面八方，还从你的脚底下，你的头顶上，你的身边一下子出现了。
             </p>
             <br>
             <p>真要按设定写，三个战列舰折越过来，三发大和炮直接带美利坚、天朝和俄罗斯走，然后再把卫星什么的东西一打，地球瞬间玩完。</p>
@@ -47,7 +49,8 @@ width: 100%;object-fit: cover">
             <br>
             <img src="https://www.asgardusk.com/images/portfolio/4.png" alt="" style="width: 100%;object-fit: cover">
             <br>
-            <p>打个比方就是，10亿个虫子冲过来了，联合国一轮炮击全躺。然后仅仅过了3秒钟，20亿虫子马上又冲了过来，又是一轮炮击，但虫子因为进化，所以杀伤力不明显，但还是用导弹给压了下去。不等你喘口气，40亿的虫子从四面八方围了上来，联合国动用核弹，到处种蘑菇，总算给消灭了。然后80亿的虫子不光是四面八方，还从你的脚底下，你的头顶上，你的身边一下子出现了。
+            <p>
+                打个比方就是，10亿个虫子冲过来了，联合国一轮炮击全躺。然后仅仅过了3秒钟，20亿虫子马上又冲了过来，又是一轮炮击，但虫子因为进化，所以杀伤力不明显，但还是用导弹给压了下去。不等你喘口气，40亿的虫子从四面八方围了上来，联合国动用核弹，到处种蘑菇，总算给消灭了。然后80亿的虫子不光是四面八方，还从你的脚底下，你的头顶上，你的身边一下子出现了。
             </p>
         </v-flex>
         <v-footer class="pa-3" style="padding-right: 1em;background-color: transparent;text-align: right">
@@ -64,13 +67,15 @@ height: 100%;border-radius: 50%">
                     </div>
                 </v-flex>
                 <v-flex xs9>
-                    <div style="display: flex;align-items: center;"><b class="nickname">拉拉人</b><span class="board">专家lv.4</span></div>
+                    <div style="display: flex;align-items: center;"><b class="nickname">拉拉人</b><span class="board">专家lv.4</span>
+                    </div>
                     <p class="topicdetail">
                         <span>卡拉之光，如影随形。八门齐开，光复艾尔</span>
                     </p>
                 </v-flex>
             </v-layout>
-            <h3 style="margin-bottom: 1.1em;font-size: 1.2em;padding-left: 25%">查看全部</h3>
+            <h3 @click="$router.push({name:'comment'})" style="margin-bottom: 1.1em;font-size: 1.2em;padding-left: 25%">
+                查看全部</h3>
         </div>
         <!--占位的盒子   STAR-->
         <v-flex xs12 style="height: 60px;background-color: white"></v-flex>
@@ -82,20 +87,19 @@ height: 100%;border-radius: 50%">
                 <button :class="word?'enSend':'disSend'" :disabled="!word" @click="send">发送</button>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
     export default {
         name: "article-read",
-        data () {
+        data() {
             return {
                 word: ''
             }
         },
         methods: {
-            send () {
+            send() {
                 this.word = ''
             }
         }
@@ -121,7 +125,8 @@ height: 100%;border-radius: 50%">
         height: 4em;
         background-color: #eee;
     }
-    .box{
+
+    .box {
         position: fixed;
         bottom: 0;
         width: 100%;
@@ -131,7 +136,8 @@ height: 100%;border-radius: 50%">
         display: flex;
         justify-content: flex-end;
     }
-    .chat{
+
+    .chat {
         height: 40px;
         margin: 5px 15px;
         padding: 0 10px;
@@ -139,16 +145,19 @@ height: 100%;border-radius: 50%">
         border-radius: 5px;
         flex: 1;
     }
-    .chat::-webkit-input-placeholder{
+
+    .chat::-webkit-input-placeholder {
         color: #999;
         font-size: 16px;
     }
-    .emoji-icon{
+
+    .emoji-icon {
         font-size: 30px;
         margin-top: 10px;
         color: #333;
     }
-    .disSend{
+
+    .disSend {
         line-height: 30px;
         margin: 7px 10px;
         padding: 0 12px;
@@ -158,7 +167,8 @@ height: 100%;border-radius: 50%">
         color: #999;
         background-color: #eee
     }
-    .enSend{
+
+    .enSend {
         line-height: 30px;
         margin: 7px 10px;
         padding: 0 5px;
@@ -168,16 +178,18 @@ height: 100%;border-radius: 50%">
         color: #fff;
         background-color: blue;
     }
-    .board{
-        border:solid 1px #ffcc00;
+
+    .board {
+        border: solid 1px #ffcc00;
         border-radius: 2px;
         margin-left: 1em;
         padding: 0.1em;
         margin-bottom: 0.2em;
         font-size: 1.1em;
-        color:orange;
+        color: orange;
     }
-    .nickname{
+
+    .nickname {
         font-size: 1.5em;
     }
 </style>

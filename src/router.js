@@ -107,7 +107,7 @@ export default new Router({
             name: 'message',
             meta: {requireLogin: true},  // 需要登录
             component: () => import('./views/Message.vue'),
-            children:[
+            children: [
                 {
                     path: 'chat',
                     name: 'Chat',
@@ -127,14 +127,25 @@ export default new Router({
             path: '/article',
             name: 'article',
             component: () => import('./views/Article.vue'),
-            children: [
-
-            ]
+            children: []
         },
+        // 文章阅读
         {
             path: '/article-read',
             name: 'article-read',
-            component: () => import('./views/ArticleRead.vue')
+            component: () => import('./views/ArticleRead.vue'),
+        },
+        // 评论组件
+        {
+            path: '/comment',
+            name: 'comment',
+            component: () => import('./views/Comment.vue')
+        },
+        // 评论回复组件
+        {
+            path: '/comment-detail',
+            name: 'comment-detail',
+            component: () => import('./views/CommentDetail.vue')
         },
         // 收藏
         {
