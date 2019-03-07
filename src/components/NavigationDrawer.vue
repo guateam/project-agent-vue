@@ -9,7 +9,7 @@
                 </v-flex>
                 <v-flex shrink>
                     <div id="button-group">
-                        <v-btn id="wallet" outline fab small color="secondary" @click="$router.push({name:'wallet'})">
+                        <v-btn id="wallet" outline fab small color="secondary" @click="$router.push({name:'wallet', query: {redirect: $route.fullPath}})">
                             <v-icon>account_balance_wallet</v-icon>
                         </v-btn>
                         <v-btn id="camera" outline fab small color="secondary">

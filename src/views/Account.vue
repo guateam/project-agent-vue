@@ -1,6 +1,6 @@
 <template>
   <div class="account">
-    <v-toolbar dark flat color="primary" app dense scroll-off-screen>
+    <v-toolbar dark flat color="primary" app dense scroll-off-screen v-if="showToolBar">
       <v-toolbar-side-icon v-if="title === ''" @click="$store.commit('drawer')"></v-toolbar-side-icon>
       <v-btn v-else :to="$route.query.redirect" icon>
         <v-icon>arrow_back</v-icon>
@@ -13,7 +13,7 @@
       <v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon> <v-icon>settings</v-icon> </v-btn>
     </v-toolbar>
 
-    <router-view @changeTitle="val => { this.title = val }"></router-view>
+    <router-view @changeTitle="val => { this.title = val }" @hiddenToolBar="showToolBar = false"></router-view>
 
   </div>
 </template>
@@ -28,6 +28,7 @@
     data() {
       return {
         title: '',  // 标题
+        showToolBar: true,  // 显示顶部
       }
     },
   }

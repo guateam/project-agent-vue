@@ -67,7 +67,12 @@
                     {title: '提问'},
                     {title: '文章'},
                 ],
-                items: []
+                items: [
+                    {
+                        title:'',
+                        headline:''
+                    }
+                ]
             }
         },
         methods: {

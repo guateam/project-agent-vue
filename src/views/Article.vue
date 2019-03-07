@@ -242,15 +242,15 @@ height: 100%;border-radius: 50%">
                 this.dialog = false;
                 this.$api.article.pay_article(this.$route.query.id).then(res => {
                     if (res.data.code === 1 || res.data.code === 2) {
-                        this.$router.push({name: 'article-read'})
+                        this.$router.push({name: 'article-read', query: {id: this.$route.query.id}})
                     }
                 })
             },
             pay_confirm() {
-                if (this.paid === false) {
+                if (this.paid === false && this.data.free !== 1) {
                     this.dialog = true;
                 } else {
-                    this.$router.push({name: 'article-read'})
+                    this.$router.push({name: 'article-read', query: {id: this.$route.query.id}})
                 }
             },
             get_paid(id) {
