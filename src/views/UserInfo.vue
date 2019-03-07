@@ -124,7 +124,7 @@
 
                     <v-divider></v-divider>
 
-                    <v-list-tile @click="$router.push({name:'wallet'})">
+                    <v-list-tile @click="$router.push({name:'wallet', query: {redirect: $route.fullPath}})">
                         <v-list-tile-action>
                             <v-icon class="time--text">account_balance_wallet</v-icon>
                         </v-list-tile-action>
