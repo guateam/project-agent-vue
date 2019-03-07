@@ -38,7 +38,7 @@
                                 @click:append="show = !show"
                             ></v-text-field>
                         </form>
-                        <span class="right">忘记密码?</span>
+                        <span @click="forgetPassword" class="right">忘记密码?</span>
                         <br />
                         <br />
                         <v-btn @click="login" color="primary" block large>登录</v-btn>
@@ -92,6 +92,9 @@
         },
 
         methods: {
+            forgetPassword() {
+                alert("忘记密码");
+            },  // 忘记密码
             // 登录
             login() {
                 this.$v.$touch();

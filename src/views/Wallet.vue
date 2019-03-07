@@ -2,7 +2,7 @@
     <div class="wallet">
         <v-layout column fill-height>
             <v-flex shrink>
-                <v-btn @click="$router.push({name: 'account'})" icon>
+                <v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>
                     <v-icon>arrow_back</v-icon>
                 </v-btn>
             </v-flex>
@@ -19,7 +19,7 @@
                                             <span class="font--text">总资产(元)</span>
                                         </v-flex>
                                         <v-flex shrink>
-                                            <span class="headline font-weight-bold">¥ 2,000.00</span>
+                                            <span class="headline font-weight-bold">¥ {{ balance }}</span>
                                         </v-flex>
                                         <v-flex shrink>
                                             <v-btn @click="topUp" small color="success" flat outline>立即充值</v-btn>
@@ -83,7 +83,7 @@
                                 <v-card flat>
                                     <v-list two-line subheader>
 
-                                        <div v-for="item in expense" :key="item.title">
+                                        <div v-for="(item, index) in expense" :key="index">
                                             <v-divider></v-divider>
 
                                             <v-list-tile avatar>
@@ -114,7 +114,7 @@
                                 <v-card flat>
                                     <v-list two-line subheader>
 
-                                        <div v-for="item in income" :key="item.title">
+                                        <div v-for="(item, index) in income" :key="index">
                                             <v-divider></v-divider>
 
                                             <v-list-tile avatar>
@@ -168,7 +168,7 @@
                     { title: '微信充值', time: '2019-03-01', price: '60.00' },
                     { title: '微信充值', time: '2019-01-01', price: '2,000.00' },
                 ],  // 收入/充值
-                wallet: 0
+                balance: 0,  // 余额
             }
         },
         methods: {
@@ -179,13 +179,11 @@
                 alert("立即充值");
             },  // 充值
             getWallet() {
-
                 this.$api.account.get_account_balance().then((res) => {
                     if (res.data.code === 1) {
-                        this.wallet = res.data.data
+                        this.balance = (res.data.data.toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     }
                 })
-
             }
         },
         mounted() {
@@ -199,7 +197,7 @@
     .wallet {
         height: 100vh;
         font-family: Helvetica, Arial, sans-serif;
-        background: linear-gradient(0deg, white, whitesmoke 60%, #FFCC00);;
+        background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);;
         /*background: linear-gradient(to bottom, #FFCC00, white);*/
     }
     .card-info {
