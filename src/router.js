@@ -23,7 +23,13 @@ export default new Router({
             name: 'school',
             component: () => import('./views/School.vue'),
         },
-
+        // 查看用户详情
+        {
+          path: '/detail/:id',
+          name: 'detail',
+          meta: {requireLogin: false},
+          component: () => import('./views/UserDetails.vue')
+        },
         // 用户个人页
         {
             path: '/account',

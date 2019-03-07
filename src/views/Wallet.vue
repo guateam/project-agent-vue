@@ -262,7 +262,6 @@
         height: 100vh;
         font-family: Helvetica, Arial, sans-serif;
         background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);;
-        /*background: linear-gradient(to bottom, #FFCC00, white);*/
     }
     .balance {
         font-size: 3em;
