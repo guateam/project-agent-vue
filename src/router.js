@@ -208,5 +208,12 @@ export default new Router({
             meta: {requireLogin: true},
             component: () => import('./views/Search.vue')
         },
+        // 搜索结果
+        {
+            path: '/search-results',
+            name: 'search-results',
+            meta: {requireLogin: true},
+            component: () => import('./views/SearchResults.vue')
+        },
     ],
 });
