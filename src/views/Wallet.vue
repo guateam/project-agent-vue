@@ -2,9 +2,18 @@
     <div class="wallet">
         <v-layout column fill-height>
             <v-flex shrink>
-                <v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>
-                    <v-icon>arrow_back</v-icon>
-                </v-btn>
+                <v-layout justify-space-between row>
+                    <v-flex shrink>
+                        <v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>
+                            <v-icon>arrow_back</v-icon>
+                        </v-btn>
+                    </v-flex>
+                    <v-flex shrink>
+                        <v-btn @click="callService" icon>
+                            <v-icon>headset</v-icon>
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
             </v-flex>
             <v-flex grow>
                 <v-layout justify-space-between column fill-height>
@@ -19,10 +28,17 @@
                                             <span class="font--text">总资产(元)</span>
                                         </v-flex>
                                         <v-flex shrink>
-                                            <span class="headline font-weight-bold">¥ {{ balance }}</span>
+                                            <span class="balance font-weight-bold">{{ balance }}</span>
                                         </v-flex>
                                         <v-flex shrink>
-                                            <v-btn @click="topUp" small color="success" flat outline>立即充值</v-btn>
+                                            <v-layout>
+                                                <v-flex>
+                                                    <v-btn @click="withdraw" small color="success" flat outline>提现</v-btn>
+                                                </v-flex>
+                                                <v-flex>
+                                                    <v-btn @click="topUp" small color="success" flat outline>充值</v-btn>
+                                                </v-flex>
+                                            </v-layout>
                                         </v-flex>
                                     </v-layout>
                                 </v-flex>
@@ -99,7 +115,7 @@
                                                 <v-list-tile-action>
                                                         <span class="font-weight-bold">
                                                             <span class="red--text">- </span>
-                                                            ¥{{ item.price }}
+                                                            {{ item.price }}
                                                         </span>
                                                 </v-list-tile-action>
                                             </v-list-tile>
@@ -130,7 +146,7 @@
                                                 <v-list-tile-action>
                                                         <span class="font-weight-bold">
                                                             <span class="green--text">+ </span>
-                                                            ¥{{ item.price }}
+                                                            {{ item.price }}
                                                         </span>
                                                 </v-list-tile-action>
                                             </v-list-tile>
@@ -168,13 +184,19 @@
                     { title: '微信充值', time: '2019-03-01', price: '60.00' },
                     { title: '微信充值', time: '2019-01-01', price: '2,000.00' },
                 ],  // 收入/充值
-                balance: 0,  // 余额
+                balance: "2,333.33",  // 余额
             }
         },
         methods: {
+            callService() {
+                alert("呼叫客服");
+            },  // 呼叫客服
             showMoreCards() {
                 alert("显示更多卡券");
             },  // 显示更多卡券
+            withdraw() {
+                alert("立即提现");
+            },  // 提现
             topUp() {
                 alert("立即充值");
             },  // 充值
@@ -199,6 +221,9 @@
         font-family: Helvetica, Arial, sans-serif;
         background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);;
         /*background: linear-gradient(to bottom, #FFCC00, white);*/
+    }
+    .balance {
+        font-size: 3em;
     }
     .card-info {
         padding: 8px;
