@@ -44,11 +44,10 @@
 
         <!--页面主体，展示不同的回答列表-->
 
-        <v-card v-for="(answer, index) in answersDataList" :key="index">
+        <v-card v-for="(answer, index) in answersDataList" :key="index" :to="{name: 'answer', query: {id: answer.answerID}}">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
 
-                <router-link
-                        :to="{name: 'answer', query: {id: answer.answerID}}">
+                <router-link :to="{name: 'answer', query: {id: answer.answerID}}">
                     <!--<p class="answerDetail">{{ answer.content.length > 70 ? answer.content.substring(0, 70) + '...' :-->
                     <!--answer.content }}</p>-->
 

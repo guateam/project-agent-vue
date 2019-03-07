@@ -47,7 +47,8 @@
                 </div>
             </div>
             <div style="padding-left: 1em; padding-right: 1em;display: flex;justify-content: space-between;border-bottom: 1px solid #EBEBEB">
-                <p>上一次编辑 <span>· {{ latestEdit }}</span></p>
+                <p>上一次编辑 <span>· {{ latestEdit }}</span>
+                </p>
                 <p>
                     <span v-for="(tag, idx) in warning" :key="idx">
                         {{ tag.text }}
@@ -64,9 +65,19 @@
         </div>
 
         <!--评论这部分,是有组件的，但是这里不用，仅获取前三个类似热评一样的东西，不然样式不好写-->
+        <div style="width: 100%">
+            <ButtonGroup style="width: 100%;height: 6em;margin-top: 2em">
+                <Button type="warning" icon="md-arrow-dropup" :class="{mid:select===0,long:select===1,hide:select===2}"
+                        @click="agree_answer()" :hidden="select===2">{{select!==0?'已':''}}点赞 {{agree}}
+                </Button>
+                <Button icon="md-arrow-dropdown" :class="{mid:select===0,long:select===2,hide:select===1}"
+                        @click="disagree_answer()" :hidden="select===1">{{select!==0?'已':''}}点踩 {{disagree}}
+                </Button>
+            </ButtonGroup>
+        </div>
         <div class="comment" style="padding-left: 1em; padding-right: 1em;">
             <h2>评论</h2>
-            <router-link :to="{name: 'comment', params: {id: $route.params.id}}">
+            <router-link :to="{name: 'comment', params: {id: $route.params.id,type:1}}">
                 <div v-for="(comment, index) in comments" :key="index" class="comment-item">
                     <div class="comment-user">
                         <img :src="comment.avatar" alt=""><!-- 头像 -->
@@ -92,7 +103,8 @@
 
         <div class="foot">
             <div class="footinput">
-                <Input placeholder="请输入评论" v-model='word' icon="md-arrow-round-forward" :on-click="send()">
+                <Input placeholder="请输入评论" v-model="comment_word" icon="md-arrow-round-forward" @on-enter="send()"
+                       @on-click="send()">
                 </Input>
             </div>
             <div class="footright">
@@ -102,7 +114,7 @@
                 </v-btn>
             </div>
             <div class="footright">
-                <v-btn icon>
+                <v-btn icon @click="$router.push({name:'comment'})">
                     <v-icon>comment</v-icon>
                 </v-btn>
             </div>
@@ -168,7 +180,10 @@
                 ],
                 name: '',
                 favorite: 'favorite_border',
-                word: ''
+                comment_word: '',
+                agree: 0,
+                disagree: 0,
+                select: 0,
             }
         },
 
@@ -186,6 +201,8 @@
                         this.group = res.data.data.group;
                         this.desc = res.data.data.description;
                         this.warning = res.data.data.tag;
+                        this.agree = res.data.data.agree;
+                        this.disagree = res.data.data.disagree;
                     }
                 })
             },
@@ -237,10 +254,52 @@
                 })
             },
             send() {
-                this.$api.answer.add_answer_comment(this.$route.query.id, this.word).then(res => {
+                this.$api.answer.add_answer_comment(this.$route.query.id, this.comment_word).then(res => {
                     if (res.data.code === 1) {
-                        this.word = '';
-                        this.getCommentData();
+                        this.comment_word = '';
+                    }
+                })
+            },
+            agree_answer() {
+                if (this.select === 1) {
+                    this.$api.answer.un_agree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 0;
+                            this.agree--;
+                        }
+                    })
+                } else {
+                    this.$api.answer.agree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 1;
+                            this.agree++;
+                        }
+                    })
+                }
+            },
+            disagree_answer() {
+                if (this.select === 2) {
+                    this.$api.answer.un_disagree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 0;
+                            this.disagree--;
+                        }
+                    })
+                } else {
+                    this.$api.answer.disagree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 2;
+                            this.disagree++;
+                        }
+                    })
+                }
+            },
+            get_answer_agree_state() {
+                this.$api.answer.get_answer_agree_state(this.$route.query.id).then(res => {
+                    if (res.data.code === 1) {
+                        this.select = 1;
+                    } else if (res.data.code === 2) {
+                        this.select = 2;
                     }
                 })
             }
@@ -251,6 +310,7 @@
             this.getCommentData();
             this.get_follow_state();
             this.add_user_action(this.$route.query.id);
+            this.get_answer_agree_state();
         },
     }
 </script>
@@ -357,5 +417,61 @@
     img {
         max-width: 100%;
         overflow: hidden;
+    }
+
+    .mid {
+        width: 50%;
+        transition: all 0.5s;
+        /*animation: back_ 2s;*/
+        /*-moz-animation: back_ 2s; !* Firefox *!*/
+        /*-webkit-animation: back_ 2s; !* Safari 和 Chrome *!*/
+        /*-o-animation: back_ 2s; !* Opera *!*/
+    }
+
+    .long {
+        width: 100%;
+        transition: all 0.5s;
+        /*animation: big 2s;*/
+        /*-moz-animation: big 2s; !* Firefox *!*/
+        /*-webkit-animation: big 2s; !* Safari 和 Chrome *!*/
+        /*-o-animation: big 2s; !* Opera *!*/
+    }
+
+    .hide {
+        width: 0;
+        /*display: none;*/
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s;
+        /*animation: small_ 0.5s;*/
+        /*-moz-animation: small_ 0.5s; !* Firefox *!*/
+        /*-webkit-animation: small_ 0.5s; !* Safari 和 Chrome *!*/
+        /*-o-animation: small_ 0.5s; !* Opera *!*/
+    }
+
+    @keyframes big {
+        0% {
+            width: 50%;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+
+    @keyframes small_ {
+        0% {
+        }
+        100% {
+            display: none;
+        }
+    }
+
+    @keyframes back_ {
+        0% {
+            width: 100%;
+        }
+        100% {
+            width: 50%;
+        }
     }
 </style>

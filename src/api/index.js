@@ -150,6 +150,21 @@ const index = {
                 token: token
             };
             return axios.post(`${base.answer}/add_answer_comment`, qs.stringify(data))
+        },
+        get_answer_agree_state(answer_id, token = store.state.token) {
+            return axios.get(`${base.answer}/get_answer_agree_state`, {params: {answer_id: answer_id, token: token}})
+        },
+        disagree_answer(answer_id, token = store.state.token) {
+            return axios.get(`${base.answer}/disagree_answer`, {params: {answer_id: answer_id, token: token}})
+        },
+        un_disagree_answer(answer_id, token = store.state.token) {
+            return axios.get(`${base.answer}/un_disagree_answer`, {params: {answer_id: answer_id, token: token}})
+        },
+        agree_answer(answer_id, token = store.state.token) {
+            return axios.get(`${base.answer}/agree_answer`, {params: {answer_id: answer_id, token: token}})
+        },
+        un_agree_answer(answer_id, token = store.state.token) {
+            return axios.get(`${base.answer}/un_agree_answer`, {params: {answer_id: answer_id, token: token}})
         }
     },
     article: {
