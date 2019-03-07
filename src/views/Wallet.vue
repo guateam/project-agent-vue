@@ -215,20 +215,34 @@
 
             getHistory() {
                 let type_dict = {
-                    1: "付费问答",
+                    1: "付费回答",
                     2: "专家咨询",
                     3: "告示板需求",
+                    4: "文章付费",
+                    5: "文章收入",
                 };
                 this.$api.account.get_history_pay().then(res => {
                     if (res.data.code === 1) {
-                        this.expense = [];  // 清空现有数据
                         if (res.data.data.length !== 0) {
+                            this.expense = [];  // 清空现有数据
+                            this.income = [];  // 清空现有数据
                             res.data.data.forEach(item => {
-                                this.expense.append({
-                                    title: type_dict[item.type],
-                                    time: item.time,
-                                    price: item.amount,
-                                })
+                                window.console.log(item);
+                                if (item.amount < 0) {
+                                    this.expense.unshift({
+                                        title: type_dict[item.type],
+                                        time: item.time,
+                                        price: Math.abs(item.amount),
+                                    })
+                                }  // 添加支出
+                                else {
+                                    this.income.unshift({
+                                        title: type_dict[item.type],
+                                        time: item.time,
+                                        price: Math.abs(item.amount),
+                                    })
+                                }  // 添加收入
+
                             })
                         }  // 处理数据
                     }  // 如果获取成功
