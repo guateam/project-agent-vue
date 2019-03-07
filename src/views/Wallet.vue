@@ -1,69 +1,84 @@
 <template>
     <div class="wallet">
-        <v-toolbar dark flat color="primary" app dense scroll-off-screen>
-            <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
+        <v-layout column fill-height>
+            <v-flex shrink>
+                <v-btn @click="$router.push({name: 'account'})" icon>
+                    <v-icon>arrow_back</v-icon>
+                </v-btn>
+            </v-flex>
+            <v-flex grow>
+                <v-container fill-height>
+                    <v-layout column fill-height>
 
-            <v-toolbar-title class="headline" style="margin: 0 auto">
-                <span>钱包</span>
-            </v-toolbar-title>
+                        <!--Balance-->
+                        <v-flex xs4>
+                            <v-layout align-center justify-center column fill-height>
+                                <v-flex shrink>
+                                    <span class="font--text">总资产(元)</span>
+                                </v-flex>
+                                <v-flex shrink>
+                                    <span class="headline font-weight-bold">¥ 2,000.00</span>
+                                </v-flex>
+                                <v-flex shrink>
+                                    <v-btn small color="success" flat outline>立即充值</v-btn>
+                                </v-flex>
+                            </v-layout>
+                        </v-flex>
 
-            <v-btn icon>
-                <v-icon>search</v-icon>
-            </v-btn>
-        </v-toolbar>
-        <v-container fluid grid-list-md>
-            <v-layout row wrap>
-                <v-flex d-flex xs12 sm6 md3>
-                    <v-card color="white lighten-2" dark>
-                        <v-layout row wrap>
-                            <v-flex d-flex>
-                                <v-layout row wrap>
-                                    <v-flex d-flex xs6>
-                                        <v-card color="blue lighten-2" dark>
-                                            <v-card-text
-                                                    style="display: flex ;align-items: center;justify-content: center;">
-                                                余额: ￥{{wallet}}
-                                            </v-card-text>
-                                        </v-card>
-                                    </v-flex>
-                                    <v-flex d-flex xs6>
-                                        <v-card color="blue lighten-2" dark>
-                                            <v-card-text
-                                                    style="display: flex ;align-items: center;justify-content: center;">
-                                                卡券
-                                            </v-card-text>
-                                        </v-card>
-                                    </v-flex>
-                                </v-layout>
-                            </v-flex>
-                        </v-layout>
-                    </v-card>
-                </v-flex>
-                <v-flex d-flex xs12 sm6 md3 style="margin-top: 2em">
-                    <v-layout row wrap>
-                        <v-flex d-flex>
-                            <v-layout row wrap>
-                                <v-flex
-                                        v-for="item in items"
-                                        @click="$router.push(item.name)"
-                                        d-flex
-                                        xs12
-                                >
-                                    <v-card
-                                            color="red lighten-2"
-                                            dark
-                                    >
-                                        <v-card-text>
-                                            {{ item.title }}
-                                        </v-card-text>
+                        <!--Cards-->
+                        <v-flex xs2>
+                            <v-layout align-center justify-space-between row fill-height>
+                                <v-flex xs5 fill-height>
+                                    <v-card height="100%" color="purple" dark>
+                                        <v-layout class="card-info" align-start justify-space-between column fill-height>
+                                            <v-flex shrink>
+                                                <span>专+学院</span>
+                                                <h2>年费会员</h2>
+                                            </v-flex>
+                                            <v-flex shrink>
+                                                <span>2020-10-10</span>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-card>
+                                </v-flex>
+                                <v-flex xs5 fill-height>
+                                    <v-card height="100%" color="blue-grey darken-2" dark>
+                                        <v-layout class="card-info" align-start justify-space-between column fill-height>
+                                            <v-flex shrink>
+                                                <span>专+读书会</span>
+                                                <h2>季度借阅卡</h2>
+                                            </v-flex>
+                                            <v-flex shrink>
+                                                <span>2019-06-01</span>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-card>
+                                </v-flex>
+                                <v-flex shrink fill-height>
+                                    <v-card height="100%" color="grey darken-2" dark>
+                                        <v-layout class="card-info" align-center justify-center column fill-height>
+                                            <v-icon>more_vert</v-icon>
+                                        </v-layout>
                                     </v-card>
                                 </v-flex>
                             </v-layout>
                         </v-flex>
+
+                        <!--Details-->
+                        <v-flex xs5>
+                            <v-tabs fixed-tabs>
+                                <v-tab
+                                    v-for="n in 3"
+                                    :key="n"
+                                >
+                                    Item {{ n }}
+                                </v-tab>
+                            </v-tabs>
+                        </v-flex>
                     </v-layout>
-                </v-flex>
-            </v-layout>
-        </v-container>
+                </v-container>
+            </v-flex>
+        </v-layout>
     </div>
 </template>
 
@@ -94,21 +109,18 @@
             }
         },
         mounted() {
+            this.$emit('hiddenToolBar');
             this.getWallet()
         }
     }
 </script>
 
 <style scoped>
-    .bigbox {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        z-index: 200;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: white;
+    .wallet {
+        height: 100vh;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+    .card-info {
+        padding: 8px;
     }
 </style>
