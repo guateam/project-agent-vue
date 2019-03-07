@@ -17,7 +17,13 @@ export default new Router({
         {path: '/register', name: 'register', component: () => import('./views/Register.vue')},
         // 设置
         {path: '/settings', name: 'settings', component: () => import('./views/Settings.vue')},
-        {path: '/school', name: 'school', component: () => import('./views/School.vue')},
+        // 学院
+        {
+            path: '/school',
+            name: 'school',
+            component: () => import('./views/School.vue'),
+        },
+
         // 用户个人页
         {
             path: '/account',
@@ -35,7 +41,7 @@ export default new Router({
                 },
                 // 用户基本详情
                 {
-                    path: 'user-detail',
+                    path: '/user-detail',
                     name: 'user-detail',
                     meta: {requireLogin: true},
                     component: () => import('./views/UserDetail.vue'),
@@ -78,18 +84,18 @@ export default new Router({
                     component: () => import('./views/Wallet.vue')
                 },
                 {
-                    path: '/history',
+                    path: 'history',
                     name: 'history',
                     meta: {requireLogin: true},
                     component: () => import('./views/History.vue')
                 },
                 {
-                    path: '/browser',
+                    path: 'browser',
                     name: 'browser',
                     component: () => import('./views/Browser.vue')
                 },
                 {
-                    path: '/qr-code',
+                    path: 'qr-code',
                     name: 'qr-code',
                     component: () => import('./views/QRCode.vue')
                 }
@@ -101,7 +107,7 @@ export default new Router({
             name: 'message',
             meta: {requireLogin: true},  // 需要登录
             component: () => import('./views/Message.vue'),
-            children:[
+            children: [
                 {
                     path: 'chat',
                     name: 'Chat',
@@ -115,6 +121,31 @@ export default new Router({
                     ]
                 },
             ]
+        },
+        // 文章页
+        {
+            path: '/article',
+            name: 'article',
+            component: () => import('./views/Article.vue'),
+            children: []
+        },
+        // 文章阅读
+        {
+            path: '/article-read',
+            name: 'article-read',
+            component: () => import('./views/ArticleRead.vue'),
+        },
+        // 评论组件
+        {
+            path: '/comment',
+            name: 'comment',
+            component: () => import('./views/Comment.vue')
+        },
+        // 评论回复组件
+        {
+            path: '/comment-detail',
+            name: 'comment-detail',
+            component: () => import('./views/CommentDetail.vue')
         },
         // 收藏
         {

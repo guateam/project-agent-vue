@@ -28,7 +28,7 @@
                         <!--@click="jump_url(item.url)"-->
                         <!--&gt;<span class="banner">{{item.title}}</span></v-carousel-item>-->
                         <!--</v-carousel>-->
-                        <Carousel autoplay loop dots="none" arrow="always">
+                        <Carousel autoplay loop dots="none" arrow="always" style="z-index: 1 !important;">
                             <CarouselItem v-for="item in items">
                                 <div class="banner-image" v-bind:style="{backgroundImage:'url(' + item.src + ')'}"
                                      @click="jump_url(item.url)">
@@ -54,7 +54,7 @@
                                         ></v-img>
                                         <v-card-title>
                                             <div>
-                                                <span><b>{{value.title}}</b></span>
+                                                <span class="inline"><b>{{value.title}}</b></span>
                                                 <div>
                                                     <div class="grey--text text--darken-2">
                                                         <span v-for="(tag, index) in value.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
@@ -80,19 +80,26 @@
                 </v-tab-item>
                 <v-tab-item :key="1">
                     <Row>
-                        <Col span="10">
-                            <Menu Menu theme="light" width="auto" accordion @on-open-change="menu_change">
-                                <Submenu :name="item.id" v-for="item in menu">
-                                    <template slot="title">
-                                        {{item.name}}
-                                    </template>
-                                    <MenuItem :name="value.id" @click.native="change(value.id)"
-                                              v-for="value in item.children">{{value.name}}
-                                    </MenuItem>
-                                </Submenu>
-                            </Menu>
+
+                        <!--尝试修复菜单栏滚动，失败了-->
+
+                        <Col span="10" style="background-color: red;position: fixed;left: 0;overflow: hidden;">
+                            <Scroll :data="menu">
+                                <Col span="24">
+                                    <Menu Menu theme="light" width="auto" accordion @on-open-change="menu_change">
+                                        <Submenu :name="item.id" v-for="item in menu">
+                                            <template slot="title">
+                                                {{item.name}}
+                                            </template>
+                                            <MenuItem :name="value.id" @click.native="change(value.id)"
+                                                      v-for="value in item.children">{{value.name}}
+                                            </MenuItem>
+                                        </Submenu>
+                                    </Menu>
+                                </Col>
+                            </Scroll>
                         </Col>
-                        <Col span="14">
+                        <Col span="14" offset="10">
                             <v-layout row>
                                 <v-flex xs12 sm6 offset-sm3>
                                     <v-card>
@@ -121,7 +128,7 @@
                                                         slot-scope="{ hover }"
                                                         :class="`elevation-${hover ? 12 : 2}`"
                                                         class="mx-auto"
-                                                        @click="jump_article(value.id)"
+                                                        @click="jump_article(value.articleID)"
                                                 >
                                                     <v-img
                                                             :aspect-ratio="16/9"
@@ -134,7 +141,13 @@
                                                             <div>
                                                                 <div class="grey--text text--darken-2">
                                                                     作者：{{value.nickname}}
+                                                                    <span class="right green--text" style="margin-left: 10em" v-if="value.free!==1">
+                                                                        ￥{{value.price}}
+                                                                    </span>
+                                                                    <span class="right red--text" style="margin-left: 10em" v-if="value.free===1">免费
+                                                                    </span>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </v-card-title>
@@ -160,9 +173,10 @@
 
 <script>
     import bottomNav from '../components/bottomNav';
+    import Scroll from '../components/Scroll'
 
     export default {
-        components: {bottomNav},
+        components: {bottomNav, Scroll},
         name: "School",
         data() {
             return {
@@ -321,9 +335,12 @@
     }
 
     .ivu-menu {
-        z-index: 4 !important;
+        z-index: 1 !important;
     }
-    button{
+
+    button {
         z-index: 1;
+    }
+    .inline{
     }
 </style>

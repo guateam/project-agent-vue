@@ -162,7 +162,6 @@
         data() {
             return {
                 content: '',
-                editorContent: '',
                 dialog: false,
                 first_category: [
                     {name: '正在获取。。。', id: 0}

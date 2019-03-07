@@ -14,6 +14,14 @@ const index = {
         get_category() {
             return axios.get(`${base.homepage}/get_category`)
         },
+        //获取特定tag下的问题或者文章
+        get_classify(tag,type,page){
+            return  axios.get(`${base.homepage}/classify_by_tag`, {params: {tag: tag, type: type, page:page}})
+        },
+        //获取特定tag下的问题或者文章
+        classify_all_tag(type){
+            return  axios.get(`${base.homepage}/classify_all_tag`, {params: {type: type}})
+        }
     },
     account: {
         // 用户登录
@@ -135,10 +143,36 @@ const index = {
             return axios.get(`${base.article}/get_article_allowed_group`, {params: {token: token}})
         },
         add_article(data) {
-            return axios.post(`${base.article}/get_article_allowed_group`, qs.stringify(data))
+            return axios.post(`${base.article}/add_article`, qs.stringify(data))
         },
         get_tag_articles(tag_id) {
             return axios.get(`${base.article}/get_tag_articles`, {params: {tag_id: tag_id}})
+        },
+        get_article_info(id) {
+            return axios.get(`${base.article}/get_article_info`, {params: {article_id: id}})
+        },
+        get_article_comment(id) {
+            return axios.get(`${base.article}/get_article_comment`, {params: {article_id: id}})
+        },
+        pay_article(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/pay_article`, {params: {article_id: article_id, token: token}})
+        },
+        get_paid(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/get_paid`, {params: {article_id: article_id, token: token}})
+        },
+        collect_article(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/collect_article`, {params: {article_id: article_id, token: token}})
+        },
+        un_collect_article(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/un_collect_article`, {params: {article_id: article_id, token: token}})
+        },
+        get_article_collect_state(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/get_article_collect_state`, {
+                params: {
+                    article_id: article_id,
+                    token: token
+                }
+            })
         }
     },
     specialist: {
@@ -177,6 +211,11 @@ const index = {
     upload: {
         upload_picture(picture) {
             return axios.get(`${base.upload}/upload_picture`, {params: {picture: picture}})
+        }
+    },
+    group: {
+        get_groups(token = store.state.token) {
+            return axios.get(`${base.group}/get_groups`, {params: {token: token}})
         }
     }
 };
