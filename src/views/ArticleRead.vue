@@ -70,7 +70,6 @@ height: 100%;border-radius: 50%">
                 <button :class="word?'enSend':'disSend'" :disabled="!word" @click="send">发送</button>
             </div>
         </div>
-
     </div>
 </template>
 
