@@ -11,7 +11,7 @@
                 <gChat
                         :data="wxChatData"
                         :showShade="false"
-                        contactNickname="大漠孤烟"
+                        contactNickname="清纯女大学生激情聊"
                         :getUpperData="getUpperData"
                         :getUnderData="getUnderData"
                         :ownerAvatarUrl="ownerAvatarUrl"
@@ -33,7 +33,7 @@
     import ChatInput from "../components/ChatInput"
 
     export default {
-        name: "chat",
+        name: "group-chat",
         components: {gChat,ChatInput},
         data() {
             return {

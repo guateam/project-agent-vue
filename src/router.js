@@ -120,6 +120,18 @@ export default new Router({
                         },
                     ]
                 },
+                {
+                    path: 'group-chat',
+                    name: 'group-chat',
+                    component: () => import('./views/GroupChat.vue'),
+                    children: [
+                        {
+                            path: 'group-chat-setting',
+                            name: 'group-chat-setting',
+                            component: () => import('./views/GroupChatSetting.vue')
+                        },
+                    ]
+                },
             ]
         },
         // 文章页
