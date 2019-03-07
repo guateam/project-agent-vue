@@ -93,7 +93,7 @@
 
         methods: {
             forgetPassword() {
-                alert("忘记密码");
+                this.$store.commit('showInfo', '忘记密码');
             },  // 忘记密码
             // 登录
             login() {

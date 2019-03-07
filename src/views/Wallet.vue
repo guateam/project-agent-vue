@@ -184,33 +184,61 @@
                     { title: '微信充值', time: '2019-03-01', price: '60.00' },
                     { title: '微信充值', time: '2019-01-01', price: '2,000.00' },
                 ],  // 收入/充值
-                balance: "2,333.33",  // 余额
+                balance: "正在载入...",  // 余额
             }
         },
         methods: {
+
             callService() {
-                alert("呼叫客服");
+                this.$store.commit('showInfo', '呼叫客服');
             },  // 呼叫客服
+
             showMoreCards() {
-                alert("显示更多卡券");
+                this.$store.commit('showInfo', '显示更多卡券');
             },  // 显示更多卡券
+
             withdraw() {
-                alert("立即提现");
+                this.$store.commit('showInfo', '立即提现');
             },  // 提现
+
             topUp() {
-                alert("立即充值");
+                this.$store.commit('showInfo', '立即充值');
             },  // 充值
-            getWallet() {
+
+            getBalance() {
                 this.$api.account.get_account_balance().then((res) => {
                     if (res.data.code === 1) {
                         this.balance = (res.data.data.toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     }
                 })
-            }
+            },  // 获取用户余额
+
+            getHistory() {
+                let type_dict = {
+                    1: "付费问答",
+                    2: "专家咨询",
+                    3: "告示板需求",
+                };
+                this.$api.account.get_history_pay().then(res => {
+                    if (res.data.code === 1) {
+                        this.expense = [];  // 清空现有数据
+                        if (res.data.data.length !== 0) {
+                            res.data.data.forEach(item => {
+                                this.expense.append({
+                                    title: type_dict[item.type],
+                                    time: item.time,
+                                    price: item.amount,
+                                })
+                            })
+                        }  // 处理数据
+                    }  // 如果获取成功
+                })
+            },  // 获取交易记录
         },
         mounted() {
             this.$emit('hiddenToolBar');
-            this.getWallet()
+            this.getBalance();
+            this.getHistory();
         }
     }
 </script>

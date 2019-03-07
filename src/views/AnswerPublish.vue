@@ -18,19 +18,6 @@
                     :options="editorOption">
             </quill-editor>
         </div>
-        <v-snackbar
-                v-model="snackbar"
-                vertical="vertical"
-        >
-            {{ text }}
-            <v-btn
-                    dark
-                    flat
-                    @click="snackbar = false"
-            >
-                Close
-            </v-btn>
-        </v-snackbar>
     </div>
 </template>
 
@@ -49,8 +36,6 @@
                 content: '',
                 dialog: false,
                 price: ['0', '￥19.9', '￥29.9', '￥69.9', '￥99.9'],
-                snackbar: false,
-                text: '',
                 editorOption: {
                     modules: {
                         ImageExtend: {
@@ -97,8 +82,7 @@
                     if (res.data.code === 1) {
                         this.$router.back()
                     } else {
-                        this.text = res.data.msg;
-                        this.snackbar = true;
+                        this.$store.commit('showInfo', res.data.msg);
                     }
                 })
             }

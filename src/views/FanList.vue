@@ -4,7 +4,7 @@
             <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
 
             <v-toolbar-title class="headline" style="margin: 0 auto">
-                <span>我关注的</span>
+                <span>关注和粉丝</span>
             </v-toolbar-title>
 
             <v-btn icon>
