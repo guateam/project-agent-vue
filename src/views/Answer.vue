@@ -92,7 +92,8 @@
 
         <div class="foot">
             <div class="footinput">
-                <input type="text" placeholder="输入您的回答">
+                <Input placeholder="请输入评论" v-model='word' icon="md-arrow-round-forward" :on-click="send()">
+                </Input>
             </div>
             <div class="footright">
                 <v-btn icon>
@@ -166,7 +167,8 @@
                     },
                 ],
                 name: '',
-                favorite: 'favorite_border'
+                favorite: 'favorite_border',
+                word: ''
             }
         },
 
@@ -228,9 +230,17 @@
                 })
             },
             add_user_action(id) {
-                this.$api.account.add_user_action(id,51).then(res=>{
-                    if(res.data.code===1){
+                this.$api.account.add_user_action(id, 51).then(res => {
+                    if (res.data.code === 1) {
                         return 0;
+                    }
+                })
+            },
+            send() {
+                this.$api.answer.add_answer_comment(this.$route.query.id, this.word).then(res => {
+                    if (res.data.code === 1) {
+                        this.word = '';
+                        this.getCommentData();
                     }
                 })
             }
@@ -326,8 +336,8 @@
         display: flex;
         flex: 0 0 70%;
         height: 80%;
-        border: 1px solid #EBEBEB;
-        border-radius: 10px;
+        margin-top: 1em;
+        margin-left: 5px;
     }
 
     .foot input {
@@ -344,8 +354,8 @@
     /*img {*/
     /*width: 100%;*/
     /*}*/
-    img{
+    img {
         max-width: 100%;
-        overflow:hidden;
+        overflow: hidden;
     }
 </style>

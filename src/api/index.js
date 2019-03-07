@@ -15,12 +15,12 @@ const index = {
             return axios.get(`${base.homepage}/get_category`)
         },
         //获取特定tag下的问题或者文章
-        get_classify(tag,type,page){
-            return  axios.get(`${base.homepage}/classify_by_tag`, {params: {tag: tag, type: type, page:page}})
+        get_classify(tag, type, page) {
+            return axios.get(`${base.homepage}/classify_by_tag`, {params: {tag: tag, type: type, page: page}})
         },
         //获取特定tag下的问题或者文章
-        classify_all_tag(type){
-            return  axios.get(`${base.homepage}/classify_all_tag`, {params: {type: type}})
+        classify_all_tag(type) {
+            return axios.get(`${base.homepage}/classify_all_tag`, {params: {type: type}})
         }
     },
     account: {
@@ -63,6 +63,15 @@ const index = {
         },
         get_user_group() {
             return axios.get(`${base.account}/get_user_group`)
+        },
+        follow_user(user_id, token = store.state.token) {
+            return axios.get(`${base.account}/follow_user`, {params: {user_id: user_id, token: token}})
+        },
+        un_follow_user(user_id, token = store.state.token) {
+            return axios.get(`${base.account}/un_follow_user`, {params: {user_id: user_id, token: token}})
+        },
+        get_user_follow_state(user_id, token = store.state.token) {
+            return axios.get(`${base.account}/get_user_follow_state`, {params: {user_id: user_id, token: token}})
         }
     },
     message: {
@@ -133,6 +142,14 @@ const index = {
         },
         add_answer(data) {
             return axios.post(`${base.answer}/add_answer`, qs.stringify(data))
+        },
+        add_answer_comment(answer_id, content, token = store.state.token) {
+            let data = {
+                answer_id: answer_id,
+                content: content,
+                token: token
+            };
+            return axios.post(`${base.answer}/add_answer_comment`, qs.stringify(data))
         }
     },
     article: {
@@ -173,6 +190,17 @@ const index = {
                     token: token
                 }
             })
+        },
+        get_article(article_id, token = store.state.token) {
+            return axios.get(`${base.article}/get_article`, {params: {article_id: article_id, token: token}})
+        },
+        add_article_comment(article_id, content, token = store.state.token) {
+            let data = {
+                article_id: article_id,
+                content: content,
+                token: token
+            };
+            return axios.post(`${base.article}/add_article_comment`, qs.stringify(data))
         }
     },
     specialist: {
