@@ -199,6 +199,8 @@
     .wallet {
         height: 100vh;
         font-family: Helvetica, Arial, sans-serif;
+        background: linear-gradient(0deg, white, whitesmoke 60%, #FFCC00);;
+        /*background: linear-gradient(to bottom, #FFCC00, white);*/
     }
     .card-info {
         padding: 8px;
