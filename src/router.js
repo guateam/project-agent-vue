@@ -201,5 +201,12 @@ export default new Router({
             meta: {requireLogin: true},
             component: () => import('./views/CorporateCenter.vue')
         },
+        // 搜索
+        {
+            path: '/search',
+            name: 'search',
+            meta: {requireLogin: true},
+            component: () => import('./views/Search.vue')
+        },
     ],
 });

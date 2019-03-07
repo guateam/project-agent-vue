@@ -8,7 +8,7 @@
                 <span>话题</span>
             </v-toolbar-title>
 
-            <v-btn icon>
+            <v-btn icon @click="$router.push({name:'search'})">
                 <v-icon>search</v-icon>
             </v-btn>
 
