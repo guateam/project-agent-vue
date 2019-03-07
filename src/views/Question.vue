@@ -65,7 +65,7 @@
                         <img :src="answer.headportrait" alt="">
                     </div>
                     <p class="userName">{{answer.nickname}}</p>
-                    &nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <!--<p class="userTag">{{answer.user.tag}}</p>-->
                     <p class="answerTime">{{answer.edittime}}</p>
                 </div>
