@@ -274,6 +274,28 @@ const index = {
             return axios.get(`${base.group}/get_groups`, {params: {token: token}})
         }
     },
+    board: {
+        get_board_recommend(page, token = store.state.token) {
+            return axios.get(`${base.board}/get_board_recommend`, {params: {page: page, token: token}})
+        },
+        get_demands_by_tag(tag_id) {
+            return axios.get(`${base.board}/get_demands_by_tag`, {params: {tag_id: tag_id}})
+        },
+        get_demand(demand_id) {
+            return axios.get(`${base.board}/get_demand`, {params: {demand_id: demand_id}})
+        },
+        get_sign_state(demand_id, token = store.state.token) {
+            return axios.get(`${base.board}/get_sign_state`, {params: {demand_id: demand_id, token: token}})
+        },
+        sign_to_demand(demand_id, token = store.state.token) {
+            return axios.get(`${base.board}/sign_to_demand`, {params: {demand_id: demand_id, token: token}})
+        }
+    },
+    enterprise: {
+        add_demand(data) {
+            return axios.post(`${base.enterprise}/add_demand`, qs.stringify(data))
+        }
+    },
     algorithm:{
         auto_complete(word){
             return axios.get(`${base.algorithm}/before_search`, {params: {word: word}})
