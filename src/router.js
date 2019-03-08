@@ -25,7 +25,7 @@ export default new Router({
         },
         // 查看用户详情
         {
-          path: '/detail/:id',
+          path: '/detail',
           name: 'detail',
           meta: {requireLogin: false},
           component: () => import('./views/UserDetails.vue')
