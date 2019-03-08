@@ -282,6 +282,11 @@ const index = {
         sign_to_demand(demand_id, token = store.state.token) {
             return axios.get(`${base.board}/sign_to_demand`, {params: {demand_id: demand_id, token: token}})
         }
+    },
+    enterprise: {
+        add_demand(data) {
+            return axios.post(`${base.enterprise}/add_demand`, qs.stringify(data))
+        }
     }
 };
 
