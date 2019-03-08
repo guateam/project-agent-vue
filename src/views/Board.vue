@@ -5,7 +5,7 @@
             <v-toolbar-title class="headline" style="margin: 0 auto">
                 <span>告示板</span>
             </v-toolbar-title>
-            <v-btn icon>
+            <v-btn icon @click="$router.push({name:'search'})">
                 <v-icon>search</v-icon>
             </v-btn>
             <v-tabs light slot="extension" v-model="tabs" color="primary" centered slider-color="secondary">
@@ -16,112 +16,36 @@
         <v-tabs-items v-model="tabs">
             <v-tab-item :key="0">
                 <v-container grid-list-md text-xs-center>
-                    <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px">
+                    <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px"
+                              v-for="item in demands" @click="$router.push({name:'board-detail',query:{id:item.demandID}})">
                         <v-flex xs4 style="height: 100%">
-                            <img src="https://www.asgardusk.com/images/portfolio/1.png" alt=""
+                            <img :src="item.cover" alt=""
                                  style="width: 100%;height: 100%;object-fit: cover">
                         </v-flex>
                         <v-flex xs8
                                 style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                            <div style="height: 25%;display: flex;align-items: center;"><h2>scgirl电竞联盟招收新成员</h2></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                要求APM250+，韩宗水平及以上，爱好女装优先</h4></div>
+                            <div style="height: 25%;display: flex;align-items: center;"><h2>{{item.title}}</h2></div>
+                            <div style="height: 25%;display: flex;align-items: center;overflow: hidden"><h4>
+                                {{item.content}}</h4></div>
                             <div style="height: 25%;display: flex;align-items: center;"><h4>发布单位：<span
-                                    style="color: blue;">scgirl电竞联盟</span></h4></div>
+                                    style="color: blue;">{{item.nickname}}</span></h4></div>
                             <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                <span>射频技术</span>/<span>人工智能</span>/<span>材料技术</span></h4></div>
+                                <span v-for="(tag, index) in item.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
+                            </h4>
+                            </div>
                         </v-flex>
                     </v-layout>
-
-
-                    <!--测试滚动的无意义复制 STAR-->
-
-                    <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px">
-                        <v-flex xs4 style="height: 100%">
-                            <img src="https://www.asgardusk.com/images/portfolio/1.png" alt=""
-                                 style="width: 100%;height: 100%;object-fit: cover">
-                        </v-flex>
-                        <v-flex xs8
-                                style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                            <div style="height: 25%;display: flex;align-items: center;"><h2>scgirl电竞联盟招收新成员</h2></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                要求APM250+，韩宗水平及以上，爱好女装优先</h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>发布单位：<span
-                                    style="color: blue;">scgirl电竞联盟</span></h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                <span>射频技术</span>/<span>人工智能</span>/<span>材料技术</span></h4></div>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px">
-                        <v-flex xs4 style="height: 100%">
-                            <img src="https://www.asgardusk.com/images/portfolio/1.png" alt=""
-                                 style="width: 100%;height: 100%;object-fit: cover">
-                        </v-flex>
-                        <v-flex xs8
-                                style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                            <div style="height: 25%;display: flex;align-items: center;"><h2>scgirl电竞联盟招收新成员</h2></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                要求APM250+，韩宗水平及以上，爱好女装优先</h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>发布单位：<span
-                                    style="color: blue;">scgirl电竞联盟</span></h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                <span>射频技术</span>/<span>人工智能</span>/<span>材料技术</span></h4></div>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px">
-                        <v-flex xs4 style="height: 100%">
-                            <img src="https://www.asgardusk.com/images/portfolio/1.png" alt=""
-                                 style="width: 100%;height: 100%;object-fit: cover">
-                        </v-flex>
-                        <v-flex xs8
-                                style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                            <div style="height: 25%;display: flex;align-items: center;"><h2>scgirl电竞联盟招收新成员</h2></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                要求APM250+，韩宗水平及以上，爱好女装优先</h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>发布单位：<span
-                                    style="color: blue;">scgirl电竞联盟</span></h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                <span>射频技术</span>/<span>人工智能</span>/<span>材料技术</span></h4></div>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px">
-                        <v-flex xs4 style="height: 100%">
-                            <img src="https://www.asgardusk.com/images/portfolio/1.png" alt=""
-                                 style="width: 100%;height: 100%;object-fit: cover">
-                        </v-flex>
-                        <v-flex xs8
-                                style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                            <div style="height: 25%;display: flex;align-items: center;"><h2>scgirl电竞联盟招收新成员</h2></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                要求APM250+，韩宗水平及以上，爱好女装优先</h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>发布单位：<span
-                                    style="color: blue;">scgirl电竞联盟</span></h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                <span>射频技术</span>/<span>人工智能</span>/<span>材料技术</span></h4></div>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px">
-                        <v-flex xs4 style="height: 100%">
-                            <img src="https://www.asgardusk.com/images/portfolio/1.png" alt=""
-                                 style="width: 100%;height: 100%;object-fit: cover">
-                        </v-flex>
-                        <v-flex xs8
-                                style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                            <div style="height: 25%;display: flex;align-items: center;"><h2>scgirl电竞联盟招收新成员</h2></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                要求APM250+，韩宗水平及以上，爱好女装优先</h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>发布单位：<span
-                                    style="color: blue;">scgirl电竞联盟</span></h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
-                                <span>射频技术</span>/<span>人工智能</span>/<span>材料技术</span></h4></div>
-                        </v-flex>
-                    </v-layout>
-
-
-                    <!--测试滚动的无意义复制 END-->
-
-
+                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
+                         infinite-scroll-disabled="busy" infinite-scroll-distance="0">
+                        <h3>
+                            <v-progress-circular
+                                    indeterminate
+                                    color="primary"
+                            ></v-progress-circular>
+                            <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
                 </v-container>
+
             </v-tab-item>
             <v-tab-item :key="1">
                 <Row>
@@ -173,7 +97,7 @@
                                                     slot-scope="{ hover }"
                                                     :class="`elevation-${hover ? 12 : 2}`"
                                                     class="mx-auto"
-                                                    @click="jump_article(value.articleID)"
+                                                    @click="$router.push({name:'board-detail',query:{id:value.demandID}})"
                                             >
                                                 <v-img
                                                         :aspect-ratio="16/9"
@@ -185,14 +109,12 @@
                                                         <span><b>{{value.title}}</b></span>
                                                         <div>
                                                             <div class="grey--text text--darken-2">
-                                                                作者：{{value.nickname}}
+                                                                发布者：{{value.nickname}}
                                                                 <span class="right green--text"
-                                                                      style="margin-left: 10em" v-if="value.free!==1">
+                                                                      style="margin-left: 10em">
                                                                         ￥{{value.price}}
                                                                     </span>
-                                                                <span class="right red--text" style="margin-left: 10em"
-                                                                      v-if="value.free===1">免费
-                                                                    </span>
+
                                                             </div>
 
                                                         </div>
@@ -228,6 +150,7 @@
             return {
                 tabs: 0,
                 articles: [],
+                demands: [],
                 cityList: [
                     {
                         value: '人工智能',
@@ -257,9 +180,28 @@
                 model11: '',
                 model12: [],
                 menu: [],
+                page: 1,
+                busy: false
             }
         },
         methods: {
+            menu_change(name) {
+                if (name.length === 0) {
+                    return;
+                }
+                this.$api.board.get_demands_by_tag(name[0]).then(res => {
+                    if (res.data.code === 1) {
+                        this.articles = res.data.data;
+                    }
+                })
+            },
+            change(tag_id) {
+                this.$api.board.get_demands_by_tag(tag_id).then(res => {
+                    if (res.data.code === 1) {
+                        this.articles = res.data.data;
+                    }
+                })
+            },
             get_tag_tree() {
                 this.$api.tags.get_tag_tree().then(res => {
                     if (res.data.code === 1) {
@@ -267,7 +209,25 @@
                         this.change(this.menu[0].id);
                     }
                 })
-            }
+            },
+            get_board_recommend() {
+                this.$api.board.get_board_recommend().then(res => {
+                    if (res.data.code === 1) {
+                        if (this.page === 1) {
+                            this.demands = [];
+                        }
+                        res.data.data.forEach(value => {
+                            this.demands.push(value)
+                        });
+                        this.page++;
+                        this.busy = false;
+                    }
+                })
+            },
+            loadMore() {
+                this.busy = true;
+                this.get_board_recommend()
+            },
         }
         ,
         mounted() {
@@ -281,5 +241,15 @@
         text-align: center;
         margin-top: 0.5em;
         margin-bottom: 0.5em;
+    }
+
+    .load-more-normal {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    }
+
+    .load-more-hide {
+        height: 0;
     }
 </style>

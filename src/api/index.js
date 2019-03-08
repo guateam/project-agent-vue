@@ -6,41 +6,41 @@ import store from '../store'
 
 const index = {
     homepage: {
-        // 根据用户推荐首页内容
+
         get_recommend(page, token = store.state.token) {
             return axios.get(`${base.homepage}/get_recommend`, {params: {token: token, page: page}})
-        },
-        // 获取分类
+        },  // 根据用户推荐首页内容
+
         get_category() {
             return axios.get(`${base.homepage}/get_category`)
-        },
-        //获取特定tag下的问题或者文章
+        },  // 获取分类
+
         get_classify(tag, type, page) {
             return axios.get(`${base.homepage}/classify_by_tag`, {params: {tag: tag, type: type, page: page}})
-        },
-        //获取特定tag下的问题或者文章
+        },  //获取特定tag下的问题或者文章
+
         classify_all_tag(type) {
             return axios.get(`${base.homepage}/classify_all_tag`, {params: {type: type}})
-        }
+        }  //获取特定tag下的问题或者文章
     },
     account: {
-        // 用户登录
+
         login(data) {
             return axios.post(`${base.account}/login`, qs.stringify(data))
-        },
-        // 用户注册
+        },  // 用户登录
+
         register(data) {
             return axios.post(`${base.account}/register`, qs.stringify(data))
-        },
-        // 根据token获取用户信息
+        },  // 用户注册
+
         get_user_by_token(token = store.state.token) {
             return axios.get(`${base.account}/get_user_by_token`, {params: {token: token}})
-        },
-        // 获取收藏记录
+        },  // 根据token获取用户信息
+
         get_collections(token = store.state.token) {
             return axios.get(`${base.account}/get_collections`, {params: {token: token}})
-        },
-        // 添加用户行为
+        },  // 获取收藏记录
+
         add_user_action(target, target_type, token = store.state.token) {
             return axios.get(`${base.account}/add_user_action`, {
                 params: {
@@ -49,15 +49,19 @@ const index = {
                     action_type: target_type
                 }
             })
-        },
-        // 获取钱包消息
-        get_account_balance(token = store.state.token) {
-            return axios.post(`${base.account}/get_account_balance`, qs.stringify({token: token}))
-        },
-        // 获取关注列表
+        },  // 添加用户行为
+
+        get_account_balance() {
+            return axios.post(`${base.account}/get_account_balance`, qs.stringify({token: store.state.token}))
+        },  // 获取钱包余额
+
+        get_history_pay() {
+            return axios.post(`${base.account}/history_pay`, qs.stringify({token: store.state.token}))
+        },  // 获取付款记录
+
         get_my_follow(token = store.state.token) {
             return axios.get(`${base.account}/get_my_follow`, {params: {token: token}})
-        },
+        },  // 获取关注列表
         get_history(token = store.state.token) {
             return axios.get(`${base.account}/get_history`, {params: {token: token}})
         },
@@ -75,35 +79,36 @@ const index = {
         }
     },
     message: {
-        // 获取聊天列表
+
         get_message_list(token = store.state.token) {
             return axios.get(`${base.message}/get_message_list`, {params: {token: token}})
-        },
+        },  // 获取聊天列表
+
         get_friend_list(token = store.state.token) {
             return axios.get(`${base.message}/get_friend_list`, {params: {token: token}})
         }
     },
     questions: {
-        // 获取问题的回答列表
+
         get_answer_list(id) {
             return axios.get(`${base.questions}/get_answer_list`, {params: {question_id: id}})
-        },
-        // 获取问题详情
+        },  // 获取问题的回答列表
+
         get_question(id) {
             return axios.get(`${base.questions}/get_question`, {params: {question_id: id}})
-        },
-        // 关注问题
+        },  // 获取问题详情
+
         follow_question(id, token = store.state.token) {
             return axios.get(`${base.questions}/follow_question`, {params: {question_id: id, token: token}})
-        },
-        // 判断是否已关注
+        },  // 关注问题
+
         get_follow(id, token = store.state.token) {
             return axios.get(`${base.questions}/get_follow`, {params: {question_id: id, token: token}})
-        },
-        // 获取发布过的问题
+        },  // 判断是否已关注
+
         get_my_questions(token = store.state.token) {
             return axios.get(`${base.questions}/get_my_questions`, {params: {token: token}})
-        },
+        },  // 获取发布过的问题
         add_question(data) {
             return axios.post(`${base.questions}/add_question`, qs.stringify(data))
         },
@@ -112,28 +117,28 @@ const index = {
         }
     },
     school: {
-        // 获取学院文章
+
         get_recommend_article(page, token = store.state.token) {
             return axios.get(`${base.school}/get_recommend_article`, {params: {token: token, page: page}})
-        }
+        }  // 获取学院文章
     },
     answer: {
-        // 获取回答详情
+
         get_answer(id) {
             return axios.get(`${base.answer}/get_answer`, {params: {answer_id: id}})
-        },
-        // 获取回答的评论
+        },  // 获取回答详情
+
         get_answer_comment_list(id) {
             return axios.get(`${base.answer}/get_answer_comment_list`, {params: {answer_id: id}})
-        },
-        // 获取发布过的回答
+        },  // 获取回答的评论
+
         get_user_answers(token = store.state.token) {
             return axios.get(`${base.answer}/get_user_answers`, {params: {token: token}})
-        },
-        // 关注回答
+        },  // 获取发布过的回答
+
         collect_answer(id, token = store.state.token) {
             return axios.get(`${base.answer}/collect_answer`, {params: {token: token, answer_id: id}})
-        },
+        },  // 关注回答
         un_collect_answer(id, token = store.state.token) {
             return axios.get(`${base.answer}/un_collect_answer`, {params: {token: token, answer_id: id}})
         },
@@ -259,6 +264,28 @@ const index = {
     group: {
         get_groups(token = store.state.token) {
             return axios.get(`${base.group}/get_groups`, {params: {token: token}})
+        }
+    },
+    board: {
+        get_board_recommend(page, token = store.state.token) {
+            return axios.get(`${base.board}/get_board_recommend`, {params: {page: page, token: token}})
+        },
+        get_demands_by_tag(tag_id) {
+            return axios.get(`${base.board}/get_demands_by_tag`, {params: {tag_id: tag_id}})
+        },
+        get_demand(demand_id) {
+            return axios.get(`${base.board}/get_demand`, {params: {demand_id: demand_id}})
+        },
+        get_sign_state(demand_id, token = store.state.token) {
+            return axios.get(`${base.board}/get_sign_state`, {params: {demand_id: demand_id, token: token}})
+        },
+        sign_to_demand(demand_id, token = store.state.token) {
+            return axios.get(`${base.board}/sign_to_demand`, {params: {demand_id: demand_id, token: token}})
+        }
+    },
+    enterprise: {
+        add_demand(data) {
+            return axios.post(`${base.enterprise}/add_demand`, qs.stringify(data))
         }
     }
 };

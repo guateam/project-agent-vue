@@ -4,7 +4,7 @@
             <div style="width: 45px;height: 45px;margin-left: 14px;display: flex;align-items: center;justify-content: center;">
                 <v-icon large color="white" @click="$router.push({name:'topic'})">keyboard_arrow_left</v-icon>
             </div>
-            <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">添加话题</span>
+            <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">发布需求</span>
             <div style="width: 45px;height: 45px;margin-right: 14px;display: flex;align-items: center;justify-content: center;color: #fff;font-size: 17px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">
                 <v-layout row justify-center>
                     <v-dialog v-model="dialog" persistent fullscreen="">
@@ -16,36 +16,19 @@
                                 <span class="headline">确认发布</span>
                             </v-card-title>
                             <v-card-text>
-                                <!--<v-container grid-list-md>-->
-                                <!--<v-layout wrap>-->
-                                <!--<v-flex xs12 sm6>-->
-
-                                <!--</v-flex>-->
-                                <!--<v-flex xs12 sm6>-->
-                                <!--<v-select-->
-                                <!--v-model="e7"-->
-                                <!--:items="states"-->
-                                <!--label="选择分类"-->
-                                <!--multiple-->
-                                <!--chips-->
-                                <!--persistent-hint-->
-                                <!--&gt;</v-select>-->
-                                <!--</v-flex>-->
-                                <!--<v-flex xs12 sm6>-->
-                                <!--<v-select-->
-                                <!--v-model="e7"-->
-                                <!--:items="states"-->
-                                <!--label="选择标签"-->
-                                <!--multiple-->
-                                <!--chips-->
-                                <!--persistent-hint-->
-                                <!--&gt;</v-select>-->
-                                <!--</v-flex>-->
-                                <!--</v-layout>-->
-                                <!--</v-container>-->
                                 <Form :model="formItem">
                                     <FormItem label="标题">
                                         <Input v-model="formItem.title" placeholder="请输入标题"></Input>
+                                    </FormItem>
+                                    <FormItem label="封面">
+                                        <Upload action="https://hanerx.tk:5000/api/upload/upload_picture" name="picture"
+                                                :on-success="upload" :default-file-list="upload_list"
+                                                :on-remove="remove">
+                                            <Button icon="ios-cloud-upload-outline">上传封面</Button>
+                                        </Upload>
+                                    </FormItem>
+                                    <FormItem label="封面预览" v-if="formItem.cover!==undefined">
+                                        <img width="100%" :src="formItem.cover">
                                     </FormItem>
                                     <FormItem label="一级标签">
                                         <Select v-model="formItem.first_category"
@@ -62,30 +45,25 @@
                                             </Option>
                                         </Select>
                                     </FormItem>
-                                    <FormItem label="付费问题">
-                                        <i-switch v-model="formItem.priced" size="large">
-                                            <span slot="open">是</span>
-                                            <span slot="close">否</span>
-                                        </i-switch>
-                                    </FormItem>
-                                    <FormItem label="悬赏价格" v-if="formItem.priced">
+                                    <FormItem label="需求预算">
                                         <Input v-model.number="formItem.price" type="text">
                                             <span slot="prepend">￥</span>
                                             <span slot="append">元</span>
                                         </Input>
                                         <!--<Slider :value="formItem.price" :step="0.1" :max="100"></Slider>-->
                                     </FormItem>
-                                    <FormItem label="允许回答用户组" v-if="formItem.priced">
+                                    <FormItem label="允许参加用户组">
                                         <Select v-model="formItem.user_group" multiple filterable>
                                             <Option :value="item.id" v-for="item in user_group">{{item.name}}
                                             </Option>
                                         </Select>
                                     </FormItem>
                                 </Form>
+
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="red" flat @click="dialog = false">取消</v-btn>
+                                <v-btn color="red" flat @click="dialog = false">关闭</v-btn>
                                 <v-btn color="primary" flat @click="send()">确认</v-btn>
                             </v-card-actions>
                         </v-card>
@@ -100,57 +78,43 @@
 
 
         <div style="width: 100%;height: 100%">
-            <!--<div style="width: 100%;height: 3.6em;line-height: 3.5em;margin-bottom: 0.5em">-->
-            <!--&lt;!&ndash;<div style="width: 94%;height: 3.6em;line-height: 3.5em;border-bottom: 1px solid #ccc;margin-bottom: 0.5em;margin-left: 3%;margin-right: 3%">&ndash;&gt;-->
-            <!--&lt;!&ndash;<input type="text" placeholder="请输入标题"&ndash;&gt;-->
-            <!--&lt;!&ndash;style="width: 100%;height: 3.5em;outline: none;line-height: 2em;font-size: 1.2em">&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--<v-flex xs12 sm6 md4>-->
-            <!--<v-text-field label="话题标题" required style="padding-left: 10px;padding-right: 10px"></v-text-field>-->
-            <!--</v-flex>-->
-            <!--</div>-->
-            <!--<div id="editput" class="text">-->
-            <!--<p>话题描述</p>-->
-            <!--</div>-->
-            <!--<div id="editbar" class="toolbar"></div>-->
             <quill-editor
                     v-model="content"
-                    :options="editorOption"
-            >
+                    :options="editorOption">
             </quill-editor>
         </div>
+
     </div>
 </template>
 
 <script>
-    // import Edit from 'wangeditor';
-    import * as Quill from 'quill' //引入编辑器
+    import * as Quill from 'quill'  //引入编辑器
     import ImageResize from 'quill-image-resize-module'
     import {ImageExtend, QuillWatch} from 'quill-image-extend-module'
+    import 'iview/dist/styles/iview.css';
 
     Quill.register('modules/imageResize', ImageResize);
     Quill.register('modules/ImageExtend', ImageExtend);
     export default {
-        name: "QuestionPublish",
-        components: {},
+        name: "requirement-publish",
         data() {
             return {
                 content: '',
                 dialog: false,
-                first_category: [
-                    {name: '正在获取。。。', id: 0}
-                ],
+                first_category: [],
                 second_category: [],
-                user_group: [],
+                upload_list: [],
                 formItem: {
                     title: undefined,
                     first_category: undefined,
                     second_category: [],
                     priced: false,
                     price: 0.00,
-                    user_group: []
+                    cover: undefined,
+                    description: undefined,
                 },
                 tag_loading: false,
+
                 editorOption: {
                     modules: {
                         ImageExtend: {
@@ -182,12 +146,18 @@
                         }
                     },
                     placeholder: '请在此输入内容'
+                },
+                user_group: [],
+
+                rules: {
+                    counter: value => value.length <= 30 || '字数不能超过30个',
+                    required: value => !!value || '该栏不能为空.',
                 }
             }
         },
         methods: {
             get_second_category() {
-                this.formItem.second_category=[];
+                this.formItem.second_category = [];
                 this.$api.tags.get_child_tag(this.formItem.first_category).then(res => {
                     if (res.data.code === 1) {
                         this.second_category = res.data.data;
@@ -246,49 +216,38 @@
                 let that = this;
                 setTimeout(() => {
                     let tags = that.get_tags(that.formItem.first_category, that.formItem.second_category);
-                    if (this.formItem.priced) {
-                        let allowed_user = that.formItem.user_group.join(',');
-                        let data = {
-                            title: that.formItem.title,
-                            token: that.$store.state.token,
-                            price: that.formItem.price,
-                            description: that.content,
-                            tags: tags,
-                            allowed_user: allowed_user
-                        };
-                        that.$api.questions.add_priced_question(data).then(res => {
-                            if (res.data.code === 1) {
-                                that.$router.back();
-                            }else{
-                                this.$store.commit('showInfo', res.data.msg);
-                            }
-                        })
-                    } else {
-                        let data = {
-                            title: that.formItem.title,
-                            token: that.$store.state.token,
-                            description: that.content,
-                            tags: tags,
-                        };
-                        that.$api.questions.add_question(data).then(res => {
-                            if (res.data.code === 1) {
-                                that.$router.back();
-                            }else{
-                                this.$store.commit('showInfo', res.data.msg);
-                            }
-                        });
-                    }
+                    let allowed_user = that.formItem.user_group.join(',');
+                    let data = {
+                        title: that.formItem.title,
+                        token: that.$store.state.token,
+                        price: that.formItem.price,
+                        content: that.content,
+                        tags: tags,
+                        cover: that.formItem.cover,
+                        allowed_user: allowed_user
+                    };
+                    that.$api.enterprise.add_demand(data).then(res => {
+                        if (res.data.code === 1) {
+                            that.$router.back();
+                        } else {
+                            this.$store.commit('showInfo', res.data.msg);
+                        }
+                    })
+
                 }, 3000)
-            }
+            },
+            upload(response, file, fileList) {
+                this.upload_list = [{
+                    name: file.name,
+                    url: response.data
+                }];
+                this.formItem.cover = response.data;
+            },
+            remove() {
+                this.formItem.cover = undefined
+            },
         },
         mounted() {
-            // var editor = new Edit(this.$refs.editor)
-            // editor.customConfig.onchange = (html) => {
-            //     this.editorContent = html
-            // }
-            // editor.create()
-            // var editor1 = new Edit('#editbar', '#editput')  // 两个参数也可以传入 elem 对象，class 选择器
-            // editor1.create()
             this.get_user_group();
             this.get_first_category();
         }

@@ -7,6 +7,14 @@
         <v-content>
             <router-view></router-view>
         </v-content>
+
+        <v-snackbar v-model="$store.state.snackbar" bottom multi-line :timeout="3000">
+            {{ $store.state.infoText }}
+            <v-btn color="primary" flat @click="$store.commit('closeInfo')">
+                关闭
+            </v-btn>
+        </v-snackbar>
+
     </v-app>
 </template>
 
@@ -20,7 +28,7 @@
         },
         data() {
             return {
-                loading:0
+                loading: 0,
             }
         },
         methods: {

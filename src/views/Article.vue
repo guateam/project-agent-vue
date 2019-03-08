@@ -79,7 +79,7 @@
         <v-divider></v-divider>
         <div style="padding: 1em;line-height: 1.5;">
             <h3 style="margin-bottom: 1.1em;font-size: 1.2em">作者简介</h3>
-            <v-layout row wrap>
+            <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.user_id}})">
                 <v-flex xs3>
                     <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                         <img :src="data.head_portrait" alt="" style="width: 100%;
@@ -136,7 +136,9 @@ height: 100%;border-radius: 50%">
                     <div style="margin-top: 5px">{{favorite==='favorite'?'已关注':'关注'}}</div>
                 </v-flex>
                 <v-flex xs2
-                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc">
+                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc"
+                        @click="$router.push({name:'comment',query:{id:$route.query.id,type:2}})"
+                >
                     <div>
                         <v-icon color="primary">comment</v-icon>
                     </div>

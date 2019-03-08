@@ -9,11 +9,11 @@
             </div>
         </div>
         <div class="line"></div>
-        <Scroll :data="topimgs" style="z-index: 200">
+        <Scroll :data="items" style="z-index: 200">
             <v-flex xs12>
                 <v-carousel hide-delimiters height="200px">
                     <v-carousel-item
-                            v-for="(item,i) in topimgs"
+                            v-for="(item,i) in items"
                             :key="i"
                             :src="item.src"
                     >
@@ -66,21 +66,21 @@
                 </v-layout>
             </v-container>
             <v-divider></v-divider>
+            <!--<v-layout row wrap style="line-height: 1.5;height: 40px;align-items: center;justify-content: center;">-->
+                <!--<v-flex xs2 style="text-align: center">-->
+                    <!--<v-icon color="#FF0066">volume_up</v-icon>-->
+                <!--</v-flex>-->
+                <!--<v-flex xs9>-->
+                    <!--<h3>你有一份新的收益周报待查看</h3>-->
+                <!--</v-flex>-->
+                <!--<v-flex xs1>-->
+                    <!--<v-icon color="black">chevron_right</v-icon>-->
+                <!--</v-flex>-->
+            <!--</v-layout>-->
+            <!--<v-divider></v-divider>-->
             <v-layout row wrap style="line-height: 1.5;height: 40px;align-items: center;justify-content: center;">
-                <v-flex xs2 style="text-align: center">
-                    <v-icon color="#FF0066">volume_up</v-icon>
-                </v-flex>
-                <v-flex xs9>
-                    <h3>你有一份新的收益周报待查看</h3>
-                </v-flex>
-                <v-flex xs1>
-                    <v-icon color="black">chevron_right</v-icon>
-                </v-flex>
-            </v-layout>
-            <v-divider></v-divider>
-            <v-layout row wrap style="line-height: 1.5;height: 40px;align-items: center;justify-content: center;">
-                <v-flex xs11>
-                    <h3>数据中心</h3>
+                <v-flex xs11 >
+                    <h2 style="margin-left: 1em">数据中心</h2>
                 </v-flex>
                 <v-flex xs1>
                     <v-icon color="black">chevron_right</v-icon>
@@ -168,28 +168,33 @@
         data() {
             return {
                 bottomNav: 0,
-                topimgs: [
+                items: [
                     {
-                        src: 'https://www.asgardusk.com/images/portfolio/3.png',
-                        title: '创作新秀激励奖第二期启动'
-                    },
-                    {
-                        src: 'https://www.asgardusk.com/images/portfolio/4.png',
-                        title: '我的废柴发明'
-                    },
-                    {
-                        src: 'https://www.asgardusk.com/images/portfolio/6.png',
-                        title: '专+星研会'
-                    },
-                    {
-                        src: 'https://www.asgardusk.com/images/portfolio/7.png',
-                        title: '我心中的镇站之宝'
+                        src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551793082170&di=a969802b6be72df8065f08348913985c&imgtype=0&src=http%3A%2F%2Fwww.3d2000.com%2Fwp-content%2Fuploads%2F2016%2F05%2F294194-7268075d6ad931da.gif',
+                        title: '加载中···'
                     }
                 ]
             }
         },
-        methods: {},
+        methods: {
+            get_activities() {
+                this.$api.activities.get_activities(3).then(res => {
+                    if (res.data.code === 1) {
+                        let data = [];
+                        res.data.data.forEach(value => {
+                            data.push({
+                                title: value['title'],
+                                src: value['cover'],
+                                url: value['url']
+                            })
+                        });
+                        this.items = data;
+                    }
+                })
+            },
+        },
         mounted() {
+            this.get_activities();
         }
     }
 </script>
