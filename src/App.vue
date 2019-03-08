@@ -8,9 +8,9 @@
             <router-view></router-view>
         </v-content>
 
-        <v-snackbar v-model="$store.state.snackbar" bottom multi-line :left="false">
+        <v-snackbar v-model="$store.state.snackbar" bottom multi-line :timeout="3000">
             {{ $store.state.infoText }}
-            <v-btn color="pink" flat @click="$store.commit('closeInfo')">
+            <v-btn color="primary" flat @click="$store.commit('closeInfo')">
                 关闭
             </v-btn>
         </v-snackbar>
