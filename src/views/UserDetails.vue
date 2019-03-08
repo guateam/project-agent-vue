@@ -201,6 +201,7 @@
 <script>
   export default {
     name: 'Detail',
+    props: ['userId'],
     data() {
       return {
         userInfo: {
@@ -232,6 +233,9 @@
       }
     },
     methods: {
+      getUserData() {
+
+      },  // 获取用户信息
       consult() {
         this.$store.commit('showInfo', '付费咨询');
       },  // 付费咨询
@@ -246,7 +250,11 @@
         }  // 关注
       },  // 关注/取关用户
     },
-    mounted() {},
+    mounted() {
+      if (this.userId) {
+        this.getUserData();
+      }
+    },
   }
 </script>
 
