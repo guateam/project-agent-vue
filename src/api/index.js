@@ -21,7 +21,15 @@ const index = {
 
         classify_all_tag(type) {
             return axios.get(`${base.homepage}/classify_all_tag`, {params: {type: type}})
-        }  //获取特定tag下的问题或者文章
+        },  //获取特定tag下的问题或者文章
+
+        get_hot_search(){
+            return axios.get(`${base.homepage}/get_hot_search`)
+        }, //获取热搜
+
+        get_history_search(token = store.state.token){
+            return axios.get(`${base.homepage}/get_history_search`, {params: {token: token}})
+        }, //获取热搜
     },
     account: {
 
@@ -226,6 +234,9 @@ const index = {
     specialist: {
         get_my_fans(token = store.state.token) {
             return axios.get(`${base.specialist}/get_my_fans`, {params: {token: token}})
+        },
+        get_click_info(token = store.state.token) {
+            return axios.get(`${base.specialist}/get_click_info`, {params: {token: token}})
         }
     },
     activities: {
@@ -287,6 +298,22 @@ const index = {
         add_demand(data) {
             return axios.post(`${base.enterprise}/add_demand`, qs.stringify(data))
         }
+    },
+    algorithm:{
+        auto_complete(word){
+            return axios.get(`${base.algorithm}/before_search`, {params: {word: word}})
+        }, //根据搜索词语言用tfidf进行自动补全
+
+        vague_search(word,type="question",token=store.state.token){
+            if(type == 0){
+                type = "question"
+            }else if(type == 1){
+                type = "article"
+            }else if(type == 2){
+                type = "user"
+            }
+            return axios.get(`${base.algorithm}/search`, {params: {word: word,type:type,token:token}})
+        }, //模糊搜索
     }
 };
 
