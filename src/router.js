@@ -38,6 +38,13 @@ export default new Router({
             meta: {requireLogin: true},  // 需要登录
             component: () => import('./views/Account.vue'),
             children: [
+                // 实名认证
+                {
+                    path: 'real-name',
+                    name: 'real-name',
+                    meta: {requireLogin: true},
+                    component: () => import('./views/RealNameVerify.vue')
+                },
                 // 用户信息
                 {
                     path: 'user-info',

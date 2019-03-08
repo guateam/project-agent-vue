@@ -102,7 +102,7 @@
       <v-flex>
         <v-tabs fixed-tabs>
           <v-tab
-              v-for="tab in ['动态', '回答', '专栏', '公开课']"
+              v-for="tab in ['动态', '回答', '专栏']"
               :key="tab"
           >
             {{ tab }}
@@ -192,35 +192,6 @@
               </v-list>
             </v-card>
           </v-tab-item>
-
-          <!--公开课-->
-          <v-tab-item :key="'公开课'">
-            <v-card flat min-height="200">
-              <v-list two-line subheader>
-                <v-layout v-if="classes.length === 0" align-center justify-center row fill-height>
-                  <span class="title font-weight-light"> <br>暂无课程</span>
-                </v-layout>
-
-                <div v-else v-for="(item, index) in classes" :key="index">
-                  <v-divider></v-divider>
-
-                  <v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                      <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                    </v-list-tile-content>
-
-                    <v-list-tile-action>
-                    <span class="font-weight-light">
-                        {{ item.time }}
-                    </span>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                </div>
-
-              </v-list>
-            </v-card>
-          </v-tab-item>
         </v-tabs>
       </v-flex>
     </v-layout>
@@ -258,7 +229,6 @@
           {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
           {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
         ],  // 专栏文章
-        classes: [],  // 公开课
       }
     },
     methods: {
@@ -285,7 +255,7 @@
     height: 100vh;
     width: 100vw;
     font-family: Helvetica, Arial, sans-serif;
-    background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);;
+    background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);
   }
   .avatar {
     border-radius: 80px;
