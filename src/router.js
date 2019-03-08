@@ -140,6 +140,13 @@ export default new Router({
                 },
             ]
         },
+        // 告示板详情
+        {
+            path: '/board-detail',
+            name: 'board-detail',
+            component: () => import('./views/BoardDetail.vue'),
+            children: []
+        },
         // 文章页
         {
             path: '/article',
