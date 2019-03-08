@@ -12,7 +12,7 @@
                 <v-icon>more_vert</v-icon>
             </v-btn>
         </v-toolbar>
-        <iframe :src="url" id="main-frame" height="100%" width="100%"></iframe>
+        <iframe onload="this.height=document.body.scrollHeight" :src="url" id="main-frame" height="100%" width="100%"></iframe>
     </div>
 </template>
 
@@ -58,5 +58,6 @@
 <style scoped>
     .browser {
         height: 100%;
+        min-height: 20em;
     }
 </style>

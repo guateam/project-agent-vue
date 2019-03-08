@@ -226,6 +226,9 @@ const index = {
     specialist: {
         get_my_fans(token = store.state.token) {
             return axios.get(`${base.specialist}/get_my_fans`, {params: {token: token}})
+        },
+        get_click_info(token = store.state.token) {
+            return axios.get(`${base.specialist}/get_click_info`, {params: {token: token}})
         }
     },
     activities: {
@@ -287,7 +290,7 @@ const index = {
         add_demand(data) {
             return axios.post(`${base.enterprise}/add_demand`, qs.stringify(data))
         }
-    }
+    },
 };
 
 export default index;
