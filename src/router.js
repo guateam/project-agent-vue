@@ -147,6 +147,27 @@ export default new Router({
             component: () => import('./views/BoardDetail.vue'),
             children: []
         },
+        // 发布需求
+        {
+            path: '/requirement-publish',
+            name: 'requirement-publish',
+            component: () => import('./views/RequirementPublish.vue'),
+            children: []
+        },
+        // 需求审核
+        {
+            path: '/requirement-check',
+            name: 'requirement-check',
+            component: () => import('./views/RequirementCheck.vue'),
+            children: []
+        },
+        // 历史发布（需求）
+        {
+            path: '/requirement-history',
+            name: 'requirement-history',
+            component: () => import('./views/RequirementHistory.vue'),
+            children: []
+        },
         // 文章页
         {
             path: '/article',
