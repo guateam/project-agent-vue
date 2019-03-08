@@ -265,6 +265,14 @@ const index = {
         get_groups(token = store.state.token) {
             return axios.get(`${base.group}/get_groups`, {params: {token: token}})
         }
+    },
+    board: {
+        get_board_recommend(page, token = store.state.token) {
+            return axios.get(`${base.board}/get_board_recommend`, {params: {page: page, token: token}})
+        },
+        get_demands_by_tag(tag_id) {
+            return axios.get(`${base.board}/get_demands_by_tag`, {params: {tag_id: tag_id}})
+        }
     }
 };
 

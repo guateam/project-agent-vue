@@ -14,13 +14,13 @@
 width: 100%;object-fit: cover">
         </v-flex>
         <v-layout row wrap style="height:70px">
-            <v-flex xs2 style="padding-top: 10px">
+            <v-flex xs2 style="padding-top: 10px" @click="$router.push({name:'detail',query:{id:data.user_id}})">
                 <div style="height: 50px;width: 50px;border-radius: 50%;overflow:hidden;margin: 0 auto;">
                     <img :src="data.head_portrait" alt="" style="width: 100%;height: 100%;">
                 </div>
             </v-flex>
             <v-flex xs7
-                    style="flex-direction: column;justify-content: space-between;line-height: 27px;padding-top: 10px;">
+                    style="flex-direction: column;justify-content: space-between;line-height: 27px;padding-top: 10px; " @click="$router.push({name:'detail',query:{id:data.user_id}})">
                 <div><h3>{{data.nickname}}</h3></div>
                 <div>{{data.description}}</div>
             </v-flex>
