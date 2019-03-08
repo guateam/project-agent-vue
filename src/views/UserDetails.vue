@@ -1,94 +1,94 @@
 <template>
-  <div class="detail">
-    <div style="height: 60%; width: 100%;">
-      <v-layout column fill-height>
-        <v-flex xs1>
-          <v-layout justify-space-between row>
-            <v-flex shrink>
-              <v-btn @click="$router.push($route.query.redirect || {name: 'topic'})" icon>
-                <v-icon>arrow_back</v-icon>
-              </v-btn>
-            </v-flex>
-            <v-flex shrink>
-              <v-btn icon>
-                <v-icon>more_horiz</v-icon>
-              </v-btn>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-
-        <v-flex xs3>
-          <v-container fill-height>
-            <v-layout align-center justify-space-between row fill-height>
-              <!--头像-->
-              <v-flex xs6>
-                <img class="avatar" :src="userInfo.avatar" width="66%">
-              </v-flex>
-
-              <v-flex xs6>
-                <!--信息-->
-                <v-layout justify-center column fill-height>
-                  <v-flex xs6>
-                    <v-layout align-start justify-center row fill-height>
-                      <v-flex>
-                        <v-btn small block color="success" outline>{{ userInfo.group }}</v-btn>
-                      </v-flex>
+    <div class="detail">
+        <div style="height: 60%; width: 100%;">
+            <v-layout column fill-height>
+                <v-flex xs1>
+                    <v-layout justify-space-between row>
+                        <v-flex shrink>
+                            <v-btn @click="$router.push($route.query.redirect || {name: 'topic'})" icon>
+                                <v-icon>arrow_back</v-icon>
+                            </v-btn>
+                        </v-flex>
+                        <v-flex shrink>
+                            <v-btn icon>
+                                <v-icon>more_horiz</v-icon>
+                            </v-btn>
+                        </v-flex>
                     </v-layout>
-                    <v-divider></v-divider>
-                  </v-flex>
-                  <v-flex xs6>
-                    <v-layout align-end row fill-height>
-                      <v-flex xs6>
-                        <span class="headline font-weight-bold">{{ (userInfo.follow).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
-                        <br />
-                        <span class="font--text">关注</span>
-                      </v-flex>
+                </v-flex>
 
-                      <v-flex xs6>
-                        <span class="headline font-weight-bold">{{ (userInfo.fans).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
-                        <br />
-                        <span class="font--text">粉丝</span>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                </v-layout>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-flex>
+                <v-flex xs3>
+                    <v-container fill-height>
+                        <v-layout align-center justify-space-between row fill-height>
+                            <!--头像-->
+                            <v-flex xs6>
+                                <img class="avatar" :src="userInfo.avatar" width="66%">
+                            </v-flex>
 
-        <!--昵称-->
-        <v-flex xs2>
-          <v-container fill-height>
-            <v-layout align-center justify-center row fill-height>
-              <v-flex shrink>
-                <span class="headline font-weight-bold">{{ userInfo.nickname }}</span>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-flex>
+                            <v-flex xs6>
+                                <!--信息-->
+                                <v-layout justify-center column fill-height>
+                                    <v-flex xs6>
+                                        <v-layout align-start justify-center row fill-height>
+                                            <v-flex>
+                                                <v-btn small block color="success" outline>{{ userInfo.group }}</v-btn>
+                                            </v-flex>
+                                        </v-layout>
+                                        <v-divider></v-divider>
+                                    </v-flex>
+                                    <v-flex xs6>
+                                        <v-layout align-end row fill-height>
+                                            <v-flex xs6>
+                                                <span class="headline font-weight-bold">{{ (userInfo.follow).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
+                                                <br/>
+                                                <span class="font--text">关注</span>
+                                            </v-flex>
 
-        <!--功能-->
-        <v-flex xs2>
-          <v-container fill-height>
-            <v-layout align-center justify-center row fill-height>
-              <v-flex xs5>
-                <v-btn @click="consult" block color="grey">
+                                            <v-flex xs6>
+                                                <span class="headline font-weight-bold">{{ (userInfo.fans).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
+                                                <br/>
+                                                <span class="font--text">粉丝</span>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-flex>
+                                </v-layout>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </v-flex>
+
+                <!--昵称-->
+                <v-flex xs2>
+                    <v-container fill-height>
+                        <v-layout align-center justify-center row fill-height>
+                            <v-flex shrink>
+                                <span class="headline font-weight-bold">{{ userInfo.nickname }}</span>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </v-flex>
+
+                <!--功能-->
+                <v-flex xs2>
+                    <v-container fill-height>
+                        <v-layout align-center justify-center row fill-height>
+                            <v-flex xs5>
+                                <v-btn @click="consult" block color="grey">
                 <span class="font-weight-bold white--text">
                   咨询
                 </span>
-                </v-btn>
-              </v-flex>
-              <v-flex xs5 offset-xs1>
-                <v-btn @click="followUser" block color="primary" :outline="userInfo.isFollow">
+                                </v-btn>
+                            </v-flex>
+                            <v-flex xs5 offset-xs1>
+                                <v-btn @click="followUser" block color="primary" :outline="userInfo.isFollow">
                 <span class="font-weight-bold">
                   {{ userInfo.isFollow? '已关注': '+ 关注' }}
                 </span>
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-flex>
+                                </v-btn>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </v-flex>
 
         <!--简介-->
         <v-flex grow>
@@ -117,77 +117,77 @@
                 <div v-for="(item, index) in message" :key="index">
                   <v-divider></v-divider>
 
-                  <v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                      <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                    </v-list-tile-content>
+                                    <v-list-tile>
+                                        <v-list-tile-content>
+                                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                                        </v-list-tile-content>
 
-                    <v-list-tile-action>
+                                        <v-list-tile-action>
                     <span class="font-weight-light">
                         {{ item.time }}
                     </span>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                </div>
+                                        </v-list-tile-action>
+                                    </v-list-tile>
+                                </div>
 
-              </v-list>
-            </v-card>
-          </v-tab-item>
+                            </v-list>
+                        </v-card>
+                    </v-tab-item>
 
-          <!--回答-->
-          <v-tab-item :key="'回答'">
-            <v-card flat min-height="200">
-              <v-layout v-if="answers.length === 0" align-center justify-center row fill-height>
-                <span class="title font-weight-light"> <br>暂无回答</span>
-              </v-layout>
+                    <!--回答-->
+                    <v-tab-item :key="'回答'">
+                        <v-card flat min-height="200">
+                            <v-layout v-if="answers.length === 0" align-center justify-center row fill-height>
+                                <span class="title font-weight-light"> <br>暂无回答</span>
+                            </v-layout>
 
-              <v-list v-else two-line subheader>
-                <div v-for="(item, index) in answers" :key="index">
-                  <v-divider></v-divider>
+                            <v-list v-else two-line subheader>
+                                <div v-for="(item, index) in answers" :key="index">
+                                    <v-divider></v-divider>
 
-                  <v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                      <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                    </v-list-tile-content>
+                                    <v-list-tile>
+                                        <v-list-tile-content>
+                                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                                        </v-list-tile-content>
 
-                    <v-list-tile-action>
+                                        <v-list-tile-action>
                     <span class="font-weight-light">
                         {{ item.time }}
                     </span>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                </div>
+                                        </v-list-tile-action>
+                                    </v-list-tile>
+                                </div>
 
-              </v-list>
-            </v-card>
-          </v-tab-item>
+                            </v-list>
+                        </v-card>
+                    </v-tab-item>
 
-          <!--专栏-->
-          <v-tab-item :key="'专栏'">
-            <v-card flat min-height="200">
-              <v-layout v-if="articles.length === 0" align-center justify-center row fill-height>
-                <span class="title font-weight-light"> <br>暂无文章</span>
-              </v-layout>
+                    <!--专栏-->
+                    <v-tab-item :key="'专栏'">
+                        <v-card flat min-height="200">
+                            <v-layout v-if="articles.length === 0" align-center justify-center row fill-height>
+                                <span class="title font-weight-light"> <br>暂无文章</span>
+                            </v-layout>
 
-              <v-list v-else two-line subheader>
-                <div v-for="(item, index) in articles" :key="index">
-                  <v-divider></v-divider>
+                            <v-list v-else two-line subheader>
+                                <div v-for="(item, index) in articles" :key="index">
+                                    <v-divider></v-divider>
 
-                  <v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                      <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                    </v-list-tile-content>
+                                    <v-list-tile>
+                                        <v-list-tile-content>
+                                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                                        </v-list-tile-content>
 
-                    <v-list-tile-action>
+                                        <v-list-tile-action>
                     <span class="font-weight-light">
                         {{ item.time }}
                     </span>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                </div>
+                                        </v-list-tile-action>
+                                    </v-list-tile>
+                                </div>
 
               </v-list>
             </v-card>
