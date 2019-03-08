@@ -1,4 +1,4 @@
-const baseUrl = 'https://hanerx.tk:5000/api';
+const baseUrl = 'http://localhost:5000/api';
 
 const base = {
     homepage: baseUrl + '/homepage',
@@ -13,6 +13,7 @@ const base = {
     tags: baseUrl + '/tags',
     upload: baseUrl + '/upload',
     group: baseUrl + '/group',
+    algorithm: baseUrl + '/algorithm',
 };
 
 export default base;
