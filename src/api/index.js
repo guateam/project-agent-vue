@@ -272,6 +272,15 @@ const index = {
         },
         get_demands_by_tag(tag_id) {
             return axios.get(`${base.board}/get_demands_by_tag`, {params: {tag_id: tag_id}})
+        },
+        get_demand(demand_id) {
+            return axios.get(`${base.board}/get_demand`, {params: {demand_id: demand_id}})
+        },
+        get_sign_state(demand_id, token = store.state.token) {
+            return axios.get(`${base.board}/get_sign_state`, {params: {demand_id: demand_id, token: token}})
+        },
+        sign_to_demand(demand_id, token = store.state.token) {
+            return axios.get(`${base.board}/sign_to_demand`, {params: {demand_id: demand_id, token: token}})
         }
     }
 };
