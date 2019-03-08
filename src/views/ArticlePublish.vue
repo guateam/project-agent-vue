@@ -45,6 +45,9 @@
                                             </Option>
                                         </Select>
                                     </FormItem>
+                                    <FormItem label="文章简介">
+                                        <Input v-model="formItem.description" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="输入文章简介···"></Input>
+                                    </FormItem>
                                     <FormItem label="付费文章">
                                         <i-switch v-model="formItem.priced" size="large">
                                             <span slot="open">是</span>
@@ -59,19 +62,7 @@
                                         <!--<Slider :value="formItem.price" :step="0.1" :max="100"></Slider>-->
                                     </FormItem>
                                 </Form>
-                                <v-snackbar
-                                        v-model="snackbar"
-                                        vertical="vertical"
-                                >
-                                    {{ text }}
-                                    <v-btn
-                                            dark
-                                            flat
-                                            @click="snackbar = false"
-                                    >
-                                        Close
-                                    </v-btn>
-                                </v-snackbar>
+
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -113,9 +104,7 @@
         data() {
             return {
                 content: '',
-                snackbar: false,
                 dialog: false,
-                text: '',
                 first_category: [],
                 second_category: [],
                 upload_list: [],
@@ -126,6 +115,7 @@
                     priced: false,
                     price: 0.00,
                     cover: undefined,
+                    description: undefined,
                 },
                 tag_loading: false,
 
@@ -237,14 +227,14 @@
                         content: that.content,
                         tags: tags,
                         cover: that.formItem.cover,
-                        free:that.formItem.priced
+                        free:that.formItem.priced,
+                        description:that.formItem.description
                     };
                     that.$api.article.add_article(data).then(res => {
                         if (res.data.code === 1) {
                             that.$router.back();
                         } else {
-                            that.text = res.data.msg;
-                            that.snackbar = true;
+                            this.$store.commit('showInfo', res.data.msg);
                         }
                     })
 

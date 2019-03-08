@@ -82,19 +82,6 @@
                                         </Select>
                                     </FormItem>
                                 </Form>
-                                <v-snackbar
-                                        v-model="snackbar"
-                                        vertical="vertical"
-                                >
-                                    {{ text }}
-                                    <v-btn
-                                            dark
-                                            flat
-                                            @click="snackbar = false"
-                                    >
-                                        Close
-                                    </v-btn>
-                                </v-snackbar>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -132,19 +119,6 @@
             >
             </quill-editor>
         </div>
-        <v-snackbar
-                v-model="snackbar"
-                vertical="vertical"
-        >
-            {{ text }}
-            <v-btn
-                    dark
-                    flat
-                    @click="snackbar = false"
-            >
-                Close
-            </v-btn>
-        </v-snackbar>
     </div>
 </template>
 
@@ -176,8 +150,6 @@
                     price: 0.00,
                     user_group: []
                 },
-                text:'',
-                snackbar:false,
                 tag_loading: false,
                 editorOption: {
                     modules: {
@@ -288,8 +260,7 @@
                             if (res.data.code === 1) {
                                 that.$router.back();
                             }else{
-                                that.text=res.data.msg;
-                                that.snackbar=true;
+                                this.$store.commit('showInfo', res.data.msg);
                             }
                         })
                     } else {
@@ -303,8 +274,7 @@
                             if (res.data.code === 1) {
                                 that.$router.back();
                             }else{
-                                that.text=res.data.msg;
-                                that.snackbar=true;
+                                this.$store.commit('showInfo', res.data.msg);
                             }
                         });
                     }

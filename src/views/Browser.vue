@@ -57,6 +57,6 @@
 
 <style scoped>
     .browser {
-        height: 54.6em;
+        height: 100%;
     }
 </style>

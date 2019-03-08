@@ -8,7 +8,7 @@
                 <span>话题</span>
             </v-toolbar-title>
 
-            <v-btn icon>
+            <v-btn icon @click="$router.push({name:'search'})">
                 <v-icon>search</v-icon>
             </v-btn>
 
@@ -42,19 +42,6 @@
                 <span style="margin-left: 1em">加载中</span></h3>
         </div>
         <div style="height: 1.5em"></div>
-        <v-snackbar
-                v-model="snackbar"
-                vertical="vertical"
-        >
-            {{ text }}
-            <v-btn
-                    dark
-                    flat
-                    @click="snackbar = false"
-            >
-                Close
-            </v-btn>
-        </v-snackbar>
         <v-footer app>
             <bottomNav :bottom-nav="'topic'"></bottomNav>
         </v-footer>
@@ -83,8 +70,6 @@
                 page: 1,
                 busy: false,
                 timeout:0,
-                snackbar:false,
-                text:''
             }
         },
 
@@ -125,8 +110,9 @@
                             this.get_recommend();
                             this.timeout++;
                         }else{
-                            this.snackbar=true;
-                            this.text='连接超时，请检查网络'
+                            // this.snackbar=true;
+                            // this.text='连接超时，请检查网络'
+                            this.$store.commit('showInfo', '连接超时，请检查网络');
                         }
                     }
                 })

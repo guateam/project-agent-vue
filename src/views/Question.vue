@@ -26,8 +26,8 @@
                     </div>
                 </div>
                 <p class="topicdetail">
-                    <span v-if="!showAll">{{ questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content }} </span>
-                    <span v-else>{{ questionData.content }} </span>
+                    <span v-if="!showAll" v-html="questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content"></span>
+                    <span v-else v-html="questionData.content"></span>
                     <button id="show-all-button" v-if="questionData.content.length > 65" @click="showAll = !showAll">
                         <span v-if="!showAll" style="color: blue">显示全部</span>
                         <span v-else style="color: blue">收起</span>
@@ -44,11 +44,10 @@
 
         <!--页面主体，展示不同的回答列表-->
 
-        <v-card v-for="(answer, index) in answersDataList" :key="index">
+        <v-card v-for="(answer, index) in answersDataList" :key="index" :to="{name: 'answer', query: {id: answer.answerID}}">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
 
-                <router-link
-                        :to="{name: 'answer', query: {id: answer.answerID}}">
+                <router-link :to="{name: 'answer', query: {id: answer.answerID}}">
                     <!--<p class="answerDetail">{{ answer.content.length > 70 ? answer.content.substring(0, 70) + '...' :-->
                     <!--answer.content }}</p>-->
 
@@ -66,7 +65,7 @@
                         <img :src="answer.headportrait" alt="">
                     </div>
                     <p class="userName">{{answer.nickname}}</p>
-                    &nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <!--<p class="userTag">{{answer.user.tag}}</p>-->
                     <p class="answerTime">{{answer.edittime}}</p>
                 </div>

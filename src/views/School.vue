@@ -54,7 +54,7 @@
                                         ></v-img>
                                         <v-card-title>
                                             <div>
-                                                <span><b>{{value.title}}</b></span>
+                                                <span class="inline"><b>{{value.title}}</b></span>
                                                 <div>
                                                     <div class="grey--text text--darken-2">
                                                         <span v-for="(tag, index) in value.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
@@ -83,21 +83,21 @@
 
                         <!--尝试修复菜单栏滚动，失败了-->
 
-                        <Col span="10" style="background-color: red;position: fixed;left: 0;overflow: hidden;">
-                            <Scroll :data="menu">
-                                <Col span="24">
-                                    <Menu Menu theme="light" width="auto" accordion @on-open-change="menu_change">
-                                        <Submenu :name="item.id" v-for="item in menu">
-                                            <template slot="title">
-                                                {{item.name}}
-                                            </template>
-                                            <MenuItem :name="value.id" @click.native="change(value.id)"
-                                                      v-for="value in item.children">{{value.name}}
-                                            </MenuItem>
-                                        </Submenu>
-                                    </Menu>
-                                </Col>
-                            </Scroll>
+                        <Col span="10" style="background-color: white;position: fixed;left: 0;overflow: scroll;height: 82%">
+
+                            <Col span="24">
+                                <Menu Menu theme="light" width="auto" accordion @on-open-change="menu_change">
+                                    <Submenu :name="item.id" v-for="item in menu">
+                                        <template slot="title">
+                                            {{item.name}}
+                                        </template>
+                                        <MenuItem :name="value.id" @click.native="change(value.id)"
+                                                  v-for="value in item.children">{{value.name}}
+                                        </MenuItem>
+                                    </Submenu>
+                                </Menu>
+                            </Col>
+
                         </Col>
                         <Col span="14" offset="10">
                             <v-layout row>
@@ -340,5 +340,7 @@
 
     button {
         z-index: 1;
+    }
+    .inline{
     }
 </style>
