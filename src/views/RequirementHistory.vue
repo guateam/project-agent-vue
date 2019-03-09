@@ -11,7 +11,7 @@
         <div class="line"></div>
         <v-container grid-list-md text-xs-center>
             <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px"
-                      @click="$router.push({name:'requirement-check-detail',query:{id:item.demandID}})"
+                      @click="$router.push({name:'requirement-history-detail',query:{id:item.demandID}})"
                       v-for="item in data">
                 <v-flex xs4 style="height: 100%">
                     <img :src="item.cover" alt=""

@@ -54,12 +54,19 @@
                     <!--answer.content }}</p>-->
 
                     <!--列表正文内容-->
-                    <p class="answerDetail" v-html="answer.content"></p>
+                    <p class="answerDetail">{{answer.content.replace(/<[^>]+>/g, '')}}</p>
 
                     <!--没有图片时不加载下面的div-->
-                    <!--<div class="answerImg" v-if="answer.image.length !== 0">-->
-                        <!--<img v-for="(item,x) in answer.image" :key="x" :src="item" alt="" />-->
-                    <!--</div>-->
+                    <div class="answerImg" v-if="answer.image.length >=3">
+                        <img v-for="(item,x) in answer.image" :key="x" v-if="x<3" :src="item" alt=""/>
+                    </div>
+                    <div class="answerImg" v-if="answer.image.length === 1">
+                        <img :src="answer.image[0]" alt="" style="width: 100%;object-fit: cover;"/>
+                    </div>
+                    <div class="answerImg" v-if="answer.image.length === 2">
+                        <img :src="answer.image[0]" alt="" style="width: 50%;object-fit: cover;"/>
+                        <img :src="answer.image[1]" alt="" style="width: 50%;object-fit: cover;"/>
+                    </div>
                 </router-link>
                 <div style="width: 100%;display: flex;align-items: center;position: relative;">
                     <div class="userhead">
@@ -380,11 +387,6 @@
     }
 
     img {
-        max-width: 100%;
-    }
-</style>
-<style>
-    img{
         max-width: 100%;
     }
 </style>
