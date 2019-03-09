@@ -247,7 +247,7 @@
             this.$store.commit('showInfo', '超时');
             break;
           }  // 超过10秒认为加载失败
-        } while (this.group.length > 0 && this.userInfo.avatar !== '')
+        } while (this.group.length > 0 && this.userInfo.group !== '');
         this.getMessage();
       },  // 初始化用户数据
       getMessage() {
@@ -281,7 +281,7 @@
         });
       },  // 获取用户信息
       consult() {
-        this.$router.push({name: 'advisory', query: {id: this.userId}})
+        this.$store.commit('showInfo', '付费咨询');
       },  // 付费咨询
       followUser() {
         if (this.userInfo.isFollow) {
@@ -290,22 +290,77 @@
               this.userInfo.isFollow = false;
               this.$store.commit('showInfo', '已取消关注');
             }
-          });
-        }  // 取关
-        else {
-          this.$api.account.follow_user(this.userId).then(res => {
-            if (res.data.code === 1) {
-              this.userInfo.isFollow = true;
-              this.$store.commit('showInfo', '关注成功!')
-            }
-          });
-        }  // 关注
-      },  // 关注/取关用户
-    },
-    mounted() {
-      this.initUserData()
-    },
-  }
+        },
+        methods: {
+            initUserData() {
+                this.getUserGroup();
+                let tic = new Date();
+                do {
+                    this.getUserData();
+                    let toc = new Date();
+                    if ((toc - tic) > 10000) {
+                        this.$store.commit('showInfo', '超时');
+                        break;
+                    }  // 超过10秒认为加载失败
+                } while (this.group.length > 0 && this.userInfo.avatar !== '')
+                this.getMessage();
+            },  // 初始化用户数据
+            getMessage() {
+                this.message = [];
+                this.answers = [];
+                this.articles = [];
+            },  // 获取用户动态等数据
+            getUserGroup() {
+                this.$api.account.get_user_group().then(res => {
+                    if (res.data.code === 1) {
+                        this.group = res.data.data;
+                    }
+                })
+            },  // 获取用户组信息
+            getUserData() {
+                this.$api.account.get_user(this.userId).then(res => {
+                    if (res.data.code === 1) {
+                        let data = res.data.data;
+                        this.userInfo.nickname = data.nickname;
+                        this.userInfo.group = this.group[data.user_group];
+                        this.userInfo.avatar = data.head_portrait;
+                        this.userInfo.follow = data.follow;
+                        this.userInfo.fans = data.fans;
+                        this.userInfo.desc = data.description;
+                    }
+                });
+                this.$api.account.get_user_follow_state(this.userId).then(res => {
+                    if (res.data.code !== 0) {
+                        this.userInfo.isFollow = res.data.code === 1;
+                    }
+                });
+            },  // 获取用户信息
+            consult() {
+                this.$router.push({name: 'advisory', query: {id: this.userId}})
+            },  // 付费咨询
+            followUser() {
+                if (this.userInfo.isFollow) {
+                    this.$api.account.un_follow_user(this.userId).then(res => {
+                        if (res.data.code === 1) {
+                            this.userInfo.isFollow = false;
+                            this.$store.commit('showInfo', '已取消关注');
+                        }
+                    });
+                }  // 取关
+                else {
+                    this.$api.account.follow_user(this.userId).then(res => {
+                        if (res.data.code === 1) {
+                            this.userInfo.isFollow = true;
+                            this.$store.commit('showInfo', '关注成功!')
+                        }
+                    });
+                }  // 关注
+            },  // 关注/取关用户
+        },
+        mounted() {
+            this.initUserData()
+        },
+    }
 </script>
 
 <style scoped>
