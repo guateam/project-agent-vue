@@ -14,28 +14,25 @@
                 prominent
                 tabs
         >
-            <v-autocomplete
+            <v-combobox
                     v-model="model"
                     :items="items"
                     :loading="isLoading"
                     :search-input.sync="search"
-                    chips
                     clearable
-                    hide-details
-                    hide-selected
-                    item-text="name"
-                    item-value="symbol"
+                    item-text="content"
+                    item-value="content"
                     label="搜索你想要的内容"
                     solo
             >
-                <template v-slot:no-data>
+            <template v-slot:no-data>
                     <v-list-tile>
                         <v-list-tile-title>
-                            Search for your favorite
-                            <strong>Cryptocurrency</strong>
+                            <strong></strong>
                         </v-list-tile-title>
                     </v-list-tile>
                 </template>
+                <!--
                 <template v-slot:selection="{ item, selected }">
                     <v-chip
                             :selected="selected"
@@ -46,7 +43,7 @@
                         <span v-text="item.name"></span>
                     </v-chip>
                 </template>
-                <template v-slot:item="{ item }">
+                <template v-slot:item="item">
                     <v-list-tile-avatar
                             color="indigo"
                             class="headline font-weight-light white--text"
@@ -54,64 +51,113 @@
                         {{ item.name.charAt(0) }}
                     </v-list-tile-avatar>
                     <v-list-tile-content>
-                        <v-list-tile-title v-text="item.name"></v-list-tile-title>
-                        <v-list-tile-sub-title v-text="item.symbol"></v-list-tile-sub-title>
+                        <v-list-tile-title v-text="item.content"></v-list-tile-title>
+                        <v-list-tile-sub-title v-text="item.time"></v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
                         <v-icon>mdi-coin</v-icon>
                     </v-list-tile-action>
-                </template>
-            </v-autocomplete>
-            <v-toolbar-title class="title"><v-icon large color="white" @click="$router.push({name:'search-results'})">search</v-icon></v-toolbar-title>
+                </template>-->
+            </v-combobox>
+            <v-toolbar-title class="title"><v-icon large color="white" @click="$router.push({name:'search-results',query:{search:search}})">search</v-icon></v-toolbar-title>
         </v-toolbar>
         <v-flex xs12 style="margin-top: 2em">
             <h4>热门搜索</h4>
-            <div class="hotbox"><v-icon small color="red">whatshot</v-icon>没有只狼玩我要死了 <v-icon small style="float:right;margin-right: 2em">call_made</v-icon> </div>
-            <div class="hotbox">湖人无缘季后赛<v-icon small style="float:right;margin-right: 2em">call_made</v-icon></div>
-            <div class="hotbox">Maru被$O$吊打，智商碾压<v-icon small style="float:right;margin-right: 2em">call_made</v-icon></div>
-            <div class="hotbox">夏目友人帐<v-icon small style="float:right;margin-right: 2em">call_made</v-icon></div>
-            <div class="hotbox">熊猫直播官服<v-icon small style="float:right;margin-right: 2em">call_made</v-icon></div>
+            <div class="hotbox" v-for="(it,idx) in hot">
+                <v-icon v-if="idx == 0" small color="red">
+                    whatshot
+                </v-icon>
+                    {{it.content}}
+                <v-icon small style="float:right;margin-right: 2em">
+                    call_made
+                </v-icon> 
+            </div>
         </v-flex>
         <v-flex xs12 style="margin-top: 2em">
             <h4>历史记录</h4>
-            <div class="hotbox">没有只狼玩我要死了 <v-icon small style="float:right;margin-right: 2em">close</v-icon> </div>
-            <div class="hotbox">湖人无缘季后赛<v-icon small style="float:right;margin-right: 2em">close</v-icon></div>
-            <div class="hotbox">Maru被$O$吊打，智商碾压<v-icon small style="float:right;margin-right: 2em">close</v-icon></div>
-            <div class="hotbox">夏目友人帐<v-icon small style="float:right;margin-right: 2em">close</v-icon></div>
-            <div class="hotbox">熊猫直播官服<v-icon small style="float:right;margin-right: 2em">close</v-icon></div>
+            <div class="hotbox" v-for="it in history_search" v-if="!it.close">
+                {{it.content}} 
+                <v-icon @click="" small style="float:right;margin-right: 2em">
+                    close
+                </v-icon> 
+            </div>
         </v-flex>
     </div>
 </template>
 
 <script>
+    var uid = ""
     export default {
         name: "Search",
         data() {
             return {
                 isLoading: false,
-                items: [],
+                items: [
+
+                ],
+                hot:[],
+                history_search:[],
                 model: null,
-                search: null
+                search: null,
+                counter:2,
             }
         },
         watch: {
-            search(val) {
+            search(val) 
+            {
+                var that = this
                 // Items have already been loaded
-                if (this.items.length > 0) return
+                // if (this.items.length > 0) return
+                if (val == "")return
+                if (!that.isLoading)that.counter = 2
 
-                this.isLoading = true
-
+                if(that.counter > 0 && !that.isLoading && uid == ""){
+                    uid = setInterval(()=>{
+                        that.counter-=1
+                        console.log(that.counter)
+                        if(that.counter ==0){
+                            console.log("run")
+                            clearInterval(uid);
+                            uid = ""
+                            if(that.search == "")return
+                            that.isLoading = true
+                            that.$api.algorithm.auto_complete(that.search).then(res => {
+                                if (res.data.code === 1) {
+                                    that.items= res.data.data;
+                                    that.isLoading = false;
+                                    that.counter = 2;
+                                }
+                            })
+                        }
+                    },300)
+                }
                 // Lazily load input items
-                fetch('https://api.coinmarketcap.com/v2/listings/')
-                    .then(res => res.json())
-                    .then(res => {
-                        this.items = res.data
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-                    .finally(() => (this.isLoading = false))
+                // fetch('https://api.coinmarketcap.com/v2/listings/')
+                //     .then(res => res.json())
+                //     .then(res => {
+                //         this.items = res.data
+                //     })
+                //     .catch(err => {
+                //         console.log(err)
+                //     })
+                //     .finally(() => (this.isLoading = false))
             }
+        },
+        methods:{
+            
+        },
+        mounted(){
+            this.$api.homepage.get_hot_search().then(res => {
+                if (res.data.code === 1) {
+                    this.hot= res.data.data;
+                }
+            })
+
+            this.$api.homepage.get_history_search().then(res => {
+                if (res.data.code === 1) {
+                    this.history_search = res.data.data;
+                }
+            })
         }
     }
 </script>

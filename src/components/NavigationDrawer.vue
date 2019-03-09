@@ -12,9 +12,9 @@
                         <v-btn id="wallet" outline fab small color="secondary" @click="$router.push({name:'wallet', query: {redirect: $route.fullPath}})">
                             <v-icon>account_balance_wallet</v-icon>
                         </v-btn>
-                        <v-btn id="camera" outline fab small color="secondary">
-                            <v-icon>photo_camera</v-icon>
-                        </v-btn>
+                        <!--<v-btn id="camera" outline fab small color="secondary">-->
+                            <!--<v-icon>photo_camera</v-icon>-->
+                        <!--</v-btn>-->
                     </div>
                 </v-flex><!--按钮组-->
             </v-layout>
@@ -144,7 +144,7 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile @click="$router.push({name:'corporate_center'})">
+                <v-list-tile @click="$router.push({name:'corporate_center'})" v-if="$store.state.userInfo.usergroup===3">
                     <v-list-tile-action>
                         <v-icon class="time--text">local_offer</v-icon>
                     </v-list-tile-action>
