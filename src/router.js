@@ -289,11 +289,19 @@ export default new Router({
       meta: {requireLogin: true},
       component: () => import('./views/Advisory.vue')
     },
-    {
-      path: '/advisory-publish',
-      name: 'advisory-publish',
-      meta: {requireLogin: true},
-      component: () => import('./views/AdvisoryPublish.vue')
-    },
+    // 添加咨询
+      {
+          path: '/advisory-publish',
+          name: 'advisory-publish',
+          meta: {requireLogin: true},
+          component: () => import('./views/AdvisoryPublish.vue')
+      },
+      // 咨询管理
+      {
+          path: '/advisory-list',
+          name: 'advisory-list',
+          meta: {requireLogin: true},
+          component: () => import('./views/AdvisoryList.vue')
+      },
   ],
 });
