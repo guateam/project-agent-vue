@@ -211,7 +211,7 @@
                 })
             },
             get_board_recommend() {
-                this.$api.board.get_board_recommend().then(res => {
+                this.$api.board.get_board_recommend(this.page).then(res => {
                     if (res.data.code === 1) {
                         if (this.page === 1) {
                             this.demands = [];

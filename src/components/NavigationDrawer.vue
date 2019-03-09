@@ -9,11 +9,12 @@
                 </v-flex>
                 <v-flex shrink>
                     <div id="button-group">
-                        <v-btn id="wallet" outline fab small color="secondary" @click="$router.push({name:'wallet', query: {redirect: $route.fullPath}})">
+                        <v-btn id="wallet" outline fab small color="secondary"
+                               @click="$router.push({name:'wallet', query: {redirect: $route.fullPath}})">
                             <v-icon>account_balance_wallet</v-icon>
                         </v-btn>
                         <!--<v-btn id="camera" outline fab small color="secondary">-->
-                            <!--<v-icon>photo_camera</v-icon>-->
+                        <!--<v-icon>photo_camera</v-icon>-->
                         <!--</v-btn>-->
                     </div>
                 </v-flex><!--按钮组-->
@@ -144,7 +145,8 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile @click="$router.push({name:'corporate_center'})" v-if="$store.state.userInfo.usergroup===3">
+                <v-list-tile @click="$router.push({name:'corporate_center'})"
+                             v-if="$store.state.userInfo.usergroup===3 || $store.state.userInfo.usergroup===0">
                     <v-list-tile-action>
                         <v-icon class="time--text">local_offer</v-icon>
                     </v-list-tile-action>
@@ -230,10 +232,11 @@
         padding: 10px;
     }
 
-    .v-navigation-drawer, .v-navigation-drawer--fixed, .v-navigation-drawer--open, .v-navigation-drawer--temporary{
+    .v-navigation-drawer, .v-navigation-drawer--fixed, .v-navigation-drawer--open, .v-navigation-drawer--temporary {
         z-index: 9999 !important;
     }
-    aside{
+
+    aside {
         z-index: 9999;
     }
 </style>

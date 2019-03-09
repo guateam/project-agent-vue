@@ -2,7 +2,8 @@
   <div class="real-name-verify">
     <v-layout column fill-height>
       <v-flex shrink>
-        <v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>
+        <v-btn @click="$router.back()" icon>
+        <!--<v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>-->
           <v-icon>arrow_back</v-icon>
         </v-btn>
       </v-flex>
@@ -12,6 +13,7 @@
             <Upload
                 :format="['jpg','jpeg','png']"
                 type="drag"
+                :data="{token: $store.state.token}"
                 action="https://hanerx.tk:5000/api/upload/upload_identify_card_back">
               <div style="padding: 20px 0">
                 <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>

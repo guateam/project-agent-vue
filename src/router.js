@@ -45,6 +45,20 @@ export default new Router({
           meta: {requireLogin: true},
           component: () => import('./views/RealNameVerify.vue')
         },
+        // 专家认证
+        {
+          path: 'specialist-verify',
+          name: 'specialist-verify',
+          meta: {requireLogin: true},
+          component: () => import('./views/SpecialistVerify.vue')
+        },
+        // 企业认证
+        {
+          path: 'company-verify',
+          name: 'company-verify',
+          meta: {requireLogin: true},
+          component: () => import('./views/CompanyVerify.vue')
+        },
         // 用户信息
         {
           path: 'user-info',
@@ -60,13 +74,13 @@ export default new Router({
           component: () => import('./views/UserDetail.vue'),
           children: [
             // 实名认证
-            {
-              path: 'verified',
-              name: 'verified',
-              meta: {requireLogin: true},
-              component: () => import('./views/Verified.vue')
-            },
           ]
+        },
+        {
+          path: 'verified',
+          name: 'verified',
+          meta: {requireLogin: true},
+          component: () => import('./views/Verified.vue')
         },
         // 积分详情
         {
@@ -275,5 +289,19 @@ export default new Router({
       meta: {requireLogin: true},
       component: () => import('./views/Advisory.vue')
     },
+    // 添加咨询
+      {
+          path: '/advisory-publish',
+          name: 'advisory-publish',
+          meta: {requireLogin: true},
+          component: () => import('./views/AdvisoryPublish.vue')
+      },
+      // 咨询管理
+      {
+          path: '/advisory-list',
+          name: 'advisory-list',
+          meta: {requireLogin: true},
+          component: () => import('./views/AdvisoryList.vue')
+      },
   ],
 });
