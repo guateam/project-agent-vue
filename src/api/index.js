@@ -98,7 +98,10 @@ const index = {
 
         get_friend_list(token = store.state.token) {
             return axios.get(`${base.message}/get_friend_list`, {params: {token: token}})
-        }
+        },
+        get_chat_box(id) {
+            return axios.get(`${base.message}/get_chat_box`, {params: {token: store.state.token, user_id: id}})
+        },  // 获取聊天信息
     },
     questions: {
 
@@ -244,6 +247,9 @@ const index = {
         },
         get_historical_orders(token = store.state.token) {
             return axios.get(`${base.specialist}/get_historical_orders`, {params: {token: token}})
+        },
+        add_order(data) {
+            return axios.post(`${base.specialist}/add_order`, qs.stringify(data))
         }
     },
     activities: {
@@ -318,7 +324,7 @@ const index = {
                 type = "article"
             } else if (type == 2) {
                 type = "user"
-            }else if(type == 3){
+            } else if (type == 3) {
                 type = "all"
             }
             return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token,page:page}})

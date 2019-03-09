@@ -4,7 +4,8 @@
       <v-flex shrink>
         <v-layout align-center justify-space-between row fill-height>
           <v-flex shrink>
-            <v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>
+            <v-btn @click="$router.back()" icon>
+            <!--<v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>-->
               <v-icon>arrow_back</v-icon>
             </v-btn>
           </v-flex>
@@ -27,7 +28,7 @@
               <v-layout justify-center row>
                 <v-flex shrink>
                   <!--需要替换成Logo-->
-                  <v-icon size="120">card_membership</v-icon>
+                  <img src="../assets/logo.png" width="120" height="120">
                 </v-flex>
               </v-layout>
             </v-flex>
