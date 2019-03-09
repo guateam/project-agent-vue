@@ -75,7 +75,8 @@
                     <v-container fill-height>
                         <v-layout align-center justify-center row fill-height>
                             <v-flex xs5>
-                                <v-btn @click="consult" block color="grey">
+                                <v-btn @click="consult" block color="grey"
+                                       :disabled='user_group.value===0||user_group.value===2||user_group.value===3'>
                 <span class="font-weight-bold white--text">
                   咨询
                 </span>
@@ -234,6 +235,7 @@
                     {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
                 ],  // 专栏文章
                 group: [],  // 用户组信息
+                user_group: {}
             }
         },
         methods: {
@@ -272,6 +274,7 @@
                         this.userInfo.follow = data.follow;
                         this.userInfo.fans = data.fans;
                         this.userInfo.desc = data.description;
+                        this.user_group = data.user_group;
                     }
                 });
                 this.$api.account.get_user_follow_state(this.userId).then(res => {

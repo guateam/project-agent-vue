@@ -95,85 +95,113 @@ height: 100%;border-radius: 50%">
             </v-layout>
         </div>
         <div style="padding: 1em;line-height: 1.5;">
-            <h3 style="margin-bottom: 1.1em;font-size: 1.2em">需求申请人</h3>
-            <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.userID}})" style="margin-bottom: 2em;border-bottom: 1px #eee solid">
-                <v-flex xs3>
-                    <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
-                        <img :src="data.headportrait" alt="" style="width: 100%;
+            <!--<h3 style="margin-bottom: 1.1em;font-size: 1.2em">需求申请人</h3>-->
+            <v-tabs fixed-tabs>
+                <v-tab
+                        v-for="tab in ['待审核', '已审核', '已拒绝']"
+                        :key="tab"
+                >
+                    {{ tab }}
+                </v-tab>
+                <!--动态-->
+                <v-tab-item :key="'待审核'">
+                    <v-layout row wrap
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              v-if="item.state===0">
+                        <v-flex xs3>
+                            <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
+                                <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
-                    </div>
-                </v-flex>
-                <v-flex xs9>
-                    <p class="topicdetail">
-                    <h3>{{data.nickname}}</h3>
-                    账号简介：
-                    <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
-                    <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
-                    <button v-if="data.description.length > 80" @click="showAll_two = !showAll_two">
-                        <span v-if="!showAll_two" style="color: blue">显示全部</span>
-                        <span v-else style="color: blue">收起</span>
-                    </button>
-                    </p>
-                </v-flex>
-                <v-flex 6 offset-xs4>
-                    <div>
-                        <v-btn color="error">拒绝</v-btn>
-                        <v-btn color="info">同意</v-btn>
-                    </div>
-                </v-flex>
-            </v-layout>
-            <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.userID}})" style="margin-bottom: 2em;border-bottom: 1px #eee solid">
-                <v-flex xs3>
-                    <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
-                        <img :src="data.headportrait" alt="" style="width: 100%;
+                            </div>
+                        </v-flex>
+                        <v-flex xs9 @click="$router.push({name:'detail',query:{id:item.userID}})">
+                            <p class="topicdetail">
+                            <h3>{{item.nickname}}</h3>
+                            账号简介：
+                            <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description }} </span>
+                            <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.description }} </span>
+                            <button v-if="item.description.length > 80" @click="showAll_two = !showAll_two">
+                                <span v-if="!showAll_two" style="color: blue">显示全部</span>
+                                <span v-else style="color: blue">收起</span>
+                            </button>
+                            <h3>当前状态：{{user_state[item.state+1]}}</h3>
+                            </p>
+                        </v-flex>
+                        <v-flex 6 offset-xs4>
+                            <div>
+                                <v-btn color="error" @click="refuse_signed_user(item.userID)">拒绝</v-btn>
+                                <v-btn color="success" @click="confirm_signed_user(item.userID)">同意</v-btn>
+                            </div>
+                        </v-flex>
+                    </v-layout>
+                </v-tab-item>
+
+                <!--回答-->
+                <v-tab-item :key="'已审核'">
+                    <v-layout row wrap
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              v-if="item.state===1">
+                        <v-flex xs3>
+                            <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
+                                <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
-                    </div>
-                </v-flex>
-                <v-flex xs9>
-                    <p class="topicdetail">
-                    <h3>{{data.nickname}}</h3>
-                    账号简介：
-                    <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
-                    <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
-                    <button v-if="data.description.length > 80" @click="showAll_two = !showAll_two">
-                        <span v-if="!showAll_two" style="color: blue">显示全部</span>
-                        <span v-else style="color: blue">收起</span>
-                    </button>
-                    </p>
-                </v-flex>
-                <v-flex 6 offset-xs4>
-                    <div>
-                        <v-btn color="error">拒绝</v-btn>
-                        <v-btn color="info">同意</v-btn>
-                    </div>
-                </v-flex>
-            </v-layout>
-            <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.userID}})" style="margin-bottom: 2em;border-bottom: 1px #eee solid">
-                <v-flex xs3>
-                    <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
-                        <img :src="data.headportrait" alt="" style="width: 100%;
+                            </div>
+                        </v-flex>
+                        <v-flex xs9 @click="$router.push({name:'detail',query:{id:item.userID}})">
+                            <p class="topicdetail">
+                            <h3>{{item.nickname}}</h3>
+                            账号简介：
+                            <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description }} </span>
+                            <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.description }} </span>
+                            <button v-if="item.description.length > 80" @click="showAll_two = !showAll_two">
+                                <span v-if="!showAll_two" style="color: blue">显示全部</span>
+                                <span v-else style="color: blue">收起</span>
+                            </button>
+                            <h3>当前状态：{{user_state[item.state+1]}}</h3>
+                            </p>
+                        </v-flex>
+                        <v-flex 6 offset-xs8>
+                            <div>
+                                <v-btn color="info" @click="$router.push({name:'chat',query:{id:item.userID}})">私聊
+                                </v-btn>
+                            </div>
+                        </v-flex>
+                    </v-layout>
+                </v-tab-item>
+
+                <!--专栏-->
+                <v-tab-item :key="'已拒绝'">
+                    <v-layout row wrap
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              v-if="item.state===-1">
+                        <v-flex xs3>
+                            <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
+                                <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
-                    </div>
-                </v-flex>
-                <v-flex xs9>
-                    <p class="topicdetail">
-                    <h3>{{data.nickname}}</h3>
-                    账号简介：
-                    <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
-                    <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
-                    <button v-if="data.description.length > 80" @click="showAll_two = !showAll_two">
-                        <span v-if="!showAll_two" style="color: blue">显示全部</span>
-                        <span v-else style="color: blue">收起</span>
-                    </button>
-                    </p>
-                </v-flex>
-                <v-flex 6 offset-xs4>
-                    <div>
-                        <v-btn color="error">拒绝</v-btn>
-                        <v-btn color="info">同意</v-btn>
-                    </div>
-                </v-flex>
-            </v-layout>
+                            </div>
+                        </v-flex>
+                        <v-flex xs9 @click="$router.push({name:'detail',query:{id:item.userID}})">
+                            <p class="topicdetail">
+                            <h3>{{item.nickname}}</h3>
+                            账号简介：
+                            <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description }} </span>
+                            <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.description }} </span>
+                            <button v-if="item.description.length > 80" @click="showAll_two = !showAll_two">
+                                <span v-if="!showAll_two" style="color: blue">显示全部</span>
+                                <span v-else style="color: blue">收起</span>
+                            </button>
+                            <h3>当前状态：{{user_state[item.state+1]}}</h3>
+                            </p>
+                        </v-flex>
+                        <v-flex 6 offset-xs8>
+                            <div>
+                                <v-btn color="success" @click="un_refuse_signed_user(item.userID)">取消拒绝</v-btn>
+                            </div>
+                        </v-flex>
+                    </v-layout>
+                </v-tab-item>
+            </v-tabs>
+
         </div>
     </div>
 </template>
@@ -204,7 +232,9 @@ height: 100%;border-radius: 50%">
                 paid: false,
                 favorite: 'favorite_border',
                 state: ['被清除', '招标中', '项目开始', '项目结束'],
-                sign: -2
+                sign: -2,
+                users: [],
+                user_state: ['被拒绝', '待审核', '已通过']
             }
         },
         methods: {
@@ -215,32 +245,38 @@ height: 100%;border-radius: 50%">
                     }
                 })
             },
-            add_user_action() {
-                this.$api.account.add_user_action(this.$route.query.id, 52).then(res => {
+            get_signed_users() {
+                this.$api.enterprise.get_signed_users(this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
-
+                        this.users = res.data.data;
                     }
                 })
             },
-            join() {
-                this.$api.board.sign_to_demand(this.$route.query.id).then(res => {
+            un_refuse_signed_user(user_id) {
+                this.$api.enterprise.un_refuse_signed_user(user_id, this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
-                        this.sign=res.data.data.state;
+                        this.get_signed_users();
                     }
                 })
             },
-            get_sign_state() {
-                this.$api.board.get_sign_state(this.$route.query.id).then(res => {
+            refuse_signed_user(user_id) {
+                this.$api.enterprise.refuse_signed_user(user_id, this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
-                        this.sign = 0;
+                        this.get_signed_users();
+                    }
+                })
+            },
+            confirm_signed_user(user_id) {
+                this.$api.enterprise.confirm_signed_user(user_id, this.$route.query.id).then(res => {
+                    if (res.data.code === 1) {
+                        this.get_signed_users();
                     }
                 })
             }
         },
         mounted() {
             this.get_demand(this.$route.query.id);
-            this.add_user_action();
-            this.get_sign_state();
+            this.get_signed_users();
         }
     }
 </script>
@@ -264,6 +300,7 @@ height: 100%;border-radius: 50%">
         height: 4em;
         background-color: #eee;
     }
+
     .head {
         width: 100%;
         height: 50px;
