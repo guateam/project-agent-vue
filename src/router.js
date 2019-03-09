@@ -268,5 +268,12 @@ export default new Router({
       meta: {requireLogin: true},
       component: () => import('./views/SearchResults.vue')
     },
+    // 咨询
+    {
+      path: '/advisory',
+      name: 'advisory',
+      meta: {requireLogin: true},
+      component: () => import('./views/Advisory.vue')
+    },
   ],
 });
