@@ -127,7 +127,7 @@
                 </v-tab-item>
             </v-tabs>
             <div class="load-more-normal" v-infinite-scroll="loadMore(active)"
-                 infinite-scroll-disabled="busy" infinite-scroll-distance="0">
+                 infinite-scroll-disabled="loading" infinite-scroll-distance="0">
                 <h3>
                     <v-progress-circular
                             indeterminate
@@ -148,7 +148,7 @@
         components: {QuestionCard},
         data() {
             return {
-                active: null,
+                active: 0,
                 text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
                         laboris nisi ut aliquip ex ea commodo consequat.`,
@@ -166,7 +166,7 @@
                 counter: 2,
 
                 //繁忙状态
-                busy: false,
+                loading: false,
 
 
                 info_word: "请输入搜索内容",
@@ -195,7 +195,6 @@
                         this.questions = res.data.data[0];
                         this.articles = res.data.data[1];
                         this.users = res.data.data[2];
-                        this.busy = true
                         this.now_search = searching
                     }
                 })
@@ -211,78 +210,58 @@
                 this.questions = []
                 this.articles = []
                 this.users = []
-                this.all_busy_start()
+                this.loading = false;
             },
             //全部繁忙状态开启
-            all_busy_start() {
-                this.busy_start(0)
-                this.busy_start(1)
-                this.busy_start(2)
-            },
-            //全部繁忙状态关闭
-            all_busy_done() {
-                this.busy_done(0)
-                this.busy_done(1)
-                this.busy_done(2)
-            },
             //idx标签的繁忙状态关闭
-            busy_done(idx) {
-                if (idx == 0) this.busy0 = false
-                else if (idx == 1) this.busy1 = false
-                else if (idx == 2) this.busy2 = false
-            },
-            //idx标签的繁忙状态开启
-            busy_start(idx) {
-                if (idx == 0) this.busy0 = true
-                else if (idx == 1) this.busy1 = true
-                else if (idx == 2) this.busy2 = true
-            },
             //流加载
-            loadMore(type) {
-                var that = this
+            loadMore() {
+                let type = this.active;
+                let that = this;
                 //即将加载第几页
-                var active_page = 0
-                if (this.first_loading) return
+                let active_page = 0;
+                if (this.first_loading) return;
                 //更新当前流加载的tab的页码数，并赋值给active_page
-                if (type == 0) {
-                    this.question_page++
+                if (type === 0) {
+                    this.question_page++;
                     active_page = this.question_page
-                } else if (type == 1) {
-                    this.article_page++
+                } else if (type === 1) {
+                    this.article_page++;
                     active_page = this.article_page
-                } else if (type == 2) {
-                    this.user_page++
+                } else if (type === 2) {
+                    this.user_page++;
                     active_page = this.user_page
                 }
                 //繁忙状态开启
-                that.busy = true
+                that.loading = true;
                 //流加载查询
                 this.$api.algorithm.vague_search(this.now_search, type, active_page).then(res => {
                     if (res.data.code === 1) {
                         //无任何数据的情况
-                        var nodata = false
+                        let nodata = false;
                         if (res.data.data.length <= 0) {
                             nodata = true
                         }
 
                         //根据tab将数据追加到指定容器中
-                        for (var i = 0; i < res.data.data.length; i++) {
-                            if (type == 0) {
+                        for (let i = 0; i < res.data.data.length; i++) {
+                            if (type === 0) {
                                 that.questions.push(res.data.data[i])
-                            } else if (type == 1) {
+                            } else if (type === 1) {
                                 that.articles.push(res.data.data[i])
-                            } else if (type == 2) {
+                            } else if (type === 2) {
                                 that.users.push(res.data.data[i])
                             }
                         }
+                        that.loading = false;
                     }
                 })
             }
         },
         watch: {
             search(val) {
-                var that = this
-                if (val == "") {
+                let that = this;
+                if (val === "") {
                     that.info_word = "请输入搜索内容"
                     return
                 }
@@ -342,7 +321,6 @@
                     this.articles = res.data.data[1];
                     this.users = res.data.data[2];
                     this.first_loading = false;
-                    this.busy = false;
                 }
             })
         }

@@ -15,6 +15,7 @@
                 color="#ffd633"
                 prominent
                 tabs
+                flat
         >
             <v-combobox
                     v-model="model"
