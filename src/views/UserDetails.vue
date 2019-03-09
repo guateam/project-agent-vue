@@ -90,32 +90,32 @@
                     </v-container>
                 </v-flex>
 
-                <!--简介-->
-                <v-flex grow>
-                    <v-container fill-height>
-                        <span class="body-1 font-weight-light">{{ userInfo.desc.length > 60? userInfo.desc.substring(0, 60) + '...': userInfo.desc }}</span>
-                    </v-container>
-                </v-flex>
-            </v-layout>
-        </div>
-        <v-layout>
-            <v-flex>
-                <v-tabs fixed-tabs>
-                    <v-tab
-                            v-for="tab in ['动态', '回答', '专栏', '公开课']"
-                            :key="tab"
-                    >
-                        {{ tab }}
-                    </v-tab>
-                    <!--动态-->
-                    <v-tab-item :key="'动态'">
-                        <v-card flat min-height="200">
-                            <v-layout v-if="message.length === 0" align-center justify-center row fill-height>
-                                <span class="title font-weight-light"> <br>暂无动态</span>
-                            </v-layout>
-                            <v-list v-else two-line subheader>
-                                <div v-for="(item, index) in message" :key="index">
-                                    <v-divider></v-divider>
+        <!--简介-->
+        <v-flex grow>
+          <v-container fill-height>
+            <span class="body-1 font-weight-light">{{ userInfo.desc.length > 60? userInfo.desc.substring(0, 60) + '...': userInfo.desc }}</span>
+          </v-container>
+        </v-flex>
+      </v-layout>
+    </div>
+    <v-layout>
+      <v-flex>
+        <v-tabs fixed-tabs>
+          <v-tab
+              v-for="tab in ['动态', '回答', '专栏']"
+              :key="tab"
+          >
+            {{ tab }}
+          </v-tab>
+          <!--动态-->
+          <v-tab-item :key="'动态'">
+            <v-card flat min-height="200">
+              <v-layout v-if="message.length === 0" align-center justify-center row fill-height>
+                <span class="title font-weight-light"> <br>暂无动态</span>
+              </v-layout>
+              <v-list v-else two-line subheader>
+                <div v-for="(item, index) in message" :key="index">
+                  <v-divider></v-divider>
 
                                     <v-list-tile>
                                         <v-list-tile-content>
@@ -189,115 +189,87 @@
                                     </v-list-tile>
                                 </div>
 
-                            </v-list>
-                        </v-card>
-                    </v-tab-item>
-
-                    <!--公开课-->
-                    <v-tab-item :key="'公开课'">
-                        <v-card flat min-height="200">
-                            <v-list two-line subheader>
-                                <v-layout v-if="classes.length === 0" align-center justify-center row fill-height>
-                                    <span class="title font-weight-light"> <br>暂无课程</span>
-                                </v-layout>
-
-                                <div v-else v-for="(item, index) in classes" :key="index">
-                                    <v-divider></v-divider>
-
-                                    <v-list-tile>
-                                        <v-list-tile-content>
-                                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                                        </v-list-tile-content>
-
-                                        <v-list-tile-action>
-                    <span class="font-weight-light">
-                        {{ item.time }}
-                    </span>
-                                        </v-list-tile-action>
-                                    </v-list-tile>
-                                </div>
-
-                            </v-list>
-                        </v-card>
-                    </v-tab-item>
-                </v-tabs>
-            </v-flex>
-        </v-layout>
-    </div>
+              </v-list>
+            </v-card>
+          </v-tab-item>
+        </v-tabs>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'Detail',
-        data() {
-            return {
-                userInfo: {
-                    isFollow: false,  // 是否关注
-                    nickname: '吉良吉影',  // 昵称
-                    group: '系统管理员',  // 用户组
-                    avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551978614399&di=52a92d5c8a76d460f2665dc07732a175&imgtype=0&src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2017%2F07%2F28%2F2615633434213754887_320x320.jpg',  // 头像
-                    follow: 199,  // 关注
-                    fans: 40500,  // 粉丝数
-                    desc: '我的名字叫吉良吉影，33岁。住在杜王町东北部的别墅区一带，未婚。我在龟友连锁店服务。每天都要加班到晚上8点才能回家。我不抽烟，酒仅止于浅尝。晚上11点睡，每天要睡足8个小时。睡前，我一定喝一杯温牛奶，然后做20分钟的柔软操，上了床，马上熟睡。一觉到天亮，决不把疲劳和压力留到第二天。医生都说我很正常。',  // 简介
-                },  // 用户信息
-                message: [
-                    {title: '剪指甲的108种方法', subtitle: '发表文章', time: '1天前'},
-                    {title: '剪指甲的正确方式', subtitle: '赞同答案', time: '2天前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                ],  // 动态
-                answers: [],  // 回答
-                articles: [
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                ],  // 专栏文章
-                classes: [],  // 公开课
-            }
-        },
-        methods: {
-            consult() {
-                this.$store.commit('showInfo', '付费咨询');
-            },  // 付费咨询
-            followUser() {
-                if (this.userInfo.isFollow) {
-                    this.userInfo.isFollow = false;
-                    this.$store.commit('showInfo', '已取消关注');
-                }  // 取关
-                else {
-                    this.userInfo.isFollow = true;
-                    this.$store.commit('showInfo', '关注成功!')
-                }  // 关注
-            },  // 关注/取关用户
-        },
-        mounted() {
-            let id = this.$route.query.id;
-        },
-    }
+  export default {
+    name: 'Detail',
+    props: ['userId'],
+    data() {
+      return {
+        userInfo: {
+          isFollow: false,  // 是否关注
+          nickname: '吉良吉影',  // 昵称
+          group: '系统管理员',  // 用户组
+          avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551978614399&di=52a92d5c8a76d460f2665dc07732a175&imgtype=0&src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2017%2F07%2F28%2F2615633434213754887_320x320.jpg',  // 头像
+          follow: 199,  // 关注
+          fans: 40500,  // 粉丝数
+          desc: '我的名字叫吉良吉影，33岁。住在杜王町东北部的别墅区一带，未婚。我在龟友连锁店服务。每天都要加班到晚上8点才能回家。我不抽烟，酒仅止于浅尝。晚上11点睡，每天要睡足8个小时。睡前，我一定喝一杯温牛奶，然后做20分钟的柔软操，上了床，马上熟睡。一觉到天亮，决不把疲劳和压力留到第二天。医生都说我很正常。',  // 简介
+        },  // 用户信息
+        message: [
+          {title: '剪指甲的108种方法', subtitle: '发表文章', time: '1天前'},
+          {title: '剪指甲的正确方式', subtitle: '赞同答案', time: '2天前'},
+          {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+          {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+          {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+          {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+        ],  // 动态
+        answers: [],  // 回答
+        articles: [
+          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+        ],  // 专栏文章
+      }
+    },
+    methods: {
+      getUserData() {
+
+      },  // 获取用户信息
+      consult() {
+        this.$store.commit('showInfo', '付费咨询');
+      },  // 付费咨询
+      followUser() {
+        if (this.userInfo.isFollow) {
+          this.userInfo.isFollow = false;
+          this.$store.commit('showInfo', '已取消关注');
+        }  // 取关
+        else {
+          this.userInfo.isFollow = true;
+          this.$store.commit('showInfo', '关注成功!')
+        }  // 关注
+      },  // 关注/取关用户
+    },
+    mounted() {
+      if (this.userId) {
+        this.getUserData();
+      }
+    },
+  }
 </script>
 
 <style scoped>
-    .detail {
-        height: 100vh;
-        width: 100vw;
-        font-family: Helvetica, Arial, sans-serif;
-        background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);;
-    }
-
-    .avatar {
-        border-radius: 80px;
-    }
-
-    .container {
-        padding: 0 16px;
-    }
-
-    /*覆盖组件样式*/
+  .detail {
+    height: 100vh;
+    width: 100vw;
+    font-family: Helvetica, Arial, sans-serif;
+    background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);
+  }
+  .avatar {
+    border-radius: 80px;
+  }
+  .container {
+    padding: 0 16px;
+  }  /*覆盖组件样式*/
 
 </style>

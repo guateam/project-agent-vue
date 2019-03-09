@@ -13,6 +13,7 @@ const base = {
     tags: baseUrl + '/tags',
     upload: baseUrl + '/upload',
     group: baseUrl + '/group',
+    algorithm: baseUrl + '/algorithm',
     board: baseUrl + '/board',
     enterprise: baseUrl + '/enterprise',
 };
