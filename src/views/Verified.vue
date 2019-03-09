@@ -28,7 +28,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-flex>
-                    <v-flex xs12 v-if="$store.state.userInfo.group.value===1">
+                    <v-flex xs12 v-if="$store.state.userInfo.group.value===1&&$route.query.state">
                         <v-card color="primary" class="white--text">
                             <v-card-title primary-title>
                                 <div>
@@ -41,7 +41,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-flex>
-                    <v-flex xs12 v-if="$store.state.userInfo.group.value===1">
+                    <v-flex xs12 v-if="$store.state.userInfo.group.value===1&&$route.query.state">
                         <v-card color="blue light" class="white--text">
                             <v-card-title primary-title>
                                 <div>
