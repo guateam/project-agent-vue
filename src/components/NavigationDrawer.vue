@@ -146,7 +146,7 @@
                     </v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile @click="$router.push({name:'corporate_center'})"
-                             v-if="$store.state.userInfo.usergroup===3 || $store.state.userInfo.usergroup===0">
+                             v-if="$store.state.userInfo.group.value===3 || $store.state.userInfo.group.value===0">
                     <v-list-tile-action>
                         <v-icon class="time--text">local_offer</v-icon>
                     </v-list-tile-action>
