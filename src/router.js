@@ -27,7 +27,7 @@ export default new Router({
     {
       path: '/detail',
       name: 'detail',
-      meta: {requireLogin: false},
+      meta: {requireLogin: true},
       component: () => import('./views/UserDetails.vue')
     },
     // 用户个人页
