@@ -57,17 +57,17 @@
                     <p class="answerDetail" v-html="answer.content"></p>
 
                     <!--没有图片时不加载下面的div-->
-                    <div class="answerImg" v-if="answer.image.length !== 0">
-                        <img v-for="(item,x) in answer.image" :key="x" :src="item" alt=""/>
-                    </div>
+                    <!--<div class="answerImg" v-if="answer.image.length !== 0">-->
+                        <!--<img v-for="(item,x) in answer.image" :key="x" :src="item" alt="" />-->
+                    <!--</div>-->
                 </router-link>
-                <div class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</div>
                 <div style="width: 100%;display: flex;align-items: center;position: relative;">
                     <div class="userhead">
-                        <img :src="answer.headportrait" alt="">
+                        <img :src="answer.headportrait" alt="" style="width: 100%">
                     </div>
                     <p class="userName">{{answer.nickname}}</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;
+                    <p class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</p>
                     <!--<p class="userTag">{{answer.user.tag}}</p>-->
                     <p class="answerTime">{{answer.edittime}}</p>
                 </div>
