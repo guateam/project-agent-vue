@@ -117,14 +117,14 @@
                     </v-list>
                 </v-tab-item>
             </v-tabs>
-            <!--<div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore(active)"
+            <div class="load-more-normal" v-infinite-scroll="loadMore(active)"
                         infinite-scroll-disabled="busy" infinite-scroll-distance="0">
                         <h3>
                             <v-progress-circular
                                     indeterminate
                                     color="primary"
                             ></v-progress-circular>
-            <span style="margin-left: 1em">加载中</span></h3>-->
+            <span style="margin-left: 1em">加载中</span></h3>
             </div>
         </div>
     </div>
@@ -156,7 +156,7 @@
                 counter:2,
 
                 //繁忙状态
-                busy:true,
+                busy:false,
 
 
                 info_word:"请输入搜索内容",

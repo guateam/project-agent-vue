@@ -26,7 +26,8 @@
                     </div>
                 </div>
                 <p class="topicdetail">
-                    <span v-if="!showAll" v-html="questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content"></span>
+                    <span v-if="!showAll"
+                          v-html="questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content"></span>
                     <span v-else v-html="questionData.content"></span>
                     <button id="show-all-button" v-if="questionData.content.length > 65" @click="showAll = !showAll">
                         <span v-if="!showAll" style="color: blue">显示全部</span>
@@ -44,7 +45,8 @@
 
         <!--页面主体，展示不同的回答列表-->
 
-        <v-card v-for="(answer, index) in answersDataList" :key="index" :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
+        <v-card v-for="(answer, index) in answersDataList" :key="index"
+                :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
 
                 <router-link :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
@@ -105,6 +107,7 @@
 
 <script>
     import bottomNav from '../components/bottomNav';
+
     export default {
         name: "Question",
         components: {
@@ -371,7 +374,12 @@
     .bottom {
         margin-bottom: 3em;
     }
+
     #bottom-space {
         height: 8em;
+    }
+
+    img {
+        max-width: 100%;
     }
 </style>
