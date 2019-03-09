@@ -73,7 +73,7 @@
         <v-divider></v-divider>
         <div style="padding: 1em;line-height: 1.5;">
             <h3 style="margin-bottom: 1.1em;font-size: 1.2em">需求发布人</h3>
-            <v-layout row wrap @click="$router.push({name:'detail',query:{id:userID}})">
+            <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.userID}})">
                 <v-flex xs3>
                     <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                         <img :src="data.headportrait" alt="" style="width: 100%;
