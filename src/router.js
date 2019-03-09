@@ -60,13 +60,13 @@ export default new Router({
           component: () => import('./views/UserDetail.vue'),
           children: [
             // 实名认证
-            {
-              path: 'verified',
-              name: 'verified',
-              meta: {requireLogin: true},
-              component: () => import('./views/Verified.vue')
-            },
           ]
+        },
+        {
+          path: 'verified',
+          name: 'verified',
+          meta: {requireLogin: true},
+          component: () => import('./views/Verified.vue')
         },
         // 积分详情
         {
