@@ -45,6 +45,20 @@ export default new Router({
           meta: {requireLogin: true},
           component: () => import('./views/RealNameVerify.vue')
         },
+        // 专家认证
+        {
+          path: 'specialist-verify',
+          name: 'specialist-verify',
+          meta: {requireLogin: true},
+          component: () => import('./views/SpecialistVerify.vue')
+        },
+        // 企业认证
+        {
+          path: 'company-verify',
+          name: 'company-verify',
+          meta: {requireLogin: true},
+          component: () => import('./views/CompanyVerify.vue')
+        },
         // 用户信息
         {
           path: 'user-info',
