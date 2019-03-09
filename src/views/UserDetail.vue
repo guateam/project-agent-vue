@@ -39,7 +39,7 @@
                 <div>{{email}}</div>
             </div>
             <v-divider></v-divider>
-            <div class="box" @click="$router.push({name:'verified'})">
+            <div class="box" @click="$router.push({name:'verified',query:{state:$store.state.userInfo.state === 2}})">
                 <div>实名认证</div>
                 <div>{{verify}}</div>
             </div>
@@ -50,7 +50,6 @@
             </div>
             <v-divider></v-divider>
         </div>
-        <router-view></router-view>
     </div>
 </template>
 
