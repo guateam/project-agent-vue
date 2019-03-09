@@ -53,11 +53,11 @@
                     </v-flex>
                 </v-layout>
                 <v-layout row wrap>
-                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column">
+                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column" @click="$router.push({name:'advisory-list'})">
                         <div>
                             <v-icon large color="#FFFF33">access_time</v-icon>
                         </div>
-                        <div style="margin-top: 5px">预约管理</div>
+                        <div style="margin-top: 5px">咨询管理</div>
                     </v-flex>
                     <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column">
                         <div>
@@ -222,8 +222,6 @@
 
 <style scoped>
 
-    .bigbox {
-    }
 
     .head {
         z-index: 400;
