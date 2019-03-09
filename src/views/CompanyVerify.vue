@@ -27,7 +27,7 @@
               <v-layout justify-center row>
                 <v-flex shrink>
                   <!--需要替换成Logo-->
-                  <v-icon size="120">card_membership</v-icon>
+                  <img src="../assets/logo.png" width="120" height="120">
                 </v-flex>
               </v-layout>
             </v-flex>
