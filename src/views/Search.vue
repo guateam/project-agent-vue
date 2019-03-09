@@ -192,4 +192,13 @@
         width: 100%;
         border-bottom: 1px #eee solid;
     }
+    .load-more-normal {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    }
+
+    .load-more-hide {
+        height: 0;
+    }
 </style>
