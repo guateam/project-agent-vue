@@ -27,7 +27,7 @@ export default new Router({
     {
       path: '/detail',
       name: 'detail',
-      meta: {requireLogin: false},
+      meta: {requireLogin: true},
       component: () => import('./views/UserDetails.vue')
     },
     // 用户个人页
@@ -267,6 +267,13 @@ export default new Router({
       name: 'search-results',
       meta: {requireLogin: true},
       component: () => import('./views/SearchResults.vue')
+    },
+    // 咨询
+    {
+      path: '/advisory',
+      name: 'advisory',
+      meta: {requireLogin: true},
+      component: () => import('./views/Advisory.vue')
     },
   ],
 });
