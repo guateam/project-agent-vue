@@ -41,8 +41,12 @@ const index = {
             return axios.post(`${base.account}/register`, qs.stringify(data))
         },  // 用户注册
 
-        get_user_by_token(token = store.state.token) {
-            return axios.get(`${base.account}/get_user_by_token`, {params: {token: token}})
+        get_user_by_token() {
+            return axios.get(`${base.account}/get_user_by_token`, {params: {token: store.state.token}})
+        },  // 根据token获取用户信息
+
+        get_user(id) {
+            return axios.get(`${base.account}/get_user`, {params: {user_id: id}})
         },  // 根据token获取用户信息
 
         get_collections(token = store.state.token) {
@@ -70,21 +74,21 @@ const index = {
         get_my_follow(token = store.state.token) {
             return axios.get(`${base.account}/get_my_follow`, {params: {token: token}})
         },  // 获取关注列表
-        get_history(token = store.state.token) {
-            return axios.get(`${base.account}/get_history`, {params: {token: token}})
+        get_history() {
+            return axios.get(`${base.account}/get_history`, {params: {token: store.state.token}})
         },
         get_user_group() {
             return axios.get(`${base.account}/get_user_group`)
         },
-        follow_user(user_id, token = store.state.token) {
-            return axios.get(`${base.account}/follow_user`, {params: {user_id: user_id, token: token}})
-        },
-        un_follow_user(user_id, token = store.state.token) {
-            return axios.get(`${base.account}/un_follow_user`, {params: {user_id: user_id, token: token}})
-        },
-        get_user_follow_state(user_id, token = store.state.token) {
-            return axios.get(`${base.account}/get_user_follow_state`, {params: {user_id: user_id, token: token}})
-        }
+        follow_user(id) {
+            return axios.get(`${base.account}/follow_user`, {params: {user_id: id, token: store.state.token}})
+        },  // 关注
+        un_follow_user(id) {
+            return axios.get(`${base.account}/un_follow_user`, {params: {user_id: id, token: store.state.token}})
+        },  // 取关
+        get_user_follow_state(id) {
+            return axios.get(`${base.account}/get_user_follow_state`, {params: {user_id: id, token: store.state.token}})
+        }  // 用户是否被关注
     },
     message: {
 
