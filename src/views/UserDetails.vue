@@ -1,23 +1,23 @@
 <template>
-  <div class="detail">
-    <div style="height: 50%; width: 100%;">
-      <v-layout column fill-height>
-        <v-flex xs1>
-          <v-layout justify-space-between row>
-            <v-flex shrink>
-              <!--返回上一页-->
-              <v-btn @click="$router.back()" icon>
-              <!--<v-btn @click="$router.push($route.query.redirect || {name: 'topic'})" icon>-->
-                <v-icon>arrow_back</v-icon>
-              </v-btn>
-            </v-flex>
-            <v-flex shrink>
-              <v-btn icon>
-                <v-icon>more_horiz</v-icon>
-              </v-btn>
-            </v-flex>
-          </v-layout>
-        </v-flex>
+    <div class="detail">
+        <div style="height: 50%; width: 100%;">
+            <v-layout column fill-height>
+                <v-flex xs1>
+                    <v-layout justify-space-between row>
+                        <v-flex shrink>
+                            <!--返回上一页-->
+                            <v-btn @click="$router.back()" icon>
+                                <!--<v-btn @click="$router.push($route.query.redirect || {name: 'topic'})" icon>-->
+                                <v-icon>arrow_back</v-icon>
+                            </v-btn>
+                        </v-flex>
+                        <v-flex shrink>
+                            <v-btn icon>
+                                <v-icon>more_horiz</v-icon>
+                            </v-btn>
+                        </v-flex>
+                    </v-layout>
+                </v-flex>
 
                 <v-flex xs3>
                     <v-container fill-height>
@@ -201,94 +201,39 @@
 </template>
 
 <script>
-  export default {
-    name: 'Detail',
-    data() {
-      return {
-        userId: this.$route.query.id,  // 当前页面对应的用户id
-        // userId: this.$route.query.id,  // 当前页面对应的用户id
-        userInfo: {
-          isFollow: false,  // 是否关注
-          nickname: '未知用户',  // 昵称
-          group: '路人',  // 用户组
-          avatar: '',  // 头像
-          follow: 0,  // 关注
-          fans: 0,  // 粉丝数
-          desc: '这个人很懒，什么也没留下。',  // 简介
-        },  // 用户信息
-        message: [
-          {title: '剪指甲的108种方法', subtitle: '发表文章', time: '1天前'},
-          {title: '剪指甲的正确方式', subtitle: '赞同答案', time: '2天前'},
-          {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-          {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-          {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-          {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-        ],  // 动态
-        answers: [],  // 回答
-        articles: [
-          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-          {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-        ],  // 专栏文章
-        group: [],  // 用户组信息
-      }
-    },
-    methods: {
-      initUserData() {
-        this.getUserGroup();
-        let tic = new Date();
-        do {
-          this.getUserData();
-          let toc = new Date();
-          if ((toc - tic) > 10000) {
-            this.$store.commit('showInfo', '超时');
-            break;
-          }  // 超过10秒认为加载失败
-        } while (this.group.length > 0 && this.userInfo.group !== '');
-        this.getMessage();
-      },  // 初始化用户数据
-      getMessage() {
-        this.message = [];
-        this.answers = [];
-        this.articles = [];
-      },  // 获取用户动态等数据
-      getUserGroup() {
-        this.$api.account.get_user_group().then(res => {
-          if (res.data.code === 1) {
-            this.group = res.data.data;
-          }
-        })
-      },  // 获取用户组信息
-      getUserData() {
-        this.$api.account.get_user(this.userId).then(res => {
-          if (res.data.code === 1) {
-            let data = res.data.data;
-            this.userInfo.nickname = data.nickname;
-            this.userInfo.group = this.group[data.user_group];
-            this.userInfo.avatar = data.head_portrait;
-            this.userInfo.follow = data.follow;
-            this.userInfo.fans = data.fans;
-            this.userInfo.desc = data.description;
-          }
-        });
-        this.$api.account.get_user_follow_state(this.userId).then(res => {
-          if (res.data.code !== 0) {
-            this.userInfo.isFollow = res.data.code === 1;
-          }
-        });
-      },  // 获取用户信息
-      consult() {
-        this.$store.commit('showInfo', '付费咨询');
-      },  // 付费咨询
-      followUser() {
-        if (this.userInfo.isFollow) {
-          this.$api.account.un_follow_user(this.userId).then(res => {
-            if (res.data.code === 1) {
-              this.userInfo.isFollow = false;
-              this.$store.commit('showInfo', '已取消关注');
+    export default {
+        name: 'Detail',
+        data() {
+            return {
+                userId: this.$route.query.id,  // 当前页面对应的用户id
+                // userId: this.$route.query.id,  // 当前页面对应的用户id
+                userInfo: {
+                    isFollow: false,  // 是否关注
+                    nickname: '未知用户',  // 昵称
+                    group: '路人',  // 用户组
+                    avatar: '',  // 头像
+                    follow: 0,  // 关注
+                    fans: 0,  // 粉丝数
+                    desc: '这个人很懒，什么也没留下。',  // 简介
+                },  // 用户信息
+                message: [
+                    {title: '剪指甲的108种方法', subtitle: '发表文章', time: '1天前'},
+                    {title: '剪指甲的正确方式', subtitle: '赞同答案', time: '2天前'},
+                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+                ],  // 动态
+                answers: [],  // 回答
+                articles: [
+                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+                ],  // 专栏文章
+                group: [],  // 用户组信息
             }
         },
         methods: {
@@ -302,7 +247,7 @@
                         this.$store.commit('showInfo', '超时');
                         break;
                     }  // 超过10秒认为加载失败
-                } while (this.group.length > 0 && this.userInfo.avatar !== '')
+                } while (this.group.length > 0 && this.userInfo.group !== '');
                 this.getMessage();
             },  // 初始化用户数据
             getMessage() {
@@ -336,7 +281,7 @@
                 });
             },  // 获取用户信息
             consult() {
-                this.$router.push({name: 'advisory', query: {id: this.userId}})
+                this.$store.commit('showInfo', '付费咨询');
             },  // 付费咨询
             followUser() {
                 if (this.userInfo.isFollow) {
@@ -345,21 +290,13 @@
                             this.userInfo.isFollow = false;
                             this.$store.commit('showInfo', '已取消关注');
                         }
-                    });
-                }  // 取关
-                else {
-                    this.$api.account.follow_user(this.userId).then(res => {
-                        if (res.data.code === 1) {
-                            this.userInfo.isFollow = true;
-                            this.$store.commit('showInfo', '关注成功!')
-                        }
-                    });
-                }  // 关注
-            },  // 关注/取关用户
+                    })
+                }
+            },
         },
         mounted() {
             this.initUserData()
-        },
+        }
     }
 </script>
 
