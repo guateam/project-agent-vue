@@ -275,5 +275,11 @@ export default new Router({
       meta: {requireLogin: true},
       component: () => import('./views/Advisory.vue')
     },
+    {
+      path: '/advisory-publish',
+      name: 'advisory-publish',
+      meta: {requireLogin: true},
+      component: () => import('./views/AdvisoryPublish.vue')
+    },
   ],
 });
