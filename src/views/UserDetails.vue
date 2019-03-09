@@ -6,7 +6,8 @@
           <v-layout justify-space-between row>
             <v-flex shrink>
               <!--返回上一页-->
-              <v-btn @click="$router.push($route.query.redirect || {name: 'topic'})" icon>
+              <v-btn @click="$router.back()" icon>
+              <!--<v-btn @click="$router.push($route.query.redirect || {name: 'topic'})" icon>-->
                 <v-icon>arrow_back</v-icon>
               </v-btn>
             </v-flex>
@@ -204,7 +205,7 @@
     name: 'Detail',
     data() {
       return {
-        userId: 1,  // 当前页面对应的用户id
+        userId: this.$route.query.id,  // 当前页面对应的用户id
         // userId: this.$route.query.id,  // 当前页面对应的用户id
         userInfo: {
           isFollow: false,  // 是否关注
@@ -246,7 +247,7 @@
             this.$store.commit('showInfo', '超时');
             break;
           }  // 超过10秒认为加载失败
-        } while (this.group.length > 0 && this.userInfo.avatar !== '')
+        } while (this.group.length > 0 && this.userInfo.group !== '');
         this.getMessage();
       },  // 初始化用户数据
       getMessage() {
