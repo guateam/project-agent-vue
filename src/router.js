@@ -128,12 +128,11 @@ export default new Router({
         }
       ],
     },
-    // 消息
+    // 新聊天页
     {
-      path: '/message',
-      name: 'message',
-      meta: {requireLogin: true},  // 需要登录
-      component: () => import('./views/Message.vue'),
+      path: '/chat',
+      name: 'chat',
+      component: () => import('./views/NewChat.vue'),
       children: [
         {
           path: 'chat',
@@ -160,6 +159,13 @@ export default new Router({
           ]
         },
       ]
+    },
+    // 消息
+    {
+      path: '/message',
+      name: 'message',
+      meta: {requireLogin: true},  // 需要登录
+      component: () => import('./views/Message.vue'),
     },
     // 告示板详情
     {
