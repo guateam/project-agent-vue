@@ -128,123 +128,11 @@ export default new Router({
         }
       ],
     },
-    // 消息
-    {
-      path: '/message',
-      name: 'message',
-      meta: {requireLogin: true},  // 需要登录
-      component: () => import('./views/Message.vue'),
-      children: [
-        {
-          path: 'chat',
-          name: 'chat',
-          component: () => import('./views/Chat.vue'),
-          children: [
-            {
-              path: 'chat-setting',
-              name: 'chat-setting',
-              component: () => import('./views/ChatSetting.vue')
-            },
-          ]
-        },
-        {
-          path: 'group-chat',
-          name: 'group-chat',
-          component: () => import('./views/GroupChat.vue'),
-          children: [
-            {
-              path: 'group-chat-setting',
-              name: 'group-chat-setting',
-              component: () => import('./views/GroupChatSetting.vue')
-            },
-          ]
-        },
-      ]
-    },
-    // 告示板详情
-    {
-      path: '/board-detail',
-      name: 'board-detail',
-      component: () => import('./views/BoardDetail.vue'),
-      children: []
-    },
-    // 发布需求
-    {
-      path: '/requirement-publish',
-      name: 'requirement-publish',
-      component: () => import('./views/RequirementPublish.vue'),
-      children: []
-    },
-    // 需求审核
-    {
-      path: '/requirement-check',
-      name: 'requirement-check',
-      component: () => import('./views/RequirementCheck.vue'),
-      children: []
-    },// 需求审核详情页
-    {
-      path: '/requirement-check-detail',
-      name: 'requirement-check-detail',
-      component: () => import('./views/RequirementCheckDetail.vue'),
-      children: []
-    },
-    // 历史发布（需求）
-    {
-      path: '/requirement-history',
-      name: 'requirement-history',
-      component: () => import('./views/RequirementHistory.vue'),
-      children: []
-    },
-    {
-      path: '/requirement-history-detail',
-      name: 'requirement-history-detail',
-      component: () => import('./views/RequirementHistoryDetail.vue'),
-      children: []
-    },
-    // 文章页
-    {
-      path: '/article',
-      name: 'article',
-      component: () => import('./views/Article.vue'),
-      children: []
-    },
-    // 文章阅读
-    {
-      path: '/article-read',
-      name: 'article-read',
-      component: () => import('./views/ArticleRead.vue'),
-    },
-    // 评论组件
-    {
-      path: '/comment',
-      name: 'comment',
-      component: () => import('./views/Comment.vue')
-    },
-    // 评论回复组件
-    {
-      path: 'qr-code',
-      name: 'qr-code',
-      component: () => import('./views/QRCode.vue')
-    },
     // 新聊天页
     {
       path: '/chat',
       name: 'chat',
       component: () => import('./views/NewChat.vue'),
-      children: [
-        {
-          path: '/collection',
-          name: 'collection',
-          meta: {requireLogin: true},
-          component: () => import('./views/Collection.vue')
-        },
-        // 问题页
-        {
-          path: '/question',
-          name: 'question',
-          component: () => import('./views/Question.vue')
-        },
-      ]
     },
     // 消息
     {
@@ -252,6 +140,32 @@ export default new Router({
       name: 'message',
       meta: {requireLogin: true},  // 需要登录
       component: () => import('./views/Message.vue'),
+      // children: [
+      //   {
+      //     path: 'chat',
+      //     name: 'Chat',
+      //     component: () => import('./views/Chat.vue'),
+      //     children: [
+      //       {
+      //         path: 'chat-setting',
+      //         name: 'chat-setting',
+      //         component: () => import('./views/ChatSetting.vue')
+      //       },
+      //     ]
+      //   },
+      //   {
+      //     path: 'group-chat',
+      //     name: 'group-chat',
+      //     component: () => import('./views/GroupChat.vue'),
+      //     children: [
+      //       {
+      //         path: 'group-chat-setting',
+      //         name: 'group-chat-setting',
+      //         component: () => import('./views/GroupChatSetting.vue')
+      //       },
+      //     ]
+      //   },
+      // ]
     },
     // 告示板详情
     {
@@ -274,12 +188,12 @@ export default new Router({
       component: () => import('./views/RequirementCheck.vue'),
       children: []
     },// 需求审核详情页
-    {
-      path: '/requirement-check-detail',
-      name: 'requirement-check-detail',
-      component: () => import('./views/RequirementCheckDetail.vue'),
-      children: []
-    },
+      {
+          path: '/requirement-check-detail',
+          name: 'requirement-check-detail',
+          component: () => import('./views/RequirementCheckDetail.vue'),
+          children: []
+      },
     // 历史发布（需求）
     {
       path: '/requirement-history',
@@ -388,20 +302,18 @@ export default new Router({
       component: () => import('./views/Advisory.vue')
     },
     // 添加咨询
-    {
-      path: '/advisory-publish',
-      name: 'advisory-publish',
-      meta: {requireLogin: true},
-      component: () => import('./views/AdvisoryPublish.vue')
-    },
-    // 咨询管理
-    {
-      path: '/advisory-list',
-      name: 'advisory-list',
-      meta: {requireLogin: true},
-      component: () => import('./views/AdvisoryList.vue')
-
-    },
-
-  ]
+      {
+          path: '/advisory-publish',
+          name: 'advisory-publish',
+          meta: {requireLogin: true},
+          component: () => import('./views/AdvisoryPublish.vue')
+      },
+      // 咨询管理
+      {
+          path: '/advisory-list',
+          name: 'advisory-list',
+          meta: {requireLogin: true},
+          component: () => import('./views/AdvisoryList.vue')
+      },
+  ],
 });
