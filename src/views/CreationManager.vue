@@ -9,11 +9,11 @@
             </div>
         </div>
         <div class="line"></div>
-        <Scroll :data="topimgs" style="z-index: 200">
+        <Scroll :data="items" style="z-index: 200">
             <v-flex xs12>
                 <v-carousel hide-delimiters height="200px">
                     <v-carousel-item
-                            v-for="(item,i) in topimgs"
+                            v-for="(item,i) in items"
                             :key="i"
                             :src="item.src"
                     >
@@ -23,25 +23,29 @@
             </v-flex>
             <v-container grid-list-md text-xs-center>
                 <v-layout row wrap>
-                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column">
+                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column"
+                            @click="$router.push({name:'historical-post'})">
                         <div>
                             <v-icon large color="#99FF00">event_note</v-icon>
                         </div>
                         <div style="margin-top: 5px">回答管理</div>
                     </v-flex>
-                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column">
+                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column"
+                            @click="$router.push({name:'historical-post'})">
                         <div>
                             <v-icon large color="#99FFFF">library_books</v-icon>
                         </div>
                         <div style="margin-top: 5px">文章管理</div>
                     </v-flex>
-                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column">
+                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column"
+                            @click="$router.push({name: 'fan-list', query: {active: 1}})">
                         <div>
                             <v-icon large color="#FF3300">people</v-icon>
                         </div>
                         <div style="margin-top: 5px">粉丝管理</div>
                     </v-flex>
-                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column">
+                    <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column"
+                            @click="$router.push({name: 'message'})">
                         <div>
                             <v-icon large color="#CC66CC">question_answer</v-icon>
                         </div>
@@ -57,7 +61,8 @@
                     </v-flex>
                     <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column">
                         <div>
-                            <v-icon large color="#6699FF">
+                            <v-icon large color="#6699FF"
+                                    @click="$router.push({name:'wallet', query: {redirect: $route.fullPath}})">
                                 account_balance_wallet
                             </v-icon>
                         </div>
@@ -66,90 +71,90 @@
                 </v-layout>
             </v-container>
             <v-divider></v-divider>
-            <v-layout row wrap style="line-height: 1.5;height: 40px;align-items: center;justify-content: center;">
-                <v-flex xs2 style="text-align: center">
-                    <v-icon color="#FF0066">volume_up</v-icon>
-                </v-flex>
-                <v-flex xs9>
-                    <h3>你有一份新的收益周报待查看</h3>
-                </v-flex>
-                <v-flex xs1>
-                    <v-icon color="black">chevron_right</v-icon>
-                </v-flex>
-            </v-layout>
-            <v-divider></v-divider>
+            <!--<v-layout row wrap style="line-height: 1.5;height: 40px;align-items: center;justify-content: center;">-->
+            <!--<v-flex xs2 style="text-align: center">-->
+            <!--<v-icon color="#FF0066">volume_up</v-icon>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs9>-->
+            <!--<h3>你有一份新的收益周报待查看</h3>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs1>-->
+            <!--<v-icon color="black">chevron_right</v-icon>-->
+            <!--</v-flex>-->
+            <!--</v-layout>-->
+            <!--<v-divider></v-divider>-->
             <v-layout row wrap style="line-height: 1.5;height: 40px;align-items: center;justify-content: center;">
                 <v-flex xs11>
-                    <h3>数据中心</h3>
+                    <h2 style="margin-left: 1em">数据中心</h2>
                 </v-flex>
-                <v-flex xs1>
-                    <v-icon color="black">chevron_right</v-icon>
-                </v-flex>
+                <!--<v-flex xs1>-->
+                <!--<v-icon color="black">chevron_right</v-icon>-->
+                <!--</v-flex>-->
             </v-layout>
             <v-container grid-list-md text-xs-center>
                 <v-layout row wrap>
                     <v-flex xs4 style="align-items: center;flex-direction: column;border-right: 1px solid #eee">
                         <div style="margin-top: 5px">粉丝</div>
-                        <div style="margin-top: 5px">24369</div>
-                        <div style="margin-top: 5px;color: #FF0033">
-                            <v-icon large color="#FF0033" small>
-                                keyboard_arrow_up
-                            </v-icon>
-                            366
-                        </div>
+                        <div style="margin-top: 5px">{{click.fan}}</div>
+                        <!--<div style="margin-top: 5px;color: #FF0033">-->
+                        <!--<v-icon large color="#FF0033" small>-->
+                        <!--keyboard_arrow_up-->
+                        <!--</v-icon>-->
+                        <!--366-->
+                        <!--</div>-->
                     </v-flex>
                     <v-flex xs4 style="align-items: center;flex-direction: column;border-right: 1px solid #eee">
                         <div style="margin-top: 5px">回答浏览</div>
-                        <div style="margin-top: 5px">5465465</div>
-                        <div style="margin-top: 5px;color: #99FF00">
-                            <v-icon large color="#99FF00" small>
-                                keyboard_arrow_down
-                            </v-icon>
-                            366
-                        </div>
+                        <div style="margin-top: 5px">{{click.answer_read}}</div>
+                        <!--<div style="margin-top: 5px;color: #99FF00">-->
+                        <!--<v-icon large color="#99FF00" small>-->
+                        <!--keyboard_arrow_down-->
+                        <!--</v-icon>-->
+                        <!--366-->
+                        <!--</div>-->
                     </v-flex>
                     <v-flex xs4 style="align-items: center;flex-direction: column">
                         <div style="margin-top: 5px">文章阅读</div>
-                        <div style="margin-top: 5px">54655</div>
-                        <div style="margin-top: 5px;color: #99FF00">
-                            <v-icon large color="#99FF00" small>
-                                keyboard_arrow_down
-                            </v-icon>
-                            5566
-                        </div>
+                        <div style="margin-top: 5px">{{click.article_read}}</div>
+                        <!--<div style="margin-top: 5px;color: #99FF00">-->
+                        <!--<v-icon large color="#99FF00" small>-->
+                        <!--keyboard_arrow_down-->
+                        <!--</v-icon>-->
+                        <!--5566-->
+                        <!--</div>-->
                     </v-flex>
                 </v-layout>
                 <v-divider></v-divider>
                 <v-layout row wrap>
                     <v-flex xs4 style="align-items: center;flex-direction: column;border-right: 1px solid #eee">
                         <div style="margin-top: 5px">点赞</div>
-                        <div style="margin-top: 5px">24369</div>
-                        <div style="margin-top: 5px;color: #FF0033">
-                            <v-icon large color="#FF0033" small>
-                                keyboard_arrow_up
-                            </v-icon>
-                            366
-                        </div>
+                        <div style="margin-top: 5px">{{click.agree}}</div>
+                        <!--<div style="margin-top: 5px;color: #FF0033">-->
+                        <!--<v-icon large color="#FF0033" small>-->
+                        <!--keyboard_arrow_up-->
+                        <!--</v-icon>-->
+                        <!--366-->
+                        <!--</div>-->
                     </v-flex>
                     <v-flex xs4 style="align-items: center;flex-direction: column;border-right: 1px solid #eee">
                         <div style="margin-top: 5px">收藏</div>
-                        <div style="margin-top: 5px">5465465</div>
-                        <div style="margin-top: 5px;color: #99FF00">
-                            <v-icon large color="#99FF00" small>
-                                keyboard_arrow_down
-                            </v-icon>
-                            366
-                        </div>
+                        <div style="margin-top: 5px">{{click.collect}}</div>
+                        <!--<div style="margin-top: 5px;color: #99FF00">-->
+                        <!--<v-icon large color="#99FF00" small>-->
+                        <!--keyboard_arrow_down-->
+                        <!--</v-icon>-->
+                        <!--366-->
+                        <!--</div>-->
                     </v-flex>
                     <v-flex xs4 style="align-items: center;flex-direction: column">
                         <div style="margin-top: 5px">收入</div>
-                        <div style="margin-top: 5px">54655</div>
-                        <div style="margin-top: 5px;color: #99FF00">
-                            <v-icon large color="#99FF00" small>
-                                keyboard_arrow_down
-                            </v-icon>
-                            5566
-                        </div>
+                        <div style="margin-top: 5px">{{click.pay}}</div>
+                        <!--<div style="margin-top: 5px;color: #99FF00">-->
+                        <!--<v-icon large color="#99FF00" small>-->
+                        <!--keyboard_arrow_down-->
+                        <!--</v-icon>-->
+                        <!--5566-->
+                        <!--</div>-->
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -168,28 +173,49 @@
         data() {
             return {
                 bottomNav: 0,
-                topimgs: [
+                items: [
                     {
-                        src: 'https://www.asgardusk.com/images/portfolio/3.png',
-                        title: '创作新秀激励奖第二期启动'
-                    },
-                    {
-                        src: 'https://www.asgardusk.com/images/portfolio/4.png',
-                        title: '我的废柴发明'
-                    },
-                    {
-                        src: 'https://www.asgardusk.com/images/portfolio/6.png',
-                        title: '专+星研会'
-                    },
-                    {
-                        src: 'https://www.asgardusk.com/images/portfolio/7.png',
-                        title: '我心中的镇站之宝'
+                        src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551793082170&di=a969802b6be72df8065f08348913985c&imgtype=0&src=http%3A%2F%2Fwww.3d2000.com%2Fwp-content%2Fuploads%2F2016%2F05%2F294194-7268075d6ad931da.gif',
+                        title: '加载中···'
                     }
-                ]
+                ],
+                click: {
+                    article_read: 0,
+                    answer_read: 0,
+                    fan: 0,
+                    pay: 0,
+                    collect: 0,
+                    agree: 0,
+                }
             }
         },
-        methods: {},
+        methods: {
+            get_activities() {
+                this.$api.activities.get_activities(3).then(res => {
+                    if (res.data.code === 1) {
+                        let data = [];
+                        res.data.data.forEach(value => {
+                            data.push({
+                                title: value['title'],
+                                src: value['cover'],
+                                url: value['url']
+                            })
+                        });
+                        this.items = data;
+                    }
+                })
+            },
+            get_click_info() {
+                this.$api.specialist.get_click_info().then(res => {
+                    if (res.data.code === 1) {
+                        this.click = res.data.data;
+                    }
+                })
+            }
+        },
         mounted() {
+            this.get_activities();
+            this.get_click_info();
         }
     }
 </script>

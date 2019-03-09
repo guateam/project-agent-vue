@@ -23,11 +23,11 @@ const index = {
             return axios.get(`${base.homepage}/classify_all_tag`, {params: {type: type}})
         },  //获取特定tag下的问题或者文章
 
-        get_hot_search(){
+        get_hot_search() {
             return axios.get(`${base.homepage}/get_hot_search`)
         }, //获取热搜
 
-        get_history_search(token = store.state.token){
+        get_history_search(token = store.state.token) {
             return axios.get(`${base.homepage}/get_history_search`, {params: {token: token}})
         }, //获取热搜
     },
@@ -41,8 +41,12 @@ const index = {
             return axios.post(`${base.account}/register`, qs.stringify(data))
         },  // 用户注册
 
-        get_user_by_token(token = store.state.token) {
-            return axios.get(`${base.account}/get_user_by_token`, {params: {token: token}})
+        get_user_by_token() {
+            return axios.get(`${base.account}/get_user_by_token`, {params: {token: store.state.token}})
+        },  // 根据token获取用户信息
+
+        get_user(id) {
+            return axios.get(`${base.account}/get_user`, {params: {user_id: id}})
         },  // 根据token获取用户信息
 
         get_collections(token = store.state.token) {
@@ -70,21 +74,21 @@ const index = {
         get_my_follow(token = store.state.token) {
             return axios.get(`${base.account}/get_my_follow`, {params: {token: token}})
         },  // 获取关注列表
-        get_history(token = store.state.token) {
-            return axios.get(`${base.account}/get_history`, {params: {token: token}})
+        get_history() {
+            return axios.get(`${base.account}/get_history`, {params: {token: store.state.token}})
         },
         get_user_group() {
             return axios.get(`${base.account}/get_user_group`)
         },
-        follow_user(user_id, token = store.state.token) {
-            return axios.get(`${base.account}/follow_user`, {params: {user_id: user_id, token: token}})
-        },
-        un_follow_user(user_id, token = store.state.token) {
-            return axios.get(`${base.account}/un_follow_user`, {params: {user_id: user_id, token: token}})
-        },
-        get_user_follow_state(user_id, token = store.state.token) {
-            return axios.get(`${base.account}/get_user_follow_state`, {params: {user_id: user_id, token: token}})
-        }
+        follow_user(id) {
+            return axios.get(`${base.account}/follow_user`, {params: {user_id: id, token: store.state.token}})
+        },  // 关注
+        un_follow_user(id) {
+            return axios.get(`${base.account}/un_follow_user`, {params: {user_id: id, token: store.state.token}})
+        },  // 取关
+        get_user_follow_state(id) {
+            return axios.get(`${base.account}/get_user_follow_state`, {params: {user_id: id, token: store.state.token}})
+        }  // 用户是否被关注
     },
     message: {
 
@@ -234,6 +238,12 @@ const index = {
     specialist: {
         get_my_fans(token = store.state.token) {
             return axios.get(`${base.specialist}/get_my_fans`, {params: {token: token}})
+        },
+        get_click_info(token = store.state.token) {
+            return axios.get(`${base.specialist}/get_click_info`, {params: {token: token}})
+        },
+        get_historical_orders(token = store.state.token) {
+            return axios.get(`${base.specialist}/get_historical_orders`, {params: {token: token}})
         }
     },
     activities: {
@@ -274,20 +284,44 @@ const index = {
             return axios.get(`${base.group}/get_groups`, {params: {token: token}})
         }
     },
-    algorithm:{
-        auto_complete(word){
+    board: {
+        get_board_recommend(page, token = store.state.token) {
+            return axios.get(`${base.board}/get_board_recommend`, {params: {page: page, token: token}})
+        },
+        get_demands_by_tag(tag_id) {
+            return axios.get(`${base.board}/get_demands_by_tag`, {params: {tag_id: tag_id}})
+        },
+        get_demand(demand_id) {
+            return axios.get(`${base.board}/get_demand`, {params: {demand_id: demand_id}})
+        },
+        get_sign_state(demand_id, token = store.state.token) {
+            return axios.get(`${base.board}/get_sign_state`, {params: {demand_id: demand_id, token: token}})
+        },
+        sign_to_demand(demand_id, token = store.state.token) {
+            return axios.get(`${base.board}/sign_to_demand`, {params: {demand_id: demand_id, token: token}})
+        }
+    },
+    enterprise: {
+        add_demand(data) {
+            return axios.post(`${base.enterprise}/add_demand`, qs.stringify(data))
+        }
+    },
+    algorithm: {
+        auto_complete(word) {
             return axios.get(`${base.algorithm}/before_search`, {params: {word: word}})
         }, //根据搜索词语言用tfidf进行自动补全
 
-        vague_search(word,type="question",token=store.state.token){
+        vague_search(word,type="all",token=store.state.token){
             if(type == 0){
                 type = "question"
-            }else if(type == 1){
+            } else if (type == 1) {
                 type = "article"
-            }else if(type == 2){
+            } else if (type == 2) {
                 type = "user"
+            }else if(type == 3){
+                type = "all"
             }
-            return axios.get(`${base.algorithm}/search`, {params: {word: word,type:type,token:token}})
+            return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token}})
         }, //模糊搜索
     }
 };

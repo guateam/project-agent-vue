@@ -7,7 +7,7 @@
                 <span>我发布的</span>
             </v-toolbar-title>
 
-            <v-btn icon>
+            <v-btn icon @click="$router.push({name:'search'})">
                 <v-icon>search</v-icon>
             </v-btn>
 
@@ -93,7 +93,7 @@
                             title: '专栏？应该没有这玩意',
                             subtitle: '3订阅  ·  9评论'
                         }
-                    ], [], []
+                    ], [], [], []
                 ]
             }
         },
@@ -168,6 +168,29 @@
                     }
                 })
             },
+            get_my_orders() {
+                this.$api.specialist.get_historical_orders().then((data) => {
+                    if (data.data.code === 1) {
+                        data = data.data.data;
+                        let items = [];
+                        let state = ['被拒绝', '待回答', '已回答'];
+                        data.forEach((value) => {
+                            items.push({
+                                title: value['content'],
+                                headline: value['answer'],
+                                action: this.get_date(value['time']),
+                                subtitle: '状态：' + state[value['state'] + 1] + ' 回答人：' + value['specialist_nickname'],
+                                id: value['orderID'],
+                            })
+                        });
+                        if (this.tabs.length === 4) {
+                            this.items[3] = items;
+                        } else {
+                            this.items[2] = items;
+                        }
+                    }
+                })
+            },
             get_category() {
                 this.$api.article.get_article_allowed_group().then((data) => {
                     if (data.data.code === 1) {
@@ -175,12 +198,14 @@
                             {title: '回答'},
                             {title: '提问'},
                             {title: '文章'},
+                            {title: '咨询'},
                         ];
                         this.get_my_articles()
                     } else if (data.data.code === -1) {
                         this.tabs = [
                             {title: '回答'},
                             {title: '提问'},
+                            {title: '咨询'},
                         ]
                     } else {
                         this.tabs = [
@@ -206,7 +231,7 @@
             this.get_my_answers();
             this.get_my_questions();
             this.get_category();
-
+            this.get_my_orders();
         }
         ,
     }

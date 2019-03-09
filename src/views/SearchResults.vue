@@ -14,6 +14,7 @@
                 prominent
                 tabs
         >
+        <v-icon large color="white" style="margin-left:-15px" @click="$router.back()">keyboard_arrow_left</v-icon>
             <v-combobox
                     v-model="model"
                     :items="items"
@@ -33,34 +34,9 @@
                         </v-list-tile-title>
                     </v-list-tile>
                 </template>
-                <!--<template v-slot:selection="{ item, selected }">
-                    <v-chip
-                            :selected="selected"
-                            color="blue-grey"
-                            class="white--text"
-                    >
-                        <v-icon left>mdi-coin</v-icon>
-                        <span v-text="item.name"></span>
-                    </v-chip>
-                </template>
-                <template v-slot:item="{ item }">
-                    <v-list-tile-avatar
-                            color="indigo"
-                            class="headline font-weight-light white--text"
-                    >
-                        {{ item.name.charAt(0) }}
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                        <v-list-tile-title v-text="item.name"></v-list-tile-title>
-                        <v-list-tile-sub-title v-text="item.symbol"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                    <v-list-tile-action>
-                        <v-icon>mdi-coin</v-icon>
-                    </v-list-tile-action>
-                </template>-->
             </v-combobox>
             <v-toolbar-title class="title">
-                <v-icon large color="white" @click="research()">search</v-icon>
+                <v-icon mid color="white" @click="research()">search</v-icon>
             </v-toolbar-title>
         </v-toolbar>
         <div>
@@ -78,8 +54,8 @@
                     <question-card @click.native="view_detail(question.questionID)" v-for="(question,idx) in questions"
                                    :key="idx" v-bind="question"></question-card>
                     
-                    <div :class="busy[0] ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy[0]">
+                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
+                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy">
                         <h3>
                             <v-progress-circular
                                     indeterminate
@@ -89,8 +65,6 @@
                     </div>
                 </v-tab-item>
                 <v-tab-item :key="2">
-
-
                     <!--这部分直接把school的搬过来就好了，同上，样式我稍微盲改了一下-->
                     <v-container grid-list-md>
                         <v-layout row wrap>
@@ -100,11 +74,11 @@
                                             slot-scope="{ hover }"
                                             :class="`elevation-${hover ? 12 : 2}`"
                                             class="mx-auto"
-                                            @click="jump_article(value.id)"
+                                            @click="jump_article(value.articleID)"
                                     >
                                         <v-img
                                                 :aspect-ratio="16/9"
-                                                :src="value.img"
+                                                :src="value.cover"
                                         ></v-img>
                                         <v-card-title>
                                             <div>
@@ -121,8 +95,8 @@
                             </v-flex>
                         </v-layout>
                     </v-container>
-                    <div :class="busy[1] ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy[1]">
+                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
+                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy">
                         <h3>
                             <v-progress-circular
                                     indeterminate
@@ -133,19 +107,17 @@
                     <div class="bottom"></div>
                 </v-tab-item>
                 <v-tab-item :key="3">
-
                     <!--同上，fanlist-->
-
                     <v-list>
                         <template v-for="(item, index) in users">
                             <v-list-tile
-                                    :key="item.title"
+                                    :key="item.nickname"
                                     avatar
                                     ripple
-                                    @click="toggle(item.id)"
+                                    @click="toggle(item.userId)"
                             >
                                 <v-list-tile-avatar>
-                                    <img :src="item.head_portrait" alt="">
+                                    <img :src="item.headportrait" alt="">
                                 </v-list-tile-avatar>
 
                                 <v-list-tile-content>
@@ -158,21 +130,17 @@
                                 </v-list-tile-content>
 
                             </v-list-tile>
-                            <v-divider
-                                    v-if="index + 1 < items[n-1].length"
-                                    :key="index"
-                                    style="margin-bottom: 0.5em;margin-top: 0.5em"
-                            ></v-divider>
                         </template>
                     </v-list>
-                    <div :class="busy[2] ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy[2]">
+                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
+                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy">
                         <h3>
                             <v-progress-circular
                                     indeterminate
                                     color="primary"
                             ></v-progress-circular>
-                            <span style="margin-left: 1em">加载中</span></h3>
+                            <span style="margin-left: 1em">加载中</span>
+                        </h3>
                     </div>
                 </v-tab-item>
             </v-tabs>
@@ -181,8 +149,8 @@
 </template>
 
 <script>
-
     import QuestionCard from "../components/QuestionCard";
+    var uid = ""
     export default {
         name: "search-results",
         components: {QuestionCard},
@@ -200,46 +168,34 @@
                 articles:[],
                 users:[],
                 counter:2,
-                busy:[
-                    true,
-                    true,
-                    true,
-                ]
+                busy:true,
+                info_word:"请输入搜索内容"
             }
         },
         methods:{
             research(){
                 var that = this
                 this.reset()
-
-                this.$api.algorithm.vague_search(this.search,0).then(res => {
-                if (res.data.code === 1) {
-                    this.questions = res.data.data;
-                    that.$set(that.busy,0,false)
-                }
-                })
-                this.$api.algorithm.vague_search(this.search,1).then(res => {
+                this.$api.algorithm.vague_search(this.search,3).then(res => {
                     if (res.data.code === 1) {
-                        this.articles = res.data.data;
-                        that.$set(that.busy,1,false)
+                        this.questions = res.data.data[0];
+                        this.articles = res.data.data[1];
+                        this.users = res.data.data[2];
+                        this.busy = false
                     }
                 })
-                this.$api.algorithm.vague_search(this.search,2).then(res => {
-                    if (res.data.code === 1) {
-                        this.users = res.data.data;
-                        that.$set(that.busy,2,false)
-                    }
-                })
+            },
+            toggle(id) {
+                this.$router.push({name: 'user', query: {id: id}});
             },
             reset(){
                 this.questions = []
                 this.articles = []
                 this.users = []
-                this.busy = [
-                    true,
-                    true,
-                    true,
-                ]
+                this.busy = true
+            },
+            loadMore(){
+                return
             }
         },
         watch: {
@@ -248,15 +204,21 @@
                 var that = this
                 // Items have already been loaded
                 // if (this.items.length > 0) return
-                if (val == "")return
+                if (val == ""){
+                    that.info_word = "请输入搜索内容"
+                    return
+                }
                 if (!that.isLoading)that.counter = 2
 
                 if(that.counter > 0 && !that.isLoading && uid == ""){
                     uid = setInterval(()=>{
                         that.counter-=1
-                        console.log(that.counter)
                         if(that.counter ==0){
-                            console.log("run")
+                            if(that.search == ""){
+                                that.info_word = "请输入搜索内容"
+                            }else{
+                                that.info_word = "正在加载..."
+                            }
                             clearInterval(uid);
                             uid = ""
                             if(that.search == "")return
@@ -266,6 +228,9 @@
                                     that.items= res.data.data;
                                     that.isLoading = false;
                                     that.counter = 2;
+                                    if(that.items.length == 0 && that.search != ""){
+                                        that.info_word = "无匹配项"
+                                    }
                                 }
                             })
                         }
@@ -275,25 +240,15 @@
         },
         mounted(){
             var that = this
-             this.search = this.$route.query.search;
-             this.model = this.search
-             this.isLoading = false
-             this.$api.algorithm.vague_search(this.search,0).then(res => {
+            this.search = this.$route.query.search;
+            this.model = this.search
+            this.isLoading = false
+            this.$api.algorithm.vague_search(this.search,3).then(res => {
                 if (res.data.code === 1) {
-                    this.questions = res.data.data;
-                    that.$set(that.busy,0,false)
-                }
-            })
-            this.$api.algorithm.vague_search(this.search,1).then(res => {
-                if (res.data.code === 1) {
-                    this.articles = res.data.data;
-                    that.$set(that.busy,1,false)
-                }
-            })
-            this.$api.algorithm.vague_search(this.search,2).then(res => {
-                if (res.data.code === 1) {
-                    this.users = res.data.data;
-                    that.$set(that.busy,2,false)
+                    this.questions = res.data.data[0];
+                    this.articles = res.data.data[1];
+                    this.users = res.data.data[2];
+                    that.busy = false
                 }
             })
         }
@@ -319,4 +274,5 @@
         height: 4em;
         background-color: #eee;
     }
+
 </style>

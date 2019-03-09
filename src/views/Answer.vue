@@ -1,7 +1,7 @@
 <template>
     <div class="answer">
         <v-toolbar dark flat color="primary" app dense scroll-off-screen>
-            <v-btn icon @click="$router.go(-1)">
+            <v-btn icon @click="$router.push($route.query.redirect || {name: 'topic'})">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
 
@@ -27,7 +27,8 @@
 
         <div>
             <div style="display: flex;justify-content: space-between;margin-top: 1em;margin-bottom: 1em">
-                <div style="display: flex;flex: 0 0 80%;">
+                <div style="display: flex;flex: 0 0 80%;"
+                     @click="$router.push({name: 'detail', query: {redirect: $route.fullPath, id: user_id}})">
                     <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center">
                         <div style="width: 60px;height: 60px;border-radius: 50%">
                             <img :src="avatar" alt="" style="width: 100%;height: 100%;border-radius: 50%">
@@ -184,6 +185,7 @@
                 agree: 0,
                 disagree: 0,
                 select: 0,
+                user_id: 0,
             }
         },
 
@@ -203,6 +205,7 @@
                         this.warning = res.data.data.tag;
                         this.agree = res.data.data.agree;
                         this.disagree = res.data.data.disagree;
+                        this.user_id = res.data.data.user_id;
                     }
                 })
             },

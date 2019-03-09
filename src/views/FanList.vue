@@ -7,7 +7,7 @@
                 <span>关注和粉丝</span>
             </v-toolbar-title>
 
-            <v-btn icon>
+            <v-btn icon @click="$router.push({name:'search'})">
                 <v-icon>search</v-icon>
             </v-btn>
             <v-tabs slot="extension" v-model="active" centered color="primary" slider-color="secondary">

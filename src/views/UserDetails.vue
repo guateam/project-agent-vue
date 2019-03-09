@@ -1,10 +1,11 @@
 <template>
   <div class="detail">
-    <div style="height: 60%; width: 100%;">
+    <div style="height: 50%; width: 100%;">
       <v-layout column fill-height>
         <v-flex xs1>
           <v-layout justify-space-between row>
             <v-flex shrink>
+              <!--返回上一页-->
               <v-btn @click="$router.push($route.query.redirect || {name: 'topic'})" icon>
                 <v-icon>arrow_back</v-icon>
               </v-btn>
@@ -40,13 +41,13 @@
                     <v-layout align-end row fill-height>
                       <v-flex xs6>
                         <span class="headline font-weight-bold">{{ (userInfo.follow).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
-                        <br />
+                        <br/>
                         <span class="font--text">关注</span>
                       </v-flex>
 
                       <v-flex xs6>
                         <span class="headline font-weight-bold">{{ (userInfo.fans).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
-                        <br />
+                        <br/>
                         <span class="font--text">粉丝</span>
                       </v-flex>
                     </v-layout>
@@ -58,7 +59,7 @@
         </v-flex>
 
         <!--昵称-->
-        <v-flex xs2>
+        <v-flex xs1>
           <v-container fill-height>
             <v-layout align-center justify-center row fill-height>
               <v-flex shrink>
@@ -102,14 +103,14 @@
       <v-flex>
         <v-tabs fixed-tabs>
           <v-tab
-              v-for="tab in ['动态', '回答', '专栏', '公开课']"
+              v-for="tab in ['动态', '回答', '专栏']"
               :key="tab"
           >
             {{ tab }}
           </v-tab>
           <!--动态-->
           <v-tab-item :key="'动态'">
-            <v-card flat min-height="200">
+            <v-card flat min-height="250">
               <v-layout v-if="message.length === 0" align-center justify-center row fill-height>
                 <span class="title font-weight-light"> <br>暂无动态</span>
               </v-layout>
@@ -137,7 +138,7 @@
 
           <!--回答-->
           <v-tab-item :key="'回答'">
-            <v-card flat min-height="200">
+            <v-card flat min-height="250">
               <v-layout v-if="answers.length === 0" align-center justify-center row fill-height>
                 <span class="title font-weight-light"> <br>暂无回答</span>
               </v-layout>
@@ -166,42 +167,13 @@
 
           <!--专栏-->
           <v-tab-item :key="'专栏'">
-            <v-card flat min-height="200">
+            <v-card flat min-height="250">
               <v-layout v-if="articles.length === 0" align-center justify-center row fill-height>
                 <span class="title font-weight-light"> <br>暂无文章</span>
               </v-layout>
 
               <v-list v-else two-line subheader>
                 <div v-for="(item, index) in articles" :key="index">
-                  <v-divider></v-divider>
-
-                  <v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                      <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                    </v-list-tile-content>
-
-                    <v-list-tile-action>
-                    <span class="font-weight-light">
-                        {{ item.time }}
-                    </span>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                </div>
-
-              </v-list>
-            </v-card>
-          </v-tab-item>
-
-          <!--公开课-->
-          <v-tab-item :key="'公开课'">
-            <v-card flat min-height="200">
-              <v-list two-line subheader>
-                <v-layout v-if="classes.length === 0" align-center justify-center row fill-height>
-                  <span class="title font-weight-light"> <br>暂无课程</span>
-                </v-layout>
-
-                <div v-else v-for="(item, index) in classes" :key="index">
                   <v-divider></v-divider>
 
                   <v-list-tile>
@@ -232,14 +204,16 @@
     name: 'Detail',
     data() {
       return {
+        userId: 1,  // 当前页面对应的用户id
+        // userId: this.$route.query.id,  // 当前页面对应的用户id
         userInfo: {
           isFollow: false,  // 是否关注
-          nickname: '吉良吉影',  // 昵称
-          group: '系统管理员',  // 用户组
-          avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551978614399&di=52a92d5c8a76d460f2665dc07732a175&imgtype=0&src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2017%2F07%2F28%2F2615633434213754887_320x320.jpg',  // 头像
-          follow: 199,  // 关注
-          fans: 40500,  // 粉丝数
-          desc: '我的名字叫吉良吉影，33岁。住在杜王町东北部的别墅区一带，未婚。我在龟友连锁店服务。每天都要加班到晚上8点才能回家。我不抽烟，酒仅止于浅尝。晚上11点睡，每天要睡足8个小时。睡前，我一定喝一杯温牛奶，然后做20分钟的柔软操，上了床，马上熟睡。一觉到天亮，决不把疲劳和压力留到第二天。医生都说我很正常。',  // 简介
+          nickname: '未知用户',  // 昵称
+          group: '路人',  // 用户组
+          avatar: '',  // 头像
+          follow: 0,  // 关注
+          fans: 0,  // 粉丝数
+          desc: '这个人很懒，什么也没留下。',  // 简介
         },  // 用户信息
         message: [
           {title: '剪指甲的108种方法', subtitle: '发表文章', time: '1天前'},
@@ -258,25 +232,78 @@
           {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
           {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
         ],  // 专栏文章
-        classes: [],  // 公开课
+        group: [],  // 用户组信息
       }
     },
     methods: {
+      initUserData() {
+        this.getUserGroup();
+        let tic = new Date();
+        do {
+          this.getUserData();
+          let toc = new Date();
+          if ((toc - tic) > 10000) {
+            this.$store.commit('showInfo', '超时');
+            break;
+          }  // 超过10秒认为加载失败
+        } while (this.group.length > 0 && this.userInfo.avatar !== '')
+        this.getMessage();
+      },  // 初始化用户数据
+      getMessage() {
+        this.message = [];
+        this.answers = [];
+        this.articles = [];
+      },  // 获取用户动态等数据
+      getUserGroup() {
+        this.$api.account.get_user_group().then(res => {
+          if (res.data.code === 1) {
+            this.group = res.data.data;
+          }
+        })
+      },  // 获取用户组信息
+      getUserData() {
+        this.$api.account.get_user(this.userId).then(res => {
+          if (res.data.code === 1) {
+            let data = res.data.data;
+            this.userInfo.nickname = data.nickname;
+            this.userInfo.group = this.group[data.user_group];
+            this.userInfo.avatar = data.head_portrait;
+            this.userInfo.follow = data.follow;
+            this.userInfo.fans = data.fans;
+            this.userInfo.desc = data.description;
+          }
+        });
+        this.$api.account.get_user_follow_state(this.userId).then(res => {
+          if (res.data.code !== 0) {
+            this.userInfo.isFollow = res.data.code === 1;
+          }
+        });
+      },  // 获取用户信息
       consult() {
         this.$store.commit('showInfo', '付费咨询');
       },  // 付费咨询
       followUser() {
         if (this.userInfo.isFollow) {
-          this.userInfo.isFollow = false;
-          this.$store.commit('showInfo', '已取消关注');
+          this.$api.account.un_follow_user(this.userId).then(res => {
+            if (res.data.code === 1) {
+              this.userInfo.isFollow = false;
+              this.$store.commit('showInfo', '已取消关注');
+            }
+          });
         }  // 取关
         else {
-          this.userInfo.isFollow = true;
-          this.$store.commit('showInfo', '关注成功!')
+          this.$api.account.follow_user(this.userId).then(res => {
+            if (res.data.code === 1) {
+              this.userInfo.isFollow = true;
+              this.$store.commit('showInfo', '关注成功!')
+            }
+          });
         }  // 关注
       },  // 关注/取关用户
     },
-    mounted() {},
+    mounted() {
+      this.initUserData()
+    },
   }
 </script>
 
@@ -285,7 +312,7 @@
     height: 100vh;
     width: 100vw;
     font-family: Helvetica, Arial, sans-serif;
-    background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);;
+    background: linear-gradient(0deg, white, whitesmoke 40%, #FFCC00);
   }
   .avatar {
     border-radius: 80px;
