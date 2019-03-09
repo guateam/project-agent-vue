@@ -37,7 +37,7 @@
                                 </div>
                             </v-card-title>
                             <v-card-actions>
-                                <v-btn flat dark>立即上传</v-btn>
+                                <v-btn flat dark @click="$router.push({name:'specialist-verify'})">立即上传</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-flex>
@@ -50,7 +50,7 @@
                                 </div>
                             </v-card-title>
                             <v-card-actions>
-                                <v-btn flat dark>立即上传</v-btn>
+                                <v-btn flat dark @click="$router.push({name:'company-verify'})">立即上传</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-flex>
