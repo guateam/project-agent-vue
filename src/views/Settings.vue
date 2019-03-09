@@ -178,7 +178,7 @@
                             <v-flex>
                                 <v-btn v-if="$store.state.token" @click="logout" color="error" block>退出登录</v-btn>
                                 <v-btn v-else color="primary"
-                                       @click="$router.push({name: 'login', query: {redirect: '/index'}})" block>立即登录
+                                       @click="$router.push({name: 'login', query: {redirect: '/topic'}})" block>立即登录
                                 </v-btn>
                             </v-flex>
                         </v-list-tile>

@@ -26,7 +26,8 @@
                     </div>
                 </div>
                 <p class="topicdetail">
-                    <span v-if="!showAll" v-html="questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content"></span>
+                    <span v-if="!showAll"
+                          v-html="questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content"></span>
                     <span v-else v-html="questionData.content"></span>
                     <button id="show-all-button" v-if="questionData.content.length > 65" @click="showAll = !showAll">
                         <span v-if="!showAll" style="color: blue">显示全部</span>
@@ -44,7 +45,8 @@
 
         <!--页面主体，展示不同的回答列表-->
 
-        <v-card v-for="(answer, index) in answersDataList" :key="index" :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
+        <v-card v-for="(answer, index) in answersDataList" :key="index"
+                :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
 
                 <router-link :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
@@ -52,20 +54,27 @@
                     <!--answer.content }}</p>-->
 
                     <!--列表正文内容-->
-                    <p class="answerDetail" v-html="answer.content"></p>
+                    <p class="answerDetail">{{answer.content.replace(/<[^>]+>/g, '')}}</p>
 
                     <!--没有图片时不加载下面的div-->
-                    <div class="answerImg" v-if="answer.image.length !== 0">
-                        <img v-for="(item,x) in answer.image" :key="x" :src="item" alt=""/>
+                    <div class="answerImg" v-if="answer.image.length >=3">
+                        <img v-for="(item,x) in answer.image" :key="x" v-if="x<3" :src="item" alt=""/>
+                    </div>
+                    <div class="answerImg" v-if="answer.image.length === 1">
+                        <img :src="answer.image[0]" alt="" style="width: 100%;object-fit: cover;"/>
+                    </div>
+                    <div class="answerImg" v-if="answer.image.length === 2">
+                        <img :src="answer.image[0]" alt="" style="width: 50%;object-fit: cover;"/>
+                        <img :src="answer.image[1]" alt="" style="width: 50%;object-fit: cover;"/>
                     </div>
                 </router-link>
-                <div class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</div>
                 <div style="width: 100%;display: flex;align-items: center;position: relative;">
                     <div class="userhead">
-                        <img :src="answer.headportrait" alt="">
+                        <img :src="answer.headportrait" alt="" style="width: 100%">
                     </div>
                     <p class="userName">{{answer.nickname}}</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;
+                    <p class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</p>
                     <!--<p class="userTag">{{answer.user.tag}}</p>-->
                     <p class="answerTime">{{answer.edittime}}</p>
                 </div>
@@ -105,6 +114,7 @@
 
 <script>
     import bottomNav from '../components/bottomNav';
+
     export default {
         name: "Question",
         components: {
@@ -371,7 +381,12 @@
     .bottom {
         margin-bottom: 3em;
     }
+
     #bottom-space {
         height: 8em;
+    }
+
+    img {
+        max-width: 100%;
     }
 </style>
