@@ -98,7 +98,10 @@ const index = {
 
         get_friend_list(token = store.state.token) {
             return axios.get(`${base.message}/get_friend_list`, {params: {token: token}})
-        }
+        },
+        get_chat_box(id) {
+            return axios.get(`${base.message}/get_chat_box`, {params: {token: store.state.token, user_id: id}})
+        },  // 获取聊天信息
     },
     questions: {
 

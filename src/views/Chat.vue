@@ -37,6 +37,8 @@
         components: {gChat,ChatInput},
         data() {
             return {
+                userId: 2,  // 目标id
+                // userId: this.$route.query.id,  // 目标id
                 upperTimes: 0,
                 underTimes: 0,
                 upperId: 0,
@@ -44,13 +46,14 @@
                 width: window.screen.width,
                 ownerAvatarUrl: 'https://www.asgardusk.com/images/none.png',
                 contactAvatarUrl: 'https://www.asgardusk.com/images/head-pic.jpeg',
-                wxChatData: [{
-                    direction: 2,
-                    id: 1,
-                    type: 1,
-                    content: '你好!![呲牙]',
-                    ctime: new Date().toLocaleString()
-                },
+                wxChatData: [
+                    {
+                        direction: 2,
+                        id: 1,
+                        type: 1,
+                        content: '你好!![呲牙]',
+                        ctime: new Date().toLocaleString()
+                    },
                     {
                         direction: 1,
                         id: 2,
@@ -81,10 +84,30 @@
                     }]
             }
         },
-        created() {
+        mounted() {
             this.initWidth();
+            this.loadMessage();
         },
         methods: {
+            loadMessage() {
+                this.$api.message.get_chat_box(this.userId).then(res => {
+                    if (res.data.code === 1) {
+                        this.wxChatData = [];
+                        let data = res.data.data;
+                        if (data.length > 0) {
+                            data.forEach(item => {
+                                this.wxChatData.push({
+                                    direction: item.poster === this.userId? 1: 2,
+                                    id: item.messageID,
+                                    type: 1,
+                                    content: item.content,
+                                    ctime: item.post_time,
+                                });
+                            })
+                        }
+                    }
+                })
+            },  // 加载消息
             initWidth() {
                 var ua = navigator.userAgent;
                 var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
