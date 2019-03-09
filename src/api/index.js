@@ -244,6 +244,9 @@ const index = {
         },
         get_historical_orders(token = store.state.token) {
             return axios.get(`${base.specialist}/get_historical_orders`, {params: {token: token}})
+        },
+        add_order(data) {
+            return axios.post(`${base.specialist}/add_order`, qs.stringify(data))
         }
     },
     activities: {
@@ -311,17 +314,17 @@ const index = {
             return axios.get(`${base.algorithm}/before_search`, {params: {word: word}})
         }, //根据搜索词语言用tfidf进行自动补全
 
-        vague_search(word,type="all",token=store.state.token){
+        vague_search(word,type="all",page=1,token=store.state.token){
             if(type == 0){
                 type = "question"
             } else if (type == 1) {
                 type = "article"
             } else if (type == 2) {
                 type = "user"
-            }else if(type == 3){
+            } else if (type == 3) {
                 type = "all"
             }
-            return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token}})
+            return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token,page:page}})
         }, //模糊搜索
     }
 };
