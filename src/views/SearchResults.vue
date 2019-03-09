@@ -54,8 +54,8 @@
                     <question-card @click.native="view_detail(question.questionID)" v-for="(question,idx) in questions"
                                    :key="idx" v-bind="question"></question-card>
                     
-                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy">
+                    <div :class="busy0 ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll=""
+                        infinite-scroll-disabled="busy0" infinite-scroll-distance="0" v-show="busy0">
                         <h3>
                             <v-progress-circular
                                     indeterminate
@@ -95,8 +95,8 @@
                             </v-flex>
                         </v-layout>
                     </v-container>
-                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy">
+                    <div :class="busy1 ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll=""
+                        infinite-scroll-disabled="busy1" infinite-scroll-distance="0" v-show="busy1">
                         <h3>
                             <v-progress-circular
                                     indeterminate
@@ -132,8 +132,8 @@
                             </v-list-tile>
                         </template>
                     </v-list>
-                    <div :class="busy ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="busy" infinite-scroll-distance="0" v-show="busy">
+                    <div :class="busy2 ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll=""
+                        infinite-scroll-disabled="busy2" infinite-scroll-distance="0" v-show="busy2">
                         <h3>
                             <v-progress-circular
                                     indeterminate
@@ -164,70 +164,170 @@
                 model:"",
                 isLoading:true,
                 search:"",
+
+                //存放三个标签的容器
                 questions:[],
                 articles:[],
                 users:[],
+
+                //输入延迟
                 counter:2,
-                busy:true,
-                info_word:"请输入搜索内容"
+
+                //三个标签的繁忙状态
+                busy0:true,
+                busy1:true,
+                busy2:true,
+
+                info_word:"请输入搜索内容",
+
+                //三个标签目前的页码数
+                question_page:1,
+                article_page:1,
+                user_page:1,
+
+                //根据该值进行流加载搜索
+                now_search:"",
+
+                //第一次进入页面的加载
+                first_loading:true,
             }
         },
         methods:{
+            //重新搜索
             research(){
                 var that = this
                 this.reset()
-                this.$api.algorithm.vague_search(this.search,3).then(res => {
+                searching = this.search
+                this.$api.algorithm.vague_search(searching,3).then(res => {
                     if (res.data.code === 1) {
                         this.questions = res.data.data[0];
                         this.articles = res.data.data[1];
                         this.users = res.data.data[2];
-                        this.busy = false
+                        this.all_busy_done()
+                        this.now_search = searching
                     }
                 })
             },
             toggle(id) {
                 this.$router.push({name: 'user', query: {id: id}});
             },
+            //用于重新搜索时的状态重置
             reset(){
                 this.questions = []
                 this.articles = []
                 this.users = []
-                this.busy = true
+                this.all_busy_start()
             },
-            loadMore(){
-                return
+            //全部繁忙状态开启
+            all_busy_start(){
+                this.busy_start(0)
+                this.busy_start(1)
+                this.busy_start(2)
+            },
+            //全部繁忙状态关闭
+            all_busy_done(){
+                this.busy_done(0)
+                this.busy_done(1)
+                this.busy_done(2)
+            },
+            //idx标签的繁忙状态关闭
+            busy_done(idx){
+                if(idx == 0)this.busy0 = false
+                else if (idx == 1)this.busy1 = false
+                else if (idx == 2)this.busy2 = false
+            },
+            //idx标签的繁忙状态开启
+            busy_start(idx){
+                if(idx == 0)this.busy0 = true
+                else if (idx == 1)this.busy1 = true
+                else if (idx == 2)this.busy2 = true
+            },
+            //获取idx标签的繁忙状态
+            check_busy(idx){
+                if(idx == 0)return this.busy0
+                else if (idx == 1)return this.busy1
+                else if (idx == 2)return this.busy2
+            },
+            //流加载
+            loadMore(type){
+                var that = this
+                //即将加载第几页
+                var active_page = 0
+                if(this.first_loading)return
+                //更新当前流加载的tab的页码数，并赋值给active_page
+                if(type == 0){
+                    this.question_page ++
+                    active_page = this.question_page
+                }else if(type == 1){
+                    this.article_page ++
+                    active_page = this.article_page
+                }else if (type == 2){
+                    this.user_page ++
+                    active_page = this.user_page 
+                }
+                //当前tab的繁忙状态开启
+                that.busy_start(type)
+                //流加载查询
+                this.$api.algorithm.vague_search(this.now_search,type,active_page).then(res => {
+                    if (res.data.code === 1) {
+                        //根据tab将数据追加到指定容器中
+                        for(var i=0;i<res.data.data.length;i++){
+                            if(type == 0){
+                                that.questions.push(res.data.data[i])
+                            }else if(type == 1){
+                                that.articles.push(res.data.data[i])
+                            }else if (type == 2){
+                                that.users.push(res.data.data[i])
+                            }
+                        }
+                        //当前tab的繁忙状态关闭
+                        that.busy_done(type)
+                    }
+                })
             }
         },
         watch: {
             search(val) 
             {
                 var that = this
-                // Items have already been loaded
-                // if (this.items.length > 0) return
                 if (val == ""){
                     that.info_word = "请输入搜索内容"
                     return
                 }
+                //如果还没进入加载状态,重置2单位的输入延迟时间，表示用户输入未结束，暂时不进行加载
                 if (!that.isLoading)that.counter = 2
-
+                //如果还没进入加载状态，则输入延迟时间开始减少
                 if(that.counter > 0 && !that.isLoading && uid == ""){
+                    //打开倒计时
                     uid = setInterval(()=>{
+                        //每次减少1单位时间
                         that.counter-=1
+                        //若倒计时为0，则表示用户输入完毕，可以进行加载
                         if(that.counter ==0){
+                            //判断用户输入的内容
                             if(that.search == ""){
+                                //为空则不进行加载
                                 that.info_word = "请输入搜索内容"
                             }else{
                                 that.info_word = "正在加载..."
                             }
+                            //清除上次的计时器，并重置计时器id
                             clearInterval(uid);
                             uid = ""
+                            //空搜索值则不进行加载
                             if(that.search == "")return
+                            //进入加载状态
                             that.isLoading = true
+                            //进行加载
                             that.$api.algorithm.auto_complete(that.search).then(res => {
                                 if (res.data.code === 1) {
+                                    //获取匹配项
                                     that.items= res.data.data;
+                                    //加载状态结束
                                     that.isLoading = false;
+                                    //重置输入延迟时间
                                     that.counter = 2;
+                                    //若无匹配项，更新提示语
                                     if(that.items.length == 0 && that.search != ""){
                                         that.info_word = "无匹配项"
                                     }
@@ -241,6 +341,7 @@
         mounted(){
             var that = this
             this.search = this.$route.query.search;
+            this.now_search = this.$route.query.search;
             this.model = this.search
             this.isLoading = false
             this.$api.algorithm.vague_search(this.search,3).then(res => {
@@ -248,7 +349,8 @@
                     this.questions = res.data.data[0];
                     this.articles = res.data.data[1];
                     this.users = res.data.data[2];
-                    that.busy = false
+                    this.first_loading = false;
+                    that.all_busy_done()
                 }
             })
         }

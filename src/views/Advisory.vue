@@ -6,7 +6,7 @@
                     <v-layout justify-space-between row>
                         <v-flex shrink>
                             <!--返回上一页-->
-                            <v-btn @click="$router.push($route.query.redirect || {name: 'topic'})" icon>
+                            <v-btn @click="$router.back()" icon>
                                 <v-icon>arrow_back</v-icon>
                             </v-btn>
                         </v-flex>
@@ -81,66 +81,66 @@
             <v-flex>
                 <v-tabs fixed-tabs>
                     <v-tab
-                            v-for="tab in ['公开咨询', '付费咨询']"
+                            v-for="tab in ['付费咨询']"
                             :key="tab"
                     >
                         {{ tab }}
                     </v-tab>
                     <!--公开咨询-->
-                    <v-tab-item :key="'公开咨询'">
-                        <v-card flat min-height="250">
-                            <v-flex xs10 offset-xs1
-                                    style="padding: 2em;border: 1px #eee solid;margin-top: 2em;margin-bottom: 2em">
-                                提出问题，等待对方回答，价格由提问者自定，超过72小时未回答费用会自动退回。
-                                <br>
-                                公开提问你的回答被他人查看后，你将分成收入的一半
-                            </v-flex>
-                            <v-flex xs12 style="display: flex;align-items: center;justify-content: center;">
-                                <v-btn color="info">发起付费咨询</v-btn>
-                            </v-flex>
-                            <v-divider></v-divider>
-                            <v-card style="padding: 1em 2em;line-height: 1.5;">
-                                <h3 style="display: flex;align-items: center;margin-bottom: 8px"><img
-                                        style="width: 25px;height: 25px;object-fit: contain;border-radius: 50%;margin-right: 5px"
-                                        src="https://www.asgardusk.com/images/none.png" alt=""><span>拉拉人</span>回答了问题
-                                </h3>
-                                <p>交互原型图如何画更有利于工作,画交互图的时候有哪些事项需要注意？</p>
-                                <h4>
-                                    <v-btn color="info">￥2&nbsp;&nbsp;学习一下</v-btn>
-                                </h4>
-                                <h4>价值<span>20</span>元，<span>9</span>人听过，<span>4</span>人觉得值</h4>
-                            </v-card>
-                            <v-divider></v-divider>
-                            <v-card style="padding: 1em 2em;line-height: 1.5;">
-                                <h3 style="display: flex;align-items: center;margin-bottom: 8px"><img
-                                        style="width: 25px;height: 25px;object-fit: contain;border-radius: 50%;margin-right: 5px"
-                                        src="https://www.asgardusk.com/images/none.png" alt=""><span>拉拉人</span>回答了问题
-                                </h3>
-                                <p>交互原型图如何画更有利于工作,画交互图的时候有哪些事项需要注意？</p>
-                                <h4>
-                                    <v-btn color="info">￥2&nbsp;&nbsp;学习一下</v-btn>
-                                </h4>
-                                <h4>价值<span>20</span>元，<span>9</span>人听过，<span>4</span>人觉得值</h4>
-                            </v-card>
-                            <v-divider></v-divider>
-                            <v-card style="padding: 1em 2em;line-height: 1.5;">
-                                <h3 style="display: flex;align-items: center;margin-bottom: 8px"><img
-                                        style="width: 25px;height: 25px;object-fit: contain;border-radius: 50%;margin-right: 5px"
-                                        src="https://www.asgardusk.com/images/none.png" alt=""><span>拉拉人</span>回答了问题
-                                </h3>
-                                <p>交互原型图如何画更有利于工作,画交互图的时候有哪些事项需要注意？</p>
-                                <h4>
-                                    <v-btn color="info">￥2&nbsp;&nbsp;学习一下</v-btn>
-                                </h4>
-                                <h4>价值<span>20</span>元，<span>9</span>人听过，<span>4</span>人觉得值</h4>
-                            </v-card>
-                            <v-divider></v-divider>
-                        </v-card>
-                    </v-tab-item>
+                    <!--<v-tab-item :key="'公开咨询'">-->
+                    <!--<v-card flat min-height="250">-->
+                    <!--<v-flex xs10 offset-xs1-->
+                    <!--style="padding: 2em;border: 1px #eee solid;margin-top: 2em;margin-bottom: 2em">-->
+                    <!--提出问题，等待对方回答，价格由提问者自定，超过72小时未回答费用会自动退回。-->
+                    <!--<br>-->
+                    <!--公开提问你的回答被他人查看后，你将分成收入的一半-->
+                    <!--</v-flex>-->
+                    <!--<v-flex xs12 style="display: flex;align-items: center;justify-content: center;">-->
+                    <!--<v-btn color="info">发起付费咨询</v-btn>-->
+                    <!--</v-flex>-->
+                    <!--<v-divider></v-divider>-->
+                    <!--<v-card style="padding: 1em 2em;line-height: 1.5;">-->
+                    <!--<h3 style="display: flex;align-items: center;margin-bottom: 8px"><img-->
+                    <!--style="width: 25px;height: 25px;object-fit: contain;border-radius: 50%;margin-right: 5px"-->
+                    <!--src="https://www.asgardusk.com/images/none.png" alt=""><span>拉拉人</span>回答了问题-->
+                    <!--</h3>-->
+                    <!--<p>交互原型图如何画更有利于工作,画交互图的时候有哪些事项需要注意？</p>-->
+                    <!--<h4>-->
+                    <!--<v-btn color="info">￥2&nbsp;&nbsp;学习一下</v-btn>-->
+                    <!--</h4>-->
+                    <!--<h4>价值<span>20</span>元，<span>9</span>人听过，<span>4</span>人觉得值</h4>-->
+                    <!--</v-card>-->
+                    <!--<v-divider></v-divider>-->
+                    <!--<v-card style="padding: 1em 2em;line-height: 1.5;">-->
+                    <!--<h3 style="display: flex;align-items: center;margin-bottom: 8px"><img-->
+                    <!--style="width: 25px;height: 25px;object-fit: contain;border-radius: 50%;margin-right: 5px"-->
+                    <!--src="https://www.asgardusk.com/images/none.png" alt=""><span>拉拉人</span>回答了问题-->
+                    <!--</h3>-->
+                    <!--<p>交互原型图如何画更有利于工作,画交互图的时候有哪些事项需要注意？</p>-->
+                    <!--<h4>-->
+                    <!--<v-btn color="info">￥2&nbsp;&nbsp;学习一下</v-btn>-->
+                    <!--</h4>-->
+                    <!--<h4>价值<span>20</span>元，<span>9</span>人听过，<span>4</span>人觉得值</h4>-->
+                    <!--</v-card>-->
+                    <!--<v-divider></v-divider>-->
+                    <!--<v-card style="padding: 1em 2em;line-height: 1.5;">-->
+                    <!--<h3 style="display: flex;align-items: center;margin-bottom: 8px"><img-->
+                    <!--style="width: 25px;height: 25px;object-fit: contain;border-radius: 50%;margin-right: 5px"-->
+                    <!--src="https://www.asgardusk.com/images/none.png" alt=""><span>拉拉人</span>回答了问题-->
+                    <!--</h3>-->
+                    <!--<p>交互原型图如何画更有利于工作,画交互图的时候有哪些事项需要注意？</p>-->
+                    <!--<h4>-->
+                    <!--<v-btn color="info">￥2&nbsp;&nbsp;学习一下</v-btn>-->
+                    <!--</h4>-->
+                    <!--<h4>价值<span>20</span>元，<span>9</span>人听过，<span>4</span>人觉得值</h4>-->
+                    <!--</v-card>-->
+                    <!--<v-divider></v-divider>-->
+                    <!--</v-card>-->
+                    <!--</v-tab-item>-->
 
 
                     <!--私密咨询-->
-                    <v-tab-item :key="'私密咨询'">
+                    <v-tab-item :key="'付费咨询'">
                         <v-card flat min-height="250">
                             <v-flex xs10 offset-xs1
                                     style="padding: 2em;border: 1px #eee solid;margin-top: 2em;margin-bottom: 2em">
@@ -149,14 +149,33 @@
                                 私密咨询内容仅双方可见
                             </v-flex>
                             <v-flex xs12 style="display: flex;align-items: center;justify-content: center;">
-                                <v-btn color="info">发起付费咨询</v-btn>
+                                <v-btn color="info" @click="$router.push({name:'advisory-publish',query:{id:userId}})">
+                                    发起付费咨询
+                                </v-btn>
                             </v-flex>
                             <v-divider></v-divider>
-                            <v-layout row wrap style="line-height: 1.5;height: 50px">
-                                <v-flex xs4 style="display: flex;align-items: center;justify-content: center;"><v-icon small>filter_vintage</v-icon><span>5</span>次咨询</v-flex>
-                                <v-flex xs4 style="display: flex;align-items: center;justify-content: center;"><v-icon small>filter_vintage</v-icon><span>5</span>人评价</v-flex>
-                                <v-flex xs4 style="display: flex;align-items: center;justify-content: center;"><v-icon small>filter_vintage</v-icon><span>5。0</span>评分</v-flex>
-                            </v-layout>
+                            <h2 style="margin-top: 0.2em;margin-left: 0.2em;">历史记录</h2>
+                            <v-divider></v-divider>
+                            <v-container>
+                                <v-layout row wrap style="line-height: 1.5;height: 50px">
+                                    <v-card style="padding: 1em 2em;line-height: 1.5;" v-for="value in orders">
+                                        <h3 style="display: flex;align-items: center;margin-bottom: 8px"><img
+                                                style="width: 25px;height: 25px;object-fit: contain;border-radius: 50%;margin-right: 5px"
+                                                :src="value.user_head_portrait"
+                                                alt=""><span>{{value.content}}</span>
+                                        </h3>
+                                        <p>{{value.answer}}</p>
+                                        <h4>
+                                            <v-btn color="info"
+                                                   @click="$router.push({name:'advisory-detail',query:{id:value.id}})">
+                                                查看详情
+                                            </v-btn>
+                                        </h4>
+                                        <h4>提问日期：{{value.time}} 状态：{{value.state}}</h4>
+                                    </v-card>
+                                    <v-divider v-for="value in orders"></v-divider>
+                                </v-layout>
+                            </v-container>
                         </v-card>
                     </v-tab-item>
 
@@ -200,6 +219,14 @@
                     {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
                 ],  // 专栏文章
                 group: [],  // 用户组信息
+                orders: [
+                    {
+                        content: '加载中···',
+                        answer: '',
+                        state: 1,
+                        time: '加载中'
+                    }
+                ]
             }
         },
         methods: {
@@ -267,9 +294,28 @@
                     });
                 }  // 关注
             },  // 关注/取关用户
+            get_historical_orders() {
+                this.$api.specialist.get_historical_orders().then(res => {
+                    if (res.data.code === 1) {
+                        this.orders = [];
+                        let state = ['已拒绝', '待回答', '已回答'];
+                        res.data.data.forEach(value => {
+                            this.orders.push({
+                                content: value['content'].replace(/<[^>]+>/g, ''),
+                                answer: value['answer'] !== null ? value['answer'].replace(/<[^>]+>/g, '') : '',
+                                id: value['orderID'],
+                                state: state[value['state'] + 1],
+                                time: value['time'],
+                                user_head_portrait: value['user_head_portrait']
+                            })
+                        });
+                    }
+                })
+            }
         },
         mounted() {
-            this.initUserData()
+            this.initUserData();
+            this.get_historical_orders();
         },
     }
 </script>
