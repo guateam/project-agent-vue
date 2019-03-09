@@ -126,7 +126,7 @@
                     </v-list>
                 </v-tab-item>
             </v-tabs>
-            <div class="load-more-normal" v-infinite-scroll="loadMore(active)"
+            <div class="load-more-normal" v-infinite-scroll="loadMore"
                  infinite-scroll-disabled="loading" infinite-scroll-distance="0">
                 <h3>
                     <v-progress-circular
@@ -195,6 +195,7 @@
                         this.questions = res.data.data[0];
                         this.articles = res.data.data[1];
                         this.users = res.data.data[2];
+                        this.loading = true
                         this.now_search = searching
                     }
                 })
@@ -216,24 +217,23 @@
             //idx标签的繁忙状态关闭
             //流加载
             loadMore() {
-                let type = this.active;
-                let that = this;
+                var that = this
                 //即将加载第几页
                 let active_page = 0;
                 if (this.first_loading) return;
                 //更新当前流加载的tab的页码数，并赋值给active_page
-                if (type === 0) {
-                    this.question_page++;
+                if (this.active == 0) {
+                    this.question_page++
                     active_page = this.question_page
-                } else if (type === 1) {
-                    this.article_page++;
+                } else if (this.active == 1) {
+                    this.article_page++
                     active_page = this.article_page
-                } else if (type === 2) {
-                    this.user_page++;
+                } else if (this.active == 2) {
+                    this.user_page++
                     active_page = this.user_page
                 }
                 //繁忙状态开启
-                that.loading = true;
+                that.loading = true
                 //流加载查询
                 this.$api.algorithm.vague_search(this.now_search, type, active_page).then(res => {
                     if (res.data.code === 1) {
@@ -321,6 +321,7 @@
                     this.articles = res.data.data[1];
                     this.users = res.data.data[2];
                     this.first_loading = false;
+                    this.loading = false;
                 }
             })
         }
