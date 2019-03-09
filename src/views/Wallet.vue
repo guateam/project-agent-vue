@@ -5,7 +5,8 @@
         <v-flex shrink>
           <v-layout justify-space-between row>
             <v-flex shrink>
-              <v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>
+              <v-btn @click="$router.back()" icon>
+              <!--<v-btn @click="$router.push($route.query.redirect || {name: 'account'})" icon>-->
                 <v-icon>arrow_back</v-icon>
               </v-btn>
             </v-flex>
