@@ -222,11 +222,18 @@ export default new Router({
         },
         // 评论回复组件
         {
-            path: '/comment-detail',
-            name: 'comment-detail',
-            component: () => import('./views/CommentDetail.vue')
-        },
-        // 收藏
+          path: 'qr-code',
+          name: 'qr-code',
+          component: () => import('./views/QRCode.vue')
+        }
+      ],
+    },
+    // 新聊天页
+    {
+      path: '/chat',
+      name: 'chat',
+      component: () => import('./views/NewChat.vue'),
+      children: [
         {
             path: '/collection',
             name: 'collection',
@@ -239,81 +246,162 @@ export default new Router({
             name: 'question',
             component: () => import('./views/Question.vue')
         },
-        // 回答页
-        {
-            path: '/answer',
-            name: 'answer',
-            component: () => import('./views/Answer.vue')
-        },
-        // 问题发布页
-        {
-            path: '/question-publish',
-            name: 'question-publish',
-            meta: {requireLogin: true},
-            component: () => import('./views/QuestionPublish.vue')
-        },
-        // 回答发布页
-        {
-            path: '/answer-publish',
-            name: 'answer-publish',
-            meta: {requireLogin: true},
-            component: () => import('./views/AnswerPublish.vue')
-        },
-        // 文章发布页
-        {
-            path: '/article-publish',
-            name: 'article-publish',
-            meta: {requireLogin: true},
-            component: () => import('./views/ArticlePublish.vue')
-        },
-        // 创作中心
-        {
-            path: '/creation-manager',
-            name: 'creation-manager',
-            meta: {requireLogin: true},
-            component: () => import('./views/CreationManager.vue')
-        },
-        // 创作中心
-        {
-            path: '/corporate_center',
-            name: 'corporate_center',
-            meta: {requireLogin: true},
-            component: () => import('./views/CorporateCenter.vue')
-        },
-        // 搜索
-        {
-            path: '/search',
-            name: 'search',
-            meta: {requireLogin: true},
-            component: () => import('./views/Search.vue')
-        },
-        // 搜索结果
-        {
-            path: '/search-results',
-            name: 'search-results',
-            meta: {requireLogin: true},
-            component: () => import('./views/SearchResults.vue')
-        },
-        // 咨询
-        {
-            path: '/advisory',
-            name: 'advisory',
-            meta: {requireLogin: true},
-            component: () => import('./views/Advisory.vue')
-        },
-        // 添加咨询
-        {
-            path: '/advisory-publish',
-            name: 'advisory-publish',
-            meta: {requireLogin: true},
-            component: () => import('./views/AdvisoryPublish.vue')
-        },
-        // 咨询管理
-        {
-            path: '/advisory-list',
-            name: 'advisory-list',
-            meta: {requireLogin: true},
-            component: () => import('./views/AdvisoryList.vue')
-        },
-    ],
+      ]
+    },
+    // 消息
+    {
+      path: '/message',
+      name: 'message',
+      meta: {requireLogin: true},  // 需要登录
+      component: () => import('./views/Message.vue'),
+    },
+    // 告示板详情
+    {
+      path: '/board-detail',
+      name: 'board-detail',
+      component: () => import('./views/BoardDetail.vue'),
+      children: []
+    },
+    // 发布需求
+    {
+      path: '/requirement-publish',
+      name: 'requirement-publish',
+      component: () => import('./views/RequirementPublish.vue'),
+      children: []
+    },
+    // 需求审核
+    {
+      path: '/requirement-check',
+      name: 'requirement-check',
+      component: () => import('./views/RequirementCheck.vue'),
+      children: []
+    },// 需求审核详情页
+      {
+          path: '/requirement-check-detail',
+          name: 'requirement-check-detail',
+          component: () => import('./views/RequirementCheckDetail.vue'),
+          children: []
+      },
+    // 历史发布（需求）
+    {
+      path: '/requirement-history',
+      name: 'requirement-history',
+      component: () => import('./views/RequirementHistory.vue'),
+      children: []
+    },
+    // 文章页
+    {
+      path: '/article',
+      name: 'article',
+      component: () => import('./views/Article.vue'),
+      children: []
+    },
+    // 文章阅读
+    {
+      path: '/article-read',
+      name: 'article-read',
+      component: () => import('./views/ArticleRead.vue'),
+    },
+    // 评论组件
+    {
+      path: '/comment',
+      name: 'comment',
+      component: () => import('./views/Comment.vue')
+    },
+    // 评论回复组件
+    {
+      path: '/comment-detail',
+      name: 'comment-detail',
+      component: () => import('./views/CommentDetail.vue')
+    },
+    // 收藏
+    {
+      path: '/collection',
+      name: 'collection',
+      meta: {requireLogin: true},
+      component: () => import('./views/Collection.vue')
+    },
+    // 问题页
+    {
+      path: '/question',
+      name: 'question',
+      component: () => import('./views/Question.vue')
+    },
+    // 回答页
+    {
+      path: '/answer',
+      name: 'answer',
+      component: () => import('./views/Answer.vue')
+    },
+    // 问题发布页
+    {
+      path: '/question-publish',
+      name: 'question-publish',
+      meta: {requireLogin: true},
+      component: () => import('./views/QuestionPublish.vue')
+    },
+    // 回答发布页
+    {
+      path: '/answer-publish',
+      name: 'answer-publish',
+      meta: {requireLogin: true},
+      component: () => import('./views/AnswerPublish.vue')
+    },
+    // 文章发布页
+    {
+      path: '/article-publish',
+      name: 'article-publish',
+      meta: {requireLogin: true},
+      component: () => import('./views/ArticlePublish.vue')
+    },
+    // 创作中心
+    {
+      path: '/creation-manager',
+      name: 'creation-manager',
+      meta: {requireLogin: true},
+      component: () => import('./views/CreationManager.vue')
+    },
+    // 创作中心
+    {
+      path: '/corporate_center',
+      name: 'corporate_center',
+      meta: {requireLogin: true},
+      component: () => import('./views/CorporateCenter.vue')
+    },
+    // 搜索
+    {
+      path: '/search',
+      name: 'search',
+      meta: {requireLogin: true},
+      component: () => import('./views/Search.vue')
+    },
+    // 搜索结果
+    {
+      path: '/search-results',
+      name: 'search-results',
+      meta: {requireLogin: true},
+      component: () => import('./views/SearchResults.vue')
+    },
+    // 咨询
+    {
+      path: '/advisory',
+      name: 'advisory',
+      meta: {requireLogin: true},
+      component: () => import('./views/Advisory.vue')
+    },
+    // 添加咨询
+      {
+          path: '/advisory-publish',
+          name: 'advisory-publish',
+          meta: {requireLogin: true},
+          component: () => import('./views/AdvisoryPublish.vue')
+      },
+      // 咨询管理
+      {
+          path: '/advisory-list',
+          name: 'advisory-list',
+          meta: {requireLogin: true},
+          component: () => import('./views/AdvisoryList.vue')
+      },
+  ],
 });
