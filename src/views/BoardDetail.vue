@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-color: white">
         <div class="head">
             <div style="width: 45px;height: 45px;margin-left: 14px;display: flex;align-items: center;justify-content: center;">
                 <v-icon large color="white" @click="$router.back()">keyboard_arrow_left</v-icon>
@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="line"></div>
-        <v-container grid-list-md text-xs-center>
+        <v-container grid-list-md text-xs-center style="background-color: white">
             <v-layout row>
                 <v-flex xs12 style="padding: 0;">
                     <div style="width: 100%;height: 100%">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 50%;">
                         <h3>{{data.nickname}}</h3>
-                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;border-radius: 25%">
+                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;">
                             {{data.usergroup.text}} lv.{{data.level}}
                         </div>
                     </div>

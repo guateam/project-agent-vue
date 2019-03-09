@@ -181,7 +181,13 @@ export default new Router({
       name: 'requirement-check',
       component: () => import('./views/RequirementCheck.vue'),
       children: []
-    },
+    },// 需求审核详情页
+      {
+          path: '/requirement-check-detail',
+          name: 'requirement-check-detail',
+          component: () => import('./views/RequirementCheckDetail.vue'),
+          children: []
+      },
     // 历史发布（需求）
     {
       path: '/requirement-history',
