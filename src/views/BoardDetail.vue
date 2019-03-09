@@ -148,7 +148,8 @@ height: 100%;border-radius: 50%">
 
 <script>
     export default {
-        name: "board-detail", data() {
+        name: "board-detail",
+        data() {
             return {
                 showAll_one: false,
                 showAll_two: false,
