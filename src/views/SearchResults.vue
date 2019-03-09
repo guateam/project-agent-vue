@@ -14,7 +14,12 @@
                 prominent
                 tabs
         >
-        <v-icon large color="white" style="margin-left:-15px" @click="$router.back()">keyboard_arrow_left</v-icon>
+            <v-icon large color="white" style="margin-left:-22px" @click="$router.back()">
+                keyboard_arrow_left
+            </v-icon>
+            <!--<Select v-model="model" filterable>
+                <Option v-for="item in items" :value="item.content" :key="item.content">{{ item.content }}</Option>
+            </Select>-->
             <v-combobox
                     v-model="model"
                     :items="items"
@@ -35,9 +40,7 @@
                     </v-list-tile>
                 </template>
             </v-combobox>
-            <v-toolbar-title class="title">
-                <v-icon mid color="white" @click="research()">search</v-icon>
-            </v-toolbar-title>
+            <v-icon mid color="white" style="margin-left:5px;margin-right:-10px" @click="research()">search</v-icon>
         </v-toolbar>
         <div>
             <v-tabs
@@ -53,16 +56,6 @@
                     <!--这部分直接把topic的搬过来就好了，我懒的写静态数据了，对接的时候直接换一下吧-->
                     <question-card @click.native="view_detail(question.questionID)" v-for="(question,idx) in questions"
                                    :key="idx" v-bind="question"></question-card>
-                    
-                    <div :class="busy0 ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll=""
-                        infinite-scroll-disabled="busy0" infinite-scroll-distance="0" v-show="busy0">
-                        <h3>
-                            <v-progress-circular
-                                    indeterminate
-                                    color="primary"
-                            ></v-progress-circular>
-                            <span style="margin-left: 1em">加载中</span></h3>
-                    </div>
                 </v-tab-item>
                 <v-tab-item :key="2">
                     <!--这部分直接把school的搬过来就好了，同上，样式我稍微盲改了一下-->
@@ -95,15 +88,6 @@
                             </v-flex>
                         </v-layout>
                     </v-container>
-                    <div :class="busy1 ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll=""
-                        infinite-scroll-disabled="busy1" infinite-scroll-distance="0" v-show="busy1">
-                        <h3>
-                            <v-progress-circular
-                                    indeterminate
-                                    color="primary"
-                            ></v-progress-circular>
-                            <span style="margin-left: 1em">加载中</span></h3>
-                    </div>
                     <div class="bottom"></div>
                 </v-tab-item>
                 <v-tab-item :key="3">
@@ -128,22 +112,20 @@
                                     </v-list-tile-title>
                                     <v-list-tile-sub-title>{{ item.description }}</v-list-tile-sub-title>
                                 </v-list-tile-content>
-
                             </v-list-tile>
                         </template>
                     </v-list>
-                    <div :class="busy2 ? 'load-more-normal' : 'load-more-hide'" v-infinite-scroll=""
-                        infinite-scroll-disabled="busy2" infinite-scroll-distance="0" v-show="busy2">
+                </v-tab-item>
+            </v-tabs>
+            <div class="load-more-normal" v-infinite-scroll="loadMore(active)"
+                        infinite-scroll-disabled="busy" infinite-scroll-distance="0">
                         <h3>
                             <v-progress-circular
                                     indeterminate
                                     color="primary"
                             ></v-progress-circular>
-                            <span style="margin-left: 1em">加载中</span>
-                        </h3>
-                    </div>
-                </v-tab-item>
-            </v-tabs>
+            <span style="margin-left: 1em">加载中</span></h3>
+            </div>
         </div>
     </div>
 </template>
@@ -173,10 +155,9 @@
                 //输入延迟
                 counter:2,
 
-                //三个标签的繁忙状态
-                busy0:true,
-                busy1:true,
-                busy2:true,
+                //繁忙状态
+                busy:false,
+
 
                 info_word:"请输入搜索内容",
 
@@ -192,21 +173,25 @@
                 first_loading:true,
             }
         },
+
         methods:{
             //重新搜索
             research(){
                 var that = this
                 this.reset()
-                searching = this.search
+                var searching = this.search
                 this.$api.algorithm.vague_search(searching,3).then(res => {
                     if (res.data.code === 1) {
                         this.questions = res.data.data[0];
                         this.articles = res.data.data[1];
                         this.users = res.data.data[2];
-                        this.all_busy_done()
+                        this.busy = true
                         this.now_search = searching
                     }
                 })
+            },
+            test(){
+                console.log('infinity')
             },
             toggle(id) {
                 this.$router.push({name: 'user', query: {id: id}});
@@ -242,12 +227,6 @@
                 else if (idx == 1)this.busy1 = true
                 else if (idx == 2)this.busy2 = true
             },
-            //获取idx标签的繁忙状态
-            check_busy(idx){
-                if(idx == 0)return this.busy0
-                else if (idx == 1)return this.busy1
-                else if (idx == 2)return this.busy2
-            },
             //流加载
             loadMore(type){
                 var that = this
@@ -265,11 +244,17 @@
                     this.user_page ++
                     active_page = this.user_page 
                 }
-                //当前tab的繁忙状态开启
-                that.busy_start(type)
+                //繁忙状态开启
+                that.busy = true
                 //流加载查询
                 this.$api.algorithm.vague_search(this.now_search,type,active_page).then(res => {
                     if (res.data.code === 1) {
+                        //无任何数据的情况
+                        var nodata = false
+                        if(res.data.data.length <= 0){
+                            nodata = true
+                        }
+
                         //根据tab将数据追加到指定容器中
                         for(var i=0;i<res.data.data.length;i++){
                             if(type == 0){
@@ -280,8 +265,6 @@
                                 that.users.push(res.data.data[i])
                             }
                         }
-                        //当前tab的繁忙状态关闭
-                        that.busy_done(type)
                     }
                 })
             }
@@ -350,7 +333,7 @@
                     this.articles = res.data.data[1];
                     this.users = res.data.data[2];
                     this.first_loading = false;
-                    that.all_busy_done()
+                    this.busy = false;
                 }
             })
         }
@@ -376,5 +359,14 @@
         height: 4em;
         background-color: #eee;
     }
+    .load-more-normal {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    }
 
+    .load-more-hide {
+        height: 0;
+        z-index:-5;
+    }
 </style>

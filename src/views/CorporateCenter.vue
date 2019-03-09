@@ -47,22 +47,22 @@
                         <div style="margin-top: 5px">历史发布</div>
                     </v-flex>
                 </v-layout>
-                <v-layout row wrap style="margin-top: 2em">
-                    <v-flex xs4 style="align-items: center;justify-content: space-between;flex-direction: column">
-                        <div>
-                            <v-icon large color="#FFFF33">access_time</v-icon>
-                        </div>
-                        <div style="margin-top: 5px">群组管理</div>
-                    </v-flex>
-                    <v-flex xs4 style="align-items: center;justify-content: space-between;flex-direction: column">
-                        <div>
-                            <v-icon large color="#6699FF">
-                                account_balance_wallet
-                            </v-icon>
-                        </div>
-                        <div style="margin-top: 5px">广告投放</div>
-                    </v-flex>
-                </v-layout>
+                <!--<v-layout row wrap style="margin-top: 2em">-->
+                    <!--<v-flex xs4 style="align-items: center;justify-content: space-between;flex-direction: column">-->
+                        <!--<div>-->
+                            <!--<v-icon large color="#FFFF33">access_time</v-icon>-->
+                        <!--</div>-->
+                        <!--<div style="margin-top: 5px">群组管理</div>-->
+                    <!--</v-flex>-->
+                    <!--<v-flex xs4 style="align-items: center;justify-content: space-between;flex-direction: column">-->
+                        <!--<div>-->
+                            <!--<v-icon large color="#6699FF">-->
+                                <!--account_balance_wallet-->
+                            <!--</v-icon>-->
+                        <!--</div>-->
+                        <!--<div style="margin-top: 5px">广告投放</div>-->
+                    <!--</v-flex>-->
+                <!--</v-layout>-->
             </v-container>
             <!--<v-divider></v-divider>-->
             <!--<v-layout row wrap style="line-height: 1.5;height: 40px;align-items: center;justify-content: center;">-->

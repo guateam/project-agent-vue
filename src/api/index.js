@@ -313,6 +313,39 @@ const index = {
     enterprise: {
         add_demand(data) {
             return axios.post(`${base.enterprise}/add_demand`, qs.stringify(data))
+        },
+        get_my_demands(token = store.state.token) {
+            return axios.get(`${base.enterprise}/get_my_demands`, {params: {token: token}})
+        },
+        get_signed_users(demand_id, token = store.state.token) {
+            return axios.get(`${base.enterprise}/get_signed_users`, {params: {demand_id: demand_id, token: token}})
+        },
+        refuse_signed_user(user_id, target, token = store.state.token) {
+            return axios.get(`${base.enterprise}/refuse_signed_user`, {
+                params: {
+                    target: target,
+                    token: token,
+                    user_id: user_id
+                }
+            })
+        },
+        un_refuse_signed_user(user_id, target, token = store.state.token) {
+            return axios.get(`${base.enterprise}/un_refuse_signed_user`, {
+                params: {
+                    target: target,
+                    token: token,
+                    user_id: user_id
+                }
+            })
+        },
+        confirm_signed_user(user_id, target, token = store.state.token) {
+            return axios.get(`${base.enterprise}/confirm_signed_user`, {
+                params: {
+                    target: target,
+                    token: token,
+                    user_id: user_id
+                }
+            })
         }
     },
     algorithm: {
@@ -320,8 +353,8 @@ const index = {
             return axios.get(`${base.algorithm}/before_search`, {params: {word: word}})
         }, //根据搜索词语言用tfidf进行自动补全
 
-        vague_search(word,type="all",page=1,token=store.state.token){
-            if(type == 0){
+        vague_search(word, type = "all", page = 1, token = store.state.token) {
+            if (type == 0) {
                 type = "question"
             } else if (type == 1) {
                 type = "article"
@@ -330,7 +363,7 @@ const index = {
             } else if (type == 3) {
                 type = "all"
             }
-            return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token,page:page}})
+            return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token, page: page}})
         }, //模糊搜索
     }
 };
