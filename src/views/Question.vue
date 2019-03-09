@@ -68,13 +68,13 @@
                         <img :src="answer.image[1]" alt="" style="width: 50%;object-fit: cover;"/>
                     </div>
                 </router-link>
-                <div class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</div>
                 <div style="width: 100%;display: flex;align-items: center;position: relative;">
                     <div class="userhead">
-                        <img :src="answer.headportrait" alt="">
+                        <img :src="answer.headportrait" alt="" style="width: 100%">
                     </div>
                     <p class="userName">{{answer.nickname}}</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;
+                    <p class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</p>
                     <!--<p class="userTag">{{answer.user.tag}}</p>-->
                     <p class="answerTime">{{answer.edittime}}</p>
                 </div>
@@ -386,11 +386,6 @@
         height: 8em;
     }
 
-    img {
-        max-width: 100%;
-    }
-</style>
-<style>
     img {
         max-width: 100%;
     }
