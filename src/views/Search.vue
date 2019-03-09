@@ -28,42 +28,16 @@
             <template v-slot:no-data>
                     <v-list-tile>
                         <v-list-tile-title>
-                            <strong></strong>
+                            <strong v-text="info_word"></strong>
                         </v-list-tile-title>
                     </v-list-tile>
                 </template>
-                <!--
-                <template v-slot:selection="{ item, selected }">
-                    <v-chip
-                            :selected="selected"
-                            color="blue-grey"
-                            class="white--text"
-                    >
-                        <v-icon left>mdi-coin</v-icon>
-                        <span v-text="item.name"></span>
-                    </v-chip>
-                </template>
-                <template v-slot:item="item">
-                    <v-list-tile-avatar
-                            color="indigo"
-                            class="headline font-weight-light white--text"
-                    >
-                        {{ item.name.charAt(0) }}
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                        <v-list-tile-title v-text="item.content"></v-list-tile-title>
-                        <v-list-tile-sub-title v-text="item.time"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                    <v-list-tile-action>
-                        <v-icon>mdi-coin</v-icon>
-                    </v-list-tile-action>
-                </template>-->
             </v-combobox>
-            <v-toolbar-title class="title"><v-icon large color="white" @click="$router.push({name:'search-results',query:{search:search}})">search</v-icon></v-toolbar-title>
+            <v-toolbar-title class="title"><v-icon large color="white" @click="done(search)">search</v-icon></v-toolbar-title>
         </v-toolbar>
         <v-flex xs12 style="margin-top: 2em">
             <h4>热门搜索</h4>
-            <div class="hotbox" v-for="(it,idx) in hot">
+            <div class="hotbox" v-for="(it,idx) in hot" @click="done(it.content)">
                 <v-icon v-if="idx == 0" small color="red">
                     whatshot
                 </v-icon>
@@ -76,8 +50,8 @@
         <v-flex xs12 style="margin-top: 2em">
             <h4>历史记录</h4>
             <div class="hotbox" v-for="it in history_search" v-if="!it.close">
-                {{it.content}} 
-                <v-icon @click="" small style="float:right;margin-right: 2em">
+                <div style="display:inline-block;width:85%" v-text="it.content"  @click="done(it.content)"></div> 
+                <v-icon @click="it.close = true" small style="float:right;margin-right: 2em">
                     close
                 </v-icon> 
             </div>
@@ -100,6 +74,7 @@
                 model: null,
                 search: null,
                 counter:2,
+                info_word:"请输入搜索内容"
             }
         },
         watch: {
@@ -108,15 +83,21 @@
                 var that = this
                 // Items have already been loaded
                 // if (this.items.length > 0) return
-                if (val == "")return
+                if (val == ""){
+                    that.info_word = "请输入搜索内容"
+                    return
+                }
                 if (!that.isLoading)that.counter = 2
 
                 if(that.counter > 0 && !that.isLoading && uid == ""){
                     uid = setInterval(()=>{
                         that.counter-=1
-                        console.log(that.counter)
                         if(that.counter ==0){
-                            console.log("run")
+                            if(that.search == ""){
+                                that.info_word = "请输入搜索内容"
+                            }else{
+                                that.info_word = "正在加载..."
+                            }
                             clearInterval(uid);
                             uid = ""
                             if(that.search == "")return
@@ -126,6 +107,9 @@
                                     that.items= res.data.data;
                                     that.isLoading = false;
                                     that.counter = 2;
+                                    if(that.items.length == 0 && that.search != ""){
+                                        that.info_word = "无匹配项"
+                                    }
                                 }
                             })
                         }
@@ -144,7 +128,10 @@
             }
         },
         methods:{
-            
+            done(txt){
+                if(txt == "" || txt == null) return
+                this.$router.push({name:'search-results',query:{search:txt}})
+            }
         },
         mounted(){
             this.$api.homepage.get_hot_search().then(res => {
