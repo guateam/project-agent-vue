@@ -179,7 +179,7 @@
             research(){
                 var that = this
                 this.reset()
-                searching = this.search
+                var searching = this.search
                 this.$api.algorithm.vague_search(searching,3).then(res => {
                     if (res.data.code === 1) {
                         this.questions = res.data.data[0];

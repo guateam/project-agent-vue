@@ -71,7 +71,7 @@
             </p>
         </div>
         <v-divider></v-divider>
-        <div style="padding: 1em;line-height: 1.5;">
+        <div style="padding: 1em;line-height: 1.5;border-bottom: 1px #eee solid">
             <h3 style="margin-bottom: 1.1em;font-size: 1.2em">需求发布人</h3>
             <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.userID}})">
                 <v-flex xs3>
@@ -94,61 +94,93 @@ height: 100%;border-radius: 50%">
                 </v-flex>
             </v-layout>
         </div>
-        <!--<v-divider></v-divider>-->
-        <!--<div style="padding: 1em;line-height: 1.5;">-->
-        <!--<h3 style="margin-bottom: 1.1em;font-size: 1.2em">文章评价</h3>-->
-        <!--<v-layout row wrap style="padding-bottom: 10px;margin-top: 10px" v-for="item in comments">-->
-        <!--<v-flex xs3>-->
-        <!--<div style="width: 55px;height: 55px;overflow:hidden;border-radius: 50%">-->
-        <!--<img :src="item.headportrait" alt="" style="width: 100%;-->
-        <!--height: 100%;border-radius: 50%">-->
-        <!--</div>-->
-        <!--</v-flex>-->
-        <!--<v-flex xs9>-->
-        <!--<div><b class="nickname">{{item.nickname}}</b><span class="board">{{item.group.text}} lv.{{item.level}}</span>-->
-        <!--</div>-->
-        <!--<p class="topicdetail">-->
-        <!--<span>{{ item.content }} </span>-->
-        <!--</p>-->
-        <!--</v-flex>-->
-        <!--</v-layout>-->
-        <!--<v-divider></v-divider>-->
-        <!--</div>-->
-        <!--占位的盒子   STAR-->
-        <v-flex xs12 style="height: 70px;background-color: white"></v-flex>
-        <!--占位的盒子   END-->
-        <v-container grid-list-md text-xs-center
-                     style="position: fixed;bottom: 0;height: 60px;background: white;z-index: 100;width: 100%;padding:0;padding-top:5px;border-top:1px #ccc solid; align-items: center;">
-            <v-layout row style="height: 100%;align-items: center;">
-                <v-flex xs4
-                        style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc"
-                        @click="collect_article()"
-                >
-                    <div>
-                        招标预算：
+        <div style="padding: 1em;line-height: 1.5;">
+            <h3 style="margin-bottom: 1.1em;font-size: 1.2em">需求申请人</h3>
+            <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.userID}})" style="margin-bottom: 2em;border-bottom: 1px #eee solid">
+                <v-flex xs3>
+                    <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
+                        <img :src="data.headportrait" alt="" style="width: 100%;
+height: 100%;border-radius: 50%">
                     </div>
-                    <div style="margin-top: 5px;color: tomato"><h4>￥{{data.price}}</h4></div>
                 </v-flex>
-                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="join()" v-if="sign===-2">
-                    <h2 style="color: white">申请参加</h2>
+                <v-flex xs9>
+                    <p class="topicdetail">
+                    <h3>{{data.nickname}}</h3>
+                    账号简介：
+                    <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
+                    <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
+                    <button v-if="data.description.length > 80" @click="showAll_two = !showAll_two">
+                        <span v-if="!showAll_two" style="color: blue">显示全部</span>
+                        <span v-else style="color: blue">收起</span>
+                    </button>
+                    </p>
                 </v-flex>
-                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===0">
-                    <h2 style="color: white">您已报名</h2>
-                </v-flex>
-                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===1">
-                    <h2 style="color: white">您已加入</h2>
-                </v-flex>
-                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===-1">
-                    <h2 style="color: white">您不在报名范围内</h2>
+                <v-flex 6 offset-xs4>
+                    <div>
+                        <v-btn color="error">拒绝</v-btn>
+                        <v-btn color="info">同意</v-btn>
+                    </div>
                 </v-flex>
             </v-layout>
-        </v-container>
+            <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.userID}})" style="margin-bottom: 2em;border-bottom: 1px #eee solid">
+                <v-flex xs3>
+                    <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
+                        <img :src="data.headportrait" alt="" style="width: 100%;
+height: 100%;border-radius: 50%">
+                    </div>
+                </v-flex>
+                <v-flex xs9>
+                    <p class="topicdetail">
+                    <h3>{{data.nickname}}</h3>
+                    账号简介：
+                    <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
+                    <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
+                    <button v-if="data.description.length > 80" @click="showAll_two = !showAll_two">
+                        <span v-if="!showAll_two" style="color: blue">显示全部</span>
+                        <span v-else style="color: blue">收起</span>
+                    </button>
+                    </p>
+                </v-flex>
+                <v-flex 6 offset-xs4>
+                    <div>
+                        <v-btn color="error">拒绝</v-btn>
+                        <v-btn color="info">同意</v-btn>
+                    </div>
+                </v-flex>
+            </v-layout>
+            <v-layout row wrap @click="$router.push({name:'detail',query:{id:data.userID}})" style="margin-bottom: 2em;border-bottom: 1px #eee solid">
+                <v-flex xs3>
+                    <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
+                        <img :src="data.headportrait" alt="" style="width: 100%;
+height: 100%;border-radius: 50%">
+                    </div>
+                </v-flex>
+                <v-flex xs9>
+                    <p class="topicdetail">
+                    <h3>{{data.nickname}}</h3>
+                    账号简介：
+                    <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
+                    <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
+                    <button v-if="data.description.length > 80" @click="showAll_two = !showAll_two">
+                        <span v-if="!showAll_two" style="color: blue">显示全部</span>
+                        <span v-else style="color: blue">收起</span>
+                    </button>
+                    </p>
+                </v-flex>
+                <v-flex 6 offset-xs4>
+                    <div>
+                        <v-btn color="error">拒绝</v-btn>
+                        <v-btn color="info">同意</v-btn>
+                    </div>
+                </v-flex>
+            </v-layout>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "board-detail",
+        name: "requirement-check-detail",
         data() {
             return {
                 showAll_one: false,
@@ -158,7 +190,7 @@ height: 100%;border-radius: 50%">
                     title: 'SCgirl电竞联盟招收新成员',
                     nickname: 'SCgirl电竞',
                     usergroup: {
-                        text: '企业lv.2'
+                        text: '企业'
                     },
                     level: 0,
                     description: '250w猛男指定认证账号，一切战术转换家，没有智力只会莽',
@@ -210,11 +242,28 @@ height: 100%;border-radius: 50%">
             this.add_user_action();
             this.get_sign_state();
         }
-
     }
 </script>
 
 <style scoped>
+    .head {
+        z-index: 400;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        margin-bottom: 1em;
+        background-color: #ffd633;
+    }
+
+    .line {
+        z-index: 400;
+        width: 100%;
+        height: 4em;
+        background-color: #eee;
+    }
     .head {
         width: 100%;
         height: 50px;
