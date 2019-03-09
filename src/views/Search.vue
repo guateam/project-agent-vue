@@ -24,6 +24,9 @@
                     item-value="content"
                     label="搜索你想要的内容"
                     solo
+                    no-data-text="无相关内容"
+                    persistent-hint
+                    class="elevation-0"
             >
             <template v-slot:no-data>
                     <v-list-tile>
@@ -62,7 +65,7 @@
             <v-toolbar-title class="title"><v-icon large color="white" @click="$router.push({name:'search-results',query:{search:search}})">search</v-icon></v-toolbar-title>
         </v-toolbar>
         <v-flex xs12 style="margin-top: 2em">
-            <h4>热门搜索</h4>
+            <h4 style="margin-left: 1em">热门搜索</h4>
             <div class="hotbox" v-for="(it,idx) in hot">
                 <v-icon v-if="idx == 0" small color="red">
                     whatshot
@@ -74,7 +77,7 @@
             </div>
         </v-flex>
         <v-flex xs12 style="margin-top: 2em">
-            <h4>历史记录</h4>
+            <h4 style="margin-left: 1em">历史记录</h4>
             <div class="hotbox" v-for="it in history_search" v-if="!it.close">
                 {{it.content}} 
                 <v-icon @click="" small style="float:right;margin-right: 2em">
