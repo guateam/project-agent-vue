@@ -44,10 +44,10 @@
 
         <!--页面主体，展示不同的回答列表-->
 
-        <v-card v-for="(answer, index) in answersDataList" :key="index" :to="{name: 'answer', query: {id: answer.answerID}}">
+        <v-card v-for="(answer, index) in answersDataList" :key="index" :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
 
-                <router-link :to="{name: 'answer', query: {id: answer.answerID}}">
+                <router-link :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
                     <!--<p class="answerDetail">{{ answer.content.length > 70 ? answer.content.substring(0, 70) + '...' :-->
                     <!--answer.content }}</p>-->
 
@@ -82,7 +82,7 @@
                     top
                     right
                     color="accent"
-                    @click="$router.push({name:'answer-publish',query:{id:$route.query.id}})"
+                    @click="$router.push({name:'answer-publish',query:{redirect: $route.fullPath, id:$route.query.id}})"
             >
                 <v-icon>add</v-icon>
             </v-btn>
