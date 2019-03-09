@@ -129,6 +129,17 @@ const index = {
         },
         add_priced_question(data) {
             return axios.post(`${base.questions}/add_priced_question`, qs.stringify(data))
+        },
+        get_question_comment(question_id) {
+            return axios.get(`${base.questions}/get_question_comment`, {params: {question_id: question_id}})
+        },
+        add_question_comment(question_id, content, token = store.state.token) {
+            let data = {
+                question_id: question_id,
+                token: token,
+                content: content
+            };
+            return axios.post(`${base.questions}/add_question_comment`, qs.stringify(data))
         }
     },
     school: {

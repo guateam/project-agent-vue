@@ -22,7 +22,7 @@
                                     avatar
                                     v-for="subItem in item.items"
                                     :key="subItem.title"
-                                    @click="$router.push({name:'',query:{id:subItem.user_id}})"
+                                    @click="$router.push({name:'chat',query:{id:subItem.user_id}})"
                             >
                                 <v-list-tile-avatar>
                                     <img :src="subItem.headportrait" alt="">

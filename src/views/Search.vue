@@ -2,7 +2,9 @@
     <div>
         <div class="head">
             <div style="width: 45px;height: 45px;margin-left: 14px;display: flex;align-items: center;justify-content: center;">
-                <v-icon large color="white" @click="$router.back()">keyboard_arrow_left</v-icon>
+                <v-btn icon @click="$router.back()">
+                    <v-icon large color="white">keyboard_arrow_left</v-icon>
+                </v-btn>
             </div>
             <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">内容搜索</span>
             <div style="width: 45px;height: 45px;margin-right: 14px;display: flex;align-items: center;justify-content: center;color: #fff;font-size: 17px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">
@@ -27,6 +29,8 @@
                     no-data-text="无相关内容"
                     persistent-hint
                     class="elevation-0"
+                    flat
+                    dense
             >
             <template v-slot:no-data>
                     <v-list-tile>
@@ -36,7 +40,9 @@
                     </v-list-tile>
                 </template>
             </v-combobox>
-            <v-toolbar-title class="title"><v-icon large color="white" @click="done(search)">search</v-icon></v-toolbar-title>
+            <v-toolbar-title class="title"><v-btn icon @click="done(search)">
+                <v-icon color="white" >search</v-icon>
+            </v-btn></v-toolbar-title>
         </v-toolbar>
         <v-flex xs12 style="margin-top: 2em">
             <h4 style="margin-left: 1em">热门搜索</h4>

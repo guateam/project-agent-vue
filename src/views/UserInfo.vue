@@ -17,7 +17,7 @@
                     <v-flex offset-xs1 grow>
                         <v-layout align-center>
                             <v-flex shrink>
-                                <v-avatar id="avatar" size="70">
+                                <v-avatar id="avatar" size="70" @click="$router.push({name:'detail',query:{id:$store.state.userInfo.user_id}})">
                                     <img :src="$store.state.userInfo.head_portrait" alt="">
                                 </v-avatar>
                             </v-flex><!--头像-->
@@ -97,15 +97,15 @@
             <div id="list">
                 <v-list>
                     <!--<v-list-tile @click="jump_qr_code()">-->
-                        <!--<v-list-tile-action>-->
-                            <!--<v-icon class="time&#45;&#45;text">crop_free</v-icon>-->
-                        <!--</v-list-tile-action>-->
-                        <!--<v-list-tile-title>-->
-                            <!--<v-layout justify-space-between>-->
-                                <!--<span>我的二维码</span>-->
-                                <!--<v-icon>keyboard_arrow_right</v-icon>-->
-                            <!--</v-layout>-->
-                        <!--</v-list-tile-title>-->
+                    <!--<v-list-tile-action>-->
+                    <!--<v-icon class="time&#45;&#45;text">crop_free</v-icon>-->
+                    <!--</v-list-tile-action>-->
+                    <!--<v-list-tile-title>-->
+                    <!--<v-layout justify-space-between>-->
+                    <!--<span>我的二维码</span>-->
+                    <!--<v-icon>keyboard_arrow_right</v-icon>-->
+                    <!--</v-layout>-->
+                    <!--</v-list-tile-title>-->
                     <!--</v-list-tile>-->
 
                     <!--<v-divider></v-divider>-->
@@ -178,8 +178,8 @@
             fan_list(active) {
                 this.$router.push({name: 'fan-list', query: {active: active}});
             },
-            jump_qr_code(){
-                this.$router.push({name:'qr-code',query:{text:'uid://'+this.$store.state.userInfo.user_id}})
+            jump_qr_code() {
+                this.$router.push({name: 'qr-code', query: {text: 'uid://' + this.$store.state.userInfo.user_id}})
             }
         },
         mounted() {
