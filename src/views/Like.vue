@@ -21,7 +21,7 @@ height: 100%;border-radius: 50%"
                 <div style="display: flex;align-items: center;"><b class="nickname">任豚</b><span
                         class="board">专家lv.2</span>
                 </div>
-                <p class="topicdetail">
+                <p class="topicdetail" style="margin-top: 0.5em">
                     赞了你的回答<span>没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了...</span>
                 </p>
                 <p class="topicdetail" style="margin-top: 5px;float:right;">
