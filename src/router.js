@@ -28,14 +28,12 @@ export default new Router({
             path: '/approval',
             name: 'approval',
             // meta: {requireLogin: true},
-            meta: {requireLogin: false},
             component: () => import('./views/Approval.vue')
         },
         // 查看用户详情
         {
             path: '/detail',
             name: 'detail',
-            meta: {requireLogin: true},
             component: () => import('./views/UserDetails.vue')
         },
         // 用户个人页

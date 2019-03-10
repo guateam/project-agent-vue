@@ -61,21 +61,21 @@
       data() {
           return {
               messages: [
-                  {
-                      title: 'Brunch this weekend?',
-                      subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-                  },
-                  { divider: true, inset: true },
-                  {
-                      title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-                      subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
-                  },
-                  { divider: true, inset: true },
-                  {
-                      title: '这算眼袋吗？？',
-                      subtitle: "<span class='text--primary'>海王星</span> &mdash; 赞同了你的评论"
-                  },
-                  { divider: true, inset: true },
+                  // {
+                  //     title: 'Brunch this weekend?',
+                  //     subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+                  // },
+                  // { divider: true, inset: true },
+                  // {
+                  //     title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
+                  //     subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
+                  // },
+                  // { divider: true, inset: true },
+                  // {
+                  //     title: '这算眼袋吗？？',
+                  //     subtitle: "<span class='text--primary'>海王星</span> &mdash; 赞同了你的评论"
+                  // },
+                  // { divider: true, inset: true },
               ]
           }
       },
@@ -86,19 +86,22 @@
                       this.messages = [];
                       let data = res.data.data;
                       data.forEach(item => {
-                          this.messages.unshift({
-                              divider: true,
-                              inset: true
-                          });  // 插入分割线
-                          this.messages.unshift(
-                              {
-                                  id: item.commentID,
-                                  userId: item.userID,
-                                  title: item.title,
-                                  subtitle: "<span class='text--primary'>" + item.nickname + "</span> &mdash;" + item.type === 1? "赞同了你的答案": "赞同了你的评论",
-                                  time: item.time,
-                              }
-                          );
+                          if (item.type === 1 || item.type === 3) {
+                              window.console.log(item);
+                              this.messages.unshift({
+                                  divider: true,
+                                  inset: true
+                              });  // 插入分割线
+                              this.messages.unshift(
+                                  {
+                                      id: item.type === 1? item.answerID: item.commentID,
+                                      userId: item.userID,
+                                      title: item.title,
+                                      subtitle: "<span class='text--primary'>" + item.nickname + "</span> &mdash; 赞同了你的" + (item.type == 1? "回答": "评论"),
+                                      time: item.time,
+                                  }
+                              );
+                          }
                       })
                   }
               })
