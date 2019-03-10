@@ -133,32 +133,6 @@ export default new Router({
       path: '/chat',
       name: 'chat',
       component: () => import('./views/NewChat.vue'),
-      children: [
-        {
-          path: 'chat',
-          name: 'Chat',
-          component: () => import('./views/Chat.vue'),
-          children: [
-            {
-              path: 'chat-setting',
-              name: 'chat-setting',
-              component: () => import('./views/ChatSetting.vue')
-            },
-          ]
-        },
-        {
-          path: 'group-chat',
-          name: 'group-chat',
-          component: () => import('./views/GroupChat.vue'),
-          children: [
-            {
-              path: 'group-chat-setting',
-              name: 'group-chat-setting',
-              component: () => import('./views/GroupChatSetting.vue')
-            },
-          ]
-        },
-      ]
     },
     // 消息
     {
@@ -166,6 +140,32 @@ export default new Router({
       name: 'message',
       meta: {requireLogin: true},  // 需要登录
       component: () => import('./views/Message.vue'),
+      // children: [
+      //   {
+      //     path: 'chat',
+      //     name: 'Chat',
+      //     component: () => import('./views/Chat.vue'),
+      //     children: [
+      //       {
+      //         path: 'chat-setting',
+      //         name: 'chat-setting',
+      //         component: () => import('./views/ChatSetting.vue')
+      //       },
+      //     ]
+      //   },
+      //   {
+      //     path: 'group-chat',
+      //     name: 'group-chat',
+      //     component: () => import('./views/GroupChat.vue'),
+      //     children: [
+      //       {
+      //         path: 'group-chat-setting',
+      //         name: 'group-chat-setting',
+      //         component: () => import('./views/GroupChatSetting.vue')
+      //       },
+      //     ]
+      //   },
+      // ]
     },
     // 告示板详情
     {

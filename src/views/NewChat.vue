@@ -144,7 +144,7 @@
                 id: row.messageID,
                 time: row.post_time,
                 content: row.content,
-                type: row.poster === this.userId? 1: 2,
+                type: row.poster === this.userId? 2: 1,
               });
             });
             this.rollBottom();
