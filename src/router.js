@@ -27,8 +27,19 @@ export default new Router({
         {
             path: '/approval',
             name: 'approval',
-            // meta: {requireLogin: true},
             component: () => import('./views/Approval.vue')
+        },
+        // 系统通知
+        {
+            path: '/sys-notice',
+            name: 'sys-notice',
+            component: () => import('./views/SysNotice.vue')
+        },
+        // at我的
+        {
+            path: '/call',
+            name: 'call',
+            component: () => import('./views/Call.vue')
         },
         // 查看用户详情
         {
