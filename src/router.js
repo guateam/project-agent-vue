@@ -23,11 +23,17 @@ export default new Router({
             name: 'school',
             component: () => import('./views/School.vue'),
         },
+        // 点赞
+        {
+            path: '/approval',
+            name: 'approval',
+            // meta: {requireLogin: true},
+            component: () => import('./views/Approval.vue')
+        },
         // 查看用户详情
         {
             path: '/detail',
             name: 'detail',
-            meta: {requireLogin: true},
             component: () => import('./views/UserDetails.vue')
         },
         // 用户个人页
@@ -321,7 +327,6 @@ export default new Router({
             name: 'like',
             component: () => import('./views/Like.vue')
         },
-        // @我
         {
             path: '/callme',
             name: 'callme',
