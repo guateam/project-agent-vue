@@ -65,9 +65,19 @@
                     <!--这部分直接把topic的搬过来就好了，我懒的写静态数据了，对接的时候直接换一下吧-->
                     <question-card @click.native="view_detail(question.questionID)" v-for="(question,idx) in questions"
                                    :key="idx" v-bind="question"></question-card>
+                    
+                    <div class="load-more-normal" v-infinite-scroll="loadMore"
+                        infinite-scroll-disabled="loading_A" infinite-scroll-distance="0" v-show="loading_A">
+                        <h3>
+                            <v-progress-circular
+                                    indeterminate
+                                    color="primary"
+                            ></v-progress-circular>
+                            <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
                 </v-tab-item>
+
                 <v-tab-item :key="2">
-                    <!--这部分直接把school的搬过来就好了，同上，样式我稍微盲改了一下-->
                     <v-container grid-list-md>
                         <v-layout row wrap>
                             <v-flex xs12 v-for="(value,i) in articles" :key="i">
@@ -97,10 +107,19 @@
                             </v-flex>
                         </v-layout>
                     </v-container>
+                    <div class="load-more-normal" v-infinite-scroll="loadMore"
+                        infinite-scroll-disabled="loading_B" infinite-scroll-distance="0" v-show="loading_B">
+                        <h3>
+                            <v-progress-circular
+                                    indeterminate
+                                    color="primary"
+                            ></v-progress-circular>
+                            <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
                     <div class="bottom"></div>
                 </v-tab-item>
+
                 <v-tab-item :key="3">
-                    <!--同上，fanlist-->
                     <v-list>
                         <template v-for="(item, index) in users">
                             <v-list-tile
@@ -124,17 +143,17 @@
                             </v-list-tile>
                         </template>
                     </v-list>
+                    <div class="load-more-normal" v-infinite-scroll="loadMore"
+                        infinite-scroll-disabled="loading_C" infinite-scroll-distance="0" v-show="loading_C">
+                        <h3>
+                            <v-progress-circular
+                                    indeterminate
+                                    color="primary"
+                            ></v-progress-circular>
+                            <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
                 </v-tab-item>
             </v-tabs>
-            <div class="load-more-normal" v-infinite-scroll="loadMore"
-                 infinite-scroll-disabled="loading" infinite-scroll-distance="0">
-                <h3>
-                    <v-progress-circular
-                            indeterminate
-                            color="primary"
-                    ></v-progress-circular>
-                    <span style="margin-left: 1em">加载中</span></h3>
-            </div>
         </v-card>
     </div>
 </template>
@@ -166,8 +185,9 @@
                 counter: 2,
 
                 //繁忙状态
-                loading: false,
-
+                loading_A: true,
+                loading_B: true,
+                loading_C: true,
 
                 info_word: "请输入搜索内容",
 
@@ -187,9 +207,15 @@
         methods: {
             //重新搜索
             research() {
-                var that = this
+                let that = this
                 this.reset()
-                searching = this.search
+                let searching = this.search
+                if(searching === "")return
+
+                this.loading_A = true;
+                this.loading_B = true;
+                this.loading_c = true;
+
                 this.$api.algorithm.vague_search(searching, 3).then(res => {
                     if (res.data.code === 1) {
                         this.questions = res.data.data[0];
@@ -197,6 +223,10 @@
                         this.users = res.data.data[2];
                         this.loading = true
                         this.now_search = searching
+
+                        this.loading_A = false;
+                        this.loading_B = false;
+                        this.loading_c = false;
                     }
                 })
             },
@@ -211,84 +241,97 @@
                 this.questions = []
                 this.articles = []
                 this.users = []
-                this.loading = false;
             },
-            //全部繁忙状态开启
-            //idx标签的繁忙状态关闭
             //流加载
             loadMore() {
-                var that = this
+                //记住触发函数时激活的tab
+                let now_active = this.active
+                let that = this;
                 //即将加载第几页
                 let active_page = 0;
+
                 if (this.first_loading) return;
                 //更新当前流加载的tab的页码数，并赋值给active_page
-                if (this.active == 0) {
-                    this.question_page++
-                    active_page = this.question_page
-                } else if (this.active == 1) {
-                    this.article_page++
-                    active_page = this.article_page
-                } else if (this.active == 2) {
-                    this.user_page++
-                    active_page = this.user_page
+                if (now_active == 0) {
+                    this.question_page++;
+                    active_page = this.question_page;
+                } else if (now_active == 1) {
+                    this.article_page++;
+                    active_page = this.article_page;
+                } else if (now_active == 2) {
+                    this.user_page++;
+                    active_page = this.user_page;
                 }
                 //繁忙状态开启
-                that.loading = true
+                if(now_active === 0)
+                    that.loading_A = true;
+                else if(now_active === 1)
+                    that.loading_B =true;
+                else if(now_active === 2)
+                    that.loading_C =true;
+
                 //流加载查询
                 this.$api.algorithm.vague_search(this.now_search, type, active_page).then(res => {
                     if (res.data.code === 1) {
                         //无任何数据的情况
                         let nodata = false;
                         if (res.data.data.length <= 0) {
-                            nodata = true
+                            nodata = true;
                         }
 
                         //根据tab将数据追加到指定容器中
-                        for (let i = 0; i < res.data.data.length; i++) {
-                            if (type === 0) {
-                                that.questions.push(res.data.data[i])
-                            } else if (type === 1) {
-                                that.articles.push(res.data.data[i])
-                            } else if (type === 2) {
-                                that.users.push(res.data.data[i])
+                        for (var i = 0; i < res.data.data.length; i++) {
+                            if (type == 0) {
+                                that.questions.push(res.data.data[i]);
+                            } else if (type == 1) {
+                                that.articles.push(res.data.data[i]);
+                            } else if (type == 2) {
+                                that.users.push(res.data.data[i]);
                             }
                         }
-                        that.loading = false;
-                    }
+
+                        //繁忙状态关闭
+                        if(now_active === 0)
+                            that.loading_A = false;
+                        else if(now_active === 1)
+                            that.loading_B =false;
+                        else if(now_active === 2)
+                            that.loading_C =false;
+                        }
                 })
             }
         },
         watch: {
             search(val) {
-                let that = this;
-                if (val === "") {
-                    that.info_word = "请输入搜索内容"
-                    return
+                var that = this;
+                if (val == "") {
+                    that.info_word = "请输入搜索内容";
+                    return;
                 }
                 //如果还没进入加载状态,重置2单位的输入延迟时间，表示用户输入未结束，暂时不进行加载
-                if (!that.isLoading) that.counter = 2
+                if (!that.isLoading) that.counter = 2;
                 //如果还没进入加载状态，则输入延迟时间开始减少
                 if (that.counter > 0 && !that.isLoading && uid == "") {
                     //打开倒计时
                     uid = setInterval(() => {
                         //每次减少1单位时间
-                        that.counter -= 1
+                        that.counter -= 1;
                         //若倒计时为0，则表示用户输入完毕，可以进行加载
                         if (that.counter == 0) {
                             //判断用户输入的内容
                             if (that.search == "") {
                                 //为空则不进行加载
-                                that.info_word = "请输入搜索内容"
+                                that.info_word = "请输入搜索内容";
                             } else {
-                                that.info_word = "正在加载..."
+                                that.info_word = "正在加载...";
                             }
                             //清除上次的计时器，并重置计时器id
                             clearInterval(uid);
-                            uid = ""
+                            uid = "";
                             //空搜索值则不进行加载
                             if (that.search == "") return
                             //进入加载状态
-                            that.isLoading = true
+                            that.isLoading = true;
                             //进行加载
                             that.$api.algorithm.auto_complete(that.search).then(res => {
                                 if (res.data.code === 1) {
@@ -300,7 +343,7 @@
                                     that.counter = 2;
                                     //若无匹配项，更新提示语
                                     if (that.items.length == 0 && that.search != "") {
-                                        that.info_word = "无匹配项"
+                                        that.info_word = "无匹配项";
                                     }
                                 }
                             })
@@ -310,18 +353,20 @@
             }
         },
         mounted() {
-            var that = this
+            var that = this;
             this.search = this.$route.query.search;
             this.now_search = this.$route.query.search;
-            this.model = this.search
-            this.isLoading = false
+            this.model = this.search;
+            this.isLoading = false;
             this.$api.algorithm.vague_search(this.search, 3).then(res => {
                 if (res.data.code === 1) {
                     this.questions = res.data.data[0];
                     this.articles = res.data.data[1];
                     this.users = res.data.data[2];
                     this.first_loading = false;
-                    this.loading = false;
+                    this.loading_A = false;
+                    this.loading_B = false;
+                    this.loading_c = false;
                 }
             })
         }

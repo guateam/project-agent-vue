@@ -8,15 +8,9 @@ export default new Router({
         // 重定向到话题
         {path: '/', name: 'index', redirect: {name: 'topic'}},
         // 话题
-        {
-            path: '/topic', name: 'topic', component: () => import('./views/Topic.vue'),
-
-        },
+        {path: '/topic', name: 'topic', component: () => import('./views/Topic.vue')},
         // 告示板
-        {
-            path: '/board', name: 'board', component: () => import('./views/Board.vue'),
-
-        },
+        {path: '/board', name: 'board', component: () => import('./views/Board.vue')},
         // 登录
         {path: '/login', name: 'login', component: () => import('./views/Login.vue')},
         // 注册
@@ -28,7 +22,6 @@ export default new Router({
             path: '/school',
             name: 'school',
             component: () => import('./views/School.vue'),
-
         },
         // 查看用户详情
         {
@@ -321,6 +314,30 @@ export default new Router({
             name: 'advisory-list',
             meta: {requireLogin: true},
             component: () => import('./views/AdvisoryList.vue')
+        },
+        // 点赞通知页
+        {
+            path: '/like',
+            name: 'like',
+            component: () => import('./views/Like.vue')
+        },
+        // @我
+        {
+            path: '/callme',
+            name: 'callme',
+            component: () => import('./views/Callme.vue')
+        },
+        // 评论通知
+        {
+            path: '/commentnotice',
+            name: 'commentnotice',
+            component: () => import('./views/CommentNotice.vue')
+        },
+        // 系统通知
+        {
+            path: '/system-notification',
+            name: 'system-notification',
+            component: () => import('./views/SystemNotification.vue')
         },
     ],
 });
