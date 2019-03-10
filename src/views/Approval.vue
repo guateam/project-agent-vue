@@ -2,9 +2,19 @@
   <div class="approval">
     <v-layout column fill-height>
       <v-flex shrink>
-        <v-layout>
-          <v-flex>
+        <v-layout align-center justify-space-between row fill-height>
+          <v-flex shrink>
             <v-btn @click="$router.back()" icon>
+              <v-icon>arrow_back</v-icon>
+            </v-btn>
+          </v-flex>
+
+          <v-flex shrink>
+            <span class="title">点赞</span>
+          </v-flex>
+
+          <v-flex shrink>
+            <v-btn dark disabled icon>
               <v-icon>arrow_back</v-icon>
             </v-btn>
           </v-flex>
@@ -14,12 +24,12 @@
       <v-flex grow>
         <v-layout row>
           <v-flex xs12>
-            <v-card>
+            <v-card flat>
               <v-list two-line>
                 <template v-for="(item, index) in messages">
                   <v-subheader
                       v-if="item.header"
-                      :key="item.header"
+                      :key="index"
                   >
                     {{ item.header }}
                   </v-subheader>
@@ -32,9 +42,8 @@
 
                   <v-list-tile
                       v-else
-                      :key="item.title"
+                      :key="index"
                       avatar
-                      @click=""
                   >
                     <v-list-tile-avatar>
                       <v-icon>thumb_up</v-icon>
@@ -85,24 +94,45 @@
                   if (res.data.code === 1) {
                       this.messages = [];
                       let data = res.data.data;
-                      data.forEach(item => {
-                          if (item.type === 1 || item.type === 3) {
-                              window.console.log(item);
-                              this.messages.unshift({
-                                  divider: true,
-                                  inset: true
-                              });  // 插入分割线
-                              this.messages.unshift(
-                                  {
-                                      id: item.type === 1? item.answerID: item.commentID,
-                                      userId: item.userID,
-                                      title: item.title,
-                                      subtitle: "<span class='text--primary'>" + item.nickname + "</span> &mdash; 赞同了你的" + (item.type == 1? "回答": "评论"),
-                                      time: item.time,
-                                  }
-                              );
+                      if (data.length < 50) {
+                          data.forEach(item => {
+                              if (item.type === 1 || item.type === 3) {
+                                  this.messages.unshift({
+                                      divider: true,
+                                      inset: true
+                                  });  // 插入分割线
+                                  this.messages.unshift(
+                                      {
+                                          id: item.type === 1? item.answerID: item.commentID,
+                                          userId: item.userID,
+                                          title: item.title,
+                                          subtitle: "<span class='text--primary'>" + item.nickname + "</span> &mdash; 赞同了你的" + (item.type == 1? "回答": "评论"),
+                                          time: item.time,
+                                      }
+                                  );
+                              }
+                          })
+                      } else {
+                          for (let i = 0; i < 50; i++) {
+                              let item = data[i];
+                              if (item.type === 1 || item.type === 3) {
+                                  this.messages.unshift({
+                                      divider: true,
+                                      inset: true
+                                  });  // 插入分割线
+                                  this.messages.unshift(
+                                      {
+                                          id: item.type === 1? item.answerID: item.commentID,
+                                          userId: item.userID,
+                                          title: item.title,
+                                          subtitle: "<span class='text--primary'>" + item.nickname + "</span> &mdash; 赞同了你的" + (item.type == 1? "回答": "评论"),
+                                          time: item.time,
+                                      }
+                                  );
+                              }
                           }
-                      })
+                      }
+
                   }
               })
           },  // 初始化消息
