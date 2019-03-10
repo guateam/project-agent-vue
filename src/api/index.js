@@ -99,12 +99,18 @@ const index = {
         get_friend_list(token = store.state.token) {
             return axios.get(`${base.message}/get_friend_list`, {params: {token: token}})
         },
+
         get_chat_box(id) {
             return axios.get(`${base.message}/get_chat_box`, {params: {token: store.state.token, user_id: id}})
         },  // 获取聊天信息
+
         add_message(data) {
             return axios.post(`${base.message}/add_message`, qs.stringify(data))
         },  // 发送消息
+
+        get_agree_list() {
+            return axios.get(`${base.message}/get_agree_list`, {params: {token: store.state.token}})
+        },  // 获取点赞信息
     },
     questions: {
 
