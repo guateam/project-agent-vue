@@ -180,7 +180,7 @@
                     {
                         to: 'call',
                         icon: 'alarm',
-                        title: '@我的',
+                        title: '提到我的',
                         subtitle: "用户123@了你"
                     },
                     {divider: true, inset: true},
