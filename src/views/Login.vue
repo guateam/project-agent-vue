@@ -2,9 +2,9 @@
     <div class="login">
         <div id="background">
             <div class="top">
-                <v-btn @click="$router.push({name: 'index'})" icon dark>
-                    <v-icon>arrow_back</v-icon>
-                </v-btn>
+                <!--<v-btn @click="$router.push({name: 'index'})" icon dark>-->
+                    <!--<v-icon>arrow_back</v-icon>-->
+                <!--</v-btn>-->
             </div>
             <v-container class="container">
                 <v-layout justify-space-between column fill-height>

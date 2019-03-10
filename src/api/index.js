@@ -88,7 +88,16 @@ const index = {
         },  // 取关
         get_user_follow_state(id) {
             return axios.get(`${base.account}/get_user_follow_state`, {params: {user_id: id, token: store.state.token}})
-        }  // 用户是否被关注
+        },  // 用户是否被关注
+        get_user_questions_by_id(user_id) {
+            return axios.get(`${base.account}/get_user_questions_by_id`, {params: {user_id: user_id}})
+        },  // 获取用户问题
+        get_user_answers_by_id(user_id) {
+            return axios.get(`${base.account}/get_user_answers_by_id`, {params: {user_id: user_id}})
+        },  // 获取用户回答
+        get_user_articles_by_id(user_id) {
+            return axios.get(`${base.account}/get_user_articles_by_id`, {params: {user_id: user_id}})
+        },  // 获取用户文章
     },
     message: {
 
