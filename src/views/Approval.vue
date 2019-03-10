@@ -1,7 +1,7 @@
 <template>
   <div class="approval">
     <v-layout column fill-height>
-      <v-flex shrink>
+      <v-flex shrink class="primary">
         <v-layout align-center justify-space-between row fill-height>
           <v-flex shrink>
             <v-btn @click="$router.back()" icon>

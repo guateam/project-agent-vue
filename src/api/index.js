@@ -111,6 +111,14 @@ const index = {
         get_agree_list() {
             return axios.get(`${base.message}/get_agree_list`, {params: {token: store.state.token}})
         },  // 获取点赞信息
+
+        get_at_list() {
+            return axios.get(`${base.message}/get_at_list`, {params: {token: store.state.token}})
+        },  // 获取@信息
+
+        get_sys_message() {
+            return axios.get(`${base.message}/get_sys_message`, {params: {token: store.state.token}})
+        },  // 获取系统信息
     },
     questions: {
 
