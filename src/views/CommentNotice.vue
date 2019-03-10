@@ -21,7 +21,7 @@ height: 100%;border-radius: 50%"
                 <div style="display: flex;align-items: center;"><b class="nickname">任豚</b><span
                         class="board">专家lv.2</span><span style="color: lightskyblue;margin-left: 1.2em">21:11</span>
                 </div>
-                <h4 class="topicdetail">
+                <h4 class="topicdetail" style="margin-top: 0.5em">
                     评论了你：<span>只狼天下第一</span>
                 </h4>
                 <p class="topicdetail" style="margin-top: 5px;color: gray">
