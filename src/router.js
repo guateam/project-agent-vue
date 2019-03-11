@@ -355,5 +355,10 @@ export default new Router({
             name: 'system-notification',
             component: () => import('./views/SystemNotification.vue')
         },
+        {
+            path: '/first-login',
+            name: 'first-login',
+            component: () => import('./views/FirstLogin.vue')
+        }
     ],
 });

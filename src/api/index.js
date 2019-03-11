@@ -98,6 +98,9 @@ const index = {
         get_user_articles_by_id(user_id) {
             return axios.get(`${base.account}/get_user_articles_by_id`, {params: {user_id: user_id}})
         },  // 获取用户文章
+        set_account_info(data) {
+            return axios.post(`${base.account}/set_account_info`, qs.stringify(data))
+        }
     },
     message: {
 
