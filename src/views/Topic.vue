@@ -42,6 +42,7 @@
                 ></v-progress-circular>
                 <span style="margin-left: 1em">加载中</span></h3>
         </div>
+
         <div style="height: 1.5em"></div>
         <v-footer app>
             <bottomNav :bottom-nav="'topic'"></bottomNav>
@@ -58,7 +59,8 @@
 
         components: {
             QuestionCard,
-            bottomNav
+            bottomNav,
+
         },
 
         data() {
@@ -106,6 +108,9 @@
                         this.page++;
                         this.busy = false;
                         this.timeout = 0;
+                    } else if (res.data.code === 0) {
+                        this.$router.push({name: 'login'});
+                        // this.$store.commit('showInfo', '请先登录！');
                     } else {
                         if (this.timeout < 3) {
                             this.get_recommend();
@@ -127,31 +132,31 @@
                 })
             },
             get_classify_question(idx, page) {
-                var that = this
-                var id = this.category[idx]['id']
-                this.category[idx]['page']++
-                this.$set(this.category, idx, this.category[idx])
+                var that = this;
+                var id = this.category[idx]['id'];
+                this.category[idx]['page']++;
+                this.$set(this.category, idx, this.category[idx]);
                 this.$api.homepage.get_classify(id, 1, page).then(res => {
                     if (res.data.code === 1) {
                         for (var i = 0; i < res.data.data.length; i++)
-                            that.classify_question[idx].push(res.data.data[i])
-                        that.$set(that.classify_question, idx, that.classify_question[idx])
+                            that.classify_question[idx].push(res.data.data[i]);
+                        that.$set(that.classify_question, idx, that.classify_question[idx]);
                         that.busy = false;
                         that.timeout = 0;
                     } else {
-                        that.timeout++
+                        that.timeout++;
                         that.get_classify_question(id, page)
                     }
                 })
             },
             loadMore() {
                 this.busy = true;
-                if (this.tabs == 0) {
+                if (this.tabs === 0) {
                     this.get_recommend();
                 } else {
                     //获取目前的分类页码数
-                    var cate_page = 0
-                    cate_page = this.category[this.tabs - 1]['page'] + 1
+                    let cate_page = 0;
+                    cate_page = this.category[this.tabs - 1]['page'] + 1;
                     this.get_classify_question(this.tabs - 1, cate_page)
                 }
             },
@@ -165,6 +170,11 @@
                 }
             })
             // setTimeout(this.get_recommend(), 5000);
+        },
+        beforeRouteLeave(to, from, next) {
+            // 设置下一个路由的 meta
+            from.meta.keepAlive = to.name === 'question';
+            next();
         }
     }
 </script>

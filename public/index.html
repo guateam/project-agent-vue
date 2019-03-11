@@ -31,7 +31,7 @@
                      * 如果当前窗口是入口页，那么执行退出的逻辑。
                      */
                     if (currentWebview.id === plus.runtime.appid) {
-                        if (window.location.href.search(/#\/topic|school|board$/) !== -1) {
+                        if (window.location.href.search(/#\/topic|school|board|first-login$/) !== -1) {
                             if (!firstBack) {
                                 firstBack = now();
                                 plus.nativeUI.toast('再按一次退出应用');
@@ -42,6 +42,8 @@
                             } else if (now() - firstBack < 2000) {
                                 plus.runtime.quit();
                             }
+                        }else if(window.location.href.search(/#\/first-login$/) !== -1){
+                            plus.nativeUI.toast('没有上一页了！');
                         } else {
                             history.back();
                         }

@@ -83,7 +83,8 @@
 
                         <!--尝试修复菜单栏滚动，失败了-->
 
-                        <Col span="10" style="background-color: white;position: fixed;left: 0;overflow: scroll;height: 82%">
+                        <Col span="10"
+                             style="background-color: white;position: fixed;left: 0;overflow: scroll;height: 82%">
 
                             <Col span="24">
                                 <Menu Menu theme="light" width="auto" accordion @on-open-change="menu_change">
@@ -141,10 +142,14 @@
                                                             <div>
                                                                 <div class="grey--text text--darken-2">
                                                                     作者：{{value.nickname}}
-                                                                    <span class="right green--text" style="margin-left: 10em" v-if="value.free!==1">
+                                                                    <span class="right green--text"
+                                                                          style="margin-left: 10em"
+                                                                          v-if="value.free!==1">
                                                                         ￥{{value.price}}
                                                                     </span>
-                                                                    <span class="right red--text" style="margin-left: 10em" v-if="value.free===1">免费
+                                                                    <span class="right red--text"
+                                                                          style="margin-left: 10em"
+                                                                          v-if="value.free===1">免费
                                                                     </span>
                                                                 </div>
 
@@ -283,6 +288,11 @@
             this.get_recommend_article();
             this.get_activities();
             this.get_tag_tree();
+        },
+        beforeRouteLeave(to, from, next) {
+            // 设置下一个路由的 meta
+            from.meta.keepAlive = to.name === 'article';
+            next();
         }
     }
 </script>
@@ -341,6 +351,7 @@
     button {
         z-index: 1;
     }
-    .inline{
+
+    .inline {
     }
 </style>

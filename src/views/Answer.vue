@@ -42,8 +42,8 @@
                     </div>
                 </div>
                 <div style="display: flex;flex: 0 0 20%;align-items: center;justify-content: center">
-                    <div style="width: 70px;height: 38px;background-color: #FFCC00;color: black;font-weight: 600;display: flex;align-items: center;justify-content: center;border-radius:5px;">
-                        关注
+                    <div class="un_follow" @click="follow_user">
+                        {{follow?'已关注':'关注'}}
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                 </v-btn>
             </div>
             <div class="footright">
-                <v-btn icon @click="$router.push({name:'comment'})">
+                <v-btn icon @click="$router.push({name:'comment',query:{id:$route.query.id,type:1}})">
                     <v-icon>comment</v-icon>
                 </v-btn>
             </div>
@@ -186,6 +186,7 @@
                 disagree: 0,
                 select: 0,
                 user_id: 0,
+                follow: false,
             }
         },
 
@@ -305,6 +306,28 @@
                         this.select = 2;
                     }
                 })
+            },
+            get_user_follow_state() {
+                this.$api.account.get_user_follow_state(this.user_id).then(res => {
+                    if (res.data.code === 1) {
+                        this.follow = true;
+                    }
+                })
+            },
+            follow_user() {
+                if (this.follow) {
+                    this.$api.account.un_follow_user(this.user_id).then(res => {
+                        if (res.data.code === 1) {
+                            this.follow = false;
+                        }
+                    })
+                } else {
+                    this.$api.account.un_follow_user(this.user_id).then(res => {
+                        if (res.data.code === 1) {
+                            this.follow = true;
+                        }
+                    })
+                }
             }
         },
 
@@ -476,6 +499,18 @@
         100% {
             width: 50%;
         }
+    }
+
+    .un_follow {
+        width: 70px;
+        height: 38px;
+        background-color: #FFCC00;
+        color: black;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
     }
 </style>
 <style>

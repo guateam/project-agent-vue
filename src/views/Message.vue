@@ -26,7 +26,7 @@
                     <FriendList :list="friList"></FriendList>
                 </v-tab-item>
                 <v-tab-item :key="2">
-                    <Notice :list1="noticeList1" :list2="noticeList2"></Notice>
+                    <Notice :list1="noticeList1"></Notice>
                 </v-tab-item>
                 <v-tab-item :key="3">
                     <GroupList :list="groupList"></GroupList>
@@ -163,34 +163,35 @@
                     }
                 ],
                 noticeList1: [
-                    {header: '今天'},
                     {
-                        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+                        to: 'sys-notice',
+                        icon: 'settings',
                         title: '系统消息',
                         subtitle: "您有新的系统通知。"
                     },
                     {divider: true, inset: true},
                     {
-                        avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-                        title: '踩和赞',
+                        to: 'approval',
+                        icon: 'thumb_up',
+                        title: '赞我的',
                         subtitle: "赵一和王五赞了您的回答"
                     },
                     {divider: true, inset: true},
                     {
-                        avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                        to: 'call',
+                        icon: 'alarm',
+                        title: '提到我的',
+                        subtitle: "用户123@了你"
+                    },
+                    {divider: true, inset: true},
+                    {
+                        icon: 'message',
                         title: '评论和回复',
                         subtitle: "神奇的我等十人回复了你的评论"
                     },
-                ],
-                noticeList2: [
-                    {header: '昨天'},
+                    {divider: true, inset: true},
                     {
-                        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                        title: '@我的',
-                        subtitle: "用户123@了你"
-                    },
-                    {
-                        avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                        icon: 'group',
                         title: '群组',
                         subtitle: "用户123邀请你加入清纯女大学生激情聊"
                     }

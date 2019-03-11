@@ -1,8 +1,10 @@
 <template>
     <div class="question">
         <v-toolbar dark flat color="primary" app dense scroll-off-screen>
-            <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
-
+            <!--<v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>-->
+            <v-btn icon @click="$router.back()">
+                <v-icon color="white">keyboard_arrow_left</v-icon>
+            </v-btn>
             <v-toolbar-title class="headline" style="margin: 0 auto">
                 <span>话题</span>
             </v-toolbar-title>
