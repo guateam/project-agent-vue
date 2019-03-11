@@ -185,6 +185,7 @@
                     },
                     {divider: true, inset: true},
                     {
+                        to: 'reply',
                         icon: 'message',
                         title: '评论和回复',
                         subtitle: "神奇的我等十人回复了你的评论"

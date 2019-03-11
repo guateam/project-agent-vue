@@ -41,6 +41,12 @@ export default new Router({
             name: 'call',
             component: () => import('./views/Call.vue')
         },
+        // 评论和回复
+        {
+            path: '/reply',
+            name: 'reply',
+            component: () => import('./views/Reply.vue')
+        },
         // 查看用户详情
         {
             path: '/detail',
