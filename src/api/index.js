@@ -131,6 +131,10 @@ const index = {
         get_sys_message() {
             return axios.get(`${base.message}/get_sys_message`, {params: {token: store.state.token}})
         },  // 获取系统信息
+
+        get_comment_and_reply() {
+            return axios.get(`${base.message}/get_comment_and_reply`, {params: {token: store.state.token}})
+        },  // 获取系统信息
     },
     questions: {
 
