@@ -82,7 +82,7 @@
                 })
             },
             toggle(id) {
-                this.$router.push({name: 'user', query: {id: id}});
+                this.$router.push({name: 'detail', query: {id: id}});
             },
             get_my_fans() {
                 this.$api.specialist.get_my_fans().then(res => {
@@ -143,9 +143,12 @@
         border-color: deepskyblue;
         color: deepskyblue;
     }
-    .lv{
-        font-size:0.9em;
-        font-weight: bolder;-webkit-text-stroke:1px #ff9c00;color: transparent;
+
+    .lv {
+        font-size: 0.9em;
+        font-weight: bolder;
+        -webkit-text-stroke: 1px #ff9c00;
+        color: transparent;
         margin-right: 0.5em;
     }
 </style>
