@@ -232,11 +232,10 @@
                 // 清除用户信息
                 this.$store.commit('clearUserInfo');
                 this.DB();
-                // 跳回首页
-                this.$router.push({name: 'index'});
+                // 跳回登录
+                this.$router.push({name: 'login'});
             },
             DB() {
-                let that = this;
                 let myDB = {
                     name: "project-agent", version: 1, db: null
                 };
@@ -245,7 +244,7 @@
                     let version = 1;
                     let request = window.indexedDB.open(name, version);
                     request.onerror = function (e) {
-                        console.log(e.currentTarget.error.message);
+                        window.console.log(e.currentTarget.error.message);
                     };
                     request.onsuccess = function (e) {
                         myDB.db = e.target.result;
@@ -262,8 +261,8 @@
                     let transaction = db.transaction(storeName, 'readwrite');
                     let store = transaction.objectStore(storeName);
                     let request = store.clear();
-                    request.onsuccess = function (e) {
-                        console.info('clear')
+                    request.onsuccess = function () {
+                        window.console.info('clear')
                     };
                 }
 
