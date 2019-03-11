@@ -11,46 +11,88 @@
                 <v-icon>search</v-icon>
             </v-btn>
 
-            <v-tabs slot="extension" v-model="active" centered color="primary" slider-color="secondary">
-                <v-tab v-for="(tab, tab_idx) in tabs" :key="tab_idx">{{ tab.title }}</v-tab>
-            </v-tabs>
+            <!--<v-tabs slot="extension" v-model="active" centered color="primary" slider-color="secondary">-->
+                <!--<v-tab v-for="(tab, tab_idx) in tabs" :key="tab_idx">{{ tab.title }}</v-tab>-->
+            <!--</v-tabs>-->
         </v-toolbar>
         <v-card>
-            <v-tabs-items v-model="active">
-                <v-tab-item
-                        v-for="n in tabs.length"
-                        :key="n"
+            <!--<v-tabs-items v-model="active">-->
+                <!--<v-tab-item-->
+                        <!--v-for="n in tabs.length"-->
+                        <!--:key="n"-->
+                <!--&gt;-->
+                    <!--<v-list>-->
+                        <!--<template v-for="(item, index) in items[n-1]">-->
+                            <!--<v-list-tile-->
+                                    <!--:key="item.title"-->
+                                    <!--avatar-->
+                                    <!--ripple-->
+                                    <!--@click="toggle(item.id,n-1)"-->
+                            <!--&gt;-->
+                                <!--<v-list-tile-content>-->
+                                    <!--<v-list-tile-title>{{ item.title }}</v-list-tile-title>-->
+                                    <!--<v-list-tile-sub-title class="text&#45;&#45;primary">{{ item.headline }}-->
+                                    <!--</v-list-tile-sub-title>-->
+                                    <!--<v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>-->
+                                <!--</v-list-tile-content>-->
+
+                                <!--<v-list-tile-action>-->
+                                    <!--<v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>-->
+                                <!--</v-list-tile-action>-->
+
+                            <!--</v-list-tile>-->
+                            <!--<v-divider-->
+                                    <!--v-if="index + 1 < items[n-1].length"-->
+                                    <!--:key="index"-->
+                                    <!--style="margin-bottom: 0.5em;margin-top: 0.5em"-->
+                            <!--&gt;</v-divider>-->
+                        <!--</template>-->
+                    <!--</v-list>-->
+
+                <!--</v-tab-item>-->
+            <!--</v-tabs-items>-->
+
+
+            <v-tabs fixed-tabs>
+                <v-tab
+                    v-for="tab in tabs"
+                    :key="tab.title"
                 >
-                    <v-list>
-                        <template v-for="(item, index) in items[n-1]">
-                            <v-list-tile
-                                    :key="item.title"
+                    {{ tab.title }}
+
+                </v-tab>
+                <v-tab-item v-for="tab in tabs" :key="tab.title">
+                    <v-card flat>
+                        <v-list two-line>
+                            <template v-for="(item, index) in items[tab.dataSet]">
+                                <v-list-tile
+                                    :key="index"
                                     avatar
                                     ripple
-                                    @click="toggle(item.id,n-1)"
-                            >
-                                <v-list-tile-content>
-                                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                    <v-list-tile-sub-title class="text--primary">{{ item.headline }}
-                                    </v-list-tile-sub-title>
-                                    <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                                </v-list-tile-content>
+                                    @click="toggle(item.id, tab.dataSet)"
+                                >
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                        <v-list-tile-sub-title class="text--primary">{{ item.headline }}
+                                        </v-list-tile-sub-title>
+                                        <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                                    </v-list-tile-content>
 
-                                <v-list-tile-action>
-                                    <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
-                                </v-list-tile-action>
+                                    <v-list-tile-action>
+                                        <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
+                                    </v-list-tile-action>
 
-                            </v-list-tile>
-                            <v-divider
-                                    v-if="index + 1 < items[n-1].length"
-                                    :key="index"
+                                </v-list-tile>
+                                <v-divider
+                                    :key="index + 'divider'"
+                                    v-if="index + 1 < items[tab.dataSet].length"
                                     style="margin-bottom: 0.5em;margin-top: 0.5em"
-                            ></v-divider>
-                        </template>
-                    </v-list>
-
+                                ></v-divider>
+                            </template>
+                        </v-list>
+                    </v-card>
                 </v-tab-item>
-            </v-tabs-items>
+            </v-tabs>
         </v-card>
     </div>
 </template>
@@ -60,41 +102,48 @@
         name: "HistoricalPost",
         data() {
             return {
-                active: 0,
+                // active: 0,
                 tabs: [
-                    {title: '回答'},
-                    {title: '提问'},
-                    {title: '文章'},
+                    {title: '回答', dataSet: 'answers'},
+                    {title: '提问', dataSet: 'questions'},
+                    {title: '文章', dataSet: 'articles'},
+                    {title: '咨询', dataSet: 'orders'},
                 ],
-                selected: [2],
-                items: [
-                    [], [
-                        {
-                            action: '15 min',
-                            headline: '去你大爷的你才是非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋',
-                            title: '为什么有些非洲人就是不愿意承认自己的血统？',
-                            subtitle: "3赞同  ·  4评论"
-                        },
-                        {
-                            action: '2 hr',
-                            headline: '',
-                            title: '请问什么姿势才能捞到闪电然后单抽出紫雨心？',
-                            subtitle: "8回答  ·  4评论"
-                        },
-                        {
-                            action: '6 hr',
-                            headline: '这里应该是文章的内容吧emmm这里应该是文章的内容吧emmm这里应该是文章的内容吧emmm',
-                            title: '假装这里是一篇文章',
-                            subtitle: '4赞同  ·  4评论'
-                        },
-                        {
-                            action: '12 hr',
-                            headline: '不然太像知乎了',
-                            title: '专栏？应该没有这玩意',
-                            subtitle: '3订阅  ·  9评论'
-                        }
-                    ], [], [], []
-                ]
+                items: {
+                    answers: [],
+                    questions: [],
+                    articles: [],
+                    orders: [],
+                },
+                // selected: [2],
+                // items: [
+                //     [], [
+                //         {
+                //             action: '15 min',
+                //             headline: '去你大爷的你才是非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋',
+                //             title: '为什么有些非洲人就是不愿意承认自己的血统？',
+                //             subtitle: "3赞同  ·  4评论"
+                //         },
+                //         {
+                //             action: '2 hr',
+                //             headline: '',
+                //             title: '请问什么姿势才能捞到闪电然后单抽出紫雨心？',
+                //             subtitle: "8回答  ·  4评论"
+                //         },
+                //         {
+                //             action: '6 hr',
+                //             headline: '这里应该是文章的内容吧emmm这里应该是文章的内容吧emmm这里应该是文章的内容吧emmm',
+                //             title: '假装这里是一篇文章',
+                //             subtitle: '4赞同  ·  4评论'
+                //         },
+                //         {
+                //             action: '12 hr',
+                //             headline: '不然太像知乎了',
+                //             title: '专栏？应该没有这玩意',
+                //             subtitle: '3订阅  ·  9评论'
+                //         }
+                //     ], [], [], []
+                // ],
             }
         },
         methods: {
@@ -112,7 +161,8 @@
                                 id: value['questionID']
                             })
                         });
-                        this.items[1] = items
+                        // this.items[1] = items
+                        this.items.questions = items;
                     }
                 })
             },
@@ -146,7 +196,8 @@
                                 id: value['answerID'],
                             })
                         });
-                        this.items[0] = items
+                        // this.items[0] = items
+                        this.items.answers = items;
                     }
                 })
             },
@@ -164,7 +215,8 @@
                                 id: value['articleID'],
                             })
                         });
-                        this.items[2] = items
+                        // this.items[2] = items
+                        this.items.articles = items;
                     }
                 })
             },
@@ -184,9 +236,11 @@
                             })
                         });
                         if (this.tabs.length === 4) {
-                            this.items[3] = items;
+                            // this.items[3] = items;
+                            this.items.orders = items;
                         } else {
-                            this.items[2] = items;
+                            // this.items[2] = items;
+                            this.items.orders = items;
                         }
                     }
                 })
@@ -195,17 +249,17 @@
                 this.$api.article.get_article_allowed_group().then((data) => {
                     if (data.data.code === 1) {
                         this.tabs = [
-                            {title: '回答'},
-                            {title: '提问'},
-                            {title: '文章'},
-                            {title: '咨询'},
+                            {title: '回答', dataSet: 'answers'},
+                            {title: '提问', dataSet: 'questions'},
+                            {title: '文章', dataSet: 'articles'},
+                            {title: '咨询', dataSet: 'orders'},
                         ];
                         this.get_my_articles()
                     } else if (data.data.code === -1) {
                         this.tabs = [
-                            {title: '回答'},
-                            {title: '提问'},
-                            {title: '咨询'},
+                            {title: '回答', dataSet: 'answers'},
+                            {title: '提问', dataSet: 'questions'},
+                            {title: '咨询', dataSet: 'orders'},
                         ]
                     } else {
                         this.tabs = [
@@ -216,22 +270,24 @@
             },
             toggle(id, type) {
                 switch (type) {
-                    case 0:
+                    case 'answers':
                         this.$router.push({name: 'answer', query: {id: id}});
                         break;
-                    case 1:
+                    case 'questions':
                         this.$router.push({name: 'question', query: {id: id}});
                         break;
-                    case 2:
+                    default:
                         break;
                 }
             }
         },
         mounted() {
+            // this.get_category();
             this.get_my_answers();
             this.get_my_questions();
-            this.get_category();
+            // this.get_category();
             this.get_my_orders();
+            this.get_my_articles()
         }
         ,
     }

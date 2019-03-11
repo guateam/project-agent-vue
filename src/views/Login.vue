@@ -28,7 +28,7 @@
                                 prepend-icon="email"
                                 v-model="email"
                                 :error-messages="emailErrors"
-                                label="邮箱"
+                                label="手机号"
                                 @input="$v.email.$touch()"
                                 @blur="$v.email.$touch()"
                             ></v-text-field>
@@ -70,7 +70,7 @@
         name: "Login",
 
         validations: {
-            email: {required, email},
+            email: {required},
             password: {required},
         },
 
@@ -86,8 +86,7 @@
             emailErrors() {
                 const errors = [];
                 if (!this.$v.email.$dirty) return errors;
-                !this.$v.email.email && errors.push('请输入正确的邮箱地址');
-                !this.$v.email.required && errors.push('请输入邮箱地址');
+                !this.$v.email.required && errors.push('请输入手机号码');
                 return errors
             },
             passwordErrors() {
