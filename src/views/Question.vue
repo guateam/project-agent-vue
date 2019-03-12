@@ -21,7 +21,7 @@
                     <div style="flex: 0 0 70%">
                         <p>标签 : <span v-for="(tag, index) in questionData.tags" :key="index">{{tag.text}} </span></p>
                         <p><span> {{questionData.follow}} </span>人关注&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span>{{questionData.commentsNum}} </span>
-                            条评论</p>
+                            条评论 </p>
                     </div>
                     <div :class="{attention:!isfollowed,followed:isfollowed}" style="flex: 0 0 30%" @click="follow()">
                         {{followNotice}}
@@ -42,7 +42,8 @@
 
         <div class="line">
             <p class="answerNum"><span>&nbsp; {{answerNum}}</span>条回答</p>
-            <div>默认排序 &nbsp;</div>
+            <div style="margin-right: 1em"><a
+                    @click="$router.push({name:'comment',query:{id:$route.query.id,type:0}})">查看评论</a></div>
         </div>
 
         <!--页面主体，展示不同的回答列表-->
