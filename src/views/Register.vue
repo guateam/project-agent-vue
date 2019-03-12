@@ -30,7 +30,7 @@
                                     dark
                                     v-model="email"
                                     :error-messages="emailErrors"
-                                    label="你的邮箱地址？"
+                                    label="你的手机号码是？"
                                     @input="$v.email.$touch()"
                                     @blur="$v.email.$touch()"
                             ></v-text-field>
@@ -75,7 +75,7 @@
         name: "register",
 
         validations: {
-            email: {required, email},
+            email: {required},
             password: {required},
             password2: {required},
         },
@@ -92,8 +92,7 @@
             emailErrors() {
                 const errors = [];
                 if (!this.$v.email.$dirty) return errors;
-                !this.$v.email.email && errors.push('请输入正确的邮箱地址');
-                !this.$v.email.required && errors.push('请输入邮箱地址');
+                !this.$v.email.required && errors.push('请输入手机号码');
                 return errors
             },
             passwordErrors() {
