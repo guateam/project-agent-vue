@@ -261,6 +261,7 @@
                 this.$api.answer.add_answer_comment(this.$route.query.id, this.comment_word).then(res => {
                     if (res.data.code === 1) {
                         this.comment_word = '';
+                        this.getCommentData();
                     }
                 })
             },

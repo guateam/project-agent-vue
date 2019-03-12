@@ -138,13 +138,13 @@
                 })
             },
             get_classify_question(idx, page) {
-                var that = this;
-                var id = this.category[idx]['id'];
+                let that = this;
+                let id = this.category[idx]['id'];
                 this.category[idx]['page']++;
                 this.$set(this.category, idx, this.category[idx]);
                 this.$api.homepage.get_classify(id, 1, page).then(res => {
                     if (res.data.code === 1) {
-                        for (var i = 0; i < res.data.data.length; i++)
+                        for (let i = 0; i < res.data.data.length; i++)
                             that.classify_question[idx].push(res.data.data[i]);
                         that.$set(that.classify_question, idx, that.classify_question[idx]);
                         that.busy = false;
@@ -174,7 +174,13 @@
         },
         beforeRouteLeave(to, from, next) {
             // 设置下一个路由的 meta
-            from.meta.keepAlive = to.name === 'question';
+            // if (to.name === 'question') {
+            //     from.meta.keepAlive = true;
+            //     this.busy = true;
+            // } else {
+            //     from.meta.keepAlive = false;
+            // }
+
             next();
         }
     }
