@@ -5,7 +5,14 @@
         </v-navigation-drawer><!--侧边栏-->
 
         <v-content>
-            <router-view></router-view>
+            <!--<router-view></router-view>-->
+            <keep-alive>
+                <router-view v-if="$route.meta.keepAlive">
+                    <!-- 这里是会被缓存的视图组件，比如 Home！ -->
+                </router-view>
+            </keep-alive>
+
+            <router-view v-if="!$route.meta.keepAlive"></router-view>
         </v-content>
 
         <v-snackbar v-model="$store.state.snackbar" bottom multi-line :timeout="3000">
@@ -81,6 +88,7 @@
                         this.get_user();
                     } else {
                         this.$store.commit('logout', this.$store.state);
+                        this.$router.push({name:'login'})
                     }
                 })
             }
@@ -93,7 +101,7 @@
             this.DB();
             setTimeout(this.get_user(), 1100);
             // 添加返回事件监听
-        }
+        },
     }
 </script>
 

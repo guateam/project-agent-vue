@@ -34,7 +34,7 @@
 
     export default {
         name: "chat",
-        components: {gChat,ChatInput},
+        components: {gChat, ChatInput},
         data() {
             return {
                 userId: 2,  // 目标id
@@ -97,7 +97,7 @@
                         if (data.length > 0) {
                             data.forEach(item => {
                                 this.wxChatData.push({
-                                    direction: item.poster === this.userId? 1: 2,
+                                    direction: item.poster === this.userId ? 1 : 2,
                                     id: item.messageID,
                                     type: 1,
                                     content: item.content,
@@ -106,7 +106,8 @@
                             })
                         }
                     }
-                })
+                });
+                setTimeout(this.loadMessage(), 10000);
             },  // 加载消息
             initWidth() {
                 var ua = navigator.userAgent;
@@ -239,6 +240,7 @@
         position: fixed;
         margin-bottom: 1em;
     }
+
     .footinput {
         width: 100%;
         height: 3.5em;

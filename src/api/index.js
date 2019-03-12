@@ -88,7 +88,19 @@ const index = {
         },  // 取关
         get_user_follow_state(id) {
             return axios.get(`${base.account}/get_user_follow_state`, {params: {user_id: id, token: store.state.token}})
-        }  // 用户是否被关注
+        },  // 用户是否被关注
+        get_user_questions_by_id(user_id) {
+            return axios.get(`${base.account}/get_user_questions_by_id`, {params: {user_id: user_id}})
+        },  // 获取用户问题
+        get_user_answers_by_id(user_id) {
+            return axios.get(`${base.account}/get_user_answers_by_id`, {params: {user_id: user_id}})
+        },  // 获取用户回答
+        get_user_articles_by_id(user_id) {
+            return axios.get(`${base.account}/get_user_articles_by_id`, {params: {user_id: user_id}})
+        },  // 获取用户文章
+        set_account_info(data) {
+            return axios.post(`${base.account}/set_account_info`, qs.stringify(data))
+        }
     },
     message: {
 
@@ -99,12 +111,30 @@ const index = {
         get_friend_list(token = store.state.token) {
             return axios.get(`${base.message}/get_friend_list`, {params: {token: token}})
         },
+
         get_chat_box(id) {
             return axios.get(`${base.message}/get_chat_box`, {params: {token: store.state.token, user_id: id}})
         },  // 获取聊天信息
+
         add_message(data) {
             return axios.post(`${base.message}/add_message`, qs.stringify(data))
         },  // 发送消息
+
+        get_agree_list() {
+            return axios.get(`${base.message}/get_agree_list`, {params: {token: store.state.token}})
+        },  // 获取点赞信息
+
+        get_at_list() {
+            return axios.get(`${base.message}/get_at_list`, {params: {token: store.state.token}})
+        },  // 获取@信息
+
+        get_sys_message() {
+            return axios.get(`${base.message}/get_sys_message`, {params: {token: store.state.token}})
+        },  // 获取系统信息
+
+        get_comment_and_reply() {
+            return axios.get(`${base.message}/get_comment_and_reply`, {params: {token: store.state.token}})
+        },  // 获取系统信息
     },
     questions: {
 

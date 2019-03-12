@@ -1,14 +1,14 @@
 <template>
   <div class="exp-detail">
-    <div class="head">
-      <div style="width: 45px;height: 45px;margin-left: 14px;display: flex;align-items: center;justify-content: center;">
-        <v-icon large color="white" @click="$router.back()">keyboard_arrow_left</v-icon>
-      </div>
-      <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">积分等级</span>
-      <div style="width: 45px;height: 45px;margin-right: 14px;display: flex;align-items: center;justify-content: center;color: #fff;font-size: 17px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">
-      </div>
-    </div>
-    <div class="line"></div>
+    <!--<div class="head">-->
+      <!--<div style="width: 45px;height: 45px;margin-left: 14px;display: flex;align-items: center;justify-content: center;">-->
+        <!--<v-icon large color="white" @click="$router.back()">keyboard_arrow_left</v-icon>-->
+      <!--</div>-->
+      <!--<span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">积分等级</span>-->
+      <!--<div style="width: 45px;height: 45px;margin-right: 14px;display: flex;align-items: center;justify-content: center;color: #fff;font-size: 17px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="line"></div>-->
     <v-card flat color="primary">
       <v-container>
         <v-layout justify-center>

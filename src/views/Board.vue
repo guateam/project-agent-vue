@@ -17,7 +17,8 @@
             <v-tab-item :key="0">
                 <v-container grid-list-md text-xs-center>
                     <v-layout row wrap style="border: 1px solid #eee;padding: 12px;height: 170px"
-                              v-for="item in demands" @click="$router.push({name:'board-detail',query:{id:item.demandID}})">
+                              v-for="item in demands"
+                              @click="$router.push({name:'board-detail',query:{id:item.demandID}})">
                         <v-flex xs4 style="height: 100%">
                             <img :src="item.cover" alt=""
                                  style="width: 100%;height: 100%;object-fit: cover">
@@ -232,6 +233,11 @@
         ,
         mounted() {
             this.get_tag_tree();
+        },
+        beforeRouteLeave(to, from, next) {
+            // 设置下一个路由的 meta
+            from.meta.keepAlive = to.name === 'board-detail';
+            next();
         }
     }
 </script>

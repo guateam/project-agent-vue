@@ -105,16 +105,16 @@
             <v-flex>
                 <v-tabs fixed-tabs>
                     <v-tab
-                            v-for="tab in ['动态', '回答', '专栏']"
+                            v-for="tab in ['话题', '回答', '专栏']"
                             :key="tab"
                     >
                         {{ tab }}
                     </v-tab>
                     <!--动态-->
-                    <v-tab-item :key="'动态'">
+                    <v-tab-item :key="'话题'">
                         <v-card flat min-height="250">
                             <v-layout v-if="message.length === 0" align-center justify-center row fill-height>
-                                <span class="title font-weight-light"> <br>暂无动态</span>
+                                <span class="title font-weight-light"> <br>暂无话题</span>
                             </v-layout>
                             <v-list v-else two-line subheader>
                                 <div v-for="(item, index) in message" :key="index">
@@ -256,7 +256,56 @@
                 this.message = [];
                 this.answers = [];
                 this.articles = [];
+                this.$api.account.get_user_questions_by_id(this.$route.query.id).then(res => {
+                    if (res.data.code === 1) {
+                        res.data.data.forEach(value => {
+                            this.message.push({
+                                title: value['title'],
+                                subtitle: value['description'],
+                                time: this.get_date(value['edittime'])
+                            })
+                        })
+                    }
+                });
+                this.$api.account.get_user_answers_by_id(this.$route.query.id).then(res => {
+                    if (res.data.code === 1) {
+                        res.data.data.forEach(value => {
+                            this.answers.push({
+                                title: value['title'],
+                                subtitle: value['content'],
+                                time: this.get_date(value['edittime'])
+                            })
+                        })
+                    }
+                });
+                this.$api.account.get_user_articles_by_id(this.$route.query.id).then(res => {
+                    if (res.data.code === 1) {
+                        res.data.data.forEach(value => {
+                            this.articles.push({
+                                title: value['title'],
+                                subtitle: value['description'],
+                                time: this.get_date(value['edittime'])
+                            })
+                        })
+                    }
+                });
             },  // 获取用户动态等数据
+            get_date(date) {
+                let old = new Date(date);
+                let now = new Date();
+                let time = now.getTime() - old.getTime();
+                if (time < 60 * 1000) {
+                    return "刚刚"
+                } else if (time > 60 * 1000 && time < 60 * 60 * 1000) {
+                    return Math.round(time / 60 / 1000) + '分钟前'
+                } else if (time > 60 * 60 * 1000 && time < 24 * 60 * 60 * 1000) {
+                    return Math.round(time / 60 / 60 / 1000) + '小时前'
+                } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
+                    return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
+                } else {
+                    return old.getMonth() + '-' + old.getDay()
+                }
+            },// 处理时间
             getUserGroup() {
                 this.$api.account.get_user_group().then(res => {
                     if (res.data.code === 1) {
@@ -284,7 +333,7 @@
                 });
             },  // 获取用户信息
             consult() {
-                this.$store.commit('showInfo', '付费咨询');
+                this.$router.push({name: 'advisory', query: {id: this.userId}})
             },  // 付费咨询
             followUser() {
                 if (this.userInfo.isFollow) {
@@ -292,6 +341,13 @@
                         if (res.data.code === 1) {
                             this.userInfo.isFollow = false;
                             this.$store.commit('showInfo', '已取消关注');
+                        }
+                    });
+                } else {
+                    this.$api.account.follow_user(this.userId).then(res => {
+                        if (res.data.code === 1) {
+                            this.userInfo.isFollow = true;
+                            this.$store.commit('showInfo', '已关注');
                         }
                     });
                 }
