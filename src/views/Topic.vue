@@ -125,9 +125,15 @@
             },
             // 获取分类标签
             get_category() {
+                let that = this
                 this.$api.homepage.get_category().then(res => {
                     if (res.data.code === 1) {
-                        this.category = res.data.data;
+                        that.category = res.data.data;
+                        that.$api.homepage.classify_all_tag(1).then(res => {
+                            if (res.data.code === 1) {
+                                that.classify_question = res.data.data;
+                            }
+                        })
                     }
                 })
             },
@@ -164,11 +170,6 @@
 
         mounted() {
             this.get_category();
-            this.$api.homepage.classify_all_tag(1).then(res => {
-                if (res.data.code === 1) {
-                    this.classify_question = res.data.data;
-                }
-            })
             // setTimeout(this.get_recommend(), 5000);
         },
         beforeRouteLeave(to, from, next) {
