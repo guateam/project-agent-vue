@@ -17,22 +17,24 @@
                 <v-tab v-for="data in category" :key="data.id">{{ data.name }}</v-tab>
             </v-tabs>
         </v-toolbar>
+        <keep-alive>
+            <v-card id="card">
+                <v-tabs-items v-model="tabs">
+                    <v-tab-item :key="0">
+                        <question-card @click.native="view_detail(question.questionID)"
+                                       v-for="(question,n) in questionList"
+                                       :key="n" v-bind="question"></question-card>
+                    </v-tab-item>
 
-        <v-card id="card">
-            <v-tabs-items v-model="tabs">
-                <v-tab-item :key="0">
-                    <question-card @click.native="view_detail(question.questionID)" v-for="(question,n) in questionList"
-                                   :key="n" v-bind="question"></question-card>
-                </v-tab-item>
-
-                <v-tab-item v-for="(data,idx) in category" :key="data.id">
-                    <question-card @click.native="view_detail(question.questionID)"
-                                   v-for="question in classify_question[idx]"
-                                   :key="question.questionID" v-bind="question"></question-card>
-                </v-tab-item>
-                <div class="bottom-nav"></div>
-            </v-tabs-items>
-        </v-card>
+                    <v-tab-item v-for="(data,idx) in category" :key="data.id">
+                        <question-card @click.native="view_detail(question.questionID)"
+                                       v-for="question in classify_question[idx]"
+                                       :key="question.questionID" v-bind="question"></question-card>
+                    </v-tab-item>
+                    <div class="bottom-nav"></div>
+                </v-tabs-items>
+            </v-card>
+        </keep-alive>
         <div :class="'load-more-normal'" v-infinite-scroll="loadMore"
              infinite-scroll-disabled="busy" infinite-scroll-distance="0">
             <h3>
@@ -167,7 +169,12 @@
                 }
             },
         },
-
+        deactivated() {
+            this.busy = true;
+        },
+        activated() {
+            this.busy = false;
+        },
         mounted() {
             this.get_category();
             // setTimeout(this.get_recommend(), 5000);
