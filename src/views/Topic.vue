@@ -73,6 +73,7 @@
                 page: 1,
                 busy: false,
                 timeout: 0,
+                category_done:false,
             }
         },
 
@@ -132,6 +133,7 @@
                         that.$api.homepage.classify_all_tag(1).then(res => {
                             if (res.data.code === 1) {
                                 that.classify_question = res.data.data;
+                                that.category_done = true;
                             }
                         })
                     }
@@ -161,6 +163,7 @@
                     this.get_recommend();
                 } else {
                     //获取目前的分类页码数
+                    if(!this.category_done)return;
                     let cate_page = 0;
                     cate_page = this.category[this.tabs - 1]['page'] + 1;
                     this.get_classify_question(this.tabs - 1, cate_page)
