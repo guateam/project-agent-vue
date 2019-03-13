@@ -13,6 +13,10 @@ export default new Router({
         {path: '/board', name: 'board', component: () => import('./views/Board.vue')},
         // 登录
         {path: '/login', name: 'login', component: () => import('./views/Login.vue')},
+        // 忘记密码
+        {path: '/forget-password', name: 'forget-password', component: () => import('./views/ForgetPassword.vue')},
+        // 设定新密码
+        {path: '/set-new-password', name: 'set-new-password', component: () => import('./views/SetNewPassword.vue')},
         // 注册
         {path: '/register', name: 'register', component: () => import('./views/Register.vue')},
         // 设置

@@ -33,6 +33,18 @@ const index = {
     },
     account: {
 
+        update_password(account, psw) {
+            return axios.get(`${base.account}/update_password`, {params: {account: account, password: psw}})
+        },  // 设置新密码
+
+        send_check_code(account) {
+            return axios.get(`${base.account}/send_check_code`, {params: {account: account}})
+        },  // 发送验证码
+
+        check_code(account, code) {
+            return axios.get(`${base.account}/check_code`, {params: {account: account, check_code: code}})
+        },  // 检查验证码
+
         login(data) {
             return axios.post(`${base.account}/login`, qs.stringify(data))
         },  // 用户登录
