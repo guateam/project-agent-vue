@@ -29,8 +29,8 @@
                             <v-text-field
                                     dark
                                     v-model="email"
-                                    :error-messages="emailErrors"
                                     label="你的手机号码是？"
+                                    :error-messages="emailErrors"
                                     @input="$v.email.$touch()"
                                     @blur="$v.email.$touch()"
                             ></v-text-field>
@@ -38,8 +38,8 @@
                                     dark
                                     v-model="password"
                                     type="password"
-                                    :error-messages="passwordErrors"
                                     label="设置你的密码"
+                                    :error-messages="passwordErrors"
                                     @input="$v.password.$touch()"
                                     @blur="$v.password.$touch()"
                             ></v-text-field>
@@ -47,8 +47,8 @@
                                     dark
                                     v-model="password2"
                                     type="password"
-                                    :error-messages="password2Errors"
                                     label="再次输入密码"
+                                    :error-messages="password2Errors"
                                     @input="$v.password2.$touch()"
                                     @blur="$v.password2.$touch()"
                             ></v-text-field>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-    import {required, email} from 'vuelidate/lib/validators'
+    import {required} from 'vuelidate/lib/validators'
 
 
     export default {

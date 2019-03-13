@@ -25,10 +25,10 @@
                         <form class="form">
                             <v-text-field
                                 dark
-                                prepend-icon="email"
+                                prepend-icon="account_circle"
                                 v-model="email"
                                 :error-messages="emailErrors"
-                                label="手机号"
+                                label="账号"
                                 @input="$v.email.$touch()"
                                 @blur="$v.email.$touch()"
                             ></v-text-field>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-    import {required, email} from 'vuelidate/lib/validators'
+    import {required} from 'vuelidate/lib/validators'
 
 
     export default {
@@ -99,7 +99,8 @@
 
         methods: {
             forgetPassword() {
-                this.$store.commit('showInfo', '忘记密码');
+                // this.$store.commit('showInfo', '忘记密码');
+                this.$router.push({name: 'forget-password'});
             },  // 忘记密码
             // 登录
             login() {

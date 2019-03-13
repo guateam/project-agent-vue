@@ -115,6 +115,16 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
+                <v-list-tile @click="$router.push({name:'sign-board'})">
+                    <v-list-tile-action>
+                        <v-icon class="time--text">event_note</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-title>
+                        <v-layout justify-space-between>
+                            <span>我报名的</span>
+                        </v-layout>
+                    </v-list-tile-title>
+                </v-list-tile>
                 <v-list-tile @click="$router.push({name:'article-publish'})">
                     <v-list-tile-action>
                         <v-icon class="time--text">border_color</v-icon>

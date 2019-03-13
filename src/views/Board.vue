@@ -229,14 +229,19 @@
                 this.busy = true;
                 this.get_board_recommend()
             },
-        }
-        ,
+        },
+        deactivated() {
+            this.busy = true;
+        },
+        activated() {
+            this.busy = false;
+        },
         mounted() {
             this.get_tag_tree();
         },
         beforeRouteLeave(to, from, next) {
             // 设置下一个路由的 meta
-            from.meta.keepAlive = to.name === 'board-detail';
+            // from.meta.keepAlive = to.name === 'board-detail';
             next();
         }
     }
