@@ -161,7 +161,7 @@
                         <v-list-tile>
                             <v-list-tile-content>
                                 <v-list-tile-title @click="dialog=true">清除缓存</v-list-tile-title>
-                                <!--<v-list-tile-sub-title>155.24MB</v-list-tile-sub-title>-->
+                                <v-list-tile-sub-title v-if="size>0">{{size}}MB</v-list-tile-sub-title>
                             </v-list-tile-content>
                         </v-list-tile>
 
@@ -226,7 +226,6 @@
                             color="success"
                             flat
                             @click="clear()"
-                            :disabled="formItem.description===''"
                     >
                         确认
                     </v-btn>
@@ -257,6 +256,7 @@
                         text: '123'
                     }
                 ],
+                size: -1
             }
         },
         methods: {
@@ -324,6 +324,23 @@
                         that.$router.push({name: 'login'})
                     })
                 });
+            },
+
+            init_cache() {
+                this.size = -1;
+                let that = this;
+                plus.cache.calculate(function (size) {
+                    var sizeInt = parseInt(size);
+                    that.size = sizeInt / (1024 * 1024);
+                });
+
+            },
+        },
+        mounted() {
+            try{
+                this.init_cache()
+            }catch (e) {
+
             }
         }
     }
