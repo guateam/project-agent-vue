@@ -369,6 +369,11 @@ export default new Router({
             path: '/first-login',
             name: 'first-login',
             component: () => import('./views/FirstLogin.vue')
+        },
+        {
+            path: '/sign-board',
+            name: 'sign-board',
+            component: () => import('./views/SignBoard.vue')
         }
     ],
 });
