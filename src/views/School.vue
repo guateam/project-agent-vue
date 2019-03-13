@@ -291,7 +291,7 @@
         },
         beforeRouteLeave(to, from, next) {
             // 设置下一个路由的 meta
-            from.meta.keepAlive = to.name === 'article';
+            // from.meta.keepAlive = to.name === 'article';
             next();
         }
     }
