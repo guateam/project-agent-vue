@@ -128,7 +128,7 @@
             },
             // 获取分类标签
             get_category() {
-                let that = this
+                let that = this;
                 this.$api.homepage.get_category().then(res => {
                     if (res.data.code === 1) {
                         that.category = res.data.data;
