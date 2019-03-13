@@ -282,8 +282,13 @@
                     }
                 })
             }
-        }
-        ,
+        },
+        deactivated() {
+            this.busy = true;
+        },
+        activated() {
+            this.busy = false;
+        },
         mounted() {
             this.get_recommend_article();
             this.get_activities();

@@ -229,8 +229,13 @@
                 this.busy = true;
                 this.get_board_recommend()
             },
-        }
-        ,
+        },
+        deactivated() {
+            this.busy = true;
+        },
+        activated() {
+            this.busy = false;
+        },
         mounted() {
             this.get_tag_tree();
         },

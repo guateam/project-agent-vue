@@ -8,7 +8,7 @@ export default new Router({
         // 重定向到话题
         {path: '/', name: 'index', redirect: {name: 'topic'}},
         // 话题
-        {path: '/topic', name: 'topic', component: () => import('./views/Topic.vue'), meta: {keepAlive: true}},
+        {path: '/topic', name: 'topic', component: () => import('./views/Topic.vue')},
         // 告示板
         {path: '/board', name: 'board', component: () => import('./views/Board.vue')},
         // 登录
