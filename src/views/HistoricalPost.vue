@@ -53,7 +53,7 @@
             <!--</v-tabs-items>-->
 
 
-            <v-tabs fixed-tabs>
+            <v-tabs fixed-tabs color="primary">
                 <v-tab
                     v-for="tab in tabs"
                     :key="tab.title"

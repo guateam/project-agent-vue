@@ -69,6 +69,18 @@
                     <span v-else style="color: blue">收起</span>
                 </button>
             </p>
+            <v-layout>
+                <v-container>
+                    <v-flex sx6>
+                        <v-btn block color="primary" @click="$router.push({name:'group',query:{id:data.group}})">跳转附属群
+                        </v-btn>
+                    </v-flex>
+                    <v-flex sx6>
+                        <v-btn block color="blue" @click="change_state()">{{demand_state}}
+                        </v-btn>
+                    </v-flex>
+                </v-container>
+            </v-layout>
         </div>
         <v-divider></v-divider>
         <div style="padding: 1em;line-height: 1.5;border-bottom: 1px #eee solid">
@@ -234,7 +246,8 @@ height: 100%;border-radius: 50%">
                 state: ['被清除', '招标中', '项目开始', '项目结束'],
                 sign: -2,
                 users: [],
-                user_state: ['被拒绝', '待审核', '已通过']
+                user_state: ['被拒绝', '待审核', '已通过'],
+                demand_state: '停止招标，开始项目'
             }
         },
         methods: {
@@ -242,6 +255,14 @@ height: 100%;border-radius: 50%">
                 this.$api.board.get_demand(id).then(res => {
                     if (res.data.code === 1) {
                         this.data = res.data.data;
+                        switch (this.data.state) {
+                            case 0:
+                                this.demand_state = '停止招标，开始项目';
+                                break;
+                            case 1:
+                                this.demand_state = '确认项目结束';
+                                break;
+                        }
                     }
                 })
             },
@@ -272,6 +293,21 @@ height: 100%;border-radius: 50%">
                         this.get_signed_users();
                     }
                 })
+            },
+            change_state() {
+                if (this.data.state === 0) {
+                    this.$api.enterprise.start_demand(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.get_demand(this.$route.query.id);
+                        }
+                    })
+                } else if (this.data.state === 1) {
+                    this.$api.enterprise.close_demand(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.get_demand(this.$route.query.id);
+                        }
+                    })
+                }
             }
         },
         mounted() {

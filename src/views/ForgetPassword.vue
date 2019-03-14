@@ -2,7 +2,7 @@
   <div class="forget-password">
     <div id="background">
       <div class="top">
-        <v-btn @click="$router.push({name: 'login'})" icon dark>
+        <v-btn @click="$router.back()" icon dark>
         <v-icon>arrow_back</v-icon>
         </v-btn>
       </div>

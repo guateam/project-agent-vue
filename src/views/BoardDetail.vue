@@ -129,14 +129,16 @@ height: 100%;border-radius: 50%">
                     </div>
                     <div style="margin-top: 5px;color: tomato"><h4>￥{{data.price}}</h4></div>
                 </v-flex>
-                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="join()" v-if="sign===-2">
+                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" @click="join()"
+                        v-if="sign===-2">
                     <h2 style="color: white">申请参加</h2>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===0">
                     <h2 style="color: white">您已报名</h2>
                 </v-flex>
-                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===1">
-                    <h2 style="color: white">您已加入</h2>
+                <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===1"
+                        @click="$router.push({name:'group',query:{id:data.group}})">
+                    <h2 style="color: white">您已加入(点击跳转到对应群组)</h2>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===-1">
                     <h2 style="color: white">您不在报名范围内</h2>
@@ -180,6 +182,7 @@ height: 100%;border-radius: 50%">
                 this.$api.board.get_demand(id).then(res => {
                     if (res.data.code === 1) {
                         this.data = res.data.data;
+                        this.get_sign_state();
                     }
                 })
             },
@@ -193,7 +196,7 @@ height: 100%;border-radius: 50%">
             join() {
                 this.$api.board.sign_to_demand(this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
-                        this.sign=res.data.data.state;
+                        this.sign = res.data.data.state;
                     }
                 })
             },
@@ -201,6 +204,8 @@ height: 100%;border-radius: 50%">
                 this.$api.board.get_sign_state(this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
                         this.sign = 0;
+                    } else if (this.data.userID === this.$store.state.userInfo.user_id) {
+                        this.sign = 1;
                     }
                 })
             }
@@ -208,7 +213,6 @@ height: 100%;border-radius: 50%">
         mounted() {
             this.get_demand(this.$route.query.id);
             this.add_user_action();
-            this.get_sign_state();
         }
 
     }
