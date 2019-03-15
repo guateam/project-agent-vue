@@ -1,7 +1,7 @@
 <template>
     <div class="answer">
         <v-toolbar dark flat color="primary" app dense scroll-off-screen>
-            <v-btn icon @click="$router.push($route.query.redirect || {name: 'topic'})">
+            <v-btn icon @click="$router.back()">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
 
@@ -65,27 +65,29 @@
             <p v-html="intro.replace(/\n/g, '<br>')"></p>
         </div>
 
-        <!--<div style="width: 100%">-->
-        <!--<ButtonGroup style="width: 100%;margin-top: 1em">-->
-        <!--<Button type="warning" icon="md-arrow-dropup" :class="{mid:select===0,long:select===1,hide:select===2}"-->
-        <!--@click="agree_answer()" :hidden="select===2">{{select!==0?'已':''}}点赞 {{agree}}-->
-        <!--</Button>-->
-        <!--<Button icon="md-arrow-dropdown" :class="{mid:select===0,long:select===2,hide:select===1}"-->
-        <!--@click="disagree_answer()" :hidden="select===1">{{select!==0?'已':''}}点踩 {{disagree}}-->
-        <!--</Button>-->
-        <!--</ButtonGroup>-->
-        <!--</div>-->
-
-        <div style="width: 100%;height: 5em;border-top: 1px #eee solid;border-bottom: 1px #eee solid;display: flex;line-height: 1.5;">
-            <div style="height:100%;flex: 0 0 50%;border-right: 1px #eee solid;display: flex;align-items: center;justify-content: center;" @click="agree_answer()">
-                <v-icon style="width: 30px" :class="agreethis===1?'agree':'no'">thumb_up_alt</v-icon>
-                <span style="font-size: 1.5em" :class="agreethis===1?'agree':'no'">赞同</span>
-            </div>
-            <div style="height:100%;flex: 0 0 50%;border-right: 1px #eee solid;display: flex;align-items: center;justify-content: center;" @click="disagree_answer()">
-                <v-icon style="width: 30px" :class="agreethis===2?'disagree':'no'">thumb_down_alt</v-icon>
-                <span style="font-size: 1.5em" :class="agreethis===2?'agree':'no'">反对</span>
-            </div>
+        <div style="width: 100%">
+            <ButtonGroup style="width: 100%;margin-top: 1em;position:relative;overflow: hidden;height: 3em;margin-bottom: 1em">
+                <Button type="warning" icon="md-arrow-dropup"
+                        :class="{mid:select===0,long:select===1,hide:select===2,display:hidden1}"
+                        @click="agree_answer()" :hidden="select===2">{{select!==0?'已':''}}点赞 {{agree}}
+                </Button>
+                <Button icon="md-arrow-dropdown"
+                        :class="{mid2:select===0,long:select===2,hide2:select===1,display:hidden2}"
+                        @click="disagree_answer()" :hidden="select===1">{{select!==0?'已':''}}点踩 {{disagree}}
+                </Button>
+            </ButtonGroup>
         </div>
+
+        <!--<div style="width: 100%;height: 5em;border-top: 1px #eee solid;border-bottom: 1px #eee solid;display: flex;line-height: 1.5;">-->
+        <!--<div style="height:100%;flex: 0 0 50%;border-right: 1px #eee solid;display: flex;align-items: center;justify-content: center;" @click="agree_answer()">-->
+        <!--<v-icon style="width: 30px" :class="select===1?'agree':'no'">thumb_up_alt</v-icon>-->
+        <!--<span style="font-size: 1.5em" :class="select===1?'agree':'no'">赞同</span>-->
+        <!--</div>-->
+        <!--<div style="height:100%;flex: 0 0 50%;border-right: 1px #eee solid;display: flex;align-items: center;justify-content: center;" @click="disagree_answer()">-->
+        <!--<v-icon style="width: 30px" :class="select===2?'disagree':'no'">thumb_down_alt</v-icon>-->
+        <!--<span style="font-size: 1.5em" :class="select===2?'agree':'no'">反对</span>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class="comment" style="padding-left: 1em; padding-right: 1em;">
             <h2>评论</h2>
             <router-link :to="{name: 'comment', params: {id: $route.params.id,type:1}}">
@@ -198,6 +200,8 @@
                 select: 0,
                 user_id: 0,
                 follow: false,
+                hidden1: false,
+                hidden2: false,
             }
         },
 
@@ -277,40 +281,40 @@
                 })
             },
             agree_answer() {
-                // if (this.select === 1) {
-                //     this.$api.answer.un_agree_answer(this.$route.query.id).then(res => {
-                //         if (res.data.code === 1) {
-                //             this.select = 0;
-                //             this.agree--;
-                //         }
-                //     })
-                // } else {
-                //     this.$api.answer.agree_answer(this.$route.query.id).then(res => {
-                //         if (res.data.code === 1) {
-                //             this.select = 1;
-                //             this.agree++;
-                //         }
-                //     })
-                // }
-                this.agreethis=1
+                if (this.select === 1) {
+                    this.$api.answer.un_agree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 0;
+                            this.agree--;
+                        }
+                    })
+                } else {
+                    this.$api.answer.agree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 1;
+                            this.agree++;
+                        }
+                    })
+                }
+                // this.agreethis = 1
             },
             disagree_answer() {
-                // if (this.select === 2) {
-                //     this.$api.answer.un_disagree_answer(this.$route.query.id).then(res => {
-                //         if (res.data.code === 1) {
-                //             this.select = 0;
-                //             this.disagree--;
-                //         }
-                //     })
-                // } else {
-                //     this.$api.answer.disagree_answer(this.$route.query.id).then(res => {
-                //         if (res.data.code === 1) {
-                //             this.select = 2;
-                //             this.disagree++;
-                //         }
-                //     })
-                // }
-                this.agreethis=2
+                if (this.select === 2) {
+                    this.$api.answer.un_disagree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 0;
+                            this.disagree--;
+                        }
+                    })
+                } else {
+                    this.$api.answer.disagree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 2;
+                            this.disagree++;
+                        }
+                    })
+                }
+                // this.agreethis = 2
             },
             get_answer_agree_state() {
                 this.$api.answer.get_answer_agree_state(this.$route.query.id).then(res => {
@@ -460,6 +464,18 @@
     }
 
     .mid {
+        position: absolute;
+        left: 0;
+        width: 50%;
+        transition: all 0.5s;
+        /*animation: back_ 2s;*/
+        /*-moz-animation: back_ 2s; !* Firefox *!*/
+        /*-webkit-animation: back_ 2s; !* Safari 和 Chrome *!*/
+        /*-o-animation: back_ 2s; !* Opera *!*/
+    }
+    .mid2 {
+        position: absolute;
+        left: 50%;
         width: 50%;
         transition: all 0.5s;
         /*animation: back_ 2s;*/
@@ -469,6 +485,8 @@
     }
 
     .long {
+        position: absolute;
+        left: 0;
         width: 100%;
         transition: all 0.5s;
         /*animation: big 2s;*/
@@ -478,9 +496,24 @@
     }
 
     .hide {
+        position: absolute;
         width: 0;
         /*display: none;*/
         opacity: 0;
+        right: 100%;
+        visibility: hidden;
+        transition: all 0.5s;
+        /*animation: small_ 0.5s;*/
+        /*-moz-animation: small_ 0.5s; !* Firefox *!*/
+        /*-webkit-animation: small_ 0.5s; !* Safari 和 Chrome *!*/
+        /*-o-animation: small_ 0.5s; !* Opera *!*/
+    }
+    .hide2 {
+        position: absolute;
+        width: 0;
+        /*display: none;*/
+        opacity: 0;
+        left: 100%;
         visibility: hidden;
         transition: all 0.5s;
         /*animation: small_ 0.5s;*/
@@ -537,6 +570,9 @@
 
     .disagree {
         color: #ffcc00
+    }
+    .display{
+        display: none !important;
     }
 </style>
 <style>

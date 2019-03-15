@@ -69,6 +69,7 @@
                     request.onsuccess = function (e) {
                         let data = e.target.result;
                         that.$store.commit('updateToken', data.token);
+                        that.get_user()
                     };
                 }
 
@@ -85,7 +86,7 @@
                         this.loading=0;
                     }else if(this.loading<3){
                         this.loading++;
-                        this.get_user();
+                        setTimeout(this.get_user(),1000)
                     } else {
                         this.$store.commit('logout', this.$store.state);
                         this.$router.push({name:'login'})
@@ -99,7 +100,7 @@
         },
         created() {
             this.DB();
-            setTimeout(this.get_user(), 1100);
+            // setTimeout(this.get_user(), 1100);
             // 添加返回事件监听
         },
     }

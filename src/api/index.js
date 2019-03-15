@@ -344,7 +344,19 @@ const index = {
     group: {
         get_groups(token = store.state.token) {
             return axios.get(`${base.group}/get_groups`, {params: {token: token}})
-        }
+        },
+
+        get_group_message(id) {
+            return axios.get(`${base.group}/get_group_message`, {params: {token: store.state.token, group_id: id}})
+        },  // 获取群聊信息
+
+        send_group_message(data) {
+            return axios.post(`${base.group}/send_group_message`, qs.stringify(data))
+        },  // 发送群聊信息
+
+        get_group_members(id) {
+            return axios.get(`${base.group}/get_group_members`, {params: {group_id: id}})
+        },  // 获取当前群成员
     },
     board: {
         get_board_recommend(page, token = store.state.token) {
