@@ -9,7 +9,7 @@ export default new Vuex.Store({
     // User's token.
     token: Cookies.get('token'),
     userInfo: {
-      id: null, // 用户的唯一标识,用于向后台传参
+      user_id: null, // 用户的唯一标识,用于向后台传参
       head_portrait: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',  // 用户头像
       nickname: null,  // 用户昵称
       level: null,  // 用户等级
