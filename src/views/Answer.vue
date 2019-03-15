@@ -1,7 +1,7 @@
 <template>
     <div class="answer">
         <v-toolbar dark flat color="primary" app dense scroll-off-screen>
-            <v-btn icon @click="$router.push($route.query.redirect || {name: 'topic'})">
+            <v-btn icon @click="$router.back()">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
 
