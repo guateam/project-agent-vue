@@ -21,7 +21,6 @@
                 关闭
             </v-btn>
         </v-snackbar>
-
     </v-app>
 </template>
 
@@ -84,6 +83,7 @@
                         this.$store.commit('refreshUserInfo', res.data.data);
                         this.$store.commit('login', this.$store.state);
                         this.loading=0;
+                        this.login_state=false;
                     }else if(this.loading<3){
                         this.loading++;
                         setTimeout(this.get_user(),1000)

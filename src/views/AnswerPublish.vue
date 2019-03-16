@@ -20,7 +20,6 @@
         </div>
         <v-dialog
                 v-model="busy"
-                hide-overlay
                 persistent
                 width="300"
         >

@@ -123,13 +123,14 @@
                     if (res.data.code !== 1) {
                         this.$store.commit('showInfo', res.data.msg);
                     } else {
-                        this.chatData.push({
-                            content: this.message,
-                            time: new Date(),
-                            nickname: this.$store.state.userInfo.nickname,
-                            avatar: this.$store.state.userInfo.head_portrait,
-                            type: 1,
-                        });
+                        // this.chatData.push({
+                        //     content: this.message,
+                        //     time: new Date(),
+                        //     nickname: this.$store.state.userInfo.nickname,
+                        //     avatar: this.$store.state.userInfo.head_portrait,
+                        //     type: 1,
+                        // });
+                        this.get_more_message();
                         this.message = '';
                         this.scrollToBottom();
                     }
