@@ -118,7 +118,7 @@ height: 100%;border-radius: 50%">
                 <!--动态-->
                 <v-tab-item :key="'待审核'">
                     <v-layout row wrap
-                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em" v-for="item in users"
                               v-if="item.state===0">
                         <v-flex xs3>
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
@@ -151,7 +151,7 @@ height: 100%;border-radius: 50%">
                 <!--回答-->
                 <v-tab-item :key="'已审核'">
                     <v-layout row wrap
-                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em;" v-for="item in users"
                               v-if="item.state===1">
                         <v-flex xs3>
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
@@ -184,7 +184,7 @@ height: 100%;border-radius: 50%">
                 <!--专栏-->
                 <v-tab-item :key="'已拒绝'">
                     <v-layout row wrap
-                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em" v-for="item in users"
                               v-if="item.state===-1">
                         <v-flex xs3>
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
