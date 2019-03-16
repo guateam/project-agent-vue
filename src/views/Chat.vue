@@ -81,19 +81,20 @@
                 topHeight: document.body.clientHeight * 0.07,
                 bottomHeight: document.body.clientHeight * 0.1,
                 chatData: [
-                    {
-                        id: 1,
-                        type: 1,  // 收到的消息
-                        content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
-                    },
-                    {
-                        id: 2,
-                        type: 2,  // 发出的消息
-                        content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
-                    }
+                    // {
+                    //     id: 1,
+                    //     type: 1,  // 收到的消息
+                    //     content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
+                    // },
+                    // {
+                    //     id: 2,
+                    //     type: 2,  // 发出的消息
+                    //     content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
+                    // }
                 ],  // 聊天内容
                 userAvatar: '',  // 对方头像
                 myAvatar: this.$store.state.userInfo.head_portrait,  // 自己的头像
+                timer: undefined,
             }
         },
         methods: {
@@ -152,6 +153,32 @@
                     }
                 });
             },  // 初始化消息
+            get_more_message() {
+                this.$api.message.get_chat_box(this.userId).then(res => {
+                    if (res.data.code === 1) {
+                        let data = res.data.data;
+                        data.forEach(row => {
+                            let flag = true;
+                            this.chatData.forEach(value => {
+                                if (value.id === row.messageID) {
+                                    flag = false;
+                                }
+                            });
+                            if (flag) {
+                                this.chatData.push({
+                                    id: row.messageID,
+                                    time: row.post_time,
+                                    content: row.content,
+                                    type: row.poster === this.userId ? 2 : 1,
+                                });
+                            }
+                        });
+                        let div = document.getElementById('chat-area');
+                        div.scrollTop = div.scrollHeight;
+                    }
+                });
+                // console.info('tick')
+            },
             scrollToBottom() {
                 setTimeout(() => {
                     let div = document.getElementById('chat-area');
@@ -162,8 +189,13 @@
         mounted() {
             this.initWindow();
             this.initUserInfo();
-            setInterval(this.initMessage(), 1000);
+            this.initMessage();
+            this.timer = setInterval(this.get_more_message, 5000);
+
         },
+        beforeDestroy() {
+            window.clearInterval(this.timer);
+        }
     }
 </script>
 

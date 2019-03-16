@@ -14,7 +14,8 @@
                     </v-flex>
 
                     <v-flex shrink>
-                        <v-btn @click="$router.push({name: 'group-settings', params: {id: groupId, title: title}})" icon>
+                        <v-btn @click="$router.push({name: 'group-settings', params: {id: groupId, title: title}})"
+                               icon>
                             <v-icon>group</v-icon>
                         </v-btn>
                     </v-flex>
@@ -53,16 +54,16 @@
                     <v-layout>
                         <v-flex>
                             <v-text-field
-                                v-model="message"
-                                append-outer-icon="send"
-                                prepend-icon="insert_photo"
-                                solo
-                                flat
-                                single-line
-                                label="发送消息"
-                                type="text"
-                                @click:append-outer="sendMessage"
-                                @click:prepend="sendImage"
+                                    v-model="message"
+                                    append-outer-icon="send"
+                                    prepend-icon="insert_photo"
+                                    solo
+                                    flat
+                                    single-line
+                                    label="发送消息"
+                                    type="text"
+                                    @click:append-outer="sendMessage"
+                                    @click:prepend="sendImage"
                             ></v-text-field>
                         </v-flex>
                     </v-layout>
@@ -83,28 +84,29 @@
                 topHeight: document.body.clientHeight * 0.07,
                 bottomHeight: document.body.clientHeight * 0.1,
                 chatData: [
-                    {
-                        id: 1,
-                        type: 2,  // 收到的消息
-                        nickname: '其他人',  // 昵称
-                        avatar: this.$store.state.userInfo.head_portrait,  // 头像
-                        content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
-                    },
-                    {
-                        id: 3,
-                        type: 2,  // 收到的消息
-                        nickname: '不一样的其他人',  // 昵称
-                        avatar: this.$store.state.userInfo.head_portrait,  // 头像
-                        content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
-                    },
-                    {
-                        id: 2,
-                        type: 1,  // 发出的消息
-                        nickname: '拉拉人',
-                        avatar: this.$store.state.userInfo.head_portrait,
-                        content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
-                    }
+                    // {
+                    //     id: 1,
+                    //     type: 2,  // 收到的消息
+                    //     nickname: '其他人',  // 昵称
+                    //     avatar: this.$store.state.userInfo.head_portrait,  // 头像
+                    //     content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
+                    // },
+                    // {
+                    //     id: 3,
+                    //     type: 2,  // 收到的消息
+                    //     nickname: '不一样的其他人',  // 昵称
+                    //     avatar: this.$store.state.userInfo.head_portrait,  // 头像
+                    //     content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
+                    // },
+                    // {
+                    //     id: 2,
+                    //     type: 1,  // 发出的消息
+                    //     nickname: '拉拉人',
+                    //     avatar: this.$store.state.userInfo.head_portrait,
+                    //     content: 'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
+                    // }
                 ],  // 聊天内容
+                timer: undefined,
             }
         },
         methods: {
@@ -159,6 +161,32 @@
                     }
                 });
             },  // 初始化消息
+            get_more_message() {
+                this.$api.group.get_group_message(this.groupId).then(res => {
+                    if (res.data.code === 1) {
+                        let data = res.data.data;
+                        data.forEach(row => {
+                            let flag = true;
+                            this.chatData.forEach(value => {
+                                if (value.id === row.id) {
+                                    flag = false;
+                                }
+                            });
+                            if (flag) {
+                                this.chatData.push({
+                                    id: row.id,
+                                    time: row.time,
+                                    content: row.content,
+                                    avatar: row.headportrait,
+                                    nickname: row.nickname,
+                                    type: row.userID === this.$store.state.userInfo.user_id ? 1 : 2,
+                                });
+                            }
+                        });
+                        this.scrollToBottom();
+                    }
+                });
+            },
             scrollToBottom() {
                 setTimeout(() => {
                     let div = document.getElementById('chat-area');
@@ -168,8 +196,11 @@
         },
         mounted() {
             this.initWindow();
-            setInterval(this.initMessage(), 1000);
+            this.timer = setInterval(this.get_more_message, 5000);
         },
+        beforeDestroy() {
+            window.clearInterval(this.timer);
+        }
     }
 </script>
 
