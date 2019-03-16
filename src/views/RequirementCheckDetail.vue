@@ -72,7 +72,7 @@
             <v-layout>
                 <v-container>
                     <v-flex sx6>
-                        <v-btn block color="primary" @click="$router.push({name:'group',query:{id:data.group}})">跳转附属群
+                        <v-btn block color="primary" @click="$router.push({name:'group',params:{ id:data.group, title: data.nickname}})">跳转附属群
                         </v-btn>
                     </v-flex>
                     <v-flex sx6>

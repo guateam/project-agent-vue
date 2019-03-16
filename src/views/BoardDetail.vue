@@ -137,7 +137,7 @@ height: 100%;border-radius: 50%">
                     <h2 style="color: white">您已报名</h2>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===1"
-                        @click="$router.push({name:'group',query:{id:data.group}})">
+                        @click="$router.push({name:'group',params:{id:data.group, title: data.nickname}})">
                     <h2 style="color: white">您已加入(点击跳转到对应群组)</h2>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===-1">

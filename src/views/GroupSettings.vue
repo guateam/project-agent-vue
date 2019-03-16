@@ -28,7 +28,43 @@
 
                         <v-divider></v-divider>
 
-                        <v-flex xs4>成员</v-flex>
+                        <v-flex xs4>
+                            <v-container fill-height>
+                                <v-layout justify-space-around column fill-height>
+                                    <v-flex shrink>
+                                        <v-layout>
+                                            <v-flex v-for="member in (memberList.length > 3? memberList.slice(0, 4): memberList)" :key="member.userId" xs3>
+                                                <v-avatar size="65">
+                                                    <img
+                                                        :src="member.avatar"
+                                                    >
+                                                </v-avatar>
+                                            </v-flex>
+
+                                            <v-flex v-if="memberList.length <= 3" xs3>
+                                                <v-icon size="65">add_circle</v-icon>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-flex>
+
+                                    <v-flex shrink>
+                                        <v-layout v-if="memberList.length > 3">
+                                            <v-flex v-for="member in (memberList.length < 7)? memberList.slice(4): memberList.slice(4, 7)" :key="member.userId" xs3>
+                                                <v-avatar size="65">
+                                                    <img
+                                                        :src="member.avatar"
+                                                    >
+                                                </v-avatar>
+                                            </v-flex>
+
+                                            <v-flex xs3>
+                                                <v-icon size="65">add_circle</v-icon>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </v-flex>
 
                         <v-divider></v-divider>
 
@@ -50,7 +86,9 @@
 
                         <v-divider></v-divider>
 
-                        <v-flex grow>管理选项</v-flex>
+                        <v-flex grow>
+                            <!--管理选项-->
+                        </v-flex>
 
                         <v-flex xs2>
                             <v-btn color="error" block>退出群组</v-btn>

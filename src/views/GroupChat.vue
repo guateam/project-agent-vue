@@ -64,6 +64,7 @@
                                     type="text"
                                     @click:append-outer="sendMessage"
                                     @click:prepend="sendImage"
+                                    @click:focus="scrollToBottom"
                             ></v-text-field>
                         </v-flex>
                     </v-layout>
