@@ -13,7 +13,7 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-import": "^1.11.0",
     "babel-preset-env": "^1.7.0",
-    "better-scroll": "^1.14.1",
+    "better-scroll": "^1.15.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "file-loader": "^3.0.1",
