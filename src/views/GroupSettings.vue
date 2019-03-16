@@ -91,7 +91,7 @@
                         </v-flex>
 
                         <v-flex xs2>
-                            <v-btn color="error" block>退出群组</v-btn>
+                            <v-btn @click="exitGroup" color="error" block>退出群组</v-btn>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -130,6 +130,19 @@
                     }
                 })
             },  // 初始化成员
+
+            exitGroup() {
+                this.$api.group.exit_group(this.groupId).then(res => {
+                    if (res.data.code === 1) {
+                        this.$router.push({name: 'message'});  // 返回消息页
+                    } else {
+                        this.$store.commit('showInfo', res.data.msg);  // 显示错误提示
+                    }
+                }).catch(error => {
+                    this.$store.commit('showInfo', '网络错误，详细请看控制台');
+                    window.console.log(error);
+                })
+            },  // 退出群组
         },
 
         mounted() {
