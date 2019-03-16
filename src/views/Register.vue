@@ -29,7 +29,7 @@
                             <v-text-field
                                     dark
                                     v-model="email"
-                                    label="你的手机号码是？"
+                                    label="你的手机号或邮箱是？"
                                     :error-messages="emailErrors"
                                     @input="$v.email.$touch()"
                                     @blur="$v.email.$touch()"
