@@ -196,7 +196,7 @@ height: 100%;border-radius: 50%">
             join() {
                 this.$api.board.sign_to_demand(this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
-                        this.sign = res.data.data.state;
+                        this.sign = 0;
                     }
                 })
             },
@@ -204,6 +204,9 @@ height: 100%;border-radius: 50%">
                 this.$api.board.get_sign_state(this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
                         this.sign = 0;
+                        if (res.data.data.state === 1) {
+                            this.sign = 1;
+                        }
                     } else if (this.data.userID === this.$store.state.userInfo.user_id) {
                         this.sign = 1;
                     }
