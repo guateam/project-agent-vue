@@ -49,26 +49,6 @@
         <v-footer app>
             <bottomNav :bottom-nav="'topic'"></bottomNav>
         </v-footer>
-        <v-dialog
-                v-model="login_state"
-                persistent
-                width="300"
-                style="z-index: 9999 !important;"
-        >
-            <v-card
-                    color="primary"
-                    dark
-            >
-                <v-card-text>
-                    加载中···
-                    <v-progress-linear
-                            indeterminate
-                            color="white"
-                            class="mb-0"
-                    ></v-progress-linear>
-                </v-card-text>
-            </v-card>
-        </v-dialog>
     </div>
 </template>
 
@@ -96,7 +76,6 @@
                 busy: false,
                 timeout: 0,
                 category_done: false,
-                login_state:true
             }
         },
 
@@ -132,7 +111,7 @@
                         this.page++;
                         this.busy = false;
                         this.timeout = 0;
-                        this.login_state=false;
+                        this.$store.commit('closeDialog');
                     } else {
                         if (this.timeout < 3) {
                             this.get_recommend();
@@ -140,7 +119,7 @@
                         } else {
                             // this.snackbar=true;
                             // this.text='连接超时，请检查网络'
-                            this.login_state=false;
+                            this.$store.commit('closeDialog');
                             this.$store.commit('showInfo', '连接超时，请检查网络');
                             this.$router.push({name: 'login'})
                         }
