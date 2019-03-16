@@ -109,13 +109,7 @@ export default new Router({
                     meta: {requireLogin: true},
                     component: () => import('./views/Verified.vue')
                 },
-                // 积分详情
-                {
-                    path: 'exp-detail',
-                    name: 'exp-detail',
-                    meta: {requireLogin: true},
-                    component: () => import('./views/ExpDetail.vue')
-                },
+
                 // 历史发布
                 {
                     path: 'historical-post',
@@ -386,6 +380,13 @@ export default new Router({
             path: '/sign-board',
             name: 'sign-board',
             component: () => import('./views/SignBoard.vue')
-        }
+        },
+        // 积分详情
+        {
+            path: 'exp-detail',
+            name: 'exp-detail',
+            meta: {requireLogin: true},
+            component: () => import('./views/ExpDetail.vue')
+        },
     ],
 });
