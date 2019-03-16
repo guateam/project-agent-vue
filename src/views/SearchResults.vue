@@ -68,7 +68,7 @@
 
                     <div class="load-more-normal" v-infinite-scroll="loadMore"
                          infinite-scroll-disabled="loading_A" infinite-scroll-distance="0"
-                         v-show="loading_A" v-if="questions.length>0">
+                         v-show="loading_A&&no_A" v-if="questions.length>0">
                         <h3>
                             <v-progress-circular
                                     indeterminate
@@ -112,7 +112,7 @@
                         </v-layout>
                     </v-container>
                     <div class="load-more-normal" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="loading_B" infinite-scroll-distance="0" v-show="loading_B"
+                         infinite-scroll-disabled="loading_B" infinite-scroll-distance="0" v-show="loading_B&&no_B"
                          v-if="articles.length>0">
                         <h3>
                             <v-progress-circular
@@ -152,7 +152,7 @@
                         </template>
                     </v-list>
                     <div class="load-more-normal" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="loading_C" infinite-scroll-distance="0" v-show="loading_C"
+                         infinite-scroll-disabled="loading_C" infinite-scroll-distance="0" v-show="loading_C&&no_C"
                          v-if="users.length>0">
                         <h3>
                             <v-progress-circular
@@ -213,6 +213,10 @@
 
                 //第一次进入页面的加载
                 first_loading: true,
+                no_A: true,
+                no_B: true,
+                no_C: true,
+                nodata: false,
             }
         },
 
@@ -289,6 +293,12 @@
                         let nodata = false;
                         if (res.data.data.length <= 0) {
                             nodata = true;
+                            if (now_active === 0)
+                                that.no_A = false;
+                            else if (now_active === 1)
+                                that.no_B = false;
+                            else if (now_active === 2)
+                                that.no_C = false;
                         }
 
                         //根据tab将数据追加到指定容器中
