@@ -1,7 +1,7 @@
 <template>
     <div class="answer">
         <v-toolbar dark flat color="primary" app dense scroll-off-screen>
-            <v-btn icon @click="$router.push($route.query.redirect || {name: 'topic'})">
+            <v-btn icon @click="$router.back()">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
 
@@ -23,7 +23,6 @@
         <!--分隔线-->
         <div style="width: 100%;height: 12px;background-color: #EBEBEB;"></div>
 
-        <!--回答者的用户信息关注等，这部分dom写的太复杂了所以先直接把style全写在template里面-->
 
         <div>
             <div style="display: flex;justify-content: space-between;margin-top: 1em;margin-bottom: 1em">
@@ -31,7 +30,8 @@
                      @click="$router.push({name: 'detail', query: {redirect: $route.fullPath, id: user_id}})">
                     <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center">
                         <div style="width: 60px;height: 60px;border-radius: 50%">
-                            <img :src="avatar" alt="" style="width: 100%;height: 100%;border-radius: 50%">
+                            <img :src="avatar" alt=""
+                                 style="width: 100%;height: 100%;border-radius: 50%;object-fit: cover">
                         </div>
                     </div>
                     <div style="display: flex;flex-direction: column;justify-content: space-between;">
@@ -61,38 +61,55 @@
 
         <!--回答的答案-->
 
-        <div class="intro" style="padding-left: 1em; padding-right: 1em;">
-            <p v-html="intro.replace(/\n/g, '<br>')"></p>
+        <div class="intro" style="padding-left: 1em; padding-right: 1em;margin-bottom: 1em;">
+            <p v-html="intro.replace(/\n/g, '<br>')" style="font-size: medium"></p>
         </div>
-
-        <!--评论这部分,是有组件的，但是这里不用，仅获取前三个类似热评一样的东西，不然样式不好写-->
+        <v-divider></v-divider>
         <div style="width: 100%">
-            <ButtonGroup style="width: 100%;height: 6em;margin-top: 2em">
-                <Button type="warning" icon="md-arrow-dropup" :class="{mid:select===0,long:select===1,hide:select===2}"
+            <ButtonGroup
+                    style="width: 100%;margin-top: 1em;position:relative;overflow: hidden;height: 5em;margin-bottom: 1em">
+                <Button type="warning" icon="md-arrow-dropup" style="height: 4em"
+                        :class="{mid:select===0,long:select===1,hide:select===2,display:hidden1}"
                         @click="agree_answer()" :hidden="select===2">{{select!==0?'已':''}}点赞 {{agree}}
                 </Button>
-                <Button icon="md-arrow-dropdown" :class="{mid:select===0,long:select===2,hide:select===1}"
+                <Button icon="md-arrow-dropdown" style="height: 4em"
+                        :class="{mid2:select===0,long:select===2,hide2:select===1,display:hidden2}"
                         @click="disagree_answer()" :hidden="select===1">{{select!==0?'已':''}}点踩 {{disagree}}
                 </Button>
             </ButtonGroup>
         </div>
+
+        <!--<div style="width: 100%;height: 5em;border-top: 1px #eee solid;border-bottom: 1px #eee solid;display: flex;line-height: 1.5;">-->
+        <!--<div style="height:100%;flex: 0 0 50%;border-right: 1px #eee solid;display: flex;align-items: center;justify-content: center;" @click="agree_answer()">-->
+        <!--<v-icon style="width: 30px" :class="select===1?'agree':'no'">thumb_up_alt</v-icon>-->
+        <!--<span style="font-size: 1.5em" :class="select===1?'agree':'no'">赞同</span>-->
+        <!--</div>-->
+        <!--<div style="height:100%;flex: 0 0 50%;border-right: 1px #eee solid;display: flex;align-items: center;justify-content: center;" @click="disagree_answer()">-->
+        <!--<v-icon style="width: 30px" :class="select===2?'disagree':'no'">thumb_down_alt</v-icon>-->
+        <!--<span style="font-size: 1.5em" :class="select===2?'agree':'no'">反对</span>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class="comment" style="padding-left: 1em; padding-right: 1em;">
             <h2>评论</h2>
-            <router-link :to="{name: 'comment', params: {id: $route.params.id,type:1}}">
-                <div v-for="(comment, index) in comments" :key="index" class="comment-item">
-                    <div class="comment-user">
-                        <img :src="comment.avatar" alt=""><!-- 头像 -->
-                        <span class="comment-user-name">{{ comment.nickname }}</span>
-                        <!--<span class="comment-user-tag">从业者</span>-->
-                        <div class="comment-like"><span class="subheading">{{ comment.agree }}</span>
-                            <v-icon style="height: 30px;margin-left: 3px">thumb_up</v-icon>
-                        </div>
-                    </div>
-                    <div>
-                        <p>{{ comment.content.length > 20 ? comment.content.substring(0, 20) + '...' : comment.content
-                            }}</p>
-                    </div>
+            <div v-for="(comment, index) in comments" :key="index" class="comment-item" v-if="index<3">
+                <div class="comment-user" @click="$router.push({name:'detail',query:{id:comment.id}})">
+                    <img :src="comment.avatar" alt=""><!-- 头像 -->
+                    <h2>{{ comment.nickname }}</h2>
+                    <span class="comment-user-tag">{{comment.usergroup.text}}</span>
+                    <!--<div class="comment-like"><span class="subheading">{{ comment.agree }}</span>-->
+                    <!--<v-icon style="height: 30px;margin-left: 3px">thumb_up</v-icon>-->
+                    <!--</div>-->
+
                 </div>
+                <div style="margin-left: 4em;margin-bottom: 1em">
+                    <p style="font-size: medium">{{ comment.content.length > 20 ? comment.content.substring(0, 20) +
+                        '...' : comment.content
+                        }}</p>
+                </div>
+            </div>
+            <router-link :to="{name: 'comment', query: {id: $route.query.id,type:1}}" v-if="comments.length>=3">
+                <h2 style="align-items: center;color: #ffcc00;text-align: center;margin: 1em;">加载更多</h2>
+                <v-divider></v-divider>
             </router-link>
         </div>
 
@@ -130,6 +147,7 @@
         name: "Answer",
         data() {
             return {
+                agreethis: 0,
                 topicTitle: '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？',  // 话题标题
                 intro: '先回答大家最关心的两个问题：\n' +
                     '1、我们可以实现芯片彻底国产化了吗？\n' +
@@ -152,31 +170,18 @@
                 desc: '杭州光学专家',
                 latestEdit: '19:00',
                 warning: ['原创', '不可转载'],
-                avatar: './head.png',
+                avatar: 'https://www.asgardusk.com/images/none.png',
                 comments: [
                     {
                         agree: 1,
-                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
-                        create_time: "Sat, 29 Dec 2018 11:15:40 GMT",
+                        content: "加载中",
+                        create_time: "加载中",
                         avatar: "",
                         id: 1,
-                        nickname: "拉拉人"
-                    },
-                    {
-                        agree: 0,
-                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
-                        create_time: "Sat, 15 Dec 2018 19:08:09 GMT",
-                        avatar: "",
-                        id: 1,
-                        nickname: "拉拉人"
-                    },
-                    {
-                        agree: 0,
-                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
-                        create_time: "Sat, 15 Dec 2018 19:08:36 GMT",
-                        avatar: "",
-                        id: 1,
-                        nickname: "拉拉人"
+                        nickname: "加载中",
+                        usergroup: {
+                            text: ''
+                        }
                     },
                 ],
                 name: '',
@@ -187,6 +192,8 @@
                 select: 0,
                 user_id: 0,
                 follow: false,
+                hidden1: false,
+                hidden2: false,
             }
         },
 
@@ -222,7 +229,8 @@
                                 avatar: res.data.data[i].user_headportrait,
                                 id: res.data.data[i].user_id,
                                 nickname: res.data.data[i].user_nickname,
-                                agree: res.data.data[i].agree
+                                agree: res.data.data[i].agree,
+                                usergroup: res.data.data[i].usergroup,
                             })
                         }
                     }
@@ -281,6 +289,7 @@
                         }
                     })
                 }
+                // this.agreethis = 1
             },
             disagree_answer() {
                 if (this.select === 2) {
@@ -298,6 +307,7 @@
                         }
                     })
                 }
+                // this.agreethis = 2
             },
             get_answer_agree_state() {
                 this.$api.answer.get_answer_agree_state(this.$route.query.id).then(res => {
@@ -447,6 +457,19 @@
     }
 
     .mid {
+        position: absolute;
+        left: 0;
+        width: 50%;
+        transition: all 0.5s;
+        /*animation: back_ 2s;*/
+        /*-moz-animation: back_ 2s; !* Firefox *!*/
+        /*-webkit-animation: back_ 2s; !* Safari 和 Chrome *!*/
+        /*-o-animation: back_ 2s; !* Opera *!*/
+    }
+
+    .mid2 {
+        position: absolute;
+        left: 50%;
         width: 50%;
         transition: all 0.5s;
         /*animation: back_ 2s;*/
@@ -456,6 +479,8 @@
     }
 
     .long {
+        position: absolute;
+        left: 0;
         width: 100%;
         transition: all 0.5s;
         /*animation: big 2s;*/
@@ -465,9 +490,25 @@
     }
 
     .hide {
+        position: absolute;
         width: 0;
         /*display: none;*/
         opacity: 0;
+        right: 100%;
+        visibility: hidden;
+        transition: all 0.5s;
+        /*animation: small_ 0.5s;*/
+        /*-moz-animation: small_ 0.5s; !* Firefox *!*/
+        /*-webkit-animation: small_ 0.5s; !* Safari 和 Chrome *!*/
+        /*-o-animation: small_ 0.5s; !* Opera *!*/
+    }
+
+    .hide2 {
+        position: absolute;
+        width: 0;
+        /*display: none;*/
+        opacity: 0;
+        left: 100%;
         visibility: hidden;
         transition: all 0.5s;
         /*animation: small_ 0.5s;*/
@@ -512,6 +553,22 @@
         align-items: center;
         justify-content: center;
         border-radius: 5px;
+    }
+
+    .agree {
+        color: #ffcc00
+    }
+
+    .no {
+        color: rgba(0, 0, 0, .54);
+    }
+
+    .disagree {
+        color: #ffcc00
+    }
+
+    .display {
+        display: none !important;
     }
 </style>
 <style>

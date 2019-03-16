@@ -75,7 +75,7 @@
                 page: 1,
                 busy: false,
                 timeout: 0,
-                category_done:false,
+                category_done: false,
             }
         },
 
@@ -111,9 +111,6 @@
                         this.page++;
                         this.busy = false;
                         this.timeout = 0;
-                    } else if (res.data.code === 0) {
-                        this.$router.push({name: 'login'});
-                        // this.$store.commit('showInfo', '请先登录！');
                     } else {
                         if (this.timeout < 3) {
                             this.get_recommend();
@@ -165,7 +162,7 @@
                     this.get_recommend();
                 } else {
                     //获取目前的分类页码数
-                    if(!this.category_done)return;
+                    if (!this.category_done) return;
                     let cate_page = 0;
                     cate_page = this.category[this.tabs - 1]['page'] + 1;
                     this.get_classify_question(this.tabs - 1, cate_page)

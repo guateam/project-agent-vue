@@ -159,7 +159,19 @@ export default new Router({
         {
             path: '/chat',
             name: 'chat',
-            component: () => import('./views/NewChat.vue'),
+            component: () => import('./views/Chat.vue'),
+        },
+        // 群聊
+        {
+            path: '/group-chat/:id/:title',
+            name: 'group-chat',
+            component: () => import('./views/GroupChat.vue')
+        },
+        // 群聊设置
+        {
+            path: '/group-settings/:id/:title',
+            name: 'group-settings',
+            component: () => import('./views/GroupSettings.vue')
         },
         // 消息
         {
