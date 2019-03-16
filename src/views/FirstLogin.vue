@@ -24,7 +24,7 @@
                             </v-flex>
                         </v-layout>
                     </v-flex>
-                    <v-flex grow>
+                    <v-flex row>
                         <form class="form">
                             <v-text-field
                                     dark
@@ -52,10 +52,12 @@
                                     </div>
                                 </Upload>
                             </div>
-                            <div v-if="headportrait">
+                            <div v-if="headportrait" style="align-items: center">
                                 <h2 style="color:lightgray;">头像预览（点击重新上传）</h2>
-                                <img :src="formItem.headportrait" style="width: 100%;height: auto;"
+                                <div style="width:100%">
+                                <img :src="formItem.headportrait" style="width: 50%;height: 50vw;display:table-cell;border-radius: 5px;border: solid #ffcc00 3px;margin-left: auto;margin-right: auto;margin-top: 1em;margin-bottom: 1em"
                                      alt="头像预览" @click="remove">
+                                </div>
                             </div>
                         </form>
                         <v-btn @click="set_account_info" color="primary" block large>立即设置</v-btn>

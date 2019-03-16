@@ -11,7 +11,7 @@
                     <v-flex shrink>
                         <v-layout justify-center>
                             <v-flex shrink>
-                                <img src="../assets/logo.png" width="120" height="120">
+                                <img src="../assets/logo.png" width="120" height="120" style="width: 120px;height: 120px">
                             </v-flex>
                         </v-layout>
                     </v-flex>
@@ -29,7 +29,7 @@
                             <v-text-field
                                     dark
                                     v-model="email"
-                                    label="你的手机号码是？"
+                                    label="你的手机号或邮箱是？"
                                     :error-messages="emailErrors"
                                     @input="$v.email.$touch()"
                                     @blur="$v.email.$touch()"
