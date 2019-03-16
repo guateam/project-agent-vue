@@ -21,6 +21,28 @@
                 关闭
             </v-btn>
         </v-snackbar>
+
+        <v-dialog
+            v-model="$store.state.login_state"
+            persistent
+            width="300"
+            style="z-index: 9999 !important;"
+        >
+            <v-card
+                color="primary"
+                dark
+            >
+                <v-card-text>
+                    加载中···
+                    <v-progress-linear
+                        indeterminate
+                        color="white"
+                        class="mb-0"
+                    ></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
     </v-app>
 </template>
 
