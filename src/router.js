@@ -388,5 +388,12 @@ export default new Router({
             meta: {requireLogin: true},
             component: () => import('./views/ExpDetail.vue')
         },
+        // 激活账号
+        {
+            path: 'activate-account',
+            name: 'activate-account',
+            meta: {requireLogin: true},
+            component: () => import('./views/ActivateAccount.vue')
+        },
     ],
 });
