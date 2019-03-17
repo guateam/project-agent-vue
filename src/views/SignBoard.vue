@@ -60,6 +60,9 @@
             get_my_demand() {
                 this.$api.board.get_my_demand().then(res => {
                     if (res.data.code === 1) {
+                        res.data.data.forEach(value => {
+                            value['content'] = value['content'].replace(/<[^>]+>/g, '');
+                        });
                         this.demands = res.data.data;
                         this.busy = false;
                     }
