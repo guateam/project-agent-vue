@@ -198,6 +198,7 @@
         },
         mounted() {
             this.initWindow();
+            this.initMessage();
             this.timer = setInterval(this.get_more_message, 5000);
         },
         beforeDestroy() {
@@ -235,4 +236,5 @@
     .v-input__control {
         height: 64px;
     }
+
 </style>

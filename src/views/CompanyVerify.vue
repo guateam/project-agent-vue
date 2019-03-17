@@ -49,16 +49,16 @@
       </v-flex>
       <v-flex xs4>
         <v-container>
-          <Upload
+          <Uploadq
               :format="['jpg','jpeg','png']"
               type="drag"
               :data="{token: $store.state.token}"
-              action="https://hanerx.tk:5000/api/enterprise/reduest_upgrade">
+              action="https://hanerx.tk:5000/api/enterprise/request_upgrade">
             <div style="padding: 20px 0">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>点击上传证书</p>
             </div>
-          </Upload>
+          </Uploadq>
         </v-container>
       </v-flex>
     </v-layout>

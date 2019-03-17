@@ -72,7 +72,7 @@
             <v-layout>
                 <v-container>
                     <v-flex sx6>
-                        <v-btn block color="primary" @click="$router.push({name:'group',params:{ id:data.group, title: data.nickname}})">跳转附属群
+                        <v-btn block color="primary" @click="$router.push({name:'group-chat',params:{ id:data.group, title: data.title}})">跳转附属群
                         </v-btn>
                     </v-flex>
                     <v-flex sx6>
@@ -120,7 +120,7 @@ height: 100%;border-radius: 50%">
                     <v-layout row wrap
                               style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em" v-for="item in users"
                               v-if="item.state===0">
-                        <v-flex xs3>
+                        <v-flex xs3 @click="$router.push({name:'detail',query:{id:item.userID}})">
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                                 <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
@@ -153,7 +153,7 @@ height: 100%;border-radius: 50%">
                     <v-layout row wrap
                               style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em;" v-for="item in users"
                               v-if="item.state===1">
-                        <v-flex xs3>
+                        <v-flex xs3 @click="$router.push({name:'detail',query:{id:item.userID}})">
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                                 <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
@@ -186,7 +186,7 @@ height: 100%;border-radius: 50%">
                     <v-layout row wrap
                               style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em" v-for="item in users"
                               v-if="item.state===-1">
-                        <v-flex xs3>
+                        <v-flex xs3 @click="$router.push({name:'detail',query:{id:item.userID}})">
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                                 <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
