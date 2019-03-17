@@ -79,7 +79,8 @@
         <v-divider></v-divider>
         <div style="padding: 1em;line-height: 1.5;">
             <h3 style="margin-bottom: 1.1em;font-size: 1.2em">作者简介</h3>
-            <v-layout row wrap @click="$router.push({name:'detail',query:{redirect: $route.fullPath, id:data.user_id}})">
+            <v-layout row wrap
+                      @click="$router.push({name:'detail',query:{redirect: $route.fullPath, id:data.user_id}})">
                 <v-flex xs3>
                     <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                         <img :src="data.head_portrait" alt="" style="width: 100%;
@@ -245,6 +246,10 @@ height: 100%;border-radius: 50%">
                 this.$api.article.pay_article(this.$route.query.id).then(res => {
                     if (res.data.code === 1 || res.data.code === 2) {
                         this.$router.push({name: 'article-read', query: {id: this.$route.query.id}})
+                    } else if (res.data.code === -2) {
+                        this.$store.commit('showInfo', '余额不足！');
+                    } else {
+                        this.$store.commit('showInfo', res.data.msg);
                     }
                 })
             },
