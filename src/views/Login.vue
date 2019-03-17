@@ -137,6 +137,7 @@
                         }
                     })
                 }
+                this.$store.commit('closeDialog');
             },
             DB(data) {
                 let myDB = {

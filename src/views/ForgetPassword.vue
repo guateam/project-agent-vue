@@ -75,6 +75,10 @@
 
         methods: {
             sendCode() {
+                if (this.account === '') {
+                    this.$store.commit('showInfo', '请输入邮箱或手机号码');
+                    return
+                }
                 this.$api.account.send_check_code(this.account).then(res => {
                     if (res.data.code === 1) {
                         this.btnText = '再次发送';
