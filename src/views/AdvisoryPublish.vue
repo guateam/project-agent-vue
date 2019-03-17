@@ -4,16 +4,16 @@
             <div style="width: 45px;height: 45px;margin-left: 14px;display: flex;align-items: center;justify-content: center;">
                 <v-icon large color="white" @click="$router.back()">keyboard_arrow_left</v-icon>
             </div>
-            <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">发布需求</span>
+            <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">付费咨询</span>
             <div style="width: 45px;height: 45px;margin-right: 14px;display: flex;align-items: center;justify-content: center;color: #fff;font-size: 17px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">
                 <v-layout row justify-center>
                     <v-dialog v-model="dialog" persistent fullscreen="">
                         <template v-slot:activator="{ on }">
-                            <div v-on="on" style="line-height: 1em;">发布</div>
+                            <div v-on="on" style="line-height: 1em;">发送</div>
                         </template>
                         <v-card>
                             <v-card-title>
-                                <span class="headline">确认发布</span>
+                                <span class="headline">确认发送</span>
                             </v-card-title>
                             <v-card-text>
                                 <Form :model="formItem">
@@ -51,7 +51,6 @@
         </div>
         <v-dialog
                 v-model="busy"
-                hide-overlay
                 persistent
                 width="300"
         >

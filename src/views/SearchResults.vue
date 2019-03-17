@@ -35,6 +35,7 @@
                     solo
                     flat
                     dense
+                    @keyup.enter="research()"
             >
                 <template v-slot:no-data>
                     <v-list-tile>

@@ -111,6 +111,7 @@
                         this.page++;
                         this.busy = false;
                         this.timeout = 0;
+                        this.$store.commit('closeDialog');
                     } else {
                         if (this.timeout < 3) {
                             this.get_recommend();
@@ -118,7 +119,9 @@
                         } else {
                             // this.snackbar=true;
                             // this.text='连接超时，请检查网络'
+                            this.$store.commit('closeDialog');
                             this.$store.commit('showInfo', '连接超时，请检查网络');
+                            this.$router.push({name: 'login'})
                         }
                     }
                 })

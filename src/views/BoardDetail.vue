@@ -137,7 +137,7 @@ height: 100%;border-radius: 50%">
                     <h2 style="color: white">您已报名</h2>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===1"
-                        @click="$router.push({name:'group',query:{id:data.group}})">
+                        @click="$router.push({name:'group',params:{id:data.group, title: data.nickname}})">
                     <h2 style="color: white">您已加入(点击跳转到对应群组)</h2>
                 </v-flex>
                 <v-flex xs8 style="background-color: orange;height: 100%;line-height: 48px" v-if="sign===-1">
@@ -196,7 +196,7 @@ height: 100%;border-radius: 50%">
             join() {
                 this.$api.board.sign_to_demand(this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
-                        this.sign = res.data.data.state;
+                        this.sign = 0;
                     }
                 })
             },
@@ -204,6 +204,9 @@ height: 100%;border-radius: 50%">
                 this.$api.board.get_sign_state(this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
                         this.sign = 0;
+                        if (res.data.data.state === 1) {
+                            this.sign = 1;
+                        }
                     } else if (this.data.userID === this.$store.state.userInfo.user_id) {
                         this.sign = 1;
                     }

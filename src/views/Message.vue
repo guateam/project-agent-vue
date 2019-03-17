@@ -191,11 +191,11 @@
                         subtitle: "神奇的我等十人回复了你的评论"
                     },
                     {divider: true, inset: true},
-                    {
-                        icon: 'group',
-                        title: '群组',
-                        subtitle: "用户123邀请你加入清纯女大学生激情聊"
-                    }
+                    // {
+                    //     icon: 'group',
+                    //     title: '群组',
+                    //     subtitle: "用户123邀请你加入清纯女大学生激情聊"
+                    // }
                 ],
                 groupList: [
                     {

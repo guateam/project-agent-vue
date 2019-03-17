@@ -22,6 +22,27 @@
             </v-btn>
         </v-snackbar>
 
+        <v-dialog
+            v-model="$store.state.login_state"
+            persistent
+            width="300"
+            style="z-index: 9999 !important;"
+        >
+            <v-card
+                color="primary"
+                dark
+            >
+                <v-card-text>
+                    加载中···
+                    <v-progress-linear
+                        indeterminate
+                        color="white"
+                        class="mb-0"
+                    ></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
     </v-app>
 </template>
 
@@ -84,6 +105,7 @@
                         this.$store.commit('refreshUserInfo', res.data.data);
                         this.$store.commit('login', this.$store.state);
                         this.loading=0;
+                        this.login_state=false;
                     }else if(this.loading<3){
                         this.loading++;
                         setTimeout(this.get_user(),1000)

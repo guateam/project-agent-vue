@@ -65,7 +65,7 @@ height: 100%;border-radius: 50%">
         <!--占位的盒子   END-->
         <div class="chatinput">
             <div class="box">
-                <input type="text" class="chat" placeholder="评论" autofocus v-model="word">
+                <input type="text" class="chat" placeholder="评论" v-model="word">
                 <!--<span class="iconfont emoji-icon">collections</span>-->
                 <button :class="word?'enSend':'disSend'" :disabled="!word" @click="send">发送</button>
             </div>
