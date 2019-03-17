@@ -190,8 +190,8 @@
         name: "advisory",
         data() {
             return {
-                userId: 1,  // 当前页面对应的用户id
-                // userId: this.$route.query.id,  // 当前页面对应的用户id
+                // userId: 1,  // 当前页面对应的用户id
+                userId: this.$route.query.id,  // 当前页面对应的用户id
                 userInfo: {
                     isFollow: false,  // 是否关注
                     nickname: '未知用户',  // 昵称

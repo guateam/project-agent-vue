@@ -132,4 +132,7 @@
     aside{
         z-index: 999!important;
     }
+    image{
+        object-fit: cover !important;
+    }
 </style>

@@ -18,7 +18,7 @@
                         <v-layout align-center>
                             <v-flex shrink>
                                 <v-avatar id="avatar" size="70" @click="$router.push({name:'detail',query:{id:$store.state.userInfo.user_id}})">
-                                    <img :src="$store.state.userInfo.head_portrait" alt="">
+                                    <img style="object-fit: cover" :src="$store.state.userInfo.head_portrait" alt="">
                                 </v-avatar>
                             </v-flex><!--头像-->
 

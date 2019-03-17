@@ -60,6 +60,7 @@
                         this.data = [];
                         res.data.data.forEach(value => {
                             if (value.state === 0 || value.state === 1) {
+                                value['content'] = value['content'].replace(/<[^>]+>/g, '');
                                 this.data.push(value)
                             }
                         })
