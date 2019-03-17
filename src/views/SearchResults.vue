@@ -231,7 +231,7 @@
 
                 this.loading_A = true;
                 this.loading_B = true;
-                this.loading_c = true;
+                this.loading_C = true;
 
                 this.$api.algorithm.vague_search(searching, 3).then(res => {
                     if (res.data.code === 1) {
@@ -243,7 +243,7 @@
 
                         this.loading_A = false;
                         this.loading_B = false;
-                        this.loading_c = false;
+                        this.loading_C = false;
                     }
                 })
             },
@@ -395,7 +395,7 @@
                     this.first_loading = false;
                     this.loading_A = false;
                     this.loading_B = false;
-                    this.loading_c = false;
+                    this.loading_C = false;
                 }
             })
         }
