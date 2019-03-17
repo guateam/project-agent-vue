@@ -133,6 +133,6 @@
         z-index: 999!important;
     }
     image{
-        object-fit: cover;
+        object-fit: cover !important;
     }
 </style>
