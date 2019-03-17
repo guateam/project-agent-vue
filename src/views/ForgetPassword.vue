@@ -80,8 +80,10 @@
                         this.btnText = '再次发送';
                         this.sendAgain = false;
                         this.allowAgain();
-                    } else {
-                        this.$store.commit('showInfo', '未知错误，请刷新重试');
+                    } else if(res.data.code === -1){
+                        this.$store.commit('showInfo', '该账号不存在');
+                    }else{
+                      this.$store.commit('showInfo', '未知错误，请刷新重试');
                     }
                 }).catch(error => {
                     this.$store.commit('showInfo', '网络异常，请重试');
