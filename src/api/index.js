@@ -357,6 +357,10 @@ const index = {
         get_group_members(id) {
             return axios.get(`${base.group}/get_group_members`, {params: {group_id: id}})
         },  // 获取当前群成员
+
+        exit_group(id) {
+            return axios.get(`${base.group}/exit_group`, {params: {token: store.state.token, group_id: id}})
+        },  // 退出群聊
     },
     board: {
         get_board_recommend(page, token = store.state.token) {
