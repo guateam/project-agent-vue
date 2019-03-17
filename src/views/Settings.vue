@@ -161,7 +161,7 @@
                         <v-list-tile>
                             <v-list-tile-content>
                                 <v-list-tile-title @click="dialog=true">清除缓存</v-list-tile-title>
-                                <v-list-tile-sub-title v-if="size>0">{{size}}MB</v-list-tile-sub-title>
+                                <v-list-tile-sub-title v-if="size>0">{{size.toFixed(2)}}MB</v-list-tile-sub-title>
                             </v-list-tile-content>
                         </v-list-tile>
 
