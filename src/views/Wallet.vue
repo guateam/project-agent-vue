@@ -181,13 +181,10 @@
         //     {title: '客服中心  ', name: 'settings'},
         // ],
         expense: [
-          { title: '学院会员', time: '2019-10-10', price: '120.00' },
-          { title: '读书会借阅卡', time: '2019-03-01', price: '60.00' },
+          { title: '加载中', time: '加载中', price: '加载中' },
         ],  // 支出/消费
         income: [
-          { title: '支付宝充值', time: '2019-10-10', price: '120.00' },
-          { title: '微信充值', time: '2019-03-01', price: '60.00' },
-          { title: '微信充值', time: '2019-01-01', price: '2,000.00' },
+          { title: '加载中', time: '加载中', price: '加载中' },
         ],  // 收入/充值
         balance: "正在载入...",  // 余额
       }

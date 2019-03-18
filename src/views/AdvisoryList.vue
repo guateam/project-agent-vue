@@ -12,15 +12,15 @@
         <div class="line"></div>
         <v-container grid-list-md text-xs-center>
             <v-layout row wrap style="height: 200px;margin: 5px auto">
-                <v-flex xs12 style="text-align: left"><h2>应该怎么和PM打好关系，设计用户交互有什么讲究？</h2></v-flex>
+                <v-flex xs12 style="text-align: left"><h2>加载中...</h2></v-flex>
                 <v-flex xs8 style="text-align: left">
-                    <v-flex xs12 style="height: 25%"><h4>咨询人：<span style="color: lightskyblue">吉良吉影</span><span
+                    <v-flex xs12 style="height: 25%"><h4>咨询人：<span style="color: lightskyblue">加载中...</span><span
                             style="padding: 0.2em;border: 1px solid #ffcc00;color: #ffcc00;margin-left: 0.5em">从业者</span>
                     </h4></v-flex>
-                    <v-flex xs12 style="height: 25%"><h4>咨询费用：<span style="color: lightskyblue">￥20</span></h4></v-flex>
-                    <v-flex xs12 style="height: 25%"><h4>咨询时间：<span style="color: lightskyblue">2019/03/23&nbsp;&nbsp;&nbsp;08:21</span>
+                    <v-flex xs12 style="height: 25%"><h4>咨询费用：<span style="color: lightskyblue">加载..</span></h4></v-flex>
+                    <v-flex xs12 style="height: 25%"><h4>咨询时间：<span style="color: lightskyblue">加载中..&nbsp;&nbsp;&nbsp;加载中..</span>
                     </h4></v-flex>
-                    <v-flex xs12 style="height: 25%"><h4>剩余时间：<span style="color: lightskyblue">43小时23分钟</span></h4></v-flex>
+                    <v-flex xs12 style="height: 25%"><h4>剩余时间：<span style="color: lightskyblue">加载中...</span></h4></v-flex>
                 </v-flex>
                 <v-flex xs4 style=" display: flex;justify-content: flex-end;align-items: flex-end;">
                     <div style="width: 100%">
@@ -31,15 +31,15 @@
             </v-layout>
             <v-divider></v-divider>
             <v-layout row wrap style="height: 200px;margin: 5px auto">
-                <v-flex xs12 style="text-align: left"><h2>有什么好的架构方式值得学习，前端程序员应该怎么向架构师方向转型？</h2></v-flex>
+                <v-flex xs12 style="text-align: left"><h2>加载中...</h2></v-flex>
                 <v-flex xs8 style="text-align: left">
-                    <v-flex xs12 style="height: 25%"><h4>咨询人：<span style="color: lightskyblue">吉良吉影</span><span
-                            style="padding: 0.2em;border: 1px solid #ffcc00;color: #ffcc00;margin-left: 0.5em">从业者</span>
+                    <v-flex xs12 style="height: 25%"><h4>咨询人：<span style="color: lightskyblue">加载中..</span><span
+                            style="padding: 0.2em;border: 1px solid #ffcc00;color: #ffcc00;margin-left: 0.5em">加载中..</span>
                     </h4></v-flex>
-                    <v-flex xs12 style="height: 25%"><h4>咨询费用：<span style="color: lightskyblue">￥20</span></h4></v-flex>
-                    <v-flex xs12 style="height: 25%"><h4>咨询时间：<span style="color: lightskyblue">2019/03/23&nbsp;&nbsp;&nbsp;08:21</span>
+                    <v-flex xs12 style="height: 25%"><h4>咨询费用：<span style="color: lightskyblue">加载中..</span></h4></v-flex>
+                    <v-flex xs12 style="height: 25%"><h4>咨询时间：<span style="color: lightskyblue">加载中..&nbsp;&nbsp;&nbsp;加载中..</span>
                     </h4></v-flex>
-                    <v-flex xs12 style="height: 25%"><h4>剩余时间：<span style="color: lightskyblue">43小时23分钟</span></h4></v-flex>
+                    <v-flex xs12 style="height: 25%"><h4>剩余时间：<span style="color: lightskyblue">加载中..</span></h4></v-flex>
                 </v-flex>
                 <v-flex xs4 style=" display: flex;justify-content: flex-end;align-items: flex-end;">
                     <div style="width: 100%">
