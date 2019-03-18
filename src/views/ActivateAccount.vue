@@ -59,7 +59,7 @@
 
         data() {
             return {
-                account: '',
+                // account: '',
                 code: '',
                 btnText: '发送验证码',  // 按钮文字
                 sendAgain: true,  // 再次发送
@@ -104,7 +104,7 @@
             },  // 允许再次发送
 
             submit() {
-                this.$api.account.check_code(this.account, this.code).then(res => {
+                this.$api.account.check_code(this.$route.query.account, this.code).then(res => {
                     if (res.data.code === 1) {
                         // 验证通过
                         this.$router.push({name: 'FirstLogin', query: {account: this.account}});  // 跳转时把account作为参数传递给下一个页面
@@ -116,6 +116,9 @@
                     window.console.log(error);
                 });
             },  // 提交验证
+        },
+        props:{
+            account:String
         }
     }
 </script>
