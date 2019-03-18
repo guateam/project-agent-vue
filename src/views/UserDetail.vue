@@ -215,6 +215,7 @@
                 description: '',
                 tag: '',
                 uid: '',
+                phone_number:'',
                 head_dialog: false,
                 headportrait: false,
                 nickname_dialog: false,

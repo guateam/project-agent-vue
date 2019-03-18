@@ -202,21 +202,11 @@
                     desc: '这个人很懒，什么也没留下。',  // 简介
                 },  // 用户信息
                 message: [
-                    {title: '剪指甲的108种方法', subtitle: '发表文章', time: '1天前'},
-                    {title: '剪指甲的正确方式', subtitle: '赞同答案', time: '2天前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+                    {title: '加载中..', subtitle: '发表文章', time: '1天前'},
                 ],  // 动态
                 answers: [],  // 回答
                 articles: [
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+                    {title: '加载中..', subtitle: '加载中..', time: '2019-03-07'},
                 ],  // 专栏文章
                 group: [],  // 用户组信息
                 orders: [

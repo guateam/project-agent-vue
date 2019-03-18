@@ -19,6 +19,8 @@ export default new Vuex.Store({
       follow: null,  // 关注
       fans: null,  // 粉丝
       collection: null,  // 收藏
+      phonenumber:null,
+      email:null
     },
     drawer: false,  // 侧边栏开关
     login: false, //是否登录检查
