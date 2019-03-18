@@ -156,10 +156,11 @@
                             // 获取用户信息
                             this.$api.account.get_user_by_token().then(res => {
                                 if (res.data.code === 1) {
-                                    this.$store.commit('refreshUserInfo', res.data.data);
-                                    this.$store.commit('login', this.$store.state);
-                                    // 跳转到之前的页面
-                                    this.$router.push({name: 'first-login'})
+                                    // this.$store.commit('refreshUserInfo', res.data.data);
+                                    // this.$store.commit('login', this.$store.state);
+                                    // // 跳转到之前的页面
+                                    this.$router.push({name: 'activate-account' , query: {token: res.data.data.token}})
+                                    // this.$router.push({name: 'first-login'})
                                 }
                             });
                         }
