@@ -69,7 +69,7 @@
                 <v-flex xs3 style="display: flex;justify-content: center;">
                     <div style="width: 55px;height: 55px;overflow:hidden;border-radius: 50%">
                         <img :src="item.headportrait" alt="" style="width: 100%;
-height: 100%;border-radius: 50%"
+height: 100%;border-radius: 50%;object-fit: cover"
                              @click="$router.push({name:'detail',query:{redirect: $route.fullPath, id:item.userID}})">
                     </div>
                 </v-flex>
