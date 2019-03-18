@@ -44,16 +44,16 @@ height: 100%;border-radius: 50%"
 
 <style scoped>
     .head {
-        z-index: 400;
-        width: 100%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: fixed;
-        margin-bottom: 1em;
-        background-color: #ffd633;
-    }
+         z-index: 400;
+         width: 100%;
+         height: 50px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         position: fixed;
+         margin-bottom: 1em;
+         background-color: #ffd633;
+     }
 
     .line {
         z-index: 400;
