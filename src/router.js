@@ -395,5 +395,19 @@ export default new Router({
             meta: {requireLogin: true},
             component: () => import('./views/ActivateAccount.vue')
         },
+        // 提现
+        {
+            path: 'check-out',
+            name: 'check-out',
+            meta: {requireLogin: true},
+            component: () => import('./views/CheckOut.vue')
+        },
+        // 充值
+        {
+            path: 'recharge',
+            name: 'recharge',
+            meta: {requireLogin: true},
+            component: () => import('./views/Recharge.vue')
+        },
     ],
 });
