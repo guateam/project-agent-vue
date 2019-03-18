@@ -2,9 +2,9 @@
     <div class="forget-password">
         <div id="background">
             <div class="top">
-                <v-btn @click="$router.back()" icon dark>
-                    <v-icon>arrow_back</v-icon>
-                </v-btn>
+                    <v-btn @click="skip()" icon dark>
+                        跳过
+                    </v-btn>
             </div>
             <v-container class="container">
                 <v-layout justify-space-between column fill-height>
@@ -63,6 +63,7 @@
                 code: '',
                 btnText: '发送验证码',  // 按钮文字
                 sendAgain: true,  // 再次发送
+                account:this.$route.query.account
             }
         },
 
@@ -72,7 +73,7 @@
                     this.$store.commit('showInfo', '请输入邮箱或手机号码');
                     return
                 }
-                this.$api.account.send_check_code(this.account).then(res => {
+                this.$api.account.send_check_code(this.$route.query.account).then(res => {
                     if (res.data.code === 1) {
                         this.btnText = '再次发送';
                         this.sendAgain = false;
@@ -107,7 +108,16 @@
                 this.$api.account.check_code(this.$route.query.account, this.code).then(res => {
                     if (res.data.code === 1) {
                         // 验证通过
-                        this.$router.push({name: 'FirstLogin', query: {account: this.account}});  // 跳转时把account作为参数传递给下一个页面
+                        //获取用户信息
+                        this.$api.account.get_user_by_token().then(res => {
+                            if (res.data.code === 1) {
+                                this.$store.commit('refreshUserInfo', res.data.data);
+                                this.$store.commit('login', this.$store.state);
+                                // 跳转到之前的页面
+                                this.$router.push({name: 'first-login', query: {account: this.$route.query.account}});  // 跳转时把account作为参数传递给下一个页面
+                            }
+                        });
+                       
                     } else {
                         this.$store.commit('showInfo', '验证码不正确');
                     }
@@ -116,6 +126,9 @@
                     window.console.log(error);
                 });
             },  // 提交验证
+            skip(){
+                this.$router.push({name: 'first-login', query: {account: this.$route.query.account}})
+            }
         },
         props:{
             account:String
