@@ -49,7 +49,7 @@
                   <v-flex xs5>
                     <v-layout align-center justify-space-between row fill-height>
                       <v-flex xs5 fill-height>
-                        <v-card height="100%" color="purple" dark>
+                        <v-card height="100%" color="#F4A460" dark style="border-radius:10px;">
                           <v-layout class="card-info" align-start justify-space-between column fill-height>
                             <v-flex shrink>
                               <span>专+学院</span>
@@ -62,7 +62,7 @@
                         </v-card>
                       </v-flex>
                       <v-flex xs5 fill-height>
-                        <v-card height="100%" color="blue-grey darken-2" dark>
+                        <v-card height="100%" color="#EE7942" dark style="border-radius:10px;">
                           <v-layout class="card-info" align-start justify-space-between column fill-height>
                             <v-flex shrink>
                               <span>专+读书会</span>
@@ -75,7 +75,7 @@
                         </v-card>
                       </v-flex>
                       <v-flex shrink fill-height>
-                        <v-card height="100%" color="grey darken-2" dark>
+                        <v-card height="100%" color="#FFB90F" dark style="border-radius:10px;">
                           <v-layout @click="showMoreCards" class="card-info" align-center justify-center column fill-height>
                             <v-icon>more_vert</v-icon>
                           </v-layout>
@@ -272,5 +272,8 @@
   }
   .card-info {
     padding: 8px;
+  }
+  .v-card{
+    box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.4),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
   }
 </style>

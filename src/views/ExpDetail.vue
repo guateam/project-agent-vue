@@ -15,13 +15,17 @@
                     <v-progress-circular
                             :rotate="180"
                             :size="200"
-                            :width="5"
+                            :width="10"
                             :value="$store.state.userInfo.exp.percent / 2"
                             color="secondary"
+                            
                     >
-                        <v-layout id="exp-text-container">
+                        <v-layout id="exp-text-container" style="text-shadow:3px 3px 3px rgb(0,0,0,0.6);">
                             <v-flex><span id="exp-text">{{ $store.state.userInfo.exp.value }}</span></v-flex>
+                            <br> <br/>
+                            
                         </v-layout>
+                        <v-flex style="text-align: center;"><span style="font-size:1.2em;text-align:center;">我的积分</span></v-flex>
                     </v-progress-circular>
                 </v-layout>
             </v-container>
@@ -43,7 +47,7 @@
                                 <v-flex>
                                     <v-btn icon fab dark small
                                            :color="$store.state.userInfo.level < authority.publishInfo ? 'grey' : 'success'">
-                                        <v-icon>comment</v-icon>
+                                        <v-icon  style="font-size=800px">comment</v-icon>
                                     </v-btn>
                                 </v-flex>
                                 <v-flex><span>发布内容</span></v-flex>
@@ -280,11 +284,11 @@
     }
 
     #exp-text-container {
-        margin-top: -60px;
+        margin-top: -90px;
     }
 
     #exp-text {
-        font-size: 45px;
+        font-size: 40px;
         font-weight: 700;
         color: white;
     }
@@ -295,5 +299,12 @@
 
     .bottom {
         margin-bottom: 8%;
+    }
+    .container{
+        background:linear-gradient(#ffcf00,#ff7500e6);
+    }
+    .v-btn--floating.v-btn--small .v-icon{
+        font-size: 25px;
+        margin-top: 11px;
     }
 </style>
