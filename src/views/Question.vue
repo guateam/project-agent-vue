@@ -61,7 +61,7 @@
 
                     <!--没有图片时不加载下面的div-->
                     <div class="answerImg" v-if="answer.image.length >=3">
-                        <img v-for="(item,x) in answer.image" :key="x" v-if="x<3" :src="item" alt=""/>
+                        <img style="object-fit: cover" v-for="(item,x) in answer.image" :key="x" v-if="x<3" :src="item" alt=""/>
                     </div>
                     <div class="answerImg" v-if="answer.image.length === 1">
                         <img :src="answer.image[0]" alt="" style="width: 100%;object-fit: cover;"/>
@@ -73,7 +73,7 @@
                 </router-link>
                 <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em">
                     <div class="userhead">
-                        <img :src="answer.headportrait" alt="" style="width: 100%">
+                        <img :src="answer.headportrait" alt="" style="width: 100%;object-fit: cover;">
                     </div>
                     <p class="userName" style="margin-left: 0.5em">{{answer.nickname}}</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;
