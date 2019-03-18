@@ -59,15 +59,15 @@
                 tabList: ['私信', '好友', '通知', '群组'],
                 msgList: [
                     {
-                        title: '赖品钊<span id="title-time">18:17</span>',
-                        content: 'de order',
+                        title: '加载中...',
+                        content: '加载中...',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
                         userId: 3
                     },
                     {divider: true, inset: true},
                     {
-                        title: '袁宜照<span id="title-time">2018/12/15</span>',
-                        content: 'first cry!!!!!',
+                        title: '加载中...',
+                        content: '加载中...',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
                         userId: 2
                     }
@@ -75,12 +75,12 @@
                 friList: [
                     {
                         action: 'account_box',
-                        title: '系统管理员',
+                        title: '加载中',
                         items: [
                             {
-                                title: '谯盼旋',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             }
                         ]
                     },
@@ -90,19 +90,19 @@
                         active: true,
                         items: [
                             {
-                                title: '伦书文',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                             {
-                                title: '隐云泽',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                             {
-                                title: '蒲秀竹',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             }
                         ]
                     },
@@ -111,9 +111,9 @@
                         title: '分组三',
                         items: [
                             {
-                                title: '在阳舒',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     },
@@ -122,9 +122,9 @@
                         title: '分组四',
                         items: [
                             {
-                                title: '百河灵',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     },
@@ -133,9 +133,9 @@
                         title: '分组五',
                         items: [
                             {
-                                title: '窦晨曦',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     },
@@ -144,9 +144,9 @@
                         title: '分组六',
                         items: [
                             {
-                                title: '塔平文',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     },
@@ -155,9 +155,9 @@
                         title: '分组七',
                         items: [
                             {
-                                title: '勇志强',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     }
@@ -167,28 +167,28 @@
                         to: 'sys-notice',
                         icon: 'settings',
                         title: '系统消息',
-                        subtitle: "您有新的系统通知。"
+                        subtitle: "加载中"
                     },
                     {divider: true, inset: true},
                     {
                         to: 'approval',
                         icon: 'thumb_up',
                         title: '赞我的',
-                        subtitle: "赵一和王五赞了您的回答"
+                        subtitle: "加载中"
                     },
                     {divider: true, inset: true},
                     {
                         to: 'call',
                         icon: 'alarm',
                         title: '提到我的',
-                        subtitle: "用户123@了你"
+                        subtitle: "加载中"
                     },
                     {divider: true, inset: true},
                     {
                         to: 'reply',
                         icon: 'message',
                         title: '评论和回复',
-                        subtitle: "神奇的我等十人回复了你的评论"
+                        subtitle: "加载中"
                     },
                     {divider: true, inset: true},
                     // {
@@ -199,15 +199,15 @@
                 ],
                 groupList: [
                     {
-                        title: '秃头猿之家<span id="title-time">18:17</span>',
-                        content: '尤雨溪：[图片]',
+                        title: '加载中',
+                        content: '加载中',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
                         userId: 3
                     },
                     {divider: true, inset: true},
                     {
-                        title: '正经群聊<span id="title-time">2018/12/15</span>',
-                        content: '大漠孤烟：我觉得OK',
+                        title: '加载中',
+                        content: '加载中',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
                         userId: 2
                     }
