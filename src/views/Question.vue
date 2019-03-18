@@ -129,19 +129,19 @@
                 isfollowed: false,
                 followNotice: '+关注话题',
                 questionData: {
-                    title: '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？',  // 问题标题
-                    tags: ['新闻', '芯片'],  // 标签
-                    follow: '22222',  // 关注人数
-                    commentsNum: '333',  // 评论数量
-                    content: '新闻资讯军报记者成都11月29日电（吕珍慧、记者邹维荣）国家重大科研装备研制项目“超...',  // 内容
+                    title: '加载中的标题...',  // 问题标题
+                    tags: [],  // 标签
+                    follow: '加载中',  // 关注人数
+                    commentsNum: '加载中',  // 评论数量
+                    content: '加载中的内容...',  // 内容
                 },
-                answerNum: "123",  // 回答的数量
+                answerNum: "加载中",  // 回答的数量
                 answersDataList: [
                     {
-                        content: '先回答大家最关心的两个问题:2、不吹不黑，这个装备真的这么厉害吗，还是只是吹牛？答：确实很厉害。',
-                        nickname: '看风景',  // 用户昵称
-                        edittime: '2小时前',  // 回答时间
-                        agree: '233',  // 点赞
+                        content: '加载中的回答...',
+                        nickname: '加载中',  // 用户昵称
+                        edittime: '加载中',  // 回答时间
+                        agree: '加载中',  // 点赞
                         commentsNum: '',  //评论数量
                     },
                 ],  // 答案列表
