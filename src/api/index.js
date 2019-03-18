@@ -40,7 +40,9 @@ const index = {
         send_check_code(account) {
             return axios.get(`${base.account}/send_check_code`, {params: {account: account}})
         },  // 发送验证码
-
+        send_check_code_2(account,aim) {
+            return axios.get(`${base.account}/send_check_code`, {params: {account: account,aim:aim}})
+        },  // 发送验证码,验证码修改数据库的用户和发送的设备不一致时（手机绑定邮箱或邮箱绑定手机）
         check_code(account, code) {
             return axios.get(`${base.account}/check_code`, {params: {account: account, check_code: code}})
         },  // 检查验证码
@@ -48,7 +50,9 @@ const index = {
         login(data) {
             return axios.post(`${base.account}/login`, qs.stringify(data))
         },  // 用户登录
-
+        login_by_message(code,account){
+            return axios.get(`${base.account}/check_code_login`, {params: {account: account, code: code}})
+        },
         register(data) {
             return axios.post(`${base.account}/register`, qs.stringify(data))
         },  // 用户注册
@@ -112,7 +116,14 @@ const index = {
         },  // 获取用户文章
         set_account_info(data) {
             return axios.post(`${base.account}/set_account_info`, qs.stringify(data))
-        }
+        },
+        bind_phonenumber(phonenumber){
+            return axios.get(`${base.account}/bind_phonenumber`, {params: {token: store.state.token, phonenumber:phonenumber}})
+        },
+        bind_email(email){
+            return axios.get(`${base.account}/bind_email`, {params: {token: store.state.token, email:email}})
+        },
+
     },
     message: {
 

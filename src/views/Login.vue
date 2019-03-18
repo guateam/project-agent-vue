@@ -59,7 +59,7 @@
                             <form class="form">
                                 <v-text-field
                                         dark
-                                        v-model="account"
+                                        v-model="email"
                                         label="手机号/邮箱"
                                         type="text"
                                 ></v-text-field>
@@ -84,7 +84,7 @@
                             <span @click="forgetPassword" class="right">忘记密码?</span>
                             <br/>
                             <br/>
-                            <v-btn @click="submit" color="primary" block large>登录</v-btn>
+                            <v-btn @click="login" color="primary" block large>登录</v-btn>
                         </v-flex>
 
 
@@ -157,10 +157,20 @@
             login() {
                 this.$v.$touch();
                 if (!this.$v.$anyError) {
-                    this.$api.account.login({
+                    if(this.codelogin === 0){
+                        this.login_by_password()
+                    }else if(this.codelogin === 1){
+                        this.login_by_message()
+                    }
+                    
+                }
+                this.$store.commit('closeDialog');
+            },
+            login_by_password(){
+                this.$api.account.login({
                         username: this.email,
                         password: this.password
-                    }).then(res => {
+                }).then(res => {
                         if (res.data.code === 1) {
                             // 保存token
                             import('js-cookie').then(Cookies => {
@@ -182,9 +192,32 @@
                         } else {
                             this.$store.commit('showInfo', '网络错误，请检查网络！');
                         }
-                    })
-                }
-                this.$store.commit('closeDialog');
+                })
+            },
+            login_by_message(){
+                this.$api.account.login_by_message(this.code,this.email).then(res =>{
+                    if (res.data.code === 1) {
+                            // 保存token
+                            import('js-cookie').then(Cookies => {
+                                Cookies.set('token', res.data.data.token)
+                            });
+                            this.DB({token: res.data.data.token, id: 1});
+                            this.$store.commit('updateToken', res.data.data.token);
+                            // 获取用户信息
+                            this.$api.account.get_user_by_token().then(res => {
+                                if (res.data.code === 1) {
+                                    this.$store.commit('refreshUserInfo', res.data.data);
+                                    this.$store.commit('login', this.$store.state);
+                                    // 跳转到之前的页面
+                                    this.$router.push(this.$route.query.redirect || {name: 'index'})
+                                }
+                            });
+                        } else if (res.data.code === 0) {
+                            this.$store.commit('showInfo', '用户名或验证码错误！');
+                        } else {
+                            this.$store.commit('showInfo', '网络错误，请检查网络！');
+                    }
+                })
             },
             DB(data) {
                 let myDB = {
@@ -220,11 +253,11 @@
                 }, 1000);
             },
             sendCode() {
-                if (this.account === '') {
+                if (this.email === '') {
                     this.$store.commit('showInfo', '请输入邮箱或手机号码');
                     return
                 }
-                this.$api.account.send_check_code(this.account).then(res => {
+                this.$api.account.send_check_code(this.email).then(res => {
                     if (res.data.code === 1) {
                         this.btnText = '再次发送';
                         this.sendAgain = false;
