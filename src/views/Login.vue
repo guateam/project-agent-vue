@@ -23,14 +23,14 @@
                                 <h1 class="white--text">嗨!<br/>欢迎回来</h1>
                             </div>
                         </v-flex>
-                        <v-flex>
+                        <v-flex v-show="codelogin===0">
                             <form class="form">
                                 <v-text-field
                                         dark
                                         prepend-icon="account_circle"
                                         v-model="email"
                                         :error-messages="emailErrors"
-                                        label="账号"
+                                        label="手机号/邮箱"
                                         @input="$v.email.$touch()"
                                         @blur="$v.email.$touch()"
                                 ></v-text-field>
@@ -47,11 +47,47 @@
                                         @click:append="show = !show"
                                 ></v-text-field>
                             </form>
+                            <span style="color: #ffcc00" @click="loginByCode">验证码登录</span>
                             <span @click="forgetPassword" class="right">忘记密码?</span>
                             <br/>
                             <br/>
                             <v-btn @click="login" color="primary" block large>登录</v-btn>
                         </v-flex>
+
+
+                        <v-flex v-show="codelogin===1">
+                            <form class="form">
+                                <v-text-field
+                                        dark
+                                        v-model="account"
+                                        label="手机号/邮箱"
+                                        type="text"
+                                ></v-text-field>
+                                <v-layout>
+                                    <v-flex grow>
+                                        <v-text-field
+                                                dark
+                                                v-model="code"
+                                                label="收到的验证码"
+                                                type="text"
+                                        ></v-text-field>
+                                    </v-flex>
+
+                                    <v-flex shrink>
+                                        <v-btn @click="sendCode" dark outline large :disabled="!sendAgain">{{ btnText
+                                            }}
+                                        </v-btn>
+                                    </v-flex>
+                                </v-layout>
+                            </form>
+                            <span style="color: #ffcc00" @click="loginByPassword">账号密码登录</span>
+                            <span @click="forgetPassword" class="right">忘记密码?</span>
+                            <br/>
+                            <br/>
+                            <v-btn @click="submit" color="primary" block large>登录</v-btn>
+                        </v-flex>
+
+
                         <v-flex shrink>
                             <p class="white--text">
                                 还没有账号？<a @click="$router.push({name: 'register'})">立即注册</a>
@@ -82,7 +118,12 @@
                 show: false,
                 email: 'zhangyu199946@126.com',
                 password: 'zhangyuk',
-                dialog:true
+                dialog: true,
+                codelogin: 0,
+                account: '',
+                code: '',
+                btnText: '发送验证码',  // 按钮文字
+                sendAgain: true,  // 再次发送
             }
         },
 
@@ -102,6 +143,12 @@
         },
 
         methods: {
+            loginByCode() {
+                this.codelogin = 1
+            },
+            loginByPassword(){
+                this.codelogin = 0
+            },
             forgetPassword() {
                 // this.$store.commit('showInfo', '忘记密码');
                 this.$router.push({name: 'forget-password'});
@@ -171,7 +218,56 @@
                 setTimeout(function () {
                     addData(myDB.db, "user", data);
                 }, 1000);
-            }
+            },
+            sendCode() {
+                if (this.account === '') {
+                    this.$store.commit('showInfo', '请输入邮箱或手机号码');
+                    return
+                }
+                this.$api.account.send_check_code(this.account).then(res => {
+                    if (res.data.code === 1) {
+                        this.btnText = '再次发送';
+                        this.sendAgain = false;
+                        this.allowAgain();
+                    } else if(res.data.code === -1){
+                        this.$store.commit('showInfo', '该账号不存在');
+                    }else{
+                        this.$store.commit('showInfo', '未知错误，请刷新重试');
+                    }
+                }).catch(error => {
+                    this.$store.commit('showInfo', '网络异常，请重试');
+                    window.console.log(error);
+                });
+            },  // 发送验证码
+
+            allowAgain() {
+                let time = 59;
+                let setTime = setInterval(() => {
+                    this.btnText = '再次发送(' + time.toString() + ')';
+                    time--;
+                    if (time === 0) {
+                        this.btnText = '再次发送';
+                        clearInterval(setTime);
+                    }
+                }, 1000);
+                setTimeout(() => {
+                    this.sendAgain = true;
+                }, 60000);
+            },  // 允许再次发送
+
+            submit() {
+                this.$api.account.check_code(this.account, this.code).then(res => {
+                    if (res.data.code === 1) {
+                        // 验证通过
+                        this.$router.push({name: 'topic', query: {account: this.account}});  // 跳转时把account作为参数传递给下一个页面
+                    } else {
+                        this.$store.commit('showInfo', '验证码不正确');
+                    }
+                }).catch(error => {
+                    this.$store.commit('showInfo', '请检查网络连接');
+                    window.console.log(error);
+                });
+            },  // 提交验证
         }
     }
 </script>
