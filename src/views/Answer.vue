@@ -47,22 +47,22 @@
                     </div>
                 </div>
             </div>
-            <div style="padding-left: 1em; padding-right: 1em;display: flex;justify-content: space-between;border-bottom: 1px solid #EBEBEB">
-                <p>上一次编辑 <span>· {{ latestEdit }}</span>
-                </p>
-                <p>
-                    <span v-for="(tag, idx) in warning" :key="idx">
-                        {{ tag.text }}
-                        <span v-if="idx !== warning.length - 1">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-                    </span>
-                </p>
-            </div>
         </div>
-
+        <v-divider></v-divider>
         <!--回答的答案-->
 
         <div class="intro" style="padding-left: 1em; padding-right: 1em;margin-bottom: 1em;">
             <p v-html="intro.replace(/\n/g, '<br>')" style="font-size: medium"></p>
+        </div>
+        <div style="padding-left: 1em; padding-right: 1em;display: flex;text-align: right">
+            <p style="width: 100%">上一次编辑 <span>· {{ latestEdit }}</span>
+            </p>
+            <p>
+                    <span v-for="(tag, idx) in warning" :key="idx">
+                        {{ tag.text }}
+                        <span v-if="idx !== warning.length - 1">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+                    </span>
+            </p>
         </div>
         <v-divider></v-divider>
         <div style="width: 100%">
@@ -149,7 +149,7 @@
             return {
                 agreethis: 0,
                 topicTitle: '加载中的标题...',  // 话题标题
-                intro:'加载中的简介...',
+                intro: '加载中的简介...',
                 nickname: '加载中的用户名...',
                 group: '加载中..',
                 desc: '加载中..',
