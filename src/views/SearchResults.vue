@@ -63,23 +63,28 @@
                 <v-tab :key="2" ripple>文章</v-tab>
                 <v-tab :key="3" ripple>用户</v-tab>
                 <v-tab-item :key="1">
-                    <!--这部分直接把topic的搬过来就好了，我懒的写静态数据了，对接的时候直接换一下吧-->
-                    <question-card @click.native="view_detail(question.questionID)" v-for="(question,idx) in questions"
-                                   :key="idx" v-bind="question"></question-card>
+                    <v-container grid-list-md>
+                        <v-layout row wrap>
+                            <!--这部分直接把topic的搬过来就好了，我懒的写静态数据了，对接的时候直接换一下吧-->
+                            <question-card @click.native="view_detail(question.questionID)"
+                                           v-for="(question,idx) in questions"
+                                           :key="idx" v-bind="question"></question-card>
 
-                    <div class="load-more-normal" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="loading_A" infinite-scroll-distance="0"
-                         v-show="loading_A&&no_A" v-if="questions.length>0">
-                        <h3>
-                            <v-progress-circular
-                                    indeterminate
-                                    color="primary"
-                            ></v-progress-circular>
-                            <span style="margin-left: 1em">加载中</span></h3>
-                    </div>
-                    <div v-if="questions.length===0" class="nothing">
-                        <h3>暂无内容</h3>
-                    </div>
+                            <div class="load-more-normal" v-infinite-scroll="loadMore"
+                                 infinite-scroll-disabled="loading_A" infinite-scroll-distance="0"
+                                 v-show="loading_A&&no_A" v-if="questions.length>0">
+                                <h3>
+                                    <v-progress-circular
+                                            indeterminate
+                                            color="primary"
+                                    ></v-progress-circular>
+                                    <span style="margin-left: 1em">加载中</span></h3>
+                            </div>
+                            <div v-if="questions.length===0" class="nothing">
+                                <h3>暂无内容</h3>
+                            </div>
+                        </v-layout>
+                    </v-container>
                 </v-tab-item>
 
                 <v-tab-item :key="2">
@@ -110,61 +115,67 @@
                                     </v-card>
                                 </v-hover>
                             </v-flex>
+                            <div class="load-more-normal" v-infinite-scroll="loadMore"
+                                 infinite-scroll-disabled="loading_B" infinite-scroll-distance="0"
+                                 v-show="loading_B&&no_B"
+                                 v-if="articles.length>0">
+                                <h3>
+                                    <v-progress-circular
+                                            indeterminate
+                                            color="primary"
+                                    ></v-progress-circular>
+                                    <span style="margin-left: 1em">加载中</span></h3>
+                            </div>
+                            <div v-if="articles.length===0" class="nothing">
+                                <h3>暂无内容</h3>
+                            </div>
                         </v-layout>
                     </v-container>
-                    <div class="load-more-normal" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="loading_B" infinite-scroll-distance="0" v-show="loading_B&&no_B"
-                         v-if="articles.length>0">
-                        <h3>
-                            <v-progress-circular
-                                    indeterminate
-                                    color="primary"
-                            ></v-progress-circular>
-                            <span style="margin-left: 1em">加载中</span></h3>
-                    </div>
-                    <div v-if="articles.length===0" class="nothing">
-                        <h3>暂无内容</h3>
-                    </div>
-                    <div class="bottom"></div>
                 </v-tab-item>
 
                 <v-tab-item :key="3">
-                    <v-list>
-                        <template v-for="(item, index) in users">
-                            <v-list-tile
-                                    :key="item.nickname"
-                                    avatar
-                                    ripple
-                                    @click="toggle(item.userID)"
-                            >
-                                <v-list-tile-avatar>
-                                    <img :src="item.headportrait" alt="">
-                                </v-list-tile-avatar>
+                    <v-container grid-list-md>
+                        <v-layout row wrap>
+                            <v-list>
+                                <template v-for="(item, index) in users">
+                                    <v-list-tile
+                                            :key="item.nickname"
+                                            avatar
+                                            ripple
+                                            @click="toggle(item.userID)"
+                                    >
+                                        <v-list-tile-avatar>
+                                            <img :src="item.headportrait" alt="">
+                                        </v-list-tile-avatar>
 
-                                <v-list-tile-content>
-                                    <v-list-tile-title><span class="lv">lv.{{item.level}}</span>{{ item.nickname }}
-                                        <span :class="{chip:true,chip_red:item.usergroup.value===0,chip_yellow:item.usergroup.value===2||item.usergroup.value===5,chip_green:item.usergroup.value===1,chip_blue:item.usergroup.value===3||item.usergroup.value===6,chip_gray:item.usergroup.value===4}">
+                                        <v-list-tile-content>
+                                            <v-list-tile-title><span class="lv">lv.{{item.level}}</span>{{ item.nickname
+                                                }}
+                                                <span :class="{chip:true,chip_red:item.usergroup.value===0,chip_yellow:item.usergroup.value===2||item.usergroup.value===5,chip_green:item.usergroup.value===1,chip_blue:item.usergroup.value===3||item.usergroup.value===6,chip_gray:item.usergroup.value===4}">
                                             {{ item.usergroup.text }}
                                         </span>
-                                    </v-list-tile-title>
-                                    <v-list-tile-sub-title>{{ item.description }}</v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
-                        </template>
-                    </v-list>
-                    <div class="load-more-normal" v-infinite-scroll="loadMore"
-                         infinite-scroll-disabled="loading_C" infinite-scroll-distance="0" v-show="loading_C&&no_C"
-                         v-if="users.length>0">
-                        <h3>
-                            <v-progress-circular
-                                    indeterminate
-                                    color="primary"
-                            ></v-progress-circular>
-                            <span style="margin-left: 1em">加载中</span></h3>
-                    </div>
-                    <div v-if="users.length===0" class="nothing">
-                        <h3>暂无内容</h3>
-                    </div>
+                                            </v-list-tile-title>
+                                            <v-list-tile-sub-title>{{ item.description }}</v-list-tile-sub-title>
+                                        </v-list-tile-content>
+                                    </v-list-tile>
+                                </template>
+                            </v-list>
+                            <div class="load-more-normal" v-infinite-scroll="loadMore"
+                                 infinite-scroll-disabled="loading_C" infinite-scroll-distance="0"
+                                 v-show="loading_C&&no_C"
+                                 v-if="users.length>0">
+                                <h3>
+                                    <v-progress-circular
+                                            indeterminate
+                                            color="primary"
+                                    ></v-progress-circular>
+                                    <span style="margin-left: 1em">加载中</span></h3>
+                            </div>
+                            <div v-if="users.length===0" class="nothing">
+                                <h3>暂无内容</h3>
+                            </div>
+                        </v-layout>
+                    </v-container>
                 </v-tab-item>
             </v-tabs>
         </v-card>
@@ -435,5 +446,6 @@
         text-align: center;
         margin-top: 0.5em;
         margin-bottom: 0.5em;
+        width: 100%;
     }
 </style>
