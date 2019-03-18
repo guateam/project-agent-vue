@@ -90,7 +90,7 @@
             emailErrors() {
                 const errors = [];
                 if (!this.$v.email.$dirty) return errors;
-                !this.$v.email.required && errors.push('请输入手机号码');
+                !this.$v.email.required && errors.push('请输入手机号或邮箱');
                 return errors
             },
             passwordErrors() {
