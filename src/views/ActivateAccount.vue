@@ -40,7 +40,7 @@
                         </form>
                         <br />
                         <br />
-                        <v-btn @click="submit" color="primary" block large>提交验证</v-btn>
+                        <v-btn @click="submit" color="primary" block large>确认激活</v-btn>
                     </v-flex>
                     <v-flex shrink>
                         <p class="white--text">
@@ -107,7 +107,7 @@
                 this.$api.account.check_code(this.account, this.code).then(res => {
                     if (res.data.code === 1) {
                         // 验证通过
-                        this.$router.push({name: 'set-new-password', query: {account: this.account}});  // 跳转时把account作为参数传递给下一个页面
+                        this.$router.push({name: 'FirstLogin', query: {account: this.account}});  // 跳转时把account作为参数传递给下一个页面
                     } else {
                         this.$store.commit('showInfo', '验证码不正确');
                     }
