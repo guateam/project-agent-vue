@@ -129,10 +129,18 @@ height: 100%;border-radius: 50%">
                     }
                 })
             },
+            get_follow_state() {
+                this.$api.account.get_user_follow_state(this.data.user_id).then(res => {
+                    if (res.data.code === 1) {
+                        this.follow = true
+                    }
+                })
+            },
         },
         mounted() {
             this.get_article(this.$route.query.id);
             this.get_article_comment(this.$route.query.id);
+            this.get_follow_state()
         }
     }
 </script>

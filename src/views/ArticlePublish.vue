@@ -256,6 +256,7 @@
                             that.$router.back();
                         } else {
                             this.$store.commit('showInfo', res.data.msg);
+                            this.busy = false;
                         }
                     })
 
