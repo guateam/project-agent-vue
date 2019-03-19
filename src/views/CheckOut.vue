@@ -17,6 +17,7 @@
                     </v-flex>
                     <v-flex xs11 sm6 style="font-size: 1.5em;font-weight: bold;">
                         <v-text-field
+                                :rules="[rules.number]"
                                 v-model="value"
                                 label="提现金额"
                         ></v-text-field>
@@ -28,20 +29,49 @@
                     </v-flex>
                     <v-flex xs11 sm6 style="font-size: 1.5em;font-weight: bold;">
                         <v-text-field
-                                v-model="value"
+                                v-model="bank_account"
                                 label="支付宝账号/银行卡号"
                         ></v-text-field>
                     </v-flex>
                 </v-layout>
             </v-container>
         </v-form>
-        <v-btn block color="info" style="position: fixed;bottom: 33.33%;">预计两小时内到账，确认提现</v-btn>
+        <v-btn block color="info" style="position: fixed;bottom: 33.33%;" @click="checkout()">预计两小时内到账，确认提现</v-btn>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "check-out"
+export default {
+        name: "check-out",
+        data(){
+            return{
+                value:"",
+                save:"",
+                bank_account:"",
+                rules: {
+                    number: value => {
+                        let reg = /^[0-9]*[1-9][0-9]*$/
+                        let flag = reg.test(value)
+                        if(flag){
+                            this.save = value
+                        }else{
+                            this.value = this.save
+                        }
+                    },
+                },
+            }
+        },
+        methods:{
+            checkout(){
+                this.$store.commit('showInfo', '已提交提现请求，将在2小时内到账，请耐心等候');
+            },
+        },
+        watch:{
+
+        },
+        mounted:{
+
+        },
     }
 </script>
 

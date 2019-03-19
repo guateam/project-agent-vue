@@ -123,7 +123,12 @@ const index = {
         bind_email(email){
             return axios.get(`${base.account}/bind_email`, {params: {token: store.state.token, email:email}})
         },
-
+        recharge(data){
+            return axios.post(`${base.account}/add_account_balance`, qs.stringify(data))
+        },  //充值
+        checkout(){
+           
+        },  //提现
     },
     message: {
 
