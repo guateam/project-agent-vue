@@ -1,7 +1,7 @@
 <template>
     <div class="chat">
         <v-layout column fill-height>
-            <v-flex shrink>
+            <v-flex shrink style="background-color: #ffd633">
                 <v-layout align-center justify-space-between row fill-height>
                     <v-flex shrink>
                         <v-btn @click="$router.go(-1)" icon>
@@ -21,7 +21,7 @@
                 </v-layout>
             </v-flex>
 
-            <v-flex grow>
+            <v-flex grow style="background-color: white;">
                 <v-container fill-height>
                     <v-layout>
                         <v-flex class="chat-area" id="chat-area">
@@ -29,7 +29,7 @@
                                       :reverse="row.type === 1" row>
                                 <v-flex shrink>
                                     <v-avatar size="50">
-                                        <img :src="row.type === 1? myAvatar: userAvatar" alt="avatar">
+                                        <img :src="row.type === 1? myAvatar: userAvatar" alt="avatar" style="object-fit: cover">
                                     </v-avatar>
                                 </v-flex>
 
@@ -46,7 +46,7 @@
                 </v-container>
             </v-flex>
 
-            <v-flex class="input-area" shrink>
+            <v-flex class="input-area" shrink style="border-top: 1px #eee solid;background-color: #ccc ">
                 <v-container>
                     <v-layout>
                         <v-flex sx10>
@@ -208,7 +208,7 @@
                         let data = {
                             token: this.$store.state.token,
                             receiver: this.userId,
-                            content: '<img src="' + res.data.data + '" class="chat-image">',
+                            content: '<img src="' + res.data.data + '" class="chat-image" style="width: 100%;object-fit: cover">',
                             message_type: 0,
                         };
                         this.$api.message.add_message(data).then(res => {
@@ -247,6 +247,11 @@
         padding: 16px 0;
     }
 
+    .chat-image{
+        width: 100%;
+        object-fit: cover;
+    }
+
     .chat-row {
         padding: 5px 0;
     }
@@ -262,11 +267,17 @@
     .v-input__control {
         height: 64px;
     }
+    .v-input__slot{
+        margin-top: 9px;
+    }
+    .v-input{
+        display: flex;
+        align-items: center;
+    }
 </style>
 <style>
     .chat-image {
-        width: 40%;
-        height: auto;
+        width: 100%;
         object-fit: cover;
     }
 </style>
