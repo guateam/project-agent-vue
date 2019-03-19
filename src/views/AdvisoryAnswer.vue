@@ -4,43 +4,12 @@
             <div style="width: 45px;height: 45px;margin-left: 14px;display: flex;align-items: center;justify-content: center;">
                 <v-icon large color="white" @click="$router.back()">keyboard_arrow_left</v-icon>
             </div>
-            <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">付费咨询</span>
+            <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">添加回答</span>
             <div style="width: 45px;height: 45px;margin-right: 14px;display: flex;align-items: center;justify-content: center;color: #fff;font-size: 17px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">
-                <v-layout row justify-center>
-                    <v-dialog v-model="dialog" persistent fullscreen="">
-                        <template v-slot:activator="{ on }">
-                            <div v-on="on" style="line-height: 1em;">发送</div>
-                        </template>
-                        <v-card>
-                            <v-card-title>
-                                <span class="headline">确认发送</span>
-                            </v-card-title>
-                            <v-card-text>
-                                <Form :model="formItem">
-                                    <FormItem label="悬赏金额">
-                                        <Input v-model.number="formItem.price" type="text">
-                                            <span slot="prepend">￥</span>
-                                            <span slot="append">元</span>
-                                        </Input>
-                                        <!--<Slider :value="formItem.price" :step="0.1" :max="100"></Slider>-->
-                                    </FormItem>
-                                </Form>
-
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="red" flat @click="dialog = false">关闭</v-btn>
-                                <v-btn color="primary" flat @click="send()">确认</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </v-layout>
+                <span @click="send">确认</span>
             </div>
         </div>
         <div class="line"></div>
-
-        <!--富文本编辑器采用的wangEditor-->
-        <!--git地址https://github.com/wangfupeng1988/wangEditor-->
 
 
         <div style="width: 100%;height: 100%">
@@ -75,14 +44,17 @@
     import * as Quill from 'quill'  //引入编辑器
     import ImageResize from 'quill-image-resize-module'
     import {ImageExtend, QuillWatch} from 'quill-image-extend-module'
-    import 'iview/dist/styles/iview.css';
 
     Quill.register('modules/imageResize', ImageResize);
     Quill.register('modules/ImageExtend', ImageExtend);
+
     export default {
-        name: "AdvisoryPublish",
+        name: "AnswerPublish",
         data() {
             return {
+                content: '',
+                dialog: false,
+                price: ['0', '￥19.9', '￥29.9', '￥69.9', '￥99.9'],
                 editorOption: {
                     modules: {
                         ImageExtend: {
@@ -115,26 +87,20 @@
                     },
                     placeholder: '请在此输入内容'
                 },
-                content: '',
-                dialog: false,
-                formItem: {
-                    price: 0
-                },
-                busy:false,
+                busy: false,
             }
         },
         methods: {
             send() {
-                this.busy=true;
+                this.busy = true;
                 let data = {
-                    token: this.$store.state.token,
-                    content: this.content,
-                    price: this.formItem.price,
-                    target: this.$route.query.id
+                    answer: this.content,
+                    order_id: this.$route.query.id,
+                    token: this.$store.state.token
                 };
-                this.$api.specialist.add_order(data).then(res => {
+                this.$api.specialist.confirm_order(data).then(res => {
                     if (res.data.code === 1) {
-                        this.busy=false;
+                        this.busy = false;
                         this.$router.back()
                     } else {
                         this.$store.commit('showInfo', res.data.msg);
@@ -142,6 +108,13 @@
                     }
                 })
             }
+        },
+        mounted() {
+            // var editor = new Edit(this.$refs.editor)
+            // editor.customConfig.onchange = (html) => {
+            //     this.editorContent = html
+            // }
+            // editor.create()
         }
     }
 </script>

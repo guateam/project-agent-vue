@@ -318,7 +318,7 @@
                         }
                     })
                 } else {
-                    this.$api.account.un_follow_user(this.user_id).then(res => {
+                    this.$api.account.follow_user(this.user_id).then(res => {
                         if (res.data.code === 1) {
                             this.follow = true;
                         }

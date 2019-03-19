@@ -411,10 +411,16 @@ export default new Router({
         },
         // 咨询详情
         {
-            path: 'advisory-detail',
+            path: '/advisory-detail',
             name: 'advisory-detail',
             meta: {requireLogin: true},
             component: () => import('./views/AdvisoryDetail.vue')
         },
+        {
+            path: '/advisory-answer',
+            name: 'advisory-answer',
+            meta: {requireLogin: true},
+            component: () => import('./views/AdvisoryAnswer.vue')
+        }
     ],
 });

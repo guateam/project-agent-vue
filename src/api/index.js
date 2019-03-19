@@ -40,8 +40,8 @@ const index = {
         send_check_code(account) {
             return axios.get(`${base.account}/send_check_code`, {params: {account: account}})
         },  // 发送验证码
-        send_check_code_2(account,aim) {
-            return axios.get(`${base.account}/send_check_code`, {params: {account: account,aim:aim}})
+        send_check_code_2(account, aim) {
+            return axios.get(`${base.account}/send_check_code`, {params: {account: account, aim: aim}})
         },  // 发送验证码,验证码修改数据库的用户和发送的设备不一致时（手机绑定邮箱或邮箱绑定手机）
         check_code(account, code) {
             return axios.get(`${base.account}/check_code`, {params: {account: account, check_code: code}})
@@ -50,7 +50,7 @@ const index = {
         login(data) {
             return axios.post(`${base.account}/login`, qs.stringify(data))
         },  // 用户登录
-        login_by_message(code,account){
+        login_by_message(code, account) {
             return axios.get(`${base.account}/check_code_login`, {params: {account: account, code: code}})
         },
         register(data) {
@@ -117,11 +117,16 @@ const index = {
         set_account_info(data) {
             return axios.post(`${base.account}/set_account_info`, qs.stringify(data))
         },
-        bind_phonenumber(phonenumber){
-            return axios.get(`${base.account}/bind_phonenumber`, {params: {token: store.state.token, phonenumber:phonenumber}})
+        bind_phonenumber(phonenumber) {
+            return axios.get(`${base.account}/bind_phonenumber`, {
+                params: {
+                    token: store.state.token,
+                    phonenumber: phonenumber
+                }
+            })
         },
-        bind_email(email){
-            return axios.get(`${base.account}/bind_email`, {params: {token: store.state.token, email:email}})
+        bind_email(email) {
+            return axios.get(`${base.account}/bind_email`, {params: {token: store.state.token, email: email}})
         },
 
     },
@@ -317,6 +322,18 @@ const index = {
         },
         add_order(data) {
             return axios.post(`${base.specialist}/add_order`, qs.stringify(data))
+        },
+        get_order_list(token = store.state.token) {
+            return axios.get(`${base.specialist}/get_order_list`, {params: {token: token}})
+        },
+        get_order(order_id, token = store.state.token) {
+            return axios.get(`${base.specialist}/get_order`, {params: {order_id: order_id, token: token}})
+        },
+        confirm_order(data) {
+            return axios.post(`${base.specialist}/confirm_order`, qs.stringify(data))
+        },
+        refuse_order(order_id, token = store.state.token) {
+            return axios.get(`${base.specialist}/refuse_order`, {params: {order_id: order_id, token: token}})
         }
     },
     activities: {
@@ -349,7 +366,7 @@ const index = {
     },
     upload: {
         upload_picture(formData) {
-            return axios.post(`${base.upload}/upload_picture`,formData)
+            return axios.post(`${base.upload}/upload_picture`, formData)
         }
     },
     group: {
