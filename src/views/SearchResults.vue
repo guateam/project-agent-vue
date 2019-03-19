@@ -145,7 +145,7 @@
                                             @click="toggle(item.userID)"
                                     >
                                         <v-list-tile-avatar>
-                                            <img :src="item.headportrait" alt="">
+                                            <img :src="item.headportrait" alt="" style="object-fit: cover">
                                         </v-list-tile-avatar>
 
                                         <v-list-tile-content>

@@ -30,7 +30,7 @@
                                       :reverse="row.type === 1" row>
                                 <v-flex shrink>
                                     <v-avatar size="50">
-                                        <img :src="row.avatar" alt="avatar">
+                                        <img :src="row.avatar" alt="avatar" style="object-fit: cover">
                                     </v-avatar>
                                 </v-flex>
 
@@ -270,7 +270,7 @@
 </style>
 <style>
     .chat-image {
-        width: 40%;
+        width: 100%;
         height: auto;
         object-fit: cover;
     }
