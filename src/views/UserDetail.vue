@@ -216,9 +216,9 @@
                             v-model="formItem.phone_number"
                     ></v-text-field>
                     <v-text-field
-                        solo
-                        v-model="code1"
-                        label="收到的验证码"
+                            solo
+                            v-model="code1"
+                            label="收到的验证码"
                     ></v-text-field>
                     <v-btn @click="sendCode(formItem.phone_number)" outline large :disabled="!sendAgain">
                         {{ btnText}}
@@ -266,9 +266,9 @@
                             v-model="formItem.email"
                     ></v-text-field>
                     <v-text-field
-                        v-model="code2"
-                        label="收到的验证码"
-                        solo
+                            v-model="code2"
+                            label="收到的验证码"
+                            solo
                     ></v-text-field>
                     <v-btn @click="sendCode(formItem.email)" solo outline large :disabled="!sendAgain">
                         {{ btnText}}
@@ -312,25 +312,25 @@
                 description: '',
                 tag: '',
                 uid: '',
-                phone_number:'点击绑定',
+                phone_number: '点击绑定',
                 head_dialog: false,
                 headportrait: false,
                 nickname_dialog: false,
                 description_dialog: false,
-                bind_email_model:false,
-                bind_phone_model:false,
-                btnText:'点击发送验证码',
+                bind_email_model: false,
+                bind_phone_model: false,
+                btnText: '点击发送验证码',
                 upload_list: [],
                 formItem: {
                     nickname: undefined,
                     description: undefined,
                     headportrait: undefined,
-                    phone_number:undefined,
-                    email:undefined
+                    phone_number: undefined,
+                    email: undefined
                 },
                 sendAgain: true,  // 再次发送
-                code1:'',
-                code2:'',
+                code1: '',
+                code2: '',
             }
         },
         methods: {
@@ -355,6 +355,8 @@
                     nickname: this.nickname,
                     description: this.description,
                     headportrait: this.head_portrait,
+                    phone_number: this.$store.state.userInfo.phonenumber,
+                    email: this.$store.state.userInfo.email
                 };
                 this.headportrait = false;
                 this.bind_email_model = false;
@@ -386,22 +388,22 @@
                 this.head_portrait = this.$store.state.userInfo.head_portrait;
                 this.group = this.$store.state.userInfo.group.text;
                 this.uid = this.$store.state.userInfo.user_id;
-                this.email = this.$store.state.userInfo.email === '' ? '点击绑定':this.$store.state.userInfo.email;
+                this.email = this.$store.state.userInfo.email === '' ? '点击绑定' : this.$store.state.userInfo.email;
                 this.verify = this.$store.state.userInfo.state === 2 ? '已实名' : '未实名';
                 this.description = this.$store.state.userInfo.description;
-                this.phone_number = this.$store.state.userInfo.phonenumber === ''?'点击绑定':this.$store.state.userInfo.phonenumber;
+                this.phone_number = this.$store.state.userInfo.phonenumber === '' ? '点击绑定' : this.$store.state.userInfo.phonenumber;
             },
-            bind_phone(){
+            bind_phone() {
                 let that = this
                 let account = ''
-                if (this.phone_number != '点击绑定'){
+                if (this.phone_number != '点击绑定') {
                     account = this.phone_number;
-                }else if(this.email != '点击绑定'){
+                } else if (this.email != '点击绑定') {
                     account = this.email;
-                }else{
+                } else {
                     return 0
                 }
-                this.$api.account.check_code(account,this.code1).then(res =>{
+                this.$api.account.check_code(account, this.code1).then(res => {
                     if (res.data.code === 1) {
                         // 验证通过
                         this.$api.account.bind_phonenumber(that.formItem.phone_number).then(res => {
@@ -417,18 +419,18 @@
                     window.console.log(error);
                 });
             },
-            bind_email(){
-                let that = this
-                let account = ''
-                if (this.phone_number != '点击绑定'){
+            bind_email() {
+                let that = this;
+                let account = '';
+                if (this.phone_number !== '点击绑定') {
                     account = this.phone_number;
-                }else if(this.email != '点击绑定'){
+                } else if (this.email !== '点击绑定') {
                     account = this.email;
-                }else{
+                } else {
                     return 0
                 }
-                this.$api.account.check_code(account,this.code2).then(res =>{
-                        if (res.data.code === 1) {
+                this.$api.account.check_code(account, this.code2).then(res => {
+                    if (res.data.code === 1) {
                         // 验证通过
                         this.$api.account.bind_email(that.formItem.email).then(res => {
                             if (res.data.code === 1) {
@@ -442,26 +444,26 @@
 
             },
             sendCode(input) {
-                let account = ''
-                if (this.phone_number != '点击绑定'){
+                let account = '';
+                if (this.phone_number !== '点击绑定') {
                     account = this.phone_number;
-                }else if(this.email != '点击绑定'){
+                } else if (this.email !== '点击绑定') {
                     account = this.email;
-                }else{
+                } else {
                     return 0
                 }
                 if (input === '') {
                     this.$store.commit('showInfo', '请输入内容');
                     return
                 }
-                this.$api.account.send_check_code_2(account,input).then(res => {
+                this.$api.account.send_check_code_2(account, input).then(res => {
                     if (res.data.code === 1) {
                         this.btnText = '再次发送';
                         this.sendAgain = false;
                         this.allowAgain();
-                    } else if(res.data.code === -1){
+                    } else if (res.data.code === -1) {
                         this.$store.commit('showInfo', '该账号不存在');
-                    }else{
+                    } else {
                         this.$store.commit('showInfo', '未知错误，请刷新重试');
                     }
                 }).catch(error => {
@@ -491,11 +493,11 @@
                 nickname: this.nickname,
                 description: this.description,
                 headportrait: this.head_portrait,
-                email:this.$store.state.userInfo.email,
+                email: this.$store.state.userInfo.email,
                 phone_number: this.$store.state.userInfo.phonenumber
             }
-            this.email = this.$store.state.userInfo.email === '' ? '点击绑定':this.$store.state.userInfo.email;
-            this.phone_number = this.$store.state.userInfo.phonenumber === ''?'点击绑定':this.$store.state.userInfo.phonenumber;
+            this.email = this.$store.state.userInfo.email === '' ? '点击绑定' : this.$store.state.userInfo.email;
+            this.phone_number = this.$store.state.userInfo.phonenumber === '' ? '点击绑定' : this.$store.state.userInfo.phonenumber;
         }
     }
 </script>
