@@ -130,10 +130,10 @@
                         if (res.data.code === 1) {
                             // 如果注册成功
                             this.login();
-                        } else if (res.data.data === -1) {
-                            // 如果用户已存在
-                            // ...
+                        } else if (res.data.code === -1) {
                             this.$store.commit('showInfo', '邮箱或手机号已被注册！');
+                        } else if(res.data.code === -2){
+                            this.$store.commit('showInfo', '未知原因,注册失败！');
                         }
                     })
                 }
