@@ -409,5 +409,12 @@ export default new Router({
             meta: {requireLogin: true},
             component: () => import('./views/Recharge.vue')
         },
+        // 咨询详情
+        {
+            path: 'advisory-detail',
+            name: 'advisory-detail',
+            meta: {requireLogin: true},
+            component: () => import('./views/AdvisoryDetail.vue')
+        },
     ],
 });

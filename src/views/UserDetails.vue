@@ -250,8 +250,8 @@
                     if (res.data.code === 1) {
                         res.data.data.forEach(value => {
                             this.message.push({
-                                title: value['title'],
-                                subtitle: value['description'],
+                                title: value['title'].replace(/<[^>]+>/g, ''),
+                                subtitle: value['description'].replace(/<[^>]+>/g, ''),
                                 time: this.get_date(value['edittime'])
                             })
                         })
@@ -261,8 +261,8 @@
                     if (res.data.code === 1) {
                         res.data.data.forEach(value => {
                             this.answers.push({
-                                title: value['title'],
-                                subtitle: value['content'],
+                                title: value['title'].replace(/<[^>]+>/g, ''),
+                                subtitle: value['content'].replace(/<[^>]+>/g, ''),
                                 time: this.get_date(value['edittime'])
                             })
                         })
@@ -272,8 +272,8 @@
                     if (res.data.code === 1) {
                         res.data.data.forEach(value => {
                             this.articles.push({
-                                title: value['title'],
-                                subtitle: value['description'],
+                                title: value['title'].replace(/<[^>]+>/g, ''),
+                                subtitle: value['description'].replace(/<[^>]+>/g, ''),
                                 time: this.get_date(value['edittime'])
                             })
                         })
