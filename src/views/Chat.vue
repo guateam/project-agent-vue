@@ -35,8 +35,8 @@
 
                                 <v-flex class="text-area" shrink>
                                     <v-card>
-                                        <v-container>
-                                            {{ row.content }}
+                                        <v-container v-html="row.content">
+
                                         </v-container>
                                     </v-card>
                                 </v-flex>
@@ -49,7 +49,8 @@
             <v-flex class="input-area" shrink>
                 <v-container>
                     <v-layout>
-                        <v-flex>
+                        <v-flex sx10>
+
                             <v-text-field
                                     v-model="message"
                                     append-outer-icon="send"
@@ -66,6 +67,15 @@
                         </v-flex>
                     </v-layout>
                 </v-container>
+                <input
+                        type="file"
+                        class="photoFileIn my-0 py-0"
+                        @change="previewImg()"
+                        accept="image/*"
+                        style="display: none"
+                        ref="upload"
+                        id="file"
+                >
             </v-flex>
         </v-layout>
     </div>
@@ -124,7 +134,7 @@
                 });
             },  // 发送消息
             sendImage() {
-                this.$store.commit('showInfo', '发送图片');
+                this.$refs.upload.click()
             },  // 发送图片
             initWindow() {
                 let chat = document.getElementById('chat-area');
@@ -187,6 +197,28 @@
                     div.scrollTop = div.scrollHeight;
                 }, 500)
             },  // 滚动到最下
+            previewImg: function () {
+                let fileObj = document.getElementById("file").files[0]; // js 获取文件对象
+
+                let form = new FormData(); // FormData 对象
+                form.append("picture", fileObj); // 文件对象
+
+                this.$api.upload.upload_picture(form).then(res => {
+                    if (res.data.code === 1) {
+                        let data = {
+                            token: this.$store.state.token,
+                            receiver: this.userId,
+                            content: '<img src="' + res.data.data + '" class="chat-image">',
+                            message_type: 0,
+                        };
+                        this.$api.message.add_message(data).then(res => {
+                            if (res.data.code === 1) {
+                                this.get_more_message();
+                            }
+                        })
+                    }
+                })
+            },
         },
         mounted() {
             this.initWindow();
@@ -229,5 +261,12 @@
 
     .v-input__control {
         height: 64px;
+    }
+</style>
+<style>
+    .chat-image {
+        width: 40%;
+        height: auto;
+        object-fit: cover;
     }
 </style>
