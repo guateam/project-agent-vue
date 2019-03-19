@@ -56,7 +56,6 @@
 <script>
     export default {
         name: "activate-account",
-
         data() {
             return {
                 // account: '',
@@ -105,6 +104,10 @@
             },  // 允许再次发送
 
             submit() {
+                if(this.code == ""){
+                    this.$store.commit('showInfo', '验证码不能为空');
+                    return
+                }
                 this.$api.account.check_code(this.$route.query.account, this.code).then(res => {
                     if (res.data.code === 1) {
                         // 验证通过
