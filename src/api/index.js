@@ -348,8 +348,8 @@ const index = {
         }
     },
     upload: {
-        upload_picture(picture) {
-            return axios.get(`${base.upload}/upload_picture`, {params: {picture: picture}})
+        upload_picture(formData) {
+            return axios.post(`${base.upload}/upload_picture`,formData)
         }
     },
     group: {

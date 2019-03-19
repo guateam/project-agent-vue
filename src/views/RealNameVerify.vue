@@ -14,8 +14,8 @@
                 :format="['jpg','jpeg','png']"
                 type="drag"
                 :data="{token: $store.state.token}"
-                name="back"
-                action="https://hanerx.tk:5000/api/upload/upload_identity_card_back">
+                name="front"
+                action="https://hanerx.tk:5000/api/upload/upload_identity_card_front">
               <div style="padding: 20px 0">
                 <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                 <p>点击上传身份证正面照片</p>
@@ -32,8 +32,8 @@
                 :format="['jpg','jpeg','png']"
                 type="drag"
                 :data="{token: $store.state.token}"
-                name="front"
-                action="https://hanerx.tk:5000/api/upload/upload_identify_card_front">
+                name="back"
+                action="https://hanerx.tk:5000/api/upload/upload_identity_card_back">
               <div style="padding: 20px 0">
                 <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                 <p>点击上传身份证背面照片</p>
