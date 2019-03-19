@@ -368,8 +368,8 @@
                     nickname: this.formItem.nickname,
                     headportrait: this.formItem.headportrait,
                     description: this.formItem.description,
-                    phonenumber: this.formItem.phone_number,
-                    email: this.formItem.email
+                    email:this.formItem.email,
+                    phonenumber:this.formItem.phone_number,
                 };
                 this.$api.account.set_account_info(data).then(res => {
                     if (res.data.code === 1) {
