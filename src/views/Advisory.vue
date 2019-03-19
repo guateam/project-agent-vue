@@ -45,14 +45,14 @@
                 <!--信息-->
                 <v-layout justify-center column fill-height>
                   <!-- 身份 -->
-                  <v-flex xs6 
+                  <v-flex xs6
                   style="width:50%">
                     <v-layout align-start justify-center row fill-height>
                       <v-flex>
                         <v-btn small block color="success" outline>{{ userInfo.group }}</v-btn>
                       </v-flex>
                     </v-layout>
-                    
+
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -60,7 +60,7 @@
           </v-container>
         </v-flex>
         <v-flex xs6>
-            <v-container 
+            <v-container
             style="padding:5px 10%; width:100%">
                 <!--简介-->
                     <v-flex grow>
@@ -75,7 +75,7 @@
         <!-- 关注、粉丝 -->
         <v-flex xs6>
           <v-divider></v-divider>
-          <v-layout align-end row fill-height style="height:80%; margin:10px,auto;">
+          <v-layout align-end row fill-height style="height:100%;">
             <v-flex xs6 style="width:30%; margin-left:20%;text-align:center;">
               <span
                 class="headline font-weight-bold"
@@ -170,17 +170,17 @@
               <h2 style="margin-top: 0.2em;margin-left: 0.2em;">历史记录</h2>
               <v-divider></v-divider>
               <v-container>
-                <v-layout row wrap style="line-height: 1.5;height: 50px;width:100%;">
+                <v-layout row wrap style="line-height: 1.5;width:100%;">
                   <v-card
-                    style="padding: 1em 2em;line-height: 1.5; width:100%;"
+                    style="padding: 0.5em 1em;line-height: 1.5; width:100%;margin-top: 0.5em"
                     v-for="value in orders"
                     >
                     <h3 style="display: flex;align-items: center;margin-bottom: 8px; width:100%">
-                      <img
-                        style="width: 25px;height: 25px;object-fit: contain;border-radius: 50%;margin-right: 5px"
-                        :src="value.user_head_portrait"
-                        alt
-                      >
+                      <!--<img-->
+                        <!--style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%;margin-right: 5px"-->
+                        <!--:src="value.user_head_portrait"-->
+                        <!--alt-->
+                      <!--&gt;-->
                       <span style="word-break:break-all;">{{value.content}}</span>
                     </h3>
                     <p>{{value.answer}}</p>
@@ -191,7 +191,7 @@
                         style="width:90%;"
                       >查看详情</v-btn>
                     </h4>
-                    <h4>提问日期：{{value.time}} 状态：{{value.state}}</h4>
+                    <h4 style="text-align: right">提问日期：{{value.time}} <br> 状态：<span style="color: red">{{value.state}}</span></h4>
                   </v-card>
                   <v-divider v-for="value in orders"></v-divider>
                 </v-layout>
