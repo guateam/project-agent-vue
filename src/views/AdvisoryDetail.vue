@@ -46,7 +46,7 @@ width: 100%;object-fit: cover">
             </v-flex>
         </div>
         <div style="height: 90px"></div>
-        <div style="position: fixed;bottom: 0;width: 100%;background-color: white;z-index: 100;height: 50px">
+        <div style="position: fixed;bottom: 0;width: 100%;background-color: white;z-index: 100;height: 50px" v-if="!self">
             <ButtonGroup
                     style="width: 100%;height: 50px;">
                 <Button type="error" style="height: 50px;width: 50%" @click="refuse"
@@ -85,7 +85,8 @@ width: 100%;object-fit: cover">
                     expire_date: ''
                 },
                 comments: [],
-                follow: false
+                follow: false,
+                self:false,
             }
         },
         methods: {
@@ -120,6 +121,7 @@ width: 100%;object-fit: cover">
                         if (this.data['image'].length >= 1) {
                             this.data['img'] = this.data['image'][0].split('src="')[1].split('"')[0];
                         }
+                        this.self=this.data.userID==this.$store.state.userInfo.user_id;
                     }
                 })
             },

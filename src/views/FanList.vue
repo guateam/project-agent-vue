@@ -116,6 +116,11 @@
                 },
             }
         },
+        watch: {
+            $route(val) {
+                this.active = this.$route.query.active;
+            }
+        },
         methods: {
             get_my_follow() {
 

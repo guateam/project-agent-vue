@@ -96,7 +96,7 @@ height: 100%;border-radius: 50%;object-fit: cover"
         <!--占位的盒子   END-->
         <div class="chatinput">
             <div class="box">
-                <input type="text" class="chat" placeholder="评论" autofocus v-model="word">
+                <input type="text" class="chat" placeholder="评论" autofocus v-model="word" :disabled="flag">
                 <!--<span class="iconfont emoji-icon">collections</span>-->
                 <button :class="word?'enSend':'disSend'" :disabled="!word" @click="send">发送</button>
             </div>
@@ -136,7 +136,7 @@ height: 100%;border-radius: 50%;object-fit: cover"
                     }
                 }],
                 word: '',
-
+                flag: false,
             }
         },
         methods: {
@@ -214,6 +214,9 @@ height: 100%;border-radius: 50%;object-fit: cover"
                 case 2:
                     this.get_article_comment(this.$route.query.id);
                     break;
+            }
+            if (this.$route.query.flag === 'true' || this.$route.query.flag === true) {
+                this.flag = true;
             }
         }
     }

@@ -12,51 +12,51 @@
             </v-btn>
 
             <!--<v-tabs slot="extension" v-model="active" centered color="primary" slider-color="secondary">-->
-                <!--<v-tab v-for="(tab, tab_idx) in tabs" :key="tab_idx">{{ tab.title }}</v-tab>-->
+            <!--<v-tab v-for="(tab, tab_idx) in tabs" :key="tab_idx">{{ tab.title }}</v-tab>-->
             <!--</v-tabs>-->
         </v-toolbar>
         <v-card>
             <!--<v-tabs-items v-model="active">-->
-                <!--<v-tab-item-->
-                        <!--v-for="n in tabs.length"-->
-                        <!--:key="n"-->
-                <!--&gt;-->
-                    <!--<v-list>-->
-                        <!--<template v-for="(item, index) in items[n-1]">-->
-                            <!--<v-list-tile-->
-                                    <!--:key="item.title"-->
-                                    <!--avatar-->
-                                    <!--ripple-->
-                                    <!--@click="toggle(item.id,n-1)"-->
-                            <!--&gt;-->
-                                <!--<v-list-tile-content>-->
-                                    <!--<v-list-tile-title>{{ item.title }}</v-list-tile-title>-->
-                                    <!--<v-list-tile-sub-title class="text&#45;&#45;primary">{{ item.headline }}-->
-                                    <!--</v-list-tile-sub-title>-->
-                                    <!--<v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>-->
-                                <!--</v-list-tile-content>-->
+            <!--<v-tab-item-->
+            <!--v-for="n in tabs.length"-->
+            <!--:key="n"-->
+            <!--&gt;-->
+            <!--<v-list>-->
+            <!--<template v-for="(item, index) in items[n-1]">-->
+            <!--<v-list-tile-->
+            <!--:key="item.title"-->
+            <!--avatar-->
+            <!--ripple-->
+            <!--@click="toggle(item.id,n-1)"-->
+            <!--&gt;-->
+            <!--<v-list-tile-content>-->
+            <!--<v-list-tile-title>{{ item.title }}</v-list-tile-title>-->
+            <!--<v-list-tile-sub-title class="text&#45;&#45;primary">{{ item.headline }}-->
+            <!--</v-list-tile-sub-title>-->
+            <!--<v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>-->
+            <!--</v-list-tile-content>-->
 
-                                <!--<v-list-tile-action>-->
-                                    <!--<v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>-->
-                                <!--</v-list-tile-action>-->
+            <!--<v-list-tile-action>-->
+            <!--<v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>-->
+            <!--</v-list-tile-action>-->
 
-                            <!--</v-list-tile>-->
-                            <!--<v-divider-->
-                                    <!--v-if="index + 1 < items[n-1].length"-->
-                                    <!--:key="index"-->
-                                    <!--style="margin-bottom: 0.5em;margin-top: 0.5em"-->
-                            <!--&gt;</v-divider>-->
-                        <!--</template>-->
-                    <!--</v-list>-->
+            <!--</v-list-tile>-->
+            <!--<v-divider-->
+            <!--v-if="index + 1 < items[n-1].length"-->
+            <!--:key="index"-->
+            <!--style="margin-bottom: 0.5em;margin-top: 0.5em"-->
+            <!--&gt;</v-divider>-->
+            <!--</template>-->
+            <!--</v-list>-->
 
-                <!--</v-tab-item>-->
+            <!--</v-tab-item>-->
             <!--</v-tabs-items>-->
 
 
             <v-tabs fixed-tabs color="primary">
                 <v-tab
-                    v-for="tab in tabs"
-                    :key="tab.title"
+                        v-for="tab in tabs"
+                        :key="tab.title"
                 >
                     {{ tab.title }}
 
@@ -66,16 +66,16 @@
                         <v-list two-line>
                             <template v-for="(item, index) in items[tab.dataSet]">
                                 <v-list-tile
-                                    :key="index"
-                                    avatar
-                                    ripple
-                                    @click="toggle(item.id, tab.dataSet)"
+                                        :key="index"
+                                        avatar
+                                        ripple
+                                        @click="toggle(item.id, tab.dataSet)"
                                 >
                                     <v-list-tile-content>
-                                        <v-list-tile-title>{{ item.title.replace(/<[^>]+>/g, '') }}</v-list-tile-title>
-                                        <v-list-tile-sub-title class="text--primary">{{ item.headline.replace(/<[^>]+>/g, '') }}
+                                        <v-list-tile-title>{{ item.title}}</v-list-tile-title>
+                                        <v-list-tile-sub-title class="text--primary">{{ item.headline }}
                                         </v-list-tile-sub-title>
-                                        <v-list-tile-sub-title>{{ item.subtitle.replace(/<[^>]+>/g, '') }}</v-list-tile-sub-title>
+                                        <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                                     </v-list-tile-content>
 
                                     <v-list-tile-action>
@@ -84,9 +84,9 @@
 
                                 </v-list-tile>
                                 <v-divider
-                                    :key="index + 'divider'"
-                                    v-if="index + 1 < items[tab.dataSet].length"
-                                    style="margin-bottom: 0.5em;margin-top: 0.5em"
+                                        :key="index + 'divider'"
+                                        v-if="index + 1 < items[tab.dataSet].length"
+                                        style="margin-bottom: 0.5em;margin-top: 0.5em"
                                 ></v-divider>
                             </template>
                         </v-list>
@@ -189,8 +189,8 @@
                         let items = [];
                         data.forEach((value) => {
                             items.push({
-                                title: value['content'],
-                                headline: value['title'],
+                                title: value['content'].replace(/<[^>]+>/g, ''),
+                                headline: value['title'].replace(/<[^>]+>/g, ''),
                                 action: this.get_date(value['edittime']),
                                 subtitle: value['follow'] + '订阅  ·  ' + value['comments'] + '评论',
                                 id: value['answerID'],
@@ -208,8 +208,8 @@
                         let items = [];
                         data.forEach((value) => {
                             items.push({
-                                title: value['title'],
-                                headline: value['content'],
+                                title: value['title'].replace(/<[^>]+>/g, ''),
+                                headline: value['content'].replace(/<[^>]+>/g, ''),
                                 action: this.get_date(value['edittime']),
                                 subtitle: value['follow'] + '订阅',
                                 id: value['articleID'],
@@ -227,21 +227,20 @@
                         let items = [];
                         let state = ['被拒绝', '待回答', '已回答'];
                         data.forEach((value) => {
+
                             items.push({
-                                title: value['content'],
-                                headline: value['answer'],
+                                title: value['content'].replace(/<[^>]+>/g, ''),
+                                headline: value['answer'] ? value['answer'].replace(/<[^>]+>/g, '') : '',
                                 action: this.get_date(value['time']),
                                 subtitle: '状态：' + state[value['state'] + 1] + ' 回答人：' + value['specialist_nickname'],
                                 id: value['orderID'],
                             })
+
                         });
-                        if (this.tabs.length === 4) {
-                            // this.items[3] = items;
-                            this.items.orders = items;
-                        } else {
-                            // this.items[2] = items;
-                            this.items.orders = items;
-                        }
+
+
+                        this.items.orders = items;
+
                     }
                 })
             },
@@ -275,6 +274,12 @@
                         break;
                     case 'questions':
                         this.$router.push({name: 'question', query: {id: id}});
+                        break;
+                    case 'articles':
+                        this.$router.push({name: 'article', query: {id: id}});
+                        break;
+                    case 'orders':
+                        this.$router.push({name: 'advisory-detail', query: {id: id}});
                         break;
                     default:
                         break;
