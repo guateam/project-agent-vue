@@ -43,7 +43,7 @@
 <script>
     import * as Quill from 'quill'  //引入编辑器
     import ImageResize from 'quill-image-resize-module'
-    import { ImageExtend, QuillWatch} from 'quill-image-extend-module'
+    import {ImageExtend, QuillWatch} from 'quill-image-extend-module'
 
     Quill.register('modules/imageResize', ImageResize);
     Quill.register('modules/ImageExtend', ImageExtend);
@@ -87,12 +87,16 @@
                     },
                     placeholder: '请在此输入内容'
                 },
-                busy:false,
+                busy: false,
             }
         },
         methods: {
             send() {
-                this.busy=true;
+                if (this.content === '') {
+                    this.$store.commit('showInfo', '回答不能为空！');
+                    return;
+                }
+                this.busy = true;
                 let data = {
                     content: this.content,
                     answer_type: 0,
@@ -101,7 +105,7 @@
                 };
                 this.$api.answer.add_answer(data).then(res => {
                     if (res.data.code === 1) {
-                        this.busy=false;
+                        this.busy = false;
                         this.$router.back()
                     } else {
                         this.$store.commit('showInfo', res.data.msg);

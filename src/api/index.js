@@ -134,6 +134,9 @@ const index = {
         checkout() {
 
         },  //提现
+        set_verify_info(data) {
+            return axios.post(`${base.account}/set_verify_info`, qs.stringify(data))
+        }
     },
     message: {
 

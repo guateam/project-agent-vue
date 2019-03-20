@@ -202,12 +202,12 @@
                     },
                     placeholder: '请在此输入内容'
                 },
-                busy:false,
+                busy: false,
             }
         },
         methods: {
             get_second_category() {
-                this.formItem.second_category=[];
+                this.formItem.second_category = [];
                 this.$api.tags.get_child_tag(this.formItem.first_category).then(res => {
                     if (res.data.code === 1) {
                         this.second_category = res.data.data;
@@ -262,7 +262,27 @@
                 return back;
             },
             send() {
-                this.busy=true;
+                if (this.formItem.title === '' || this.formItem.title == null) {
+                    this.$store.commit('showInfo', '标题不能为空！');
+                    return;
+                }
+                if (this.content === '' || this.content == null) {
+                    this.$store.commit('showInfo', '内容不能为空！');
+                    return;
+                }
+                if (this.formItem.price <= 0 && this.formItem.priced) {
+                    this.$store.commit('showInfo', '价格不能为负！');
+                    return;
+                }
+                if (this.formItem.first_category == null || this.formItem.first_category === '') {
+                    this.$store.commit('showInfo', '一级标签不能为空！');
+                    return;
+                }
+                if (this.formItem.user_group.length === 0 && this.formItem.priced) {
+                    this.$store.commit('showInfo', '回答用户组不能为空！');
+                    return;
+                }
+                this.busy = true;
                 this.set_tags(this.formItem.first_category);
                 let that = this;
                 setTimeout(() => {
@@ -279,9 +299,9 @@
                         };
                         that.$api.questions.add_priced_question(data).then(res => {
                             if (res.data.code === 1) {
-                                this.busy=false;
+                                this.busy = false;
                                 that.$router.back();
-                            }else{
+                            } else {
                                 this.$store.commit('showInfo', res.data.msg);
                                 this.busy = false;
                             }
@@ -295,9 +315,9 @@
                         };
                         that.$api.questions.add_question(data).then(res => {
                             if (res.data.code === 1) {
-                                this.busy=false;
+                                this.busy = false;
                                 that.$router.back();
-                            }else{
+                            } else {
                                 this.$store.commit('showInfo', res.data.msg);
                             }
                         });

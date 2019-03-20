@@ -92,21 +92,25 @@
         },
         methods: {
             send() {
-                this.busy = true;
-                let data = {
-                    answer: this.content,
-                    order_id: this.$route.query.id,
-                    token: this.$store.state.token
-                };
-                this.$api.specialist.confirm_order(data).then(res => {
-                    if (res.data.code === 1) {
-                        this.busy = false;
-                        this.$router.back()
-                    } else {
-                        this.$store.commit('showInfo', res.data.msg);
-                        this.busy = false;
-                    }
-                })
+                if (this.content !== '') {
+                    this.busy = true;
+                    let data = {
+                        answer: this.content,
+                        order_id: this.$route.query.id,
+                        token: this.$store.state.token
+                    };
+                    this.$api.specialist.confirm_order(data).then(res => {
+                        if (res.data.code === 1) {
+                            this.busy = false;
+                            this.$router.back()
+                        } else {
+                            this.$store.commit('showInfo', res.data.msg);
+                            this.busy = false;
+                        }
+                    })
+                } else {
+                    this.$store.commit('showInfo', '回答不能为空！');
+                }
             }
         },
         mounted() {

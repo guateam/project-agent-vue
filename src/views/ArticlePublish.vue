@@ -28,7 +28,7 @@
                                         </Upload>
                                     </FormItem>
                                     <FormItem label="封面预览" v-if="formItem.cover!==undefined">
-                                        <img width="100%" :src="formItem.cover" >
+                                        <img width="100%" :src="formItem.cover">
                                     </FormItem>
                                     <FormItem label="一级标签">
                                         <Select v-model="formItem.first_category"
@@ -46,7 +46,8 @@
                                         </Select>
                                     </FormItem>
                                     <FormItem label="文章简介">
-                                        <Input v-model="formItem.description" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="输入文章简介···"></Input>
+                                        <Input v-model="formItem.description" type="textarea"
+                                               :autosize="{minRows: 2,maxRows: 5}" placeholder="输入文章简介···"></Input>
                                     </FormItem>
                                     <FormItem label="付费文章">
                                         <i-switch v-model="formItem.priced" size="large">
@@ -55,7 +56,7 @@
                                         </i-switch>
                                     </FormItem>
                                     <FormItem label="文章价格" v-if="formItem.priced">
-                                        <Input v-model.number="formItem.price" type="text">
+                                        <Input v-model.number="formItem.price" type="number">
                                             <span slot="prepend">￥</span>
                                             <span slot="append">元</span>
                                         </Input>
@@ -174,7 +175,7 @@
                     counter: value => value.length <= 30 || '字数不能超过30个',
                     required: value => !!value || '该栏不能为空.',
                 },
-                busy:false,
+                busy: false,
             }
         },
         watch: {},
@@ -186,8 +187,8 @@
                 }];
                 this.formItem.cover = response.data;
             },
-            remove(){
-                this.formItem.cover=undefined
+            remove() {
+                this.formItem.cover = undefined
             },
             get_second_category() {
                 this.formItem.second_category = [];
@@ -235,7 +236,31 @@
                 return back;
             },
             send() {
-                this.busy=true;
+                if (this.formItem.title === '' || this.formItem.title == null) {
+                    this.$store.commit('showInfo', '标题不能为空！');
+                    return;
+                }
+                if (this.content === '' || this.content == null) {
+                    this.$store.commit('showInfo', '内容不能为空！');
+                    return;
+                }
+                if (this.formItem.price <= 0 && this.formItem.priced) {
+                    this.$store.commit('showInfo', '价格不能为负！');
+                    return;
+                }
+                if (this.formItem.first_category == null || this.formItem.first_category === '') {
+                    this.$store.commit('showInfo', '一级标签不能为空！');
+                    return;
+                }
+                if (this.formItem.cover == null || this.formItem.cover === '') {
+                    this.$store.commit('showInfo', '封面不能为空！');
+                    return;
+                }
+                if (this.formItem.description == null || this.formItem.description === '') {
+                    this.$store.commit('showInfo', '描述不能为空！');
+                    return;
+                }
+                this.busy = true;
                 this.set_tags(this.formItem.first_category);
                 let that = this;
                 setTimeout(() => {
@@ -247,12 +272,12 @@
                         content: that.content,
                         tags: tags,
                         cover: that.formItem.cover,
-                        free:that.formItem.priced,
-                        description:that.formItem.description
+                        free: that.formItem.priced,
+                        description: that.formItem.description
                     };
                     that.$api.article.add_article(data).then(res => {
                         if (res.data.code === 1) {
-                            this.busy=false;
+                            this.busy = false;
                             that.$router.back();
                         } else {
                             this.$store.commit('showInfo', res.data.msg);

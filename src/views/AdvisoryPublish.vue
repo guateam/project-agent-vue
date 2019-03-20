@@ -18,7 +18,7 @@
                             <v-card-text>
                                 <Form :model="formItem">
                                     <FormItem label="悬赏金额">
-                                        <Input v-model.number="formItem.price" type="text">
+                                        <Input v-model.number="formItem.price" type="number">
                                             <span slot="prepend">￥</span>
                                             <span slot="append">元</span>
                                         </Input>
@@ -120,12 +120,20 @@
                 formItem: {
                     price: 0
                 },
-                busy:false,
+                busy: false,
             }
         },
         methods: {
             send() {
-                this.busy=true;
+                if (this.content === '') {
+                    this.$store.commit('showInfo', '问题不能为空！');
+                    return;
+                }
+                if (this.formItem.price <= 0 || this.formItem.price == null) {
+                    this.$store.commit('showInfo', '价格不能为负！');
+                    return;
+                }
+                this.busy = true;
                 let data = {
                     token: this.$store.state.token,
                     content: this.content,
@@ -134,7 +142,7 @@
                 };
                 this.$api.specialist.add_order(data).then(res => {
                     if (res.data.code === 1) {
-                        this.busy=false;
+                        this.busy = false;
                         this.$router.back()
                     } else {
                         this.$store.commit('showInfo', res.data.msg);
