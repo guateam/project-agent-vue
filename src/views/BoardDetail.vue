@@ -61,7 +61,7 @@
         <div style="padding: 1em;line-height: 1.5;">
             <h3 style="margin-bottom: 1.1em;font-size: 1.2em">具体要求</h3>
             <p class="topicdetail">
-                <span v-if="!showAll_one">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.content.length > 80 ? data.article_description.substring(0, 80) + '...' : data.content }} </span>
+                <span v-if="!showAll_one">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.content.length > 80 ? data.content.substring(0, 80) + '...' : data.content }} </span>
                 <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.content }} </span>
                 <button id="show-all-button" v-if="data.content.length > 80"
                         @click="showAll_one = !showAll_one">
