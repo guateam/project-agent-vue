@@ -21,7 +21,10 @@
                     <div style="flex: 0 0 70%">
                         <p>标签 : <span v-for="(tag, index) in questionData.tags" :key="index">{{tag.text}} </span></p>
                         <p><span> {{questionData.follow}} </span>人关注&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span>{{questionData.commentsNum}} </span>
-                            条评论 </p>
+                            条评论
+                            <span v-if="question_type!==0"
+                                  style="color: #4CAF50">&nbsp;&nbsp;&nbsp;悬赏价格：￥{{price}}</span>
+                        </p>
                     </div>
                     <div :class="{attention:!isfollowed,followed:isfollowed}" style="flex: 0 0 30%" @click="follow()">
                         {{followNotice}}
@@ -48,8 +51,7 @@
 
         <!--页面主体，展示不同的回答列表-->
 
-        <v-card v-for="(answer, index) in answersDataList" :key="index"
-                :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
+        <v-card v-for="(answer, index) in answersDataList" :key="index" v-if="paid">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
 
                 <router-link :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
@@ -61,7 +63,8 @@
 
                     <!--没有图片时不加载下面的div-->
                     <div class="answerImg" v-if="answer.image.length >=3">
-                        <img style="object-fit: cover" v-for="(item,x) in answer.image" :key="x" v-if="x<3" :src="item" alt=""/>
+                        <img style="object-fit: cover" v-for="(item,x) in answer.image" :key="x" v-if="x<3" :src="item"
+                             alt=""/>
                     </div>
                     <div class="answerImg" v-if="answer.image.length === 1">
                         <img :src="answer.image[0]" alt="" style="width: 100%;object-fit: cover;"/>
@@ -71,7 +74,7 @@
                         <img :src="answer.image[1]" alt="" style="width: 50%;object-fit: cover;"/>
                     </div>
                 </router-link>
-                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em">
+                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em" @click="$router.push({name:'detail',query:{id:answer.userID}})">
                     <div class="userhead">
                         <img :src="answer.headportrait" alt="" style="width: 100%;object-fit: cover;">
                     </div>
@@ -81,7 +84,16 @@
                     <!--<p class="userTag">{{answer.user.tag}}</p>-->
                     <p class="answerTime">{{answer.edittime}}</p>
                 </div>
+                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em">
+                    <v-btn block v-if="user_id===$store.state.userInfo.user_id &&(!adopt)" color="success"
+                           @click="adopt_answer(answer.answerID)">采纳回答
+                    </v-btn>
+                </div>
             </div>
+        </v-card>
+        <v-card v-if="!paid" style="text-align: center;align-items: center;">
+            <h2 style="margin-top: 1em;padding-top: 1em;">本问题是付费问题，请付费后查看</h2>
+            <v-btn color="info" @click="confirm_pay" style="margin-top: 1em;">支付￥{{price*0.05.toFixed(2)}}</v-btn>
         </v-card>
         <div class="bottom"></div>
 
@@ -109,6 +121,44 @@
         <!--END-->
 
         <!--底部为添加按钮留出空间，防止遮挡内容-->
+        <v-dialog
+                v-model="dialog"
+                width="500"
+        >
+            <v-card>
+                <v-card-title
+                        class="headline grey lighten-2"
+                        primary-title
+                        color="primary"
+                >
+                    确认支付
+                </v-card-title>
+
+                <v-card-text>
+                    你确定支付￥{{price*0.05.toFixed(2)}}元来查看回答吗？
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                            color="warning"
+                            flat
+                            @click="dialog = false"
+                    >
+                        取消
+                    </v-btn>
+                    <v-btn
+                            color="success"
+                            flat
+                            @click="pay_question"
+                    >
+                        确定
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-footer app>
             <bottomNav :bottom-nav="'topic'"></bottomNav>
         </v-footer>
@@ -145,6 +195,12 @@
                         commentsNum: '',  //评论数量
                     },
                 ],  // 答案列表
+                question_type: 0,
+                paid: true,
+                price: 0,
+                dialog: false,
+                user_id: '',
+                adopt: false
             }
         },
         methods: {
@@ -154,20 +210,43 @@
             // },
             getAnswers(questionID) {
                 // 获取答案信息
-                this.$api.questions.get_answer_list(questionID).then((response) => {
-                    // console.log(response.data.data);
-                    let data = response.data.data;
-                    data.forEach((value) => {
-                        let image = value.image;
-                        let x = [];
-                        image.forEach((img) => {
-                            x.push(img.split('src="')[1].split('"')[0])
+                if (this.question_type === 0) {
+                    this.$api.questions.get_answer_list(questionID).then((response) => {
+                        // console.log(response.data.data);
+                        let data = response.data.data;
+                        data.forEach((value) => {
+                            let image = value.image;
+                            let x = [];
+                            image.forEach((img) => {
+                                x.push(img.split('src="')[1].split('"')[0])
+                            });
+                            value.image = x;
                         });
-                        value.image = x;
+                        this.answersDataList = data;
+                        this.answerNum = response.data.data.length;
                     });
-                    this.answersDataList = data;
-                    this.answerNum = response.data.data.length;
-                });
+                } else {
+                    this.$api.questions.get_priced_answer_list(questionID).then(res => {
+                        if (res.data.code === 1) {
+                            let data = res.data.data;
+                            data.forEach((value) => {
+                                let image = value.image;
+                                let x = [];
+                                image.forEach((img) => {
+                                    x.push(img.split('src="')[1].split('"')[0])
+                                });
+                                value.image = x;
+                                if (value.answertype === 2) {
+                                    this.adopt = true;
+                                }
+                            });
+                            this.answersDataList = data;
+                            this.answerNum = res.data.data.length;
+                        } else if (res.data.code === 0) {
+                            this.paid = false;
+                        }
+                    })
+                }
             },
             getQuestion(questionID) {
                 this.$api.questions.get_question(questionID).then((response) => {
@@ -179,7 +258,37 @@
                     this.questionData.follow = data.follow;
                     this.questionData.commentsNum = data.comment;
                     //this.questionData.tags=data.tags;
+                    this.question_type = data.question_type;
+                    this.price = data.price;
+                    this.answerNum = data.answer;
+                    this.user_id = data.user_id;
+                    this.getAnswers(questionID);
                 });
+            },
+            pay_question() {
+                this.$api.questions.pay_question(this.$route.query.id).then(res => {
+                    if (res.data.code === 1) {
+                        this.getAnswers(this.$route.query.id);
+                        this.paid = true;
+                    } else if (res.data.code === -1) {
+                        this.$store.commit('showInfo', '余额不足，请充值！');
+                    } else {
+                        this.$store.commit('showInfo', res.data.msg);
+                    }
+                    this.dialog = false;
+                })
+            },
+            confirm_pay() {
+                this.dialog = true;
+            },
+            adopt_answer(answer_id) {
+                this.$api.questions.adopt_answer(answer_id).then(res => {
+                    if (res.data.code === 1) {
+                        this.adopt = true;
+                    } else {
+                        this.$store.commit('showInfo', res.data.msg);
+                    }
+                })
             },
             follow() {
                 if (!this.isfollowed) {
@@ -210,7 +319,6 @@
         },
         mounted() {
             const id = this.$route.query.id;
-            this.getAnswers(id);
             this.getQuestion(id);
             this.get_follow(id);
             this.add_user_action(id);

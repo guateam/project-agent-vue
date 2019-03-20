@@ -128,11 +128,11 @@ const index = {
         bind_email(email) {
             return axios.get(`${base.account}/bind_email`, {params: {token: store.state.token, email: email}})
         },
-        recharge(data){
+        recharge(data) {
             return axios.post(`${base.account}/add_account_balance`, qs.stringify(data))
         },  //充值
-        checkout(){
-           
+        checkout() {
+
         },  //提现
     },
     message: {
@@ -206,6 +206,20 @@ const index = {
                 content: content
             };
             return axios.post(`${base.questions}/add_question_comment`, qs.stringify(data))
+        },
+        get_priced_answer_list(question_id, token = store.state.token) {
+            return axios.get(`${base.questions}/get_priced_answer_list`, {
+                params: {
+                    question_id: question_id,
+                    token: token
+                }
+            })
+        },
+        pay_question(question_id, token = store.state.token) {
+            return axios.get(`${base.questions}/pay_question`, {params: {question_id: question_id, token: token}})
+        },
+        adopt_answer(answer_id, token = store.state.token) {
+            return axios.get(`${base.questions}/adopt_answer`, {params: {answer_id: answer_id, token: token}})
         }
     },
     school: {
