@@ -206,6 +206,15 @@
                 recommends: []
             }
         },
+        watch: {
+            tabs(val) {
+                if (val === 1) {
+                    this.busy = true;
+                } else {
+                    this.busy = false;
+                }
+            }
+        },
         methods: {
             menu_change(name) {
                 if (name.length === 0) {

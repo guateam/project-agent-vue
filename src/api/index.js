@@ -132,7 +132,7 @@ const index = {
             return axios.post(`${base.account}/add_account_balance`, qs.stringify(data))
         },  //充值
         checkout() {
-
+            return axios.post(`${base.account}/add_account_balance`, qs.stringify(data))
         },  //提现
         set_verify_info(data) {
             return axios.post(`${base.account}/set_verify_info`, qs.stringify(data))
@@ -502,6 +502,11 @@ const index = {
             }
             return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token, page: page}})
         }, //模糊搜索
+    },
+    other:{
+        check_update(){
+            return axios.get(`https://hanerx.tk/project-agent/version.json`)
+        }
     }
 };
 

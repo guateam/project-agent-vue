@@ -116,8 +116,8 @@
         data() {
             return {
                 show: false,
-                email: 'zhangyu199946@126.com',
-                password: 'zhangyuk',
+                email: '',
+                password: '',
                 dialog: true,
                 codelogin: 0,
                 account: '',
@@ -146,7 +146,7 @@
             loginByCode() {
                 this.codelogin = 1
             },
-            loginByPassword(){
+            loginByPassword() {
                 this.codelogin = 0
             },
             forgetPassword() {
@@ -157,65 +157,67 @@
             login() {
                 this.$v.$touch();
                 if (!this.$v.$anyError) {
-                    if(this.codelogin === 0){
+                    if (this.codelogin === 0) {
                         this.login_by_password()
-                    }else if(this.codelogin === 1){
+                    } else if (this.codelogin === 1) {
                         this.login_by_message()
                     }
-                    
+
                 }
                 this.$store.commit('closeDialog');
             },
-            login_by_password(){
+            login_by_password() {
                 this.$api.account.login({
-                        username: this.email,
-                        password: this.password
+                    username: this.email,
+                    password: this.password
                 }).then(res => {
-                        if (res.data.code === 1) {
-                            // 保存token
-                            import('js-cookie').then(Cookies => {
-                                Cookies.set('token', res.data.data.token)
-                            });
-                            this.DB({token: res.data.data.token, id: 1});
-                            this.$store.commit('updateToken', res.data.data.token);
-                            // 获取用户信息
-                            this.$api.account.get_user_by_token().then(res => {
-                                if (res.data.code === 1) {
-                                    this.$store.commit('refreshUserInfo', res.data.data);
-                                    this.$store.commit('login', this.$store.state);
-                                    // 跳转到之前的页面
-                                    this.$router.push(this.$route.query.redirect || {name: 'index'})
-                                }
-                            });
-                        } else if (res.data.code === 0) {
-                            this.$store.commit('showInfo', '用户名或密码错误！');
-                        } else {
-                            this.$store.commit('showInfo', '网络错误，请检查网络！');
-                        }
+                    if (res.data.code === 1) {
+                        // 保存token
+                        import('js-cookie').then(Cookies => {
+                            Cookies.set('token', res.data.data.token)
+                        });
+                        this.DB({token: res.data.data.token, id: 1, username: this.email, password: this.password});
+                        this.DBset({username: this.email, password: this.password, id: 1});
+                        this.$store.commit('updateToken', res.data.data.token);
+                        // 获取用户信息
+                        this.$api.account.get_user_by_token().then(res => {
+                            if (res.data.code === 1) {
+                                this.$store.commit('refreshUserInfo', res.data.data);
+                                this.$store.commit('login', this.$store.state);
+                                // 跳转到之前的页面
+                                this.$router.push(this.$route.query.redirect || {name: 'index'})
+                            }
+                        });
+                    } else if (res.data.code === 0) {
+                        this.$store.commit('showInfo', '用户名或密码错误！');
+                    } else {
+                        this.$store.commit('showInfo', '网络错误，请检查网络！');
+                    }
                 })
             },
-            login_by_message(){
-                this.$api.account.login_by_message(this.code,this.email).then(res =>{
+            login_by_message() {
+                this.$api.account.login_by_message(this.code, this.email).then(res => {
                     if (res.data.code === 1) {
-                            // 保存token
-                            import('js-cookie').then(Cookies => {
-                                Cookies.set('token', res.data.data.token)
-                            });
-                            this.DB({token: res.data.data.token, id: 1});
-                            this.$store.commit('updateToken', res.data.data.token);
-                            // 获取用户信息
-                            this.$api.account.get_user_by_token().then(res => {
-                                if (res.data.code === 1) {
-                                    this.$store.commit('refreshUserInfo', res.data.data);
-                                    this.$store.commit('login', this.$store.state);
-                                    // 跳转到之前的页面
-                                    this.$router.push(this.$route.query.redirect || {name: 'index'})
-                                }
-                            });
-                        } else if (res.data.code === 0) {
-                            this.$store.commit('showInfo', '用户名或验证码错误！');
-                        } else {
-                            this.$store.commit('showInfo', '网络错误，请检查网络！');
+                        // 保存token
+                        import('js-cookie').then(Cookies => {
+                            Cookies.set('token', res.data.data.token)
+                        });
+                        this.DB({token: res.data.data.token, id: 1});
+                        this.DBset({username: this.email, password: '', id: 1});
+                        this.$store.commit('updateToken', res.data.data.token);
+                        // 获取用户信息
+                        this.$api.account.get_user_by_token().then(res => {
+                            if (res.data.code === 1) {
+                                this.$store.commit('refreshUserInfo', res.data.data);
+                                this.$store.commit('login', this.$store.state);
+                                // 跳转到之前的页面
+                                this.$router.push(this.$route.query.redirect || {name: 'index'})
+                            }
+                        });
+                    } else if (res.data.code === 0) {
+                        this.$store.commit('showInfo', '用户名或验证码错误！');
+                    } else {
+                        this.$store.commit('showInfo', '网络错误，请检查网络！');
                     }
                 })
             },
@@ -252,6 +254,39 @@
                     addData(myDB.db, "user", data);
                 }, 1000);
             },
+            DBset(data) {
+                let myDB = {
+                    name: "project-agent", version: 1, db: null
+                };
+
+                function openDB(name) {
+                    let version = 1;
+                    let request = window.indexedDB.open(name, version);
+                    request.onerror = function (e) {
+                        window.console.log(e.currentTarget.error.message);
+                    };
+                    request.onsuccess = function (e) {
+                        myDB.db = e.target.result;
+                    };
+                    request.onupgradeneeded = function (e) {
+                        let db = e.target.result;
+                        if (!db.objectStoreNames.contains("account")) {
+                            db.createObjectStore("account", {keyPath: 'id', autoIncrement: true});
+                        }
+                    };
+                }
+
+                function addData(db, storeName, data) {
+                    let transaction = db.transaction(storeName, 'readwrite');
+                    let store = transaction.objectStore(storeName);
+                    store.put(data)
+                }
+
+                openDB('account');
+                setTimeout(function () {
+                    addData(myDB.db, "account", data);
+                }, 1000);
+            },
             sendCode() {
                 if (this.email === '') {
                     this.$store.commit('showInfo', '请输入邮箱或手机号码');
@@ -262,9 +297,9 @@
                         this.btnText = '再次发送';
                         this.sendAgain = false;
                         this.allowAgain();
-                    } else if(res.data.code === -1){
+                    } else if (res.data.code === -1) {
                         this.$store.commit('showInfo', '该账号不存在');
-                    }else{
+                    } else {
                         this.$store.commit('showInfo', '未知错误，请刷新重试');
                     }
                 }).catch(error => {
@@ -301,6 +336,48 @@
                     window.console.log(error);
                 });
             },  // 提交验证
+            DBget() {
+                let that = this;
+                let myDB = {
+                    name: "project-agent", version: 1, db: null
+                };
+
+                function openDB(name) {
+                    let version = 1;
+                    let request = window.indexedDB.open(name, version);
+                    request.onerror = function (e) {
+                        window.console.log(e.currentTarget.error.message);
+                    };
+                    request.onsuccess = function (e) {
+                        myDB.db = e.target.result;
+                    };
+                    request.onupgradeneeded = function (e) {
+                        let db = e.target.result;
+                        if (!db.objectStoreNames.contains("account")) {
+                            db.createObjectStore("account", {keyPath: 'id', autoIncrement: true});
+                        }
+                    };
+                }
+
+                function getDataByKey(db, storeName, value) {
+                    let transaction = db.transaction(storeName, 'readwrite');
+                    let store = transaction.objectStore(storeName);
+                    let request = store.get(value);
+                    request.onsuccess = function (e) {
+                        let data = e.target.result;
+                        that.email = data.username;
+                        that.password = data.password;
+                    };
+                }
+
+                openDB('account');
+                setTimeout(function () {
+                    getDataByKey(myDB.db, 'account', 1)
+                }, 1000);
+            },
+        },
+        mounted() {
+            this.DBget();
         }
     }
 </script>
