@@ -1,5 +1,5 @@
 <template>
-    <div class="question-card">
+    <div class="question-card" style="width: 100%">
 
         <v-card id="card" flat border>
             <!--<v-container v-if="card_type==0">-->
