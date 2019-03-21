@@ -13,7 +13,7 @@
             <v-container>
                 <v-layout row>
                     <v-flex xs1 sm6 align-center justify-center style="display: flex">
-                            <h2>￥</h2>
+                        <h2>￥</h2>
                     </v-flex>
                     <v-flex xs11 sm6 style="font-size: 1.5em;font-weight: bold;">
                         <v-text-field
@@ -41,37 +41,42 @@
 </template>
 
 <script>
-export default {
+    export default {
         name: "check-out",
-        data(){
-            return{
-                value:"",
-                save:"",
-                bank_account:"",
+        data() {
+            return {
+                value: "",
+                save: "",
+                bank_account: "",
                 rules: {
                     number: value => {
                         let reg = /^[0-9]*[1-9][0-9]*$/
                         let flag = reg.test(value)
-                        if(flag){
+                        if (flag) {
                             this.save = value
-                        }else{
+                        } else {
                             this.value = this.save
                         }
                     },
                 },
             }
         },
-        methods:{
-            checkout(){
-                this.$store.commit('showInfo', '已提交提现请求，将在2小时内到账，请耐心等候');
+        methods: {
+            checkout() {
+                let data = {
+                    num: this.value,
+                    token: this.$store.state.token
+                };
+                this.$api.account.checkout(data).then(res => {
+                    if (res.data.code === 1) {
+                        this.$store.commit('showInfo', '已提交提现请求，请耐心等候');
+                    }
+                })
+
             },
         },
-        watch:{
-
-        },
-        mounted:{
-
-        },
+        watch: {},
+        mounted: {},
     }
 </script>
 

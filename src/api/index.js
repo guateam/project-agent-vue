@@ -132,7 +132,7 @@ const index = {
             return axios.post(`${base.account}/add_account_balance`, qs.stringify(data))
         },  //充值
         checkout() {
-
+            return axios.post(`${base.account}/add_account_balance`, qs.stringify(data))
         },  //提现
         set_verify_info(data) {
             return axios.post(`${base.account}/set_verify_info`, qs.stringify(data))

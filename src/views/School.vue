@@ -30,7 +30,8 @@
                         <!--</v-carousel>-->
                         <Carousel autoplay loop dots="none" arrow="always" style="z-index: 1 !important;">
                             <CarouselItem v-for="item in items">
-                                <div class="banner-image" style="background-size: cover;background-position: center" v-bind:style="{backgroundImage:'url(' + item.src + ')'}"
+                                <div class="banner-image" style="background-size: cover;background-position: center"
+                                     v-bind:style="{backgroundImage:'url(' + item.src + ')'}"
                                      @click="jump_url(item.url)">
                                     <span class="banner">{{item.title}}</span>
                                 </div>
@@ -201,6 +202,15 @@
                 page: 1,
                 busy: false,
                 recommends: []
+            }
+        },
+        watch: {
+            tabs(val) {
+                if (val === 1) {
+                    this.busy = true;
+                } else {
+                    this.busy = false;
+                }
             }
         },
         methods: {
