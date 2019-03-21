@@ -43,7 +43,7 @@
                                     </v-container>
                                 </v-flex>
                                 <!--信息-->
-                                <v-layout justify-center column fill-height>
+                                <v-layout justify-center column fill-height style="display: flex;align-items: center;justify-content: center;">
                                     <!-- 身份 -->
                                     <v-flex xs6
                                             style="width:50%">

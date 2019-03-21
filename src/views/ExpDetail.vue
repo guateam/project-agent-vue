@@ -18,12 +18,12 @@
                             :width="10"
                             :value="$store.state.userInfo.exp.percent / 2"
                             color="secondary"
-                            
+
                     >
-                        <v-layout id="exp-text-container" style="text-shadow:3px 3px 3px rgb(0,0,0,0.6);">
-                            <v-flex><span id="exp-text">{{ $store.state.userInfo.exp.value }}</span></v-flex>
+                        <v-layout id="exp-text-container" style="text-shadow:3px 3px 3px rgba(0,0,0,0.6);">
+                            <v-flex style="display: flex;align-items: center;justify-content: center;text-align: center"><span style="text-align: center" id="exp-text">{{ $store.state.userInfo.exp.value }}</span></v-flex>
                             <br> <br/>
-                            
+
                         </v-layout>
                         <v-flex style="text-align: center;"><span style="font-size:1.2em;text-align:center;">我的积分</span></v-flex>
                     </v-progress-circular>
