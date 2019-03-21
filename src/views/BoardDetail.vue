@@ -24,14 +24,14 @@
                         <h2>{{data.title}}</h2>
                     </div>
                     <!--<div class="title_box_item" style="width: 100%;height: 50%;">-->
-                        <!--<h3>{{data.nickname}}</h3>-->
-                        <!--<div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;">-->
-                        <!--{{data.usergroup.text}} lv.{{data.level}}-->
-                        <!--</div>-->
+                    <!--<h3>{{data.nickname}}</h3>-->
+                    <!--<div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;">-->
+                    <!--{{data.usergroup.text}} lv.{{data.level}}-->
+                    <!--</div>-->
                     <!--</div>-->
                     <!--<div class="title_box_item" style="width: 100%;height: 25%;">-->
-                        <!--<span v-for="(tag, index) in data.tags"-->
-                              <!--:key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>-->
+                    <!--<span v-for="(tag, index) in data.tags"-->
+                    <!--:key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>-->
                     <!--</div>-->
                 </v-flex>
             </v-layout>
@@ -216,11 +216,17 @@ height: 100%;border-radius: 50%">
                         this.sign = 1;
                     }
                 })
+            },
+            set_exp_change() {
+                this.$api.account.set_exp_change(1, '浏览需求').then(res => {
+
+                })
             }
         },
         mounted() {
             this.get_demand(this.$route.query.id);
             this.add_user_action();
+            this.set_exp_change();
         }
 
     }

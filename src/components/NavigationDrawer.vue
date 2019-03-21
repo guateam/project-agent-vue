@@ -4,7 +4,8 @@
             <v-layout justify-space-between align-start>
                 <v-flex shrink>
                     <v-avatar id="avatar" size="80">
-                        <img style="object-fit: cover" @click="$router.push({name: 'account'})" :src="$store.state.userInfo.head_portrait" alt="">
+                        <img style="object-fit: cover" @click="$router.push({name: 'account'})"
+                             :src="$store.state.userInfo.head_portrait" alt="">
                     </v-avatar><!--头像-->
                 </v-flex>
                 <v-flex shrink>
@@ -125,7 +126,8 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile @click="$router.push({name:'article-publish'})">
+                <v-list-tile @click="$router.push({name:'article-publish'})"
+                             v-if="$store.state.userInfo.group.value===0||$store.state.userInfo.group.value===2||$store.state.userInfo.group.value===3">
                     <v-list-tile-action>
                         <v-icon class="time--text">border_color</v-icon>
                     </v-list-tile-action>
@@ -135,7 +137,8 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile @click="$router.push({name:'question-publish'})">
+                <v-list-tile @click="$router.push({name:'question-publish'})"
+                             v-if="$store.state.userInfo.level>=1">
                     <v-list-tile-action>
                         <v-icon class="time--text">create_new_folder</v-icon>
                     </v-list-tile-action>
@@ -145,7 +148,8 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile @click="$router.push({name:'creation-manager'})">
+                <v-list-tile @click="$router.push({name:'creation-manager'})"
+                             v-if="$store.state.userInfo.group.value===0||$store.state.userInfo.group.value===2||$store.state.userInfo.group.value===3">
                     <v-list-tile-action>
                         <v-icon class="time--text">insert_chart</v-icon>
                     </v-list-tile-action>

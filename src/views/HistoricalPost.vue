@@ -91,6 +91,14 @@
                             </template>
                         </v-list>
                     </v-card>
+                    <div v-if="busy" class="load-more-normal">
+                        <h3>
+                            <v-progress-circular
+                                    indeterminate
+                                    color="primary"
+                            ></v-progress-circular>
+                            <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
                 </v-tab-item>
             </v-tabs>
         </v-card>
@@ -144,6 +152,7 @@
                 //         }
                 //     ], [], [], []
                 // ],
+                busy: false,
             }
         },
         methods: {
@@ -179,7 +188,7 @@
                 } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
                     return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
                 } else {
-                    return old.getMonth() + '-' + old.getDay()
+                    return (old.getMonth() + 1) + '-' + (old.getDate())
                 }
             },
             get_my_answers() {
@@ -199,6 +208,7 @@
                         // this.items[0] = items
                         this.items.answers = items;
                     }
+                    this.busy = false;
                 })
             },
             get_my_articles() {
@@ -218,7 +228,7 @@
                         // this.items[2] = items
                         this.items.articles = items;
                     }
-                })
+                });
             },
             get_my_orders() {
                 this.$api.specialist.get_historical_orders().then((data) => {
@@ -287,6 +297,7 @@
             }
         },
         mounted() {
+            this.busy = true;
             // this.get_category();
             this.get_my_answers();
             this.get_my_questions();
@@ -299,5 +310,9 @@
 </script>
 
 <style scoped>
-
+    .load-more-normal {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    }
 </style>

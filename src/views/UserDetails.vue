@@ -298,7 +298,7 @@
                 } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
                     return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
                 } else {
-                    return old.getMonth() + '-' + old.getDay()
+                    return (old.getMonth() + 1) + '-' + (old.getDate())
                 }
             },// 处理时间
             getUserGroup() {

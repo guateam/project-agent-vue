@@ -165,7 +165,7 @@
                             </v-list-tile-content>
                         </v-list-tile>
 
-                        <v-list-tile>
+                        <v-list-tile @click="$router.push({name:'chat',query:{id:0}})">
                             <v-list-tile-title>问题反馈</v-list-tile-title>
                         </v-list-tile>
 
@@ -188,7 +188,7 @@
 
                     <v-list>
                         <v-flex text-xs-center>
-                            Gua Team Web Version 0.0.1 (1000)
+                            Gua Team Web Version 1.4.8 (44)
                         </v-flex>
                     </v-list>
 
@@ -337,9 +337,9 @@
             },
         },
         mounted() {
-            try{
+            try {
                 this.init_cache()
-            }catch (e) {
+            } catch (e) {
 
             }
         }

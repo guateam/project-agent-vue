@@ -9,7 +9,8 @@
                 <span>话题</span>
             </v-toolbar-title>
 
-            <v-btn icon>
+            <v-btn icon @click="edit">
+                <!--<v-icon v-if="$store.state.userInfo.level>=5&&user_id==$store.state.userInfo.user_id">edit</v-icon>-->
                 <v-icon>search</v-icon>
             </v-btn>
         </v-toolbar>
@@ -74,7 +75,8 @@
                         <img :src="answer.image[1]" alt="" style="width: 50%;object-fit: cover;"/>
                     </div>
                 </router-link>
-                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em" @click="$router.push({name:'detail',query:{id:answer.userID}})">
+                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em"
+                     @click="$router.push({name:'detail',query:{id:answer.userID}})">
                     <div class="userhead">
                         <img :src="answer.headportrait" alt="" style="width: 100%;object-fit: cover;">
                     </div>
@@ -85,7 +87,8 @@
                     <p class="answerTime">{{answer.edittime}}</p>
                 </div>
                 <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em">
-                    <v-btn block v-if="user_id===$store.state.userInfo.user_id &&(!adopt)" color="success"
+                    <v-btn block v-if="user_id===$store.state.userInfo.user_id &&(!adopt)&&question_type!==0"
+                           color="success"
                            @click="adopt_answer(answer.answerID)">采纳回答
                     </v-btn>
                 </div>
@@ -107,6 +110,7 @@
                     right
                     color="accent"
                     @click="$router.push({name:'answer-publish',query:{redirect: $route.fullPath, id:$route.query.id}})"
+                    v-if="$store.state.userInfo.level>=1"
             >
                 <v-icon>add</v-icon>
             </v-btn>
@@ -315,6 +319,17 @@
                         return 0;
                     }
                 })
+            },
+            set_exp_change() {
+                this.$api.account.set_exp_change(1, '浏览话题').then(res => {
+
+                })
+            },
+            edit() {
+                // if (this.user_id == this.$store.state.userInfo.user_id) {
+                //     this.$router.push({name: 'question-edit', query: {id: this.$route.query.id}})
+                // }
+                this.$router.push({name: 'search'})
             }
         },
         mounted() {
@@ -322,6 +337,7 @@
             this.getQuestion(id);
             this.get_follow(id);
             this.add_user_action(id);
+            this.set_exp_change();
         },
     }
 </script>

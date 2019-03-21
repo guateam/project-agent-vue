@@ -14,7 +14,7 @@
                     </v-flex>
 
                     <v-flex shrink>
-                        <v-btn icon>
+                        <v-btn icon @click="$router.push({name:'detail',query:{id:$route.query.id}})">
                             <v-icon>more_horiz</v-icon>
                         </v-btn>
                     </v-flex>
@@ -29,7 +29,8 @@
                                       :reverse="row.type === 1" row>
                                 <v-flex shrink>
                                     <v-avatar size="50">
-                                        <img :src="row.type === 1? myAvatar: userAvatar" alt="avatar" style="object-fit: cover">
+                                        <img :src="row.type === 1? myAvatar: userAvatar" alt="avatar"
+                                             style="object-fit: cover">
                                     </v-avatar>
                                 </v-flex>
 
@@ -46,7 +47,7 @@
                 </v-container>
             </v-flex>
 
-            <v-flex class="input-area" shrink style="border-top: 1px #eee solid;background-color: #ccc ">
+            <v-flex class="input-area" shrink style="border-top: 2px #eee solid;background-color: #fff ">
                 <v-container>
                     <v-layout>
                         <v-flex sx10>
@@ -247,7 +248,7 @@
         padding: 16px 0;
     }
 
-    .chat-image{
+    .chat-image {
         width: 100%;
         object-fit: cover;
     }
@@ -267,10 +268,12 @@
     .v-input__control {
         height: 64px;
     }
-    .v-input__slot{
+
+    .v-input__slot {
         margin-top: 9px;
     }
-    .v-input{
+
+    .v-input {
         display: flex;
         align-items: center;
     }
