@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div style="display: flex;flex: 0 0 20%;align-items: center;justify-content: center">
-                    <div class="un_follow" @click="follow_user">
+                    <div class="un_follow" @click="follow_user" v-if="!self">
                         {{follow?'已关注':'关注'}}
                     </div>
                 </div>
@@ -179,6 +179,7 @@
                 follow: false,
                 hidden1: false,
                 hidden2: false,
+                self: false
             }
         },
 
@@ -199,6 +200,8 @@
                         this.agree = res.data.data.agree;
                         this.disagree = res.data.data.disagree;
                         this.user_id = res.data.data.user_id;
+                        this.get_user_follow_state();
+                        this.self = res.data.data.user_id == this.$store.state.userInfo.user_id;
                     }
                 })
             },
@@ -311,18 +314,20 @@
                 })
             },
             follow_user() {
-                if (this.follow) {
-                    this.$api.account.un_follow_user(this.user_id).then(res => {
-                        if (res.data.code === 1) {
-                            this.follow = false;
-                        }
-                    })
-                } else {
-                    this.$api.account.follow_user(this.user_id).then(res => {
-                        if (res.data.code === 1) {
-                            this.follow = true;
-                        }
-                    })
+                if (!this.self) {
+                    if (this.follow) {
+                        this.$api.account.un_follow_user(this.user_id).then(res => {
+                            if (res.data.code === 1) {
+                                this.follow = false;
+                            }
+                        })
+                    } else {
+                        this.$api.account.follow_user(this.user_id).then(res => {
+                            if (res.data.code === 1) {
+                                this.follow = true;
+                            }
+                        })
+                    }
                 }
             },
             set_exp_change() {
