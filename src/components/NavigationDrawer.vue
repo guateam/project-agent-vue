@@ -137,7 +137,8 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile @click="$router.push({name:'question-publish'})">
+                <v-list-tile @click="$router.push({name:'question-publish'})"
+                             v-if="$store.state.userInfo.level>=1">
                     <v-list-tile-action>
                         <v-icon class="time--text">create_new_folder</v-icon>
                     </v-list-tile-action>

@@ -136,6 +136,15 @@ const index = {
         },  //提现
         set_verify_info(data) {
             return axios.post(`${base.account}/set_verify_info`, qs.stringify(data))
+        },
+        set_exp_change(value, description, token = store.state.token) {
+            return axios.get(`${base.account}/set_exp_change`, {
+                params: {
+                    value: value,
+                    description: description,
+                    token: token
+                }
+            })
         }
     },
     message: {

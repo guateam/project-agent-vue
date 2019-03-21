@@ -324,6 +324,11 @@
                         }
                     })
                 }
+            },
+            set_exp_change() {
+                this.$api.account.set_exp_change(1, '浏览回答').then(res => {
+
+                })
             }
         },
 
@@ -333,6 +338,7 @@
             this.get_follow_state();
             this.add_user_action(this.$route.query.id);
             this.get_answer_agree_state();
+            this.set_exp_change();
         },
     }
 </script>

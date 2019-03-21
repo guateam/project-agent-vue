@@ -74,7 +74,8 @@
                         <img :src="answer.image[1]" alt="" style="width: 50%;object-fit: cover;"/>
                     </div>
                 </router-link>
-                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em" @click="$router.push({name:'detail',query:{id:answer.userID}})">
+                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em"
+                     @click="$router.push({name:'detail',query:{id:answer.userID}})">
                     <div class="userhead">
                         <img :src="answer.headportrait" alt="" style="width: 100%;object-fit: cover;">
                     </div>
@@ -315,6 +316,11 @@
                         return 0;
                     }
                 })
+            },
+            set_exp_change() {
+                this.$api.account.set_exp_change(1, '浏览话题').then(res => {
+
+                })
             }
         },
         mounted() {
@@ -322,6 +328,7 @@
             this.getQuestion(id);
             this.get_follow(id);
             this.add_user_action(id);
+            this.set_exp_change();
         },
     }
 </script>
