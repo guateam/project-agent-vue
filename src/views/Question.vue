@@ -303,6 +303,14 @@
                             this.questionData.follow++;
                         }
                     })
+                } else {
+                    this.$api.questions.un_follow_question(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.isfollowed = false;
+                            this.followNotice = '+关注话题';
+                            this.questionData.follow--;
+                        }
+                    })
                 }
             },
             get_follow(id) {

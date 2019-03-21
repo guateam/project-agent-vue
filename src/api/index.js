@@ -194,7 +194,9 @@ const index = {
         follow_question(id, token = store.state.token) {
             return axios.get(`${base.questions}/follow_question`, {params: {question_id: id, token: token}})
         },  // 关注问题
-
+        un_follow_question(id, token = store.state.token) {
+            return axios.get(`${base.questions}/un_follow_question`, {params: {question_id: id, token: token}})
+        },  // 取消关注问题
         get_follow(id, token = store.state.token) {
             return axios.get(`${base.questions}/get_follow`, {params: {question_id: id, token: token}})
         },  // 判断是否已关注
@@ -503,9 +505,9 @@ const index = {
             return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token, page: page}})
         }, //模糊搜索
     },
-    other:{
-        check_update(){
-            return axios.get(`https://hanerx.tk/project-agent/version.json`)
+    other: {
+        check_update() {
+            return axios.get(`${base.other}/check_update`)
         }
     }
 };
