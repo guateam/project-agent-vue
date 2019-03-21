@@ -416,11 +416,19 @@ export default new Router({
             meta: {requireLogin: true},
             component: () => import('./views/AdvisoryDetail.vue')
         },
+        // 回答咨询
         {
             path: '/advisory-answer',
             name: 'advisory-answer',
             meta: {requireLogin: true},
             component: () => import('./views/AdvisoryAnswer.vue')
+        },
+        // 举报
+        {
+            path: '/report',
+            name: 'report',
+            meta: {requireLogin: true},
+            component: () => import('./views/Report.vue')
         }
     ],
 });
