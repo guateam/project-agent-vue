@@ -75,7 +75,7 @@
 
             <v-card flat>
                 <v-card-title>
-                    <span class="font-weight-bold">公共编辑 ({{ edit }}/2)</span>
+                    <span class="font-weight-bold">编辑功能 ({{ edit }}/2)</span>
                 </v-card-title>
                 <v-card-text>
                     <v-layout class="text-xs-center">
@@ -87,24 +87,24 @@
                                         <v-icon>bookmark</v-icon>
                                     </v-btn>
                                 </v-flex>
-                                <v-flex><span>编辑问题标签</span></v-flex>
+                                <v-flex><span>添加二级标签</span></v-flex>
                                 <v-flex><span class="condition font--text">等级 {{ authority.editQuestionTag }} </span>
                                 </v-flex>
                             </v-layout>
                         </v-flex>
-                        <v-flex xs4>
-                            <v-layout column>
-                                <v-flex>
-                                    <v-btn icon fab dark small
-                                           :color="$store.state.userInfo.level < authority.editQuestion ? 'grey' : 'success'">
-                                        <v-icon>edit</v-icon>
-                                    </v-btn>
-                                </v-flex>
-                                <v-flex><span>编辑问题</span></v-flex>
-                                <v-flex><span class="condition font--text">等级 {{ authority.editQuestion }} </span>
-                                </v-flex>
-                            </v-layout>
-                        </v-flex>
+                        <!--<v-flex xs4>-->
+                            <!--<v-layout column>-->
+                                <!--<v-flex>-->
+                                    <!--<v-btn icon fab dark small-->
+                                           <!--:color="$store.state.userInfo.level < authority.editQuestion ? 'grey' : 'success'">-->
+                                        <!--<v-icon>edit</v-icon>-->
+                                    <!--</v-btn>-->
+                                <!--</v-flex>-->
+                                <!--<v-flex><span>编辑问题</span></v-flex>-->
+                                <!--<v-flex><span class="condition font&#45;&#45;text">等级 {{ authority.editQuestion }} </span>-->
+                                <!--</v-flex>-->
+                            <!--</v-layout>-->
+                        <!--</v-flex>-->
                         <v-flex xs4></v-flex>
                     </v-layout>
                 </v-card-text>

@@ -379,8 +379,8 @@ const index = {
         get_child_tag(tag_id) {
             return axios.get(`${base.tags}/get_child_tag`, {params: {tag_id: tag_id}})
         },
-        get_tag_recommend(tag_id, tag) {
-            return axios.get(`${base.tags}/get_tag_recommend`, {params: {tag_id: tag_id, tag: tag}})
+        get_tag_recommend(tag_id, tag, token = store.state.token) {
+            return axios.get(`${base.tags}/get_tag_recommend`, {params: {tag_id: tag_id, tag: tag, token: token}})
         },
         add_tag(father, tag, tag_type) {
             let data = {
