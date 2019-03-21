@@ -36,7 +36,7 @@
                 </v-layout>
             </v-container>
         </v-form>
-        <v-btn block color="info" style="position: fixed;bottom: 33.33%;" @click="checkout()">预计两小时内到账，确认提现</v-btn>
+        <v-btn block color="info" style="position: fixed;bottom: 33.33%;" @click="checkout()">确认提现</v-btn>
     </div>
 </template>
 

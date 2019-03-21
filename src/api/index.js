@@ -502,6 +502,11 @@ const index = {
             }
             return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token, page: page}})
         }, //模糊搜索
+    },
+    other:{
+        check_update(){
+            return axios.get(`https://hanerx.tk/project-agent/version.json`)
+        }
     }
 };
 
