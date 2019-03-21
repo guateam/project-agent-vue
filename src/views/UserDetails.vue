@@ -108,7 +108,7 @@
             <v-flex>
                 <v-tabs fixed-tabs>
                     <v-tab
-                            v-for="tab in ['话题', '回答', '专栏']"
+                            v-for="tab in ['话题', '回答', '文章']"
                             :key="tab"
                     >
                         {{ tab }}

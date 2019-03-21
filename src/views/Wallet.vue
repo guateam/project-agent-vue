@@ -239,14 +239,14 @@
                                 window.console.log(item);
                                 if (item.amount < 0) {
                                     this.expense.unshift({
-                                        title: type_dict[item.type],
+                                        title: item.type_name,
                                         time: item.time,
                                         price: Math.abs(item.amount),
                                     })
                                 }  // 添加支出
                                 else {
                                     this.income.unshift({
-                                        title: type_dict[item.type],
+                                        title: item.type_name,
                                         time: item.time,
                                         price: Math.abs(item.amount),
                                     })

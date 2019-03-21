@@ -82,7 +82,7 @@
                     <v-list-tile-action>
                         <v-icon>history</v-icon>
                     </v-list-tile-action>
-                    <v-list-tile-title>历史记录</v-list-tile-title>
+                    <v-list-tile-title>浏览记录</v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile :to="{name: 'collection'}" @click="$store.commit('drawer')">
                     <v-list-tile-action>

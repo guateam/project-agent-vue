@@ -15,7 +15,7 @@
             <div class="box" style="height: 6em" @click="head_dialog=true">
                 <div>头像</div>
                 <div style="width: 5em;height: 5em;overflow: hidden;border-radius: 50%;">
-                    <img :src="head_portrait" alt="img" style="width: 100%;height: 100%;border-radius: 50%">
+                    <img :src="head_portrait" alt="img" style="width: 100%;height: 100%;border-radius: 50%;object-fit: cover">
                 </div>
             </div>
             <v-divider></v-divider>
@@ -368,8 +368,6 @@
                     nickname: this.formItem.nickname,
                     headportrait: this.formItem.headportrait,
                     description: this.formItem.description,
-                    email:this.formItem.email,
-                    phonenumber:this.formItem.phone_number,
                 };
                 this.$api.account.set_account_info(data).then(res => {
                     if (res.data.code === 1) {
