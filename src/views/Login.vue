@@ -116,8 +116,8 @@
         data() {
             return {
                 show: false,
-                email: 'zhangyu199946@126.com',
-                password: 'zhangyuk',
+                email: '',
+                password: '',
                 dialog: true,
                 codelogin: 0,
                 account: '',
