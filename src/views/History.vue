@@ -4,7 +4,7 @@
             <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
 
             <v-toolbar-title class="headline" style="margin: 0 auto">
-                <span>历史纪录</span>
+                <span>浏览纪录</span>
             </v-toolbar-title>
 
             <v-btn icon>
