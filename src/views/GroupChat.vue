@@ -30,7 +30,7 @@
                                       :reverse="row.type === 1" row>
                                 <v-flex shrink>
                                     <v-avatar size="50">
-                                        <img :src="row.avatar" alt="avatar">
+                                        <img :src="row.avatar" alt="avatar" style="object-fit: cover">
                                     </v-avatar>
                                 </v-flex>
 
@@ -69,6 +69,15 @@
                         </v-flex>
                     </v-layout>
                 </v-container>
+                <input
+                        type="file"
+                        class="photoFileIn my-0 py-0"
+                        @change="previewImg()"
+                        accept="image/*"
+                        style="display: none"
+                        ref="upload"
+                        id="file"
+                >
             </v-flex>
         </v-layout>
     </div>
@@ -138,7 +147,7 @@
                 });  // 发送请求
             },  // 发送消息
             sendImage() {
-                this.$store.commit('showInfo', '发送图片');
+                this.$refs.upload.click()
             },  // 发送图片
             initWindow() {
                 let chat = document.getElementById('chat-area');
@@ -195,6 +204,27 @@
                     div.scrollTop = div.scrollHeight;
                 }, 500)
             },  // 滚动到最下
+            previewImg: function () {
+                let fileObj = document.getElementById("file").files[0]; // js 获取文件对象
+
+                let form = new FormData(); // FormData 对象
+                form.append("picture", fileObj); // 文件对象
+
+                this.$api.upload.upload_picture(form).then(res => {
+                    if (res.data.code === 1) {
+                        let data = {
+                            token: this.$store.state.token,
+                            group_id: this.groupId,
+                            content: '<img src="' + res.data.data + '" class="chat-image">',
+                        };
+                        this.$api.message.send_group_message(data).then(res => {
+                            if (res.data.code === 1) {
+                                this.get_more_message();
+                            }
+                        })
+                    }
+                })
+            },
         },
         mounted() {
             this.initWindow();
@@ -237,4 +267,11 @@
         height: 64px;
     }
 
+</style>
+<style>
+    .chat-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
 </style>

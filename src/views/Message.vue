@@ -228,7 +228,7 @@
                             this.msgList.push({
                                 title: item.nickname + '<span id="title-time" class="time--text">' + item.post_time + '</span>',
                                 avatar: item.headportrait,
-                                content: item.content,
+                                content: item.content.match(/<[^>]+>/)?'[图片]':item.content,
                                 userID: item.user_id
                             });
                             // 添加分割线
@@ -284,7 +284,7 @@
                 } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
                     return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
                 } else {
-                    return old.getMonth() + '-' + old.getDay()
+                    return (old.getMonth() + 1) + '-' + (old.getDate())
                 }
             },
             get_groups() {
@@ -294,7 +294,7 @@
                         res.data.data.forEach(value => {
                             data.push({
                                 title: value['name'] + '<span id="title-time">' + this.get_date(value['last_message']['time']) + '</span>',
-                                content: value['last_message']['nickname'] + ':' + value['last_message']['content'],
+                                content: value['last_message']['nickname'] + ':' + (value['last_message']['content'].match(/<[^>]+>/)?'[图片]':value['last_message']['content']),
                                 avatar: value['head_portrait'],
                                 id: value['id'],
                                 name: value['name'],

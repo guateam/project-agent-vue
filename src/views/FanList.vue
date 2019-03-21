@@ -16,7 +16,7 @@
 
         </v-toolbar>
         <v-card>
-            <v-tabs fixed-tabs color="primary">
+            <v-tabs fixed-tabs color="primary" v-model="active">
                 <v-tab
                         v-for="tab in tabs"
                         :key="tab.title"
@@ -116,6 +116,11 @@
                 },
             }
         },
+        watch: {
+            $route(val) {
+                this.active = this.$route.query.active;
+            }
+        },
         methods: {
             get_my_follow() {
 
@@ -139,6 +144,7 @@
         mounted() {
             this.get_my_follow();
             this.get_my_fans();
+            this.active = this.$route.query.active
             // this.active = this.$route.query.active;
         }
     }

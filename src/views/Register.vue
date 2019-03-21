@@ -130,10 +130,10 @@
                         if (res.data.code === 1) {
                             // 如果注册成功
                             this.login();
-                        } else if (res.data.data === -1) {
-                            // 如果用户已存在
-                            // ...
+                        } else if (res.data.code === -1) {
                             this.$store.commit('showInfo', '邮箱或手机号已被注册！');
+                        } else if(res.data.code === -2){
+                            this.$store.commit('showInfo', '未知原因,注册失败！');
                         }
                     })
                 }
@@ -153,16 +153,14 @@
                             });
                             this.DB({token: res.data.data.token, id: 1});
                             this.$store.commit('updateToken', res.data.data.token);
-                            this.$router.push({name: 'activate-account' , query: {account: this.email,token:res.data.data.token}})
-                            //获取用户信息
-                            // this.$api.account.get_user_by_token().then(res => {
-                            //     if (res.data.code === 1) {
-                            //         // this.$store.commit('refreshUserInfo', res.data.data);
-                            //         // this.$store.commit('login', this.$store.state);
-                            //         // // 跳转到之前的页面
-                            //         // this.$router.push({name: 'first-login'})
-                            //     }
-                            // });
+                            // 获取用户信息
+                            this.$api.account.get_user_by_token().then(res => {
+                                if (res.data.code === 1) {
+                                    this.$store.commit('refreshUserInfo', res.data.data);
+                                    this.$store.commit('login', this.$store.state);
+                                    this.$router.push({name: 'activate-account' , query: {account: this.email,token:res.data.data.token}})
+                                }
+                            });
                         }
                     })
                 }

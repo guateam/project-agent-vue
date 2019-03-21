@@ -28,7 +28,8 @@
                         </div>
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;padding: 0 !important;">
-                        <v-rating v-model="data.rate" style="padding: 0 !important;" half-increments readonly></v-rating>
+                        <v-rating v-model="data.rate" style="padding: 0 !important;" half-increments
+                                  readonly></v-rating>
                         <h3>{{data.rate}}分</h3>
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;">
@@ -138,7 +139,7 @@ height: 100%;border-radius: 50%">
                 </v-flex>
                 <v-flex xs2
                         style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc"
-                        @click="$router.push({name:'comment',query:{id:$route.query.id,type:2}})"
+                        @click="$router.push({name:'comment',query:{id:$route.query.id,type:2,flag:data.free!==1 && paid===false}})"
                 >
                     <div>
                         <v-icon color="primary">comment</v-icon>

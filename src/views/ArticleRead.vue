@@ -20,7 +20,8 @@ width: 100%;object-fit: cover">
                 </div>
             </v-flex>
             <v-flex xs7
-                    style="flex-direction: column;justify-content: space-between;line-height: 27px;padding-top: 10px; " @click="$router.push({name:'detail',query:{id:data.user_id}})">
+                    style="flex-direction: column;justify-content: space-between;line-height: 27px;padding-top: 10px; "
+                    @click="$router.push({name:'detail',query:{id:data.user_id}})">
                 <div><h3>{{data.nickname}}</h3></div>
                 <div>{{data.description}}</div>
             </v-flex>
@@ -129,10 +130,24 @@ height: 100%;border-radius: 50%">
                     }
                 })
             },
+            get_follow_state() {
+                this.$api.account.get_user_follow_state(this.data.user_id).then(res => {
+                    if (res.data.code === 1) {
+                        this.follow = true
+                    }
+                })
+            },
+            set_exp_change() {
+                this.$api.account.set_exp_change(1, '浏览文章').then(res => {
+
+                })
+            }
         },
         mounted() {
             this.get_article(this.$route.query.id);
             this.get_article_comment(this.$route.query.id);
+            this.get_follow_state();
+            this.set_exp_change();
         }
     }
 </script>

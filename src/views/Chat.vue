@@ -1,7 +1,7 @@
 <template>
     <div class="chat">
         <v-layout column fill-height>
-            <v-flex shrink>
+            <v-flex shrink style="background-color: #ffd633">
                 <v-layout align-center justify-space-between row fill-height>
                     <v-flex shrink>
                         <v-btn @click="$router.go(-1)" icon>
@@ -14,14 +14,14 @@
                     </v-flex>
 
                     <v-flex shrink>
-                        <v-btn icon>
+                        <v-btn icon @click="$router.push({name:'detail',query:{id:$route.query.id}})">
                             <v-icon>more_horiz</v-icon>
                         </v-btn>
                     </v-flex>
                 </v-layout>
             </v-flex>
 
-            <v-flex grow>
+            <v-flex grow style="background-color: white;">
                 <v-container fill-height>
                     <v-layout>
                         <v-flex class="chat-area" id="chat-area">
@@ -29,14 +29,15 @@
                                       :reverse="row.type === 1" row>
                                 <v-flex shrink>
                                     <v-avatar size="50">
-                                        <img :src="row.type === 1? myAvatar: userAvatar" alt="avatar">
+                                        <img :src="row.type === 1? myAvatar: userAvatar" alt="avatar"
+                                             style="object-fit: cover">
                                     </v-avatar>
                                 </v-flex>
 
                                 <v-flex class="text-area" shrink>
                                     <v-card>
-                                        <v-container>
-                                            {{ row.content }}
+                                        <v-container v-html="row.content">
+
                                         </v-container>
                                     </v-card>
                                 </v-flex>
@@ -46,10 +47,11 @@
                 </v-container>
             </v-flex>
 
-            <v-flex class="input-area" shrink>
+            <v-flex class="input-area" shrink style="border-top: 2px #eee solid;background-color: #fff ">
                 <v-container>
                     <v-layout>
-                        <v-flex>
+                        <v-flex sx10>
+
                             <v-text-field
                                     v-model="message"
                                     append-outer-icon="send"
@@ -66,6 +68,15 @@
                         </v-flex>
                     </v-layout>
                 </v-container>
+                <input
+                        type="file"
+                        class="photoFileIn my-0 py-0"
+                        @change="previewImg()"
+                        accept="image/*"
+                        style="display: none"
+                        ref="upload"
+                        id="file"
+                >
             </v-flex>
         </v-layout>
     </div>
@@ -124,7 +135,7 @@
                 });
             },  // 发送消息
             sendImage() {
-                this.$store.commit('showInfo', '发送图片');
+                this.$refs.upload.click()
             },  // 发送图片
             initWindow() {
                 let chat = document.getElementById('chat-area');
@@ -187,6 +198,28 @@
                     div.scrollTop = div.scrollHeight;
                 }, 500)
             },  // 滚动到最下
+            previewImg: function () {
+                let fileObj = document.getElementById("file").files[0]; // js 获取文件对象
+
+                let form = new FormData(); // FormData 对象
+                form.append("picture", fileObj); // 文件对象
+
+                this.$api.upload.upload_picture(form).then(res => {
+                    if (res.data.code === 1) {
+                        let data = {
+                            token: this.$store.state.token,
+                            receiver: this.userId,
+                            content: '<img src="' + res.data.data + '" class="chat-image" style="width: 100%;object-fit: cover">',
+                            message_type: 0,
+                        };
+                        this.$api.message.add_message(data).then(res => {
+                            if (res.data.code === 1) {
+                                this.get_more_message();
+                            }
+                        })
+                    }
+                })
+            },
         },
         mounted() {
             this.initWindow();
@@ -215,6 +248,11 @@
         padding: 16px 0;
     }
 
+    .chat-image {
+        width: 100%;
+        object-fit: cover;
+    }
+
     .chat-row {
         padding: 5px 0;
     }
@@ -229,5 +267,20 @@
 
     .v-input__control {
         height: 64px;
+    }
+
+    .v-input__slot {
+        margin-top: 9px;
+    }
+
+    .v-input {
+        display: flex;
+        align-items: center;
+    }
+</style>
+<style>
+    .chat-image {
+        width: 100%;
+        object-fit: cover;
     }
 </style>

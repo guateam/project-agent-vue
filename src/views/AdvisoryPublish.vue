@@ -18,7 +18,7 @@
                             <v-card-text>
                                 <Form :model="formItem">
                                     <FormItem label="悬赏金额">
-                                        <Input v-model.number="formItem.price" type="text">
+                                        <Input v-model.number="formItem.price" type="number">
                                             <span slot="prepend">￥</span>
                                             <span slot="append">元</span>
                                         </Input>
@@ -120,12 +120,20 @@
                 formItem: {
                     price: 0
                 },
-                busy:false,
+                busy: false,
             }
         },
         methods: {
             send() {
-                this.busy=true;
+                if (this.content === '') {
+                    this.$store.commit('showInfo', '问题不能为空！');
+                    return;
+                }
+                if (this.formItem.price <= 0 || this.formItem.price == null) {
+                    this.$store.commit('showInfo', '价格不能为负！');
+                    return;
+                }
+                this.busy = true;
                 let data = {
                     token: this.$store.state.token,
                     content: this.content,
@@ -134,12 +142,49 @@
                 };
                 this.$api.specialist.add_order(data).then(res => {
                     if (res.data.code === 1) {
-                        this.busy=false;
+                        this.busy = false;
                         this.$router.back()
                     } else {
                         this.$store.commit('showInfo', res.data.msg);
+                        this.busy = false;
                     }
                 })
+            }
+        },
+        mounted() {
+            if (this.$store.state.userInfo.level < 2) {
+                this.editorOption = {
+                    modules: {
+                        ImageExtend: {
+                            loading: true,  // 可选参数 是否显示上传进度和提示语
+                            name: 'picture',  // 图片参数名
+                            size: 3,  // 可选参数 图片大小，单位为M，1M = 1024kb
+                            action: 'https://hanerx.tk:5000/api/upload/upload_picture',  // 服务器地址, 如果action为空，则采用base64插入图片
+                            // response 为一个函数用来获取服务器返回的具体图片地址
+                            // 例如服务器返回{code: 200; data:{ url: 'baidu.com'}}
+                            // 则 return res.data.url
+                            response: (res) => {
+                                return res.data;
+                            },
+                        },
+                        imageResize: {
+                            modules: ['Resize', 'DisplaySize', 'Toolbar']
+                        },
+                        toolbar: {
+                            container: [['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                                [{'header': [1, 2, 3, 4, false]}, {'list': 'ordered'}, {'list': 'bullet'}],
+                                [{'indent': '-1'}, {'indent': '+1'}],
+                                ['blockquote', 'code-block', 'link', 'image', 'formula'],
+                            ],
+                            handlers: {
+                                'image': function () {  // 劫持原来的图片点击按钮事件
+                                    QuillWatch.emit(this.quill.id)
+                                }
+                            }
+                        }
+                    },
+                    placeholder: '请在此输入内容'
+                };
             }
         }
     }

@@ -19,20 +19,20 @@
                 </v-flex>
             </v-layout>
             <v-layout row>
-                <v-flex xs12 style="height: 80px;text-align: left;justify-content: center;line-height: 1.5;">
-                    <div class="title_box_item" style="width: 100%;height: 50%;">
+                <v-flex xs12 style="height: 40px;text-align: left;justify-content: center;line-height: 1.5;">
+                    <div class="title_box_item" style="width: 100%;height: 100%;">
                         <h2>{{data.title}}</h2>
                     </div>
-                    <div class="title_box_item" style="width: 100%;height: 50%;">
-                        <h3>{{data.nickname}}</h3>
-                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;">
-                            {{data.usergroup.text}} lv.{{data.level}}
-                        </div>
-                    </div>
-                    <div class="title_box_item" style="width: 100%;height: 25%;">
-                        <span v-for="(tag, index) in data.tags"
-                              :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
-                    </div>
+                    <!--<div class="title_box_item" style="width: 100%;height: 50%;">-->
+                    <!--<h3>{{data.nickname}}</h3>-->
+                    <!--<div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;">-->
+                    <!--{{data.usergroup.text}} lv.{{data.level}}-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="title_box_item" style="width: 100%;height: 25%;">-->
+                    <!--<span v-for="(tag, index) in data.tags"-->
+                    <!--:key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>-->
+                    <!--</div>-->
                 </v-flex>
             </v-layout>
         </v-container>
@@ -61,7 +61,7 @@
         <div style="padding: 1em;line-height: 1.5;">
             <h3 style="margin-bottom: 1.1em;font-size: 1.2em">具体要求</h3>
             <p class="topicdetail">
-                <span v-if="!showAll_one">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.content.length > 80 ? data.article_description.substring(0, 80) + '...' : data.content }} </span>
+                <span v-if="!showAll_one">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.content.length > 80 ? data.content.substring(0, 80) + '...' : data.content }} </span>
                 <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.content }} </span>
                 <button id="show-all-button" v-if="data.content.length > 80"
                         @click="showAll_one = !showAll_one">
@@ -82,7 +82,12 @@ height: 100%;border-radius: 50%">
                 </v-flex>
                 <v-flex xs9>
                     <p class="topicdetail">
-                    <h3>{{data.nickname}}</h3>
+                    <h3 style="margin-bottom: 5px">
+                        <span>{{data.nickname}}</span>
+                        <span style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;">
+                            {{data.usergroup.text}} lv.{{data.level}}
+                        </span>
+                    </h3>
                     账号简介：
                     <span v-if="!showAll_two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.description.length > 100 ? data.description.substring(0, 100) + '...' : data.description }} </span>
                     <span v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.description }} </span>
@@ -211,11 +216,17 @@ height: 100%;border-radius: 50%">
                         this.sign = 1;
                     }
                 })
+            },
+            set_exp_change() {
+                this.$api.account.set_exp_change(1, '浏览需求').then(res => {
+
+                })
             }
         },
         mounted() {
             this.get_demand(this.$route.query.id);
             this.add_user_action();
+            this.set_exp_change();
         }
 
     }

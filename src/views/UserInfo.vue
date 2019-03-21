@@ -17,7 +17,8 @@
                     <v-flex offset-xs1 grow>
                         <v-layout align-center>
                             <v-flex shrink>
-                                <v-avatar id="avatar" size="70" @click="$router.push({name:'detail',query:{id:$store.state.userInfo.user_id}})">
+                                <v-avatar id="avatar" size="70"
+                                          @click="$router.push({name:'detail',query:{id:$store.state.userInfo.user_id}})">
                                     <img style="object-fit: cover" :src="$store.state.userInfo.head_portrait" alt="">
                                 </v-avatar>
                             </v-flex><!--头像-->
@@ -152,7 +153,7 @@
 
                     <v-divider></v-divider>
 
-                    <v-list-tile>
+                    <v-list-tile @click="$router.push({name:'recharge'})">
                         <v-list-tile-action>
                             <v-icon class="time--text">attach_money</v-icon>
                         </v-list-tile-action>
