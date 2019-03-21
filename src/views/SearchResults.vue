@@ -145,7 +145,7 @@
                                             @click="toggle(item.userID)"
                                     >
                                         <v-list-tile-avatar>
-                                            <img :src="item.headportrait" alt="">
+                                            <img :src="item.headportrait" alt="" style="object-fit: cover">
                                         </v-list-tile-avatar>
 
                                         <v-list-tile-content>
@@ -233,7 +233,10 @@
         methods: {
             //重新搜索
             research() {
-                let that = this
+                let that = this;
+                if (this.search === "" || this.search == null) return;
+                this.$router.push({name: 'search-results', query: {search: this.search}});
+                // this.$route.query.search = this.search;
                 this.reset()
                 let searching = this.search
                 if (searching === "") return
@@ -406,7 +409,12 @@
                     this.loading_B = false;
                     this.loading_C = false;
                 }
-            })
+            });
+            // window.addEventListener("popstate", function (e) {
+            //     if (window.location.href.indexOf("#/search-results?") !== -1) {
+            //         that.$router.push({name: 'search'})
+            //     }
+            // }, false);
         }
     }
 </script>

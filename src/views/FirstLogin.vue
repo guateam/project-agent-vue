@@ -79,9 +79,9 @@
                 headportrait: false,
                 upload_list: [],
                 formItem: {
-                    headportrait: undefined,
-                    nickname: undefined,
-                    description: undefined
+                    headportrait: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871796439&di=b76ea1eec37f57c40181636afbe7d303&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F69%2F80%2F595f67c2239cb_610.jpg",
+                    nickname: "",
+                    description: "",
                 },
                 dialog: true
             }
@@ -105,7 +105,7 @@
                     token: this.$store.state.token,
                     nickname: this.formItem.nickname,
                     headportrait: this.formItem.headportrait,
-                    description: this.formItem.description
+                    description: this.formItem.description,
                 };
                 this.$api.account.set_account_info(data).then(res => {
                     if (res.data.code === 1) {

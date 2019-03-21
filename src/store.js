@@ -26,7 +26,7 @@ export default new Vuex.Store({
     login: false, //是否登录检查
     infoText: '',  // 弹出提示的文字
     snackbar: false,  // 是否弹出提示
-    login_state: true,  // 全局加载提示
+    login_state: false,  // 全局加载提示
   },
   mutations: {
     showDialog(state) {

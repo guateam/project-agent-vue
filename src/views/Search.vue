@@ -53,9 +53,15 @@
                     whatshot
                 </v-icon>
                     {{it.content}}
-                <v-icon small style="float:right;margin-right: 2em">
+
+                <!--<v-icon small style="float:right;margin-right: 2em">-->
+                    <!--call_made-->
+                <!--</v-icon>-->
+                <span style="float:right;margin-right: 2em">
+                    {{it.time}}<v-icon small>
                     call_made
-                </v-icon> 
+                </v-icon>
+                </span>
             </div>
         </v-flex>
         <v-flex xs12 style="margin-top: 2em">
