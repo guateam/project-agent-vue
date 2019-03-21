@@ -11,7 +11,10 @@
         </div>
         <div class="line"></div>
         <v-container grid-list-md text-xs-center>
-            <v-layout row wrap style="height: 200px;margin: 5px auto" v-for="value in data">
+            <v-layout row wrap style="height: 200px;margin: 5px auto;background-color: white" v-for="value in data">
+                <v-flex xs12>
+                    <h2 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;text-align: left">&nbsp;&nbsp;咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题</h2>
+                </v-flex>
                 <v-flex xs8 style="text-align: left">
                     <v-flex xs12 style="height: 25%"><h4>咨询人：<span style="color: lightskyblue">{{value.nickname}}</span><span
                             style="padding: 0.2em;border: 1px solid #ffcc00;color: #ffcc00;margin-left: 0.5em">{{value.usergroup.text}}</span>
@@ -24,17 +27,19 @@
                     <v-flex xs12 style="height: 25%" v-if="value.state===0"><h4>剩余时间：<span style="color: lightskyblue">{{value.expire}}</span>
                     </h4>
                     </v-flex>
-                    <v-flex xs12 style="height: 25%" v-if="value.state===1"><h4>状态：<span
-                            style="color: lawngreen">已回答</span>
-                    </h4>
+                    <v-flex xs12 style="height: 25%" v-if="value.state===1">
+                        <h4>状态：
+                            <span style="color: lawngreen">已回答</span>
+                        </h4>
                     </v-flex>
-                    <v-flex xs12 style="height: 25%" v-if="value.state===-1"><h4>状态：<span
-                            style="color: tomato">已拒绝</span>
-                    </h4>
+                    <v-flex xs12 style="height: 25%" v-if="value.state===-1">
+                        <h4>状态：
+                            <span style="color: tomato">已拒绝</span>
+                        </h4>
                     </v-flex>
                 </v-flex>
                 <v-flex xs4 style=" display: flex;justify-content: flex-end;align-items: flex-end;">
-                    <div style="width: 100%">
+                    <div style="width: 100%;margin-bottom: 2em">
                         <v-btn color="error" v-if="value.state===0 && value.expire!=='已过期'"
                                @click="refuse(value.orderID)">拒绝回答
                         </v-btn>
