@@ -12,7 +12,8 @@
                 <v-icon>more_vert</v-icon>
             </v-btn>
         </v-toolbar>
-        <iframe onload="this.height=document.body.scrollHeight" :src="url" id="main-frame" height="100%" width="100%"></iframe>
+        <iframe onload="this.height=document.body.scrollHeight" :src="url" id="main-frame" height="100%"
+                width="100%" frameborder="no"></iframe>
     </div>
 </template>
 
@@ -41,7 +42,13 @@
             }
         },
         mounted() {
+            console.info(this.$route.query.url.indexOf('article://'))
+            if (this.$route.query.url.indexOf('article://')!=-1) {
+                let id = this.$route.query.url.substr(this.$route.query.url.indexOf('article://') + 10);
+                this.$router.replace({name: 'article', query: {id: id}})
+            }
             this.url = this.$route.query.url;
+            this.title = this.$route.query.title;
             // let mainFrame = document.getElementById('main-frame');
             // let that = this;
             // if (mainFrame.attachEvent) {
