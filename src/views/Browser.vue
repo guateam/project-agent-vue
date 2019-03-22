@@ -47,6 +47,10 @@
                 let id = this.$route.query.url.substr(this.$route.query.url.indexOf('article://') + 10);
                 this.$router.replace({name: 'article', query: {id: id}})
             }
+            if (this.$route.query.url.indexOf('question://')!=-1) {
+                let id = this.$route.query.url.substr(this.$route.query.url.indexOf('question://') + 11);
+                this.$router.replace({name: 'question', query: {id: id}})
+            }
             this.url = this.$route.query.url;
             this.title = this.$route.query.title;
             // let mainFrame = document.getElementById('main-frame');
