@@ -254,12 +254,14 @@
                 })
             },
             send() {
-                this.$api.answer.add_answer_comment(this.$route.query.id, this.comment_word).then(res => {
-                    if (res.data.code === 1) {
-                        this.comment_word = '';
-                        this.getCommentData();
-                    }
-                })
+                if (this.comment_word === '') {
+                    this.$api.answer.add_answer_comment(this.$route.query.id, this.comment_word).then(res => {
+                        if (res.data.code === 1) {
+                            this.comment_word = '';
+                            this.getCommentData();
+                        }
+                    })
+                }
             },
             agree_answer() {
                 if (this.select === 1) {
@@ -319,12 +321,14 @@
                         this.$api.account.un_follow_user(this.user_id).then(res => {
                             if (res.data.code === 1) {
                                 this.follow = false;
+                                this.$store.state.userInfo.follow++;
                             }
                         })
                     } else {
                         this.$api.account.follow_user(this.user_id).then(res => {
                             if (res.data.code === 1) {
                                 this.follow = true;
+                                this.$store.state.userInfo.follow--;
                             }
                         })
                     }

@@ -13,7 +13,8 @@
         <v-container grid-list-md text-xs-center>
             <v-layout row wrap style="height: 200px;margin: 5px auto;background-color: white" v-for="value in data">
                 <v-flex xs12>
-                    <h2 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;text-align: left">&nbsp;&nbsp;咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题咨询标题</h2>
+                    <h2 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;text-align: left">
+                        {{value.content}}</h2>
                 </v-flex>
                 <v-flex xs8 style="text-align: left">
                     <v-flex xs12 style="height: 25%"><h4>咨询人：<span style="color: lightskyblue">{{value.nickname}}</span><span
@@ -77,6 +78,7 @@
                     if (res.data.code === 1) {
                         res.data.data.forEach(value => {
                             value['expire'] = this.get_date(value['time']);
+                            value['content'] = value['content'].replace(/<[^>]+>/g, '');
                         });
                         this.data = res.data.data;
                     }
