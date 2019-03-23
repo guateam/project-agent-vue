@@ -40,6 +40,7 @@
                     name="input-7-4"
                     label="Solo textarea"
                     value="填写举报理由，我们会尽快处理哦"
+                    v-model="reason"
             ></v-textarea>
         </v-flex>
     </div>
@@ -47,7 +48,22 @@
 
 <script>
     export default {
-        name: "report"
+        name: "report",
+        data(){
+            return {
+                content:"",
+                author_name:"",
+                author_info:"",
+                reason:"",
+            }
+        },
+        methods:{
+
+        },
+        mounted(){
+            let report_type = this.$route.query.report_type
+            
+        }
     }
 </script>
 
