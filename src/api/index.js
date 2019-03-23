@@ -145,6 +145,10 @@ const index = {
                     token: token
                 }
             })
+        },
+        complain(id,reason,type){
+            return axios.get(`${base.account}/complain`, {params: {token: store.state.token,
+                    id: id, reason:reason, report_type: type}})
         }
     },
     message: {
@@ -213,6 +217,14 @@ const index = {
         get_question_comment(question_id) {
             return axios.get(`${base.questions}/get_question_comment`, {params: {question_id: question_id}})
         },
+
+        get_question_comment_by_id(comment_id) {
+            return axios.get(`${base.questions}/get_question_comment_by_id`, {params: {comment_id: comment_id}})
+        },
+        get_question_by_id(question_id) {
+            return axios.get(`${base.questions}/get_question_by_id`, {params: {question_id: comment_id}})
+        },
+
         add_question_comment(question_id, content, token = store.state.token) {
             let data = {
                 question_id: question_id,
@@ -251,7 +263,12 @@ const index = {
         get_answer_comment_list(id) {
             return axios.get(`${base.answer}/get_answer_comment_list`, {params: {answer_id: id}})
         },  // 获取回答的评论
-
+        get_answer_comment_by_id(comment_id) {
+            return axios.get(`${base.answer}/get_answer_comment_by_id`, {params: {comment_id: comment_id}})
+        }, //根据评论ID获取回答的评论
+        get_answer_by_id(answer_id) {
+            return axios.get(`${base.answer}/get_answer_by_id`, {params: {answer_id: answer_id}})
+        },
         get_user_answers(token = store.state.token) {
             return axios.get(`${base.answer}/get_user_answers`, {params: {token: token}})
         },  // 获取发布过的回答
@@ -310,6 +327,12 @@ const index = {
         },
         get_article_comment(id) {
             return axios.get(`${base.article}/get_article_comment`, {params: {article_id: id}})
+        },
+        get_article_comment_by_id(comment_id) {
+            return axios.get(`${base.article}/get_article_comment_by_id`, {params: {comment_id: comment_id}})
+        },
+        get_article_by_id(article_id) {
+            return axios.get(`${base.article}/get_article_by_id`, {params: {article_id: article_id}})
         },
         pay_article(article_id, token = store.state.token) {
             return axios.get(`${base.article}/pay_article`, {params: {article_id: article_id, token: token}})
