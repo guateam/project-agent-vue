@@ -21,15 +21,18 @@
                     </div>
                 </v-flex>
                 <v-flex xs10>
-                    <h3>用户名</h3>
+                    <h3 v-text="author_name"></h3>
                     <h4 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
-                        用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介用户简介</h4>
+                        {{author_info}}
+                    </h4>
                 </v-flex>
             </v-layout>
         </v-container>
         <v-flex xs12 style="padding:0 2em 2em 2em;">
-            <span>评论：</span>
-            <span style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;">我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑我想砸电脑</span>
+            <span>内容</span>
+            <span style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;">
+                {{content}}
+            </span>
         </v-flex>
         <v-divider></v-divider>
         <h4 style="margin-top: 1em;margin-bottom:1em;padding-left: 2em">举报原因</h4>
@@ -55,14 +58,60 @@
                 author_name:"",
                 author_info:"",
                 reason:"",
+                report_type:"",
+                target_id:"",
             }
         },
         methods:{
-
+            send(){
+                let that = this
+                this.$api.account.complain(this.target_id,this.reason,this.report_type).then(res =>{
+                    that.$router.back();
+                 })
+            }
         },
         mounted(){
-            let report_type = this.$route.query.report_type
-            let target_id = this.$route.query.target_id
+            let that = this;
+            this.report_type = this.$route.query.report_type
+            this.target_id =  this.$route.query.target_id
+
+            if(this.report_type == 1){
+                this.$api.answer.get_answer_comment_by_id(this.target_id).then(res =>{
+                    that.content = res.data.item.content;
+                    that.author_name = res.data.author.nickname;
+                    that.author_info = res.data.author.description;
+                })
+            }else if(this.report_type == 2){
+                this.$api.article.get_article_comment_by_id(this.target_id).then(res =>{
+                    that.content = res.data.item.content;
+                    that.author_name = res.data.author.nickname;
+                    that.author_info = res.data.author.description;
+                })
+            }else if(this.report_type == 3){
+                this.$api.answer.get_question_comment_by_id(this.target_id).then(res =>{
+                    that.content = res.data.item.content;
+                    that.author_name = res.data.author.nickname;
+                    that.author_info = res.data.author.description;
+                })
+            }else if(this.report_type == 4){
+                this.$api.answer.get_answer_by_id(this.target_id).then(res =>{
+                    that.content = res.data.item.content;
+                    that.author_name = res.data.author.nickname;
+                    that.author_info = res.data.author.description;
+                })
+            }else if(this.report_type == 5){
+                this.$api.answer.get_question_by_id(this.target_id).then(res =>{
+                    that.content = res.data.item.title;
+                    that.author_name = res.data.author.nickname;
+                    that.author_info = res.data.author.description;
+                })
+            }else if(this.report_type == 6){
+                this.$api.answer.get_article_by_id(this.target_id).then(res =>{
+                    that.content = res.data.item.title;
+                    that.author_name = res.data.author.nickname;
+                    that.author_info = res.data.author.description;
+                })
+            }
         }
     }
 </script>

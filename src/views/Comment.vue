@@ -65,7 +65,7 @@
             全部评论（<span>{{data.length}}</span>）
         </div>
         <div style="padding: 1em;line-height: 1.5;">
-            <v-layout row wrap style="padding-bottom: 10px;margin-top: 10px" v-for="item in data">
+            <v-layout row wrap style="padding-bottom: 10px;margin-top: 10px" v-for="item in data" justify-space-between>
                 <v-flex xs3 style="display: flex;justify-content: center;">
                     <div style="width: 55px;height: 55px;overflow:hidden;border-radius: 50%">
                         <img :src="item.headportrait" alt="" style="width: 100%;
@@ -73,7 +73,7 @@ height: 100%;border-radius: 50%;object-fit: cover"
                              @click="$router.push({name:'detail',query:{redirect: $route.fullPath, id:item.userID}})">
                     </div>
                 </v-flex>
-                <v-flex xs9>
+                <v-flex grow>
                     <div style="display: flex;align-items: center;"><b class="nickname">{{item.nickname}}</b><span
                             class="board">{{item.usergroup.text}}lv.{{item.level}}</span>
                     </div>
@@ -86,6 +86,9 @@ height: 100%;border-radius: 50%;object-fit: cover"
                         <!--style="margin-left: 1.5em;color: #66ccff;font-size: 1.3em">查看对话</span>-->
                         <!--<v-icon style="float:right;margin-right:1em">thumb_up</v-icon>-->
                     </p>
+                </v-flex>
+                <v-flex shrink>
+                    <v-icon @click="$router.push({name:'report' ,query:{report_type:comment_type, target_id:item.ID}})">error</v-icon>
                 </v-flex>
             </v-layout>
             <v-divider v-if="data.length!==0"></v-divider>
@@ -133,10 +136,12 @@ height: 100%;border-radius: 50%;object-fit: cover"
                     level: 0,
                     usergroup: {
                         text: ''
-                    }
+                    },
+                    ID:'',
                 }],
                 word: '',
                 flag: false,
+                comment_type:"",
             }
         },
         methods: {
@@ -189,7 +194,8 @@ height: 100%;border-radius: 50%;object-fit: cover"
                                 agree: value.agree,
                                 level: value.level,
                                 usergroup: value.usergroup,
-                                headportrait: value.user_headportrait
+                                headportrait: value.user_headportrait,
+                                ID: value.ID
                             })
                         })
                     }
@@ -206,12 +212,15 @@ height: 100%;border-radius: 50%;object-fit: cover"
         mounted() {
             switch (this.$route.query.type) {
                 case 0:
+                    this.comment_type = 3;
                     this.get_question_comment(this.$route.query.id);
                     break;
                 case 1:
+                    this.comment_type = 1;
                     this.get_answer_comment(this.$route.query.id);
                     break;
                 case 2:
+                    this.comment_type = 2;
                     this.get_article_comment(this.$route.query.id);
                     break;
             }
