@@ -62,7 +62,7 @@
         },
         mounted(){
             let report_type = this.$route.query.report_type
-            
+            let target_id = this.$route.query.target_id
         }
     }
 </script>
