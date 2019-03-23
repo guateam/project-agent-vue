@@ -38,8 +38,8 @@
                                     <div :class="row.type === 1 && 'text-xs-right'">{{ row.nickname }}</div>
 
                                     <v-card>
-                                        <v-container>
-                                            {{ row.content }}
+                                        <v-container v-html="row.content">
+
                                         </v-container>
                                     </v-card>
                                 </v-flex>
@@ -206,18 +206,18 @@
             },  // 滚动到最下
             previewImg: function () {
                 let fileObj = document.getElementById("file").files[0]; // js 获取文件对象
-
+                let that = this
                 let form = new FormData(); // FormData 对象
                 form.append("picture", fileObj); // 文件对象
 
                 this.$api.upload.upload_picture(form).then(res => {
                     if (res.data.code === 1) {
                         let data = {
-                            token: this.$store.state.token,
-                            group_id: this.groupId,
+                            token: that.$store.state.token,
+                            group_id: that.groupId,
                             content: '<img src="' + res.data.data + '" class="chat-image">',
                         };
-                        this.$api.message.send_group_message(data).then(res => {
+                        that.$api.group.send_group_message(data).then(res => {
                             if (res.data.code === 1) {
                                 this.get_more_message();
                             }
