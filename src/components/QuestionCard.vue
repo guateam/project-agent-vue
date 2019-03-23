@@ -43,7 +43,7 @@
                 <v-card-actions>
                     <v-flex class="font--text" xs12 pa-1>标签 : <span v-for="(tag, index) in tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
                     </v-flex>
-                    <v-flex class="font--text" grow pa-1>{{ follow }} 人关注&nbsp;·&nbsp;{{ comment }} 条评论 <span
+                    <v-flex class="font--text" grow pa-1>{{ follow }} 关注&nbsp;·&nbsp;{{ comment }} 评论 <span
                             class="time--text">{{ edittime }}</span></v-flex>
 
                 </v-card-actions>
