@@ -112,13 +112,15 @@ height: 100%;border-radius: 50%">
                 if (this.follow) {
                     this.$api.account.un_follow_user(this.data.user_id).then(res => {
                         if (res.data.code === 1) {
-                            this.follow = false
+                            this.follow = false;
+                            this.$store.state.userInfo.follow--;
                         }
                     })
                 } else {
                     this.$api.account.follow_user(this.data.user_id).then(res => {
                         if (res.data.code === 1) {
-                            this.follow = true
+                            this.follow = true;
+                            this.$store.state.userInfo.follow++;
                         }
                     })
                 }

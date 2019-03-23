@@ -37,6 +37,7 @@
                                 name="back"
                                 action="https://hanerx.tk:5000/api/upload/upload_identity_card_back"
                                 :on-success="back_confirm"
+                                :before-upload="set_busy"
                         >
                             <div style="padding: 20px 0">
                                 <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
@@ -165,8 +166,14 @@
                     this.formData.sex = response.data.gender;
                     this.formData.birthday = response.data.birthday;
                     this.formData.address = response.data.address;
+                } else {
+                    this.$store.commit('showInfo', '上传失败,请重新上传');
                 }
+                this.$store.commit('closeDialog');
             },
+            set_busy() {
+                this.$store.commit('showDialog');
+            }
         },
         mounted() {
             this.$emit('hiddenToolBar');  // 关闭顶部

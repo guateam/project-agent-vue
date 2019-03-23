@@ -88,7 +88,7 @@
         data() {
             return {
                 userId: this.$route.query.id,  // 聊天对象id
-                title: '大漠孤烟',  // 标题(对方昵称)
+                title: '加载中..',  // 标题(对方昵称)
                 message: '',  // 输入内容
                 topHeight: document.body.clientHeight * 0.07,
                 bottomHeight: document.body.clientHeight * 0.1,

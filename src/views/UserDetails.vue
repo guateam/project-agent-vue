@@ -336,6 +336,7 @@
                         this.$api.account.un_follow_user(this.userId).then(res => {
                             if (res.data.code === 1) {
                                 this.userInfo.isFollow = false;
+                                this.$store.state.userInfo.follow--;
                                 this.$store.commit('showInfo', '已取消关注');
                             }
                         });
@@ -343,6 +344,7 @@
                         this.$api.account.follow_user(this.userId).then(res => {
                             if (res.data.code === 1) {
                                 this.userInfo.isFollow = true;
+                                this.$store.state.userInfo.follow++;
                                 this.$store.commit('showInfo', '已关注');
                             }
                         });
