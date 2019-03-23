@@ -47,7 +47,7 @@
                                 <v-flex>
                                     <v-btn icon fab dark small
                                            :color="$store.state.userInfo.level < authority.publishInfo ? 'grey' : 'success'">
-                                        <v-icon  style="font-size=800px">comment</v-icon>
+                                        <v-icon  style="margin-top: 2px">comment</v-icon>
                                     </v-btn>
                                 </v-flex>
                                 <v-flex><span>发布内容</span></v-flex>
@@ -60,7 +60,7 @@
                                 <v-flex>
                                     <v-btn icon fab dark small
                                            :color="$store.state.userInfo.level < authority.colorfulFont ? 'grey' : 'success'">
-                                        <v-icon>color_lens</v-icon>
+                                        <v-icon style="margin-top: 2px">color_lens</v-icon>
                                     </v-btn>
                                 </v-flex>
                                 <v-flex><span>彩色字体</span></v-flex>
@@ -83,7 +83,7 @@
                                 <v-flex>
                                     <v-btn icon fab dark small
                                            :color="$store.state.userInfo.level < authority.editQuestionTag ? 'grey' : 'success'">
-                                        <v-icon>bookmark</v-icon>
+                                        <v-icon style="margin-top: 2px">bookmark</v-icon>
                                     </v-btn>
                                 </v-flex>
                                 <v-flex><span>添加二级标签</span></v-flex>
@@ -119,7 +119,7 @@
                                 <v-flex>
                                     <v-btn icon fab dark small
                                            :color="$store.state.userInfo.level < authority.priorReport ? 'grey' : 'success'">
-                                        <v-icon>report</v-icon>
+                                        <v-icon style="margin-top: 2px">report</v-icon>
                                     </v-btn>
                                 </v-flex>
                                 <v-flex><span>举报优先</span></v-flex>
@@ -132,7 +132,7 @@
                                 <v-flex>
                                     <v-btn icon fab dark small
                                            :color="$store.state.userInfo.level < authority.priorAudit ? 'grey' : 'success'">
-                                        <v-icon>check_circle</v-icon>
+                                        <v-icon style="margin-top: 2px">check_circle</v-icon>
                                     </v-btn>
                                 </v-flex>
                                 <v-flex><span>审核优先</span></v-flex>
@@ -155,7 +155,7 @@
                                 <v-flex>
                                     <v-btn icon fab dark small
                                            :color="$store.state.userInfo.level < authority.strongDisagree ? 'grey' : 'success'">
-                                        <v-icon>exposure_neg_2</v-icon>
+                                        <v-icon style="margin-top: 2px">exposure_neg_2</v-icon>
                                     </v-btn>
                                 </v-flex>
                                 <v-flex><span>反对加权</span></v-flex>
@@ -178,7 +178,7 @@
                                 <v-flex>
                                     <v-btn icon fab dark small
                                            :color="$store.state.userInfo.level < authority.recommendArticle ? 'grey' : 'success'">
-                                        <v-icon>note</v-icon>
+                                        <v-icon style="margin-top: 2px">note</v-icon>
                                     </v-btn>
                                 </v-flex>
                                 <v-flex><span>文章推荐</span></v-flex>
