@@ -72,7 +72,7 @@
                     <Col span="14" offset="10">
                         <v-layout row>
                             <v-flex xs12 sm6 offset-sm3>
-                                <v-card>
+                                <v-card flat>
                                     <v-list two-line>
 
                                         <!--<v-list-tile-->
@@ -256,13 +256,13 @@
     .load-more-hide {
         height: 0;
     }
-    .elevation-12{
-        box-shadow: none !important;
-    }
-    .elevation-2{
-        box-shadow: none !important;
-    }
-    .v-card{
-        box-shadow: none !important;
-    }
+    /*.elevation-12{*/
+        /*box-shadow: none !important;*/
+    /*}*/
+    /*.elevation-2{*/
+        /*box-shadow: none !important;*/
+    /*}*/
+    /*.v-card{*/
+        /*box-shadow: none !important;*/
+    /*}*/
 </style>
